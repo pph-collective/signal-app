@@ -18,9 +18,7 @@
       </div> -->
     </section>
     <section class="footer-grid-section-b footer-right">
-      <p class="container content">
-        Funding info
-      </p>
+      <p class="container content">Funding info</p>
       <div class="logo-container">
         <!-- <img
           src="@/assets/illustrations/nsf.svg"
