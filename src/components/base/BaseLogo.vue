@@ -1,6 +1,7 @@
 <template>
   <div class="logo">
-    <img src="@/assets/illustrations/ricaim-logo.svg" />
+    <!-- TODO: Add logo -->
+    <!-- <img src="@/assets/illustrations/ricaim-logo.svg" /> -->
   </div>
 </template>
 

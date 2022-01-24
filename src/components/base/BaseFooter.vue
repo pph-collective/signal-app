@@ -1,7 +1,7 @@
 <template>
   <footer class="footer-grid footer-container">
     <section class="footer-grid-section-a footer-left">
-      <div class="logo-container">
+      <!-- <div class="logo-container">
         <img src="@/assets/illustrations/ricaim-logo-name.svg" />
       </div>
       <div class="logo-container">
@@ -15,29 +15,23 @@
           src="@/assets/illustrations/brown-logo.svg"
           class="brown logo-container"
         />
-      </div>
+      </div> -->
     </section>
     <section class="footer-grid-section-b footer-right">
       <p class="container content">
-        This material is based upon work conducted by the Rhode Island
-        Consortium for Coastal Ecology Assessment, Innovation & Modeling (RI
-        C-AIM), and supported in full by the National Science Foundation EPSCoR
-        Cooperative Agreement 1655221. Any opinions, findings, and conclusions
-        or recommendations expressed in this material are those of the author(s)
-        and do not necessarily reflect the views of the National Science
-        Foundation.
+        Funding info
       </p>
       <div class="logo-container">
-        <img
+        <!-- <img
           src="@/assets/illustrations/nsf.svg"
           class="brown logo-container"
-        />
+        /> -->
       </div>
     </section>
     <section class="footer-grid-bottom">
       <i class="far fa-copyright" />
       <span class="copyright-span">{{ year }}</span>
-      <span class="copyright-span">RI Data Discovery Center</span>
+      <span class="copyright-span">People, Place and Health Collective</span>
     </section>
   </footer>
 </template>
