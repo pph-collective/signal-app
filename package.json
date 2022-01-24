@@ -1,5 +1,5 @@
 {
-  "name": "buoy-viewer",
+  "name": "signal-app",
   "version": "0.0.0",
   "engines": {
     "node": ">16.0.0"

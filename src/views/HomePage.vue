@@ -18,16 +18,7 @@
         </div>
       </div>
       <div class="item2 chart">
-        <BayMap
-          id="map"
-          :min-width="300"
-          :dataset="model.coordinates"
-          :legend="false"
-          :include-actions="false"
-          :enable-darkmode="false"
-          :color-domain="colorDomain"
-          :color-range="colorRange"
-        />
+        <p>A thing someday!</p>
       </div>
     </main>
     <figure>
@@ -41,28 +32,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { computed } from "vue";
-
-import { buoyStores } from "../store/buoy";
-import { useColorMap } from "../store/colorMap";
-
-import BayMap from "@/components/charts/BayMap.vue";
-
-const model = buoyStores["osom"].useStore();
-const colorMap = useColorMap();
-
-const colorDomain = computed(() =>
-  model.coordinates.map((c) => c.station_name)
-);
-const colorRange = computed(() =>
-  colorDomain.value.map((c) => colorMap.colors[c])
-);
-
-if (model.coordinates.length === 0) {
-  model.fetchBuoyCoordinates();
-}
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
