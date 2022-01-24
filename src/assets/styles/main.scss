@@ -7,12 +7,6 @@ $info: #87ADB3;
 $menu-item-active-background-color: $primary;
 @import "../../../node_modules/bulma/bulma.sass";
 
-$slider-track-background: $primary;
-@import "../../../node_modules/bulma-slider/src/sass/index.sass";
-
-$primary-color: $link;
-@import '../../../node_modules/vue-datepicker-next/scss/index.scss';
-
 // widely used utility classes
 .is-flex-column {
   @extend .is-flex;
@@ -33,22 +27,4 @@ $primary-color: $link;
   white-space: normal;
   overflow-wrap: break-word;
   height: revert;
-}
-
-// make vue datepicker input width 100%
-.mx-datepicker-range {
-  width: 100%;
-}
-
-// make vue-multiselect colors match theme
-.multiselect__tag {
-  background: $link;
-}
-
-.multiselect__option--highlight {
-  background: $link;
-}
-
-.multiselect__option--highlight::after {
-  background: $link;
 }
