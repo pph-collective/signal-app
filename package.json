@@ -9,6 +9,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "lint": "eslint --ext .ts,.js,.vue src --fix",
+    "lintcheck": "eslint --ext .ts,.js,.vue src",
     "tscheck": "vue-tsc --noEmit",
     "prepare": "husky install"
   },

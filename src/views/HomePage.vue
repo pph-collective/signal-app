@@ -21,14 +21,6 @@
         <p>A thing someday!</p>
       </div>
     </main>
-    <figure>
-      <img
-        class="waves"
-        src="@/assets/illustrations/waves-small.png"
-        alt="Waves Art"
-        style="width: 100%"
-      />
-    </figure>
   </div>
 </template>
 
