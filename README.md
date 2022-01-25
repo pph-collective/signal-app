@@ -11,8 +11,7 @@ Node version: 16+
 $ npm install
 
 # serve with hot reload at localhost:3000
-$ npm run dev # connect to production api
-$ npm run dev:local # connect to locally running api
+$ npm run dev
 
 # linting
 $ npm run lint # report and fix linting errors
