@@ -7,7 +7,7 @@
       </button>
     </div>
     <div class="sidebar-body" :class="{ 'is-hidden-mobile': collapsed }">
-      <p v-if="!collapsed" class="menu-label">Narragansett Bay Data Explorer</p>
+      <p v-if="!collapsed" class="menu-label">SIGNAL Web App</p>
       <p v-else class="menu-label">
         <abbr title="Narragansett Bay Data Explorer">NBDE</abbr>
       </p>
@@ -104,49 +104,29 @@ const collapsed = ref(false);
 
 const DATASETS = [
   {
-    name: "RI Buoy Data",
-    route: "ri-buoy",
+    name: "Vaccine Cold Spots",
+    route: "vaccine-cold-spot",
     available: true,
   },
   {
-    name: "MA Buoy Data",
-    route: "ma-buoy",
-    available: true,
-  },
-  {
-    name: "Ocean State Ocean Model",
-    route: "osom",
-    available: true,
-  },
-  {
-    name: "Plankton Time Series",
-    route: "plankton",
-    available: true,
-  },
-  {
-    name: "Domoic Acid",
-    route: "domoic-acid",
-    available: true,
-  },
-  {
-    name: "Fish Trawl Survey",
-    route: "fish",
-    available: true,
+    name: "Testing Cold Spots",
+    route: "testing-cold-spot",
+    available: false,
   },
 ];
 
 const RESOURCES = [
   {
-    title: "Rhode Island Data Discovery Center Home",
-    initials: "RIDDC",
-    link: "https://ridatadiscovery.org",
-    icon: "fa-water",
+    title: "RIDOH Covid Data Hub",
+    initials: "CDH",
+    link: "https://ri-department-of-health-covid-19-data-rihealth.hub.arcgis.com/",
+    icon: "fa-anchor",
   },
   {
-    title: "ERDDAP Server",
-    initials: "ES",
-    link: "https://pricaimcit.services.brown.edu/erddap/index.html",
-    icon: "fa-database",
+    title: "RIDOH Covid Info",
+    initials: "CI",
+    link: "https://covid.ri.gov/",
+    icon: "fa-sitemap",
   },
 ];
 

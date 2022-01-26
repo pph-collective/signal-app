@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading" class="loading-container">
-    <i spin class="loading-icon fas fa-compass" />
+    <i spin class="loading-icon fas fa-anchor" />
   </div>
 </template>
 

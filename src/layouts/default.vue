@@ -1,7 +1,7 @@
 <template>
   <div>
-    <a class="logo-container" href="https://ridatadiscovery.org">
-      <span class="brand-title">Rhode Island Data Discovery Center</span>
+    <a class="logo-container" href="/">
+      <span class="brand-title">Signal Web App</span>
       <BaseLogo />
     </a>
     <slot />
