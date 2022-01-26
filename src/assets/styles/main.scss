@@ -1,10 +1,13 @@
 // set variables used by imports then import styles
 
 $body-size: 1rem;
-$primary: rgb(89, 81, 139);
-$link: hsl(194deg 50% 50%);
-$info: #87ADB3;
+$primary: rgb(53, 65, 86);
+$link: rgb(39, 145, 124);
+$info: rgb(190, 158, 255);
+$text: #434343;
 $menu-item-active-background-color: $primary;
+$family-sans-serif: "avenir", sans-serif;
+$family-secondary: "Sinhala MN", "avenir", sans-serif;
 @import "../../../node_modules/bulma/bulma.sass";
 
 // widely used utility classes

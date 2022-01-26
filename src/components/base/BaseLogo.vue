@@ -1,7 +1,6 @@
 <template>
   <div class="logo">
-    <!-- TODO: Add logo -->
-    <!-- <img src="@/assets/illustrations/ricaim-logo.svg" /> -->
+    <img src="@/assets/images/signal-logo.png" />
   </div>
 </template>
 

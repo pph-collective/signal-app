@@ -1,7 +1,7 @@
 <template>
   <div>
     <a class="logo-container" href="/">
-      <span class="brand-title">Signal Web App</span>
+      <span class="brand-title is-family-secondary">Project SIGNAL</span>
       <BaseLogo />
     </a>
     <slot />
