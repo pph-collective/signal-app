@@ -29,10 +29,6 @@
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
 
-$gradient1: $primary;
-$gradient2: $link;
-$gradient3: #f8e3ca;
-
 .home-title {
   @extend .title;
   font-size: $size-1 * 1.4;
@@ -43,7 +39,7 @@ $gradient3: #f8e3ca;
 }
 
 .grid-container {
-  background-image: linear-gradient($gradient2, $gradient1);
+  background-image: linear-gradient($link, $primary);
   display: grid;
   min-height: max(37.5rem, 90vh);
   grid-template-columns: 1fr minmax(5fr, 600px) 1fr;
