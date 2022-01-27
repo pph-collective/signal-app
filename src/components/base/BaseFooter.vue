@@ -39,7 +39,7 @@ const year = new Date().getFullYear();
   }
 }
 .footer-container {
-  background-color: $info;
+  background-color: $dark;
   padding: 1rem 1.5rem 3rem;
 }
 .footer-body {
