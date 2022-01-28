@@ -1,4 +1,18 @@
-// node ./scripts/test.js -e --id vax_first_dose_coldspots --date 2022-01-17 --zip ./data/vax_first_dose_coldspots_01_17_2022.zip --csv ./data/vaccine_first_dose_coldspot_summaries_01_17_2022.csv
+/**
+ * Upload Script for SIGNAL
+ *
+ * Requirements
+ * - serviceAccount.json
+ * - path to shape zip folder (beginning at the root of this project)
+ * - path to csv
+ *
+ * Command Line Arguments
+ *  Run the script the -h help flag to see up to date descriptions for command line arguments
+ *  node ./scripts/upload-data.js -h
+ *
+ * Example Run
+ * node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-01-17 --zip ./data/vax_first_dose_coldspots_01_17_2022.zip --csv ./data/vaccine_first_dose_coldspot_summaries_01_17_2022.csv
+ */
 
 const fs = require("fs");
 const path = require("path");
@@ -69,14 +83,16 @@ const argparse = new ArgumentParser({
   add_help: true,
 });
 
-argparse.add_argument("-e", "--emulator", {
-  action: "store_true",
-  help: "upload form to the emulator instead of production DB",
+argparse.add_argument("-i", "--id", {
+  required: true,
+  help: "ID of dataset for the collection"
 });
-argparse.add_argument("-o", "--overwrite", {
-  action: "store_true",
-  help: "if files already exists, overwrite it",
+
+argparse.add_argument("-d", "--date", {
+  required: true,
+  help: "Date of dataset, formatted in yyyy-mm-dd"
 });
+
 argparse.add_argument("-z", "--zip", {
   required: true,
   help: "Path to shape file zip",
@@ -84,18 +100,13 @@ argparse.add_argument("-z", "--zip", {
 
 argparse.add_argument("-c", "--csv", {
   required: true,
-  help: "ID of the form",
+  help: "Path to stats csv",
 });
 
-argparse.add_argument("-i", "--id", {
-  required: true,
-  help: "ID of dataset for the collection"
-})
-
-argparse.add_argument("-d", "--date", {
-  required: true,
-  help: "Date of dataset, formatted in yyyy-mm-dd"
-})
+argparse.add_argument("-o", "--overwrite", {
+  action: "store_true",
+  help: "if files already exists, overwrite it",
+});
 
 const main = async () => {
   const {overwrite, zip, csv, id, date} = argparse.parse_args();

@@ -7,8 +7,6 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "firebase:dev": "firebase emulators:start --import emulator_data",
-    "firebase:savedev": "firebase emulators:export emulator_data",
     "serve": "vite preview",
     "lint": "eslint --ext .ts,.js,.vue src --fix",
     "lintcheck": "eslint --ext .ts,.js,.vue src",
