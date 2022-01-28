@@ -11,15 +11,36 @@ This directory contains utility scripts for the SIGNAL web app.
 
 ## `upload-data`
 
-Uploads the shape file zip and stats csv to storage
+Uploads the shape file zip and stats csv to storage.
+
+Files will be converted to json and uploaded to the following folder structure in storage
+```
+|-- <id>
+|   |-- <date>
+|   |   |-- geo.json
+|   |   |-- stats.json
+```
 
 ### Usage
+
+Run
 
 `node ./scripts/upload-data.js --id <dataset id> --date <date in yyyy-mm-dd> --zip <path to shape file zip> --csv <path to csv> [--overwrite]`
 
 ### Example
 
+Example Run Command
+
 `node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-01-17 --zip ./data/vax_first_dose_coldspots_01_17_2022.zip --csv ./data/vaccine_first_dose_coldspot_summaries_01_17_2022.csv`
+
+Example Folder Structure in Storage
+
+```
+|-- vax_first_dose_coldspots
+|   |-- 2022-01-17
+|   |   |-- geo.json
+|   |   |-- stats.json
+```
 
 ### Command Line Arguments
 ```

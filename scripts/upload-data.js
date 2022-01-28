@@ -1,11 +1,6 @@
 /**
  * Upload Script for SIGNAL
  *
- * Requirements
- * - serviceAccount.json
- * - path to shape zip folder (beginning at the root of this project)
- * - path to csv
- *
  * Command Line Arguments
  *  Run the script the -h help flag to see up to date descriptions for command line arguments
  *  node ./scripts/upload-data.js -h
