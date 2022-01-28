@@ -6,9 +6,7 @@ const shapefile = require("shapefile");
 const unzipper = require("unzipper");
 const { ArgumentParser } = require("argparse");
 const { parse } = require("csv-parse");
-
 const admin = require("firebase-admin");
-const firebaseJSON = require("../firebase.json");
 
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -67,7 +65,7 @@ const getStats = async (csvFile) => {
 }
 
 const argparse = new ArgumentParser({
-  description: "SIGNAL - import data",
+  description: "SIGNAL - import data to storage",
   add_help: true,
 });
 
@@ -77,7 +75,7 @@ argparse.add_argument("-e", "--emulator", {
 });
 argparse.add_argument("-o", "--overwrite", {
   action: "store_true",
-  help: "if the form already exists, overwrite it",
+  help: "if files already exists, overwrite it",
 });
 argparse.add_argument("-z", "--zip", {
   required: true,
@@ -100,7 +98,7 @@ argparse.add_argument("-d", "--date", {
 })
 
 const main = async () => {
-  const {emulator, overwrite, zip, csv, id, date} = argparse.parse_args();
+  const {overwrite, zip, csv, id, date} = argparse.parse_args();
 
   // Check Command Line Arguments
   if (!fs.existsSync(zip)) {
@@ -115,38 +113,55 @@ const main = async () => {
     warnAndExit(`ERROR! Incorrect date format. Use yyyy-mm-dd format: ${date}`);
   }
 
-  if (emulator) {
-    console.log("using emulator");
-    process.env.FIRESTORE_EMULATOR_HOST = `localhost:${firebaseJSON.emulators.firestore.port}`
-  }
-  process.env.GOOGLE_APPLICATION_CREDENTIALS = "serviceAccount.json";
-
   if (path.extname(csv).toUpperCase() !== ".CSV") {
     warnAndExit(`ERROR! Expected a csv file: ${csv}`);
   }
 
-  const app = admin.initializeApp();
-  const db = app.firestore();
+  admin.initializeApp({ projectId: "signal-ri" });
+  const storage = admin.storage();
+  process.env.GOOGLE_APPLICATION_CREDENTIALS = "serviceAccount.json";
 
-  const document = db.collection(id).doc(date);
+  const directory = `${id}/${date}`;
+  const geoPath = `${directory}/geo.json`;
+  const statsPath = `${directory}/stats.json`;
+
+  const bucket = storage.bucket("signal-ri.appspot.com");
+  const geoFile = bucket.file(geoPath);
+  const statsFile = bucket.file(statsPath);
 
 
-  await document.get().then((doc) => {
-    if (doc.exists && !overwrite) {
-      warnAndExit(`ERROR! Data already exists in firebase for id: ${id}, date: ${date}. Use the overwrite flag if you wish to continue`);
-    }
-  })
+  if (!overwrite) {
+    await geoFile.exists((err, exists) => {
+      if (err) {
+        warnAndExit(`ERROR!: ${err}`);
+      }
 
-  // const geo = await getGeo(zip);
+      if (exists) {
+        warnAndExit(`ERROR!: File exists in storage. Use the overwrite flag if you wish to continue: ${geoPath}`)
+      }
+    });
+
+    await statsFile.exists((err, exists) => {
+      if (err) {
+        warnAndExit(`ERROR!: ${err}`);
+      }
+
+      if (exists) {
+        warnAndExit(`ERROR!: File exists in storage. Use the overwrite flag if you wish to continue: ${statsPath}`)
+      }
+    });
+  }
+
+  // Convert Files
+  const geo = await getGeo(zip);
   const stats = await getStats(csv);
 
-  await document.set({
-    // geo
-    stats,
-    last_updated: Date.now()
-  });
+  // Upload Files to Storage
+  await geoFile.save(JSON.stringify(geo));
+  console.log(`SUCCESS! Uploaded file to storage: ${geoPath}`);
 
-  console.log("FINISHED");
+  await statsFile.save(JSON.stringify(stats));
+  console.log(`SUCCESS! Uploaded file to storage: ${statsPath}`);
 };
 
 main();

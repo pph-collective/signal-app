@@ -19,9 +19,9 @@
     },
     "ui": {
       "enabled": true
-    },
-    "firestore": {
-      "port": 8088
     }
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }
