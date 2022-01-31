@@ -140,27 +140,23 @@ const main = async () => {
   const geoFile = bucket.file(geoPath);
   const statsFile = bucket.file(statsPath);
 
+  const geoExists = (await geoFile.exists())[0];
+  const statsExists = (await statsFile.exists())[0];
 
-  if (!overwrite) {
-    await geoFile.exists((err, exists) => {
-      if (err) {
-        warnAndExit(`ERROR!: ${err}`);
-      }
+  if (geoExists) {
+    if (overwrite) {
+      console.log(`WARNING! File exists in storage. Overwriting... ${geoPath}`);
+    } else {
+      warnAndExit(`ERROR!: File exists in storage. Use the overwrite flag if you wish to continue: ${geoPath}`);
+    }
+  }
 
-      if (exists) {
-        warnAndExit(`ERROR!: File exists in storage. Use the overwrite flag if you wish to continue: ${geoPath}`)
-      }
-    });
-
-    await statsFile.exists((err, exists) => {
-      if (err) {
-        warnAndExit(`ERROR!: ${err}`);
-      }
-
-      if (exists) {
-        warnAndExit(`ERROR!: File exists in storage. Use the overwrite flag if you wish to continue: ${statsPath}`)
-      }
-    });
+  if (statsExists) {
+    if (overwrite) {
+      console.log(`WARNING! File exists in storage. Overwriting... ${statsPath}`);
+    } else {
+      warnAndExit(`ERROR!: File exists in storage. Use the overwrite flag if you wish to continue: ${statsPath}`);
+    }
   }
 
   // Convert Files
