@@ -35,16 +35,9 @@ const getGeo = async (zipFile) => {
     if (filename.endsWith(".shp")) {
       const geo = [];
       const content = await entry.buffer();
+      const source = await shapefile.open(content);
 
-      // Source: https://www.npmjs.com/package/shapefile
-      await shapefile.open(content)
-        .then(source => source.read()
-          .then(function log(result) {
-            if (result.done) return;
-            geo.push(result.value);
-            return source.read().then(log);
-          }))
-        .catch(error => console.error(error.stack));
+      await shpToGeo(source, geo);
 
       // Close reader
       zipReader.unpipe();
@@ -57,6 +50,17 @@ const getGeo = async (zipFile) => {
     }
   }
 };
+
+// Source: https://www.npmjs.com/package/shapefile
+const shpToGeo = async (source, geo) => {
+  const result = await source.read();
+  if (result.done) {
+    return;
+  }
+
+  geo.push(result.value);
+  return shpToGeo(source, geo);
+}
 
 const getStats = async (csvFile) => {
   const fileContents = fs.readFileSync(csvFile, "utf8");
@@ -123,9 +127,9 @@ const main = async () => {
     warnAndExit(`ERROR! Expected a csv file: ${csv}`);
   }
 
+  process.env.GOOGLE_APPLICATION_CREDENTIALS = "serviceAccount.json";
   admin.initializeApp({ projectId: "signal-ri" });
   const storage = admin.storage();
-  process.env.GOOGLE_APPLICATION_CREDENTIALS = "serviceAccount.json";
 
   const directory = `${id}/${date}`;
   const geoPath = `${directory}/geo.json`;
