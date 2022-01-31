@@ -78,6 +78,27 @@ const getStats = async (csvFile) => {
   return records
 }
 
+const uploadToStorage = async (filePath, convertFn, bucket, storagePath, overwrite) => {
+  const storageFile = bucket.file(storagePath);
+
+  // Check Storage File
+  if ((await storageFile.exists())[0]) {
+    if (overwrite) {
+      console.log(`WARNING! File exists in storage. Overwriting... ${storagePath}`);
+    } else {
+      warnAndExit(`ERROR!: File exists in storage. Use the overwrite flag if you wish to continue: ${storagePath}`);
+    }
+  }
+
+  console.log("WHY AM I HERE?");
+
+  // Convert Data
+  const data = await convertFn(filePath);
+
+  await storageFile.save(JSON.stringify(data));
+  console.log(`SUCCESS! Uploaded file to storage: ${storagePath}`);
+}
+
 const argparse = new ArgumentParser({
   description: "SIGNAL - import data to storage",
   add_help: true,
@@ -130,45 +151,11 @@ const main = async () => {
 
   process.env.GOOGLE_APPLICATION_CREDENTIALS = "serviceAccount.json";
   initializeApp({ projectId: "signal-ri" });
-  const storage = getStorage();
-
+  const bucket = getStorage().bucket("signal-ri.appspot.com");
   const directory = `${id}/${date}`;
-  const geoPath = `${directory}/geo.json`;
-  const statsPath = `${directory}/stats.json`;
 
-  const bucket = storage.bucket("signal-ri.appspot.com");
-  const geoFile = bucket.file(geoPath);
-  const statsFile = bucket.file(statsPath);
-
-  const geoExists = (await geoFile.exists())[0];
-  const statsExists = (await statsFile.exists())[0];
-
-  if (geoExists) {
-    if (overwrite) {
-      console.log(`WARNING! File exists in storage. Overwriting... ${geoPath}`);
-    } else {
-      warnAndExit(`ERROR!: File exists in storage. Use the overwrite flag if you wish to continue: ${geoPath}`);
-    }
-  }
-
-  if (statsExists) {
-    if (overwrite) {
-      console.log(`WARNING! File exists in storage. Overwriting... ${statsPath}`);
-    } else {
-      warnAndExit(`ERROR!: File exists in storage. Use the overwrite flag if you wish to continue: ${statsPath}`);
-    }
-  }
-
-  // Convert Files
-  const geo = await getGeo(zip);
-  const stats = await getStats(csv);
-
-  // Upload Files to Storage
-  await geoFile.save(JSON.stringify(geo));
-  console.log(`SUCCESS! Uploaded file to storage: ${geoPath}`);
-
-  await statsFile.save(JSON.stringify(stats));
-  console.log(`SUCCESS! Uploaded file to storage: ${statsPath}`);
+  await uploadToStorage(zip, getGeo, bucket,`${directory}/geo.json`, overwrite);
+  await uploadToStorage(csv, getStats, bucket,`${directory}/stats.json`, overwrite);
 };
 
 main();
