@@ -4,6 +4,17 @@ This directory contains utility scripts for the SIGNAL web app.
 
 ## Admin Setup
 
+Requires Node 16+. To check, run the following command.
+```bash
+$ node -v
+```
+
+
+#### Set up Firebase
+```bash
+$ firebase login
+```
+
 ### Create a Service Account
 1. Navigate to the Firebase console to generate a private key (Settings > Service Accounts).
 2. Click **Generate New Private Key** and save the JSON file as `serviceAccount.json`
@@ -45,7 +56,6 @@ Example Folder Structure in Storage
 ### Command Line Arguments
 ```
 -h, --help            show this help message and exit
--e, --emulator        upload form to the emulator instead of production DB
 -o, --overwrite       if files already exists, overwrite it
 -z ZIP, --zip ZIP     Path to shape file zip
 -c CSV, --csv CSV     Path to stats csv

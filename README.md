@@ -9,9 +9,6 @@ Node version: 16+
 ```bash
 # install dependencies
 $ npm install
-
-# Set up firebase
-$ firebase login
 ```
 
 ### Compiles and hot-reloads for development
@@ -35,6 +32,11 @@ $ npm run serve
 ### Admin Setup
 
 *Needed to upload files*
+
+#### Set up Firebase
+```
+$ firebase login
+```
 
 #### Create a Service Account
 
