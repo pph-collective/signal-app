@@ -84,13 +84,11 @@ const uploadToStorage = async (filePath, convertFn, bucket, storagePath, overwri
   // Check Storage File
   if ((await storageFile.exists())[0]) {
     if (overwrite) {
-      console.log(`WARNING! File exists in storage. Overwriting... ${storagePath}`);
+      console.warn(`WARNING! File exists in storage. Overwriting... ${storagePath}`);
     } else {
       warnAndExit(`ERROR!: File exists in storage. Use the overwrite flag if you wish to continue: ${storagePath}`);
     }
   }
-
-  console.log("WHY AM I HERE?");
 
   // Convert Data
   const data = await convertFn(filePath);
