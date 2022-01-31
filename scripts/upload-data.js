@@ -15,7 +15,8 @@ const shapefile = require("shapefile");
 const unzipper = require("unzipper");
 const { ArgumentParser } = require("argparse");
 const { parse } = require("csv-parse");
-const admin = require("firebase-admin");
+const { initializeApp } = require("firebase-admin/app");
+const { getStorage } = require('firebase-admin/storage');
 
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -128,8 +129,8 @@ const main = async () => {
   }
 
   process.env.GOOGLE_APPLICATION_CREDENTIALS = "serviceAccount.json";
-  admin.initializeApp({ projectId: "signal-ri" });
-  const storage = admin.storage();
+  initializeApp({ projectId: "signal-ri" });
+  const storage = getStorage();
 
   const directory = `${id}/${date}`;
   const geoPath = `${directory}/geo.json`;
