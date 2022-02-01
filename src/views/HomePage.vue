@@ -3,10 +3,9 @@
     <main class="hero grid-container">
       <div class="item1 pt-4">
         <div class="center">
-          <h1 class="home-title pb-4">Narragansett Bay Data Explorer</h1>
+          <h1 class="home-title pb-4">SIGNAL Web App</h1>
           <h2 class="home-subtitle pb-4">
-            Explore historical data collected from multiple buoys in the
-            Narragansett Bay
+            Explore COVID-19 RI datsets from the SIGNAL project
           </h2>
           <router-link
             class="button is-large has-text-light is-primary"
