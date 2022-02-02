@@ -40,8 +40,8 @@ export const fetchColdSpotData = async (datasetName: string, date: string) => {
 
     return result;
   } catch (error) {
-    console.error(error);
-    return {};
+    import.meta.env.DEV && console.error(error);
+    throw new Error("Unable to get data, try again later! :(");
   }
 };
 
