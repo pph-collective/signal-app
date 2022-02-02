@@ -44,6 +44,11 @@ $ firebase login
 2. Click **Generate New Private Key** and save the JSON file as `serviceAccount.json`
 3. Add that JSON file to the project root directory. This file is listed in the `.gitignore`. Do not share this private key.
 
+## CORS Configuration
+In order to get out data from storage, we configured our Cloud Storage bucket for cross-origin access (CORS). It's
+currently set to `cors.json`. In order to change it, 
+follow [these instructions](https://firebase.google.com/docs/storage/web/download-files#cors_configuration).
+
 ## Recommended IDE Setup (very optional)
 
 - [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
