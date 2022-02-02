@@ -27,17 +27,22 @@ const storage = getStorage(app);
 // const analytics = getAnalytics(app);
 
 export const fetchColdSpotData = async (datasetName: string, date: string) => {
-  const response = await listAll(ref(storage, `${datasetName}/${date}`));
+  try {
+    const querySnapshot = await listAll(ref(storage, `${datasetName}/${date}`));
 
-  const result = {};
+    const result = {};
 
-  for (const itemRef of response.items) {
-    const url = await getDownloadURL(itemRef);
-    const field = itemRef.name.split(".")[0];
-    result[field] = await axios.get(url);
+    for (const itemRef of querySnapshot.items) {
+      const url = await getDownloadURL(itemRef);
+      const field = itemRef.name.split(".")[0];
+      result[field] = await axios.get(url);
+    }
+
+    return result;
+  } catch (error) {
+    console.error(error);
+    return {};
   }
-
-  return result;
 };
 
 export const fetchKeys = async (datasetName: string) => {
