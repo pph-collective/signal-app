@@ -1,36 +1,35 @@
 <template>
   <div>
-    <main class="hero grid-container">
+    <main class="hero grid-container header-image">
       <div class="item1 pt-4">
-        <div class="center">
-          <h1 class="home-title pb-4">SIGNAL Web App</h1>
-          <h2 class="home-subtitle pb-4">
-            Explore COVID-19 RI datsets from the SIGNAL project
-          </h2>
+        <h1
+          class="home-title pb-4 has-text-right has-text-light is-family-secondary"
+        >
+          Project SIGNAL
+        </h1>
+        <h2 class="home-subtitle pb-4 has-text-light">
+          Explore COVID-19 RI datsets from Project SIGNAL
+        </h2>
+        <div class="is-flex is-justify-content-center">
           <router-link
-            class="button is-large has-text-light is-primary"
+            class="button is-large has-text-light is-link"
             to="/dataset/"
           >
             <span class="is-size-3">Start Exploring</span>
-            <i class="ml-3 is-size-3 fas fa-compass" />
+            <BaseLogo :inverted="true" />
           </router-link>
         </div>
-      </div>
-      <div class="item2 chart">
-        <p>A thing someday!</p>
       </div>
     </main>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import BaseLogo from "@/components/base/BaseLogo.vue";
+</script>
 
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
-
-$gradient1: #598daf;
-$gradient2: #fdbc89;
-$gradient3: #f8eade;
 
 .home-title {
   @extend .title;
@@ -42,52 +41,33 @@ $gradient3: #f8eade;
 }
 
 .grid-container {
-  background-image: linear-gradient($gradient1, $gradient2, $gradient3);
+  background-image: linear-gradient($link, $primary);
   display: grid;
-  grid-template-columns: 1fr 4fr minmax(300px, 5fr) 1fr;
-  grid-template-rows: 2rem auto;
+  min-height: max(37.5rem, 93vh);
+  grid-template-columns: 1fr minmax(5fr, 600px) 1fr;
   grid-template-areas:
-    ". . . . "
-    ". area1 area2 .";
+    ". . . "
+    ". area1 ."
+    ". . . ";
   @include mobile {
-    grid-template-rows: auto 0px;
     grid-template-columns: 1fr 20fr 1fr;
-    grid-template-areas:
-      ". area1 ."
-      ". area2 .";
   }
 }
 
 .item1 {
-  display: grid;
   grid-area: area1;
-  align-content: start;
-  justify-items: start;
-  grid-template-columns: 1fr 9fr 1fr;
-  grid-template-rows: 8rem auto 5rem;
-  grid-template-areas:
-    ". top ."
-    ". center ."
-    ". bottom .";
+  display: flex;
+  max-height: 50vh;
+  flex-direction: column;
+  justify-content: space-around;
 }
-.center {
-  grid-area: center;
-}
-.item2 {
-  grid-area: area2;
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  max-width: 100vw;
-  @include mobile {
-    display: none;
-    visibility: hidden;
-  }
-}
-.waves {
-  margin-top: -10rem;
-  @include mobile {
-    visibility: hidden;
-  }
+
+.header-image {
+  background-image: url("../assets/images/folco-masi-6tbZUEqruQQ-unsplash.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #999;
 }
 </style>

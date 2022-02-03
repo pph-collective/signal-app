@@ -7,7 +7,7 @@
       </button>
     </div>
     <div class="sidebar-body" :class="{ 'is-hidden-mobile': collapsed }">
-      <p v-if="!collapsed" class="menu-label">SIGNAL Web App</p>
+      <p v-if="!collapsed" class="menu-label">Project SIGNAL</p>
       <p v-else class="menu-label">
         <abbr title="Narragansett Bay Data Explorer">NBDE</abbr>
       </p>
