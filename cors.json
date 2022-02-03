@@ -1,6 +1,6 @@
 [
   {
-    "origin": ["http://localhost:3000/", "https://signal-ri*.web.app/"],
+    "origin": ["http://localhost:3000/", "https://*.web.app/"],
     "method": ["GET"],
     "maxAgeSeconds": 3600
   }
