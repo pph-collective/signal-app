@@ -28,16 +28,16 @@ const storage = getStorage(app);
 
 export const fetchColdSpotData = async (datasetName: string, date: string) => {
   try {
-    const querySnapshot = await listAll(ref(storage, `${datasetName}/${date}`));
-
     const result = {};
 
-    for (const itemRef of querySnapshot.items) {
+    const querySnapshot = await listAll(ref(storage, `${datasetName}/${date}`));
+    const promises = querySnapshot.items.map(async (itemRef) => {
       const url = await getDownloadURL(itemRef);
       const field = itemRef.name.split(".")[0];
       result[field] = await axios.get(url);
-    }
+    });
 
+    await Promise.all(promises);
     return result;
   } catch (error) {
     import.meta.env.DEV && console.error(error);
