@@ -152,6 +152,14 @@ const main = async () => {
   const bucket = getStorage().bucket("signal-ri.appspot.com");
   const directory = `${id}/${date}`;
 
+  const [files] = await bucket.getFiles();
+  const folders = new Set(files.map(b => b.name.split("/")[0]));
+
+  if (!folders.has(id)) {
+    warnAndExit(`ERROR! id must match an existing dataset folder: ${[...folders].join(", ")}.
+  To add a new folder, go to the Firebase Console for Storage`);
+  }
+
   await uploadToStorage(zip, getGeo, bucket,`${directory}/geo.json`, overwrite);
   await uploadToStorage(csv, getStats, bucket,`${directory}/stats.json`, overwrite);
 };
