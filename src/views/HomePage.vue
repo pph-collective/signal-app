@@ -16,7 +16,7 @@
             to="/dataset/"
           >
             <span class="is-size-3">Start Exploring</span>
-            <BaseLogo />
+            <BaseLogo :inverted="true" />
           </router-link>
         </div>
       </div>
