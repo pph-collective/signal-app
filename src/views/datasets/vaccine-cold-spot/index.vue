@@ -4,7 +4,7 @@
     <template #content>
       A Map someday
       {{ dates }}
-      {{ data }}
+      {{ `${JSON.stringify(data).substring(0, 1000)}...` }}
     </template>
   </DashboardCard>
 
@@ -26,8 +26,9 @@
 import DashboardCard from "@/components/base/DashboardCard.vue";
 
 import { fetchKeys, fetchColdSpotData } from "../../../utils/firebase";
-const dates = await fetchKeys("vaccine_cold_spot");
-const data = await fetchColdSpotData("vaccine_cold_spot", dates[0]);
+const datasetName = "vax_first_dose_coldspots";
+const dates = await fetchKeys(datasetName);
+const data = await fetchColdSpotData(datasetName, dates[0]);
 </script>
 
 <style scoped></style>
