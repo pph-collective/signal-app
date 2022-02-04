@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
 import axios from "axios";
+import { parse } from "zipson";
 
 // import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -34,7 +35,8 @@ export const fetchColdSpotData = async (datasetName: string, date: string) => {
     const promises = querySnapshot.items.map(async (itemRef) => {
       const url = await getDownloadURL(itemRef);
       const field = itemRef.name.split(".")[0];
-      result[field] = await axios.get(url);
+      const response = await axios.get(url);
+      result[field] = parse(response.data);
     });
 
     await Promise.all(promises);
@@ -47,5 +49,8 @@ export const fetchColdSpotData = async (datasetName: string, date: string) => {
 
 export const fetchKeys = async (datasetName: string) => {
   const querySnapshot = await listAll(ref(storage, datasetName));
-  return querySnapshot.prefixes.map((p) => p.name).sort();
+  return querySnapshot.prefixes
+    .map((p) => p.name)
+    .sort()
+    .reverse();
 };

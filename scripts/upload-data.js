@@ -17,6 +17,7 @@ const { ArgumentParser } = require("argparse");
 const { parse } = require("csv-parse");
 const { initializeApp } = require("firebase-admin/app");
 const { getStorage } = require('firebase-admin/storage');
+const { stringify } = require('zipson');
 
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -93,7 +94,7 @@ const uploadToStorage = async (filePath, convertFn, bucket, storagePath, overwri
   // Convert Data
   const data = await convertFn(filePath);
 
-  await storageFile.save(JSON.stringify(data));
+  await storageFile.save(stringify(data));
   console.log(`SUCCESS! Uploaded file to storage: ${storagePath}`);
 }
 
@@ -152,8 +153,8 @@ const main = async () => {
   const bucket = getStorage().bucket("signal-ri.appspot.com");
   const directory = `${id}/${date}`;
 
-  await uploadToStorage(zip, getGeo, bucket,`${directory}/geo.json`, overwrite);
-  await uploadToStorage(csv, getStats, bucket,`${directory}/stats.json`, overwrite);
+  await uploadToStorage(zip, getGeo, bucket,`${directory}/geo.txt`, overwrite);
+  await uploadToStorage(csv, getStats, bucket,`${directory}/stats.txt`, overwrite);
 };
 
 main();
