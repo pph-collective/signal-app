@@ -80,7 +80,7 @@ const getStats = async (csvFile) => {
 }
 
 const argparse = new ArgumentParser({
-  description: "SIGNAL - import data to storage",
+  description: "SIGNAL - upload data to Firestore",
   add_help: true,
 });
 
@@ -154,9 +154,9 @@ const main = async () => {
   const docSnapshot = await docRef.get();
   if (docSnapshot.exists) {
     if (overwrite) {
-      console.warn(`WARNING! File exists in storage. Overwriting... ${id}/${date}`);
+      console.warn(`WARNING! Document exists in Firestore. Overwriting... ${id}/${date}`);
     } else {
-      warnAndExit(`ERROR!: File exists in storage. Use the overwrite flag if you wish to continue: ${id}/${date}`);
+      warnAndExit(`ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: ${id}/${date}`);
     }
   }
 
