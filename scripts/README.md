@@ -30,7 +30,7 @@ The shape file zip and stats csv are converted to json. Then are compressed and 
 
 Run
 
-`node ./scripts/upload-data.js --id <dataset id> --date <date in yyyy-mm-dd> --zip <path to shape file zip> --csv <path to csv> [--overwrite] [--new]`
+`node ./scripts/upload-data.js --id <dataset id> --date <date in yyyy-mm-dd> --zip <path to shape file zip> --csv <path to csv> [--overwrite] [--newCollection]`
 
 ### Example
 
@@ -46,6 +46,6 @@ Example Run Command
 -z ZIP, --zip ZIP     Path to shape file zip
 -c CSV, --csv CSV     Path to stats csv
 -o, --overwrite       if files already exists, overwrite it
--n, --new             if the collection id does not exist, creates a new
+-n, --newCollection   if the collection id does not exist, creates a new
                         collection
 ```

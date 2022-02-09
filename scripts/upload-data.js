@@ -109,13 +109,13 @@ argparse.add_argument("-o", "--overwrite", {
   help: "if files already exists, overwrite it",
 });
 
-argparse.add_argument("-n", "--new", {
+argparse.add_argument("-n", "--newCollection", {
   action: "store_true",
   help: "if the collection id does not exist, creates a new collection"
 })
 
 const main = async () => {
-  const {overwrite, zip, csv, id, date} = argparse.parse_args();
+  const { newCollection, overwrite, zip, csv, id, date } = argparse.parse_args();
 
   // Check Command Line Arguments
   if (!fs.existsSync(zip)) {
@@ -141,11 +141,11 @@ const main = async () => {
   // Check if the collection exists
   const collections = (await db.listCollections()).map((c) => c._queryOptions.collectionId);
   if (!collections.includes(id)) {
-    if (overwrite) {
+    if (newCollection) {
       console.warn(`WARNING! id does not exist in firestore. This script will create the following collection: ${id}`);
     } else {
       warnAndExit(`ERROR! id must match an existing collection id: ${collections.join(", ")}.
-      Use the --new flag to create a new collection`);
+      Use the --newCollection flag to create a new collection for "${id}"`);
     }
   }
 
