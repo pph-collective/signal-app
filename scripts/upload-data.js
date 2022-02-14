@@ -139,7 +139,8 @@ const main = async () => {
   const db = getFirestore(app);
 
   // Check if the collection exists
-  const collections = (await db.listCollections()).map((c) => c._queryOptions.collectionId);
+  const collections = (await db.listCollections()).map((c) => c.id);
+
   if (!collections.includes(id)) {
     if (newCollection) {
       console.warn(`WARNING! id does not exist in firestore. This script will create the following collection: ${id}`);
