@@ -46,6 +46,6 @@ Example Run Command
 -z ZIP, --zip ZIP     Path to shape file zip
 -c CSV, --csv CSV     Path to stats csv
 -o, --overwrite       if files already exists, overwrite it
--n, --newCollection   if the collection id does not exist, creates a new
+-n, --newId           if the collection id does not exist, creates a new
                         collection
 ```
