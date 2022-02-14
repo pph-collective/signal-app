@@ -46,14 +46,13 @@ export const fetchColdSpotData = async (datasetName: string, date: string) => {
   const rawData = await getDocWithDefault({}, datasetName, date);
 
   const result = {};
-  const promises = Object.keys(rawData).map(async (field) => {
+  Object.entries(rawData).forEach(([field, value]) => {
     if (["stats", "geo"].includes(field)) {
-      result[field] = parse(rawData[field]);
+      result[field] = parse(value);
     } else {
-      result[field] = rawData[field];
+      result[field] = value;
     }
   });
-  await Promise.all(promises);
 
   return result;
 };
