@@ -24,7 +24,8 @@
     "vega-embed": "^6.20.5",
     "vega-lite": "^5.2.0",
     "vue": "^3.2.26",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "zipson": "^0.2.12"
   },
   "devDependencies": {
     "@types/firebase": "^3.2.1",

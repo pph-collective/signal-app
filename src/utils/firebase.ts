@@ -1,7 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
-import axios from "axios";
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+} from "firebase/firestore/lite";
+import { parse } from "zipson";
 
 // import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -21,31 +27,40 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
+const db = getFirestore(app);
 
 // TODO: how to analytics with this?
 // const analytics = getAnalytics(app);
 
+const getDocWithDefault = async <T>(
+  defaultValue: T,
+  collection: string,
+  ...queryPath: string[]
+) => {
+  const docRef = doc(db, collection, ...queryPath);
+  const docSnap = await getDoc(docRef);
+  return docSnap.exists() ? docSnap.data() : defaultValue;
+};
+
 export const fetchColdSpotData = async (datasetName: string, date: string) => {
-  try {
-    const result = {};
+  const rawData = await getDocWithDefault({}, datasetName, date);
 
-    const querySnapshot = await listAll(ref(storage, `${datasetName}/${date}`));
-    const promises = querySnapshot.items.map(async (itemRef) => {
-      const url = await getDownloadURL(itemRef);
-      const field = itemRef.name.split(".")[0];
-      result[field] = await axios.get(url);
-    });
+  const result = {};
+  Object.entries(rawData).forEach(([field, value]) => {
+    if (["stats", "geo"].includes(field)) {
+      result[field] = parse(value);
+    } else {
+      result[field] = value;
+    }
+  });
 
-    await Promise.all(promises);
-    return result;
-  } catch (error) {
-    import.meta.env.DEV && console.error(error);
-    throw new Error("Unable to get data, try again later! :(");
-  }
+  return result;
 };
 
 export const fetchKeys = async (datasetName: string) => {
-  const querySnapshot = await listAll(ref(storage, datasetName));
-  return querySnapshot.prefixes.map((p) => p.name).sort();
+  const querySnapshot = await getDocs(collection(db, datasetName));
+  return querySnapshot.docs
+    .map((d) => d.id)
+    .sort()
+    .reverse();
 };

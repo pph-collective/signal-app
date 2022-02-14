@@ -16,7 +16,8 @@ const unzipper = require("unzipper");
 const { ArgumentParser } = require("argparse");
 const { parse } = require("csv-parse");
 const { initializeApp } = require("firebase-admin/app");
-const { getStorage } = require('firebase-admin/storage');
+const { getFirestore } = require("firebase-admin/firestore");
+const { stringify } = require("zipson");
 
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -78,27 +79,8 @@ const getStats = async (csvFile) => {
   return records
 }
 
-const uploadToStorage = async (filePath, convertFn, bucket, storagePath, overwrite) => {
-  const storageFile = bucket.file(storagePath);
-
-  // Check Storage File
-  if ((await storageFile.exists())[0]) {
-    if (overwrite) {
-      console.warn(`WARNING! File exists in storage. Overwriting... ${storagePath}`);
-    } else {
-      warnAndExit(`ERROR!: File exists in storage. Use the overwrite flag if you wish to continue: ${storagePath}`);
-    }
-  }
-
-  // Convert Data
-  const data = await convertFn(filePath);
-
-  await storageFile.save(JSON.stringify(data));
-  console.log(`SUCCESS! Uploaded file to storage: ${storagePath}`);
-}
-
 const argparse = new ArgumentParser({
-  description: "SIGNAL - import data to storage",
+  description: "SIGNAL - upload data to Firestore",
   add_help: true,
 });
 
@@ -127,8 +109,13 @@ argparse.add_argument("-o", "--overwrite", {
   help: "if files already exists, overwrite it",
 });
 
+argparse.add_argument("-n", "--newId", {
+  action: "store_true",
+  help: "if the collection id does not exist, creates a new collection"
+})
+
 const main = async () => {
-  const {overwrite, zip, csv, id, date} = argparse.parse_args();
+  const { newId, overwrite, zip, csv, id, date } = argparse.parse_args();
 
   // Check Command Line Arguments
   if (!fs.existsSync(zip)) {
@@ -148,20 +135,41 @@ const main = async () => {
   }
 
   process.env.GOOGLE_APPLICATION_CREDENTIALS = "serviceAccount.json";
-  initializeApp({ projectId: "signal-ri" });
-  const bucket = getStorage().bucket("signal-ri.appspot.com");
-  const directory = `${id}/${date}`;
+  const app = initializeApp();
+  const db = getFirestore(app);
 
-  const [files] = await bucket.getFiles();
-  const folders = new Set(files.map(b => b.name.split("/")[0]));
-
-  if (!folders.has(id)) {
-    warnAndExit(`ERROR! id must match an existing dataset folder: ${[...folders].join(", ")}.
-  To add a new folder, go to the Firebase Console for Storage`);
+  // Check if the collection exists
+  const collections = (await db.listCollections()).map((c) => c.id);
+  if (!collections.includes(id)) {
+    if (newId) {
+      console.warn(`WARNING! id does not exist in firestore. This script will create the following collection: ${id}`);
+    } else {
+      warnAndExit(`ERROR! id must match an existing collection id: ${collections.join(", ")}.
+      Use the --newId flag to create a new collection id for "${id}"`);
+    }
   }
 
-  await uploadToStorage(zip, getGeo, bucket,`${directory}/geo.json`, overwrite);
-  await uploadToStorage(csv, getStats, bucket,`${directory}/stats.json`, overwrite);
+  // Check if the document exists
+  const docRef = db.collection(id).doc(date);
+  const docSnapshot = await docRef.get();
+  if (docSnapshot.exists) {
+    if (overwrite) {
+      console.warn(`WARNING! Document exists in Firestore. Overwriting... ${id}/${date}`);
+    } else {
+      warnAndExit(`ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: ${id}/${date}`);
+    }
+  }
+
+  const geo = await getGeo(zip);
+  const stats = await getStats(csv);
+
+  await docRef.set({
+    geo: stringify(geo),
+    stats: stringify(stats),
+    last_updated: Date.now()
+  });
+
+  console.log(`SUCCESS! Created document in firestore: ${id}/${date}`);
 };
 
 main();
