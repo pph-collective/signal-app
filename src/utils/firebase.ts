@@ -8,6 +8,7 @@ import {
   getDocFromCache,
   getDocFromServer,
   getDocs,
+  DocumentSnapshot,
 } from "firebase/firestore";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { parse } from "zipson";
