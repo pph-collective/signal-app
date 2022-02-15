@@ -18,7 +18,6 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/dataset",
     name: "Dataset",
-    alias: "/datasets", // for backwards compatibility with buoy-viewer-nuxt
     component: DatasetPage,
     children: [
       {
