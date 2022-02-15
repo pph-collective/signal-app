@@ -31,26 +31,29 @@ const getGeo = async (zipFile) => {
     .createReadStream(zipFile, { autoClose: true });
   const zipPipe = zipReader.pipe(unzipper.Parse({ forceStream: true }));
 
+  const geo = [];
+  let shpFile, dbfFile;
+
   for await (const entry of zipPipe) {
     const filename = entry.path;
-
     if (filename.endsWith(".shp")) {
-      const geo = [];
-      const content = await entry.buffer();
-      const source = await shapefile.open(content);
-
-      await shpToGeo(source, geo);
-
-      // Close reader
-      zipReader.unpipe();
-
-      return geo
+      shpFile = await entry.buffer();
+    } else if (filename.endsWith(".dbf")) {
+      dbfFile = await entry.buffer();
     } else {
       // Dispose of entry's contents otherwise the stream will halt
       // Source: https://www.npmjs.com/package/unzipper
       entry.autodrain();
     }
   }
+
+  if (shpFile) {
+    const source = await shapefile.open(shpFile, dbfFile);
+    await shpToGeo(source, geo);
+  }
+
+  zipReader.unpipe();
+  return geo;
 };
 
 // Source: https://www.npmjs.com/package/shapefile

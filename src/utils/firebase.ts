@@ -43,9 +43,10 @@ const getDocWithDefault = async <T>(
 };
 
 export const fetchColdSpotData = async (datasetName: string, date: string) => {
-  const rawData = await getDocWithDefault({}, datasetName, date);
+  const result = { geo: "", stats: "", last_updated: "" }; // TODO: placeholder for a moment
 
-  const result = {};
+  const rawData = await getDocWithDefault(result, datasetName, date);
+
   Object.entries(rawData).forEach(([field, value]) => {
     if (["stats", "geo"].includes(field)) {
       result[field] = parse(value);

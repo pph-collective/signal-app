@@ -4,7 +4,10 @@
     <template #content>
       A Map someday
       {{ dates }}
-      {{ `${JSON.stringify(data).substring(0, 1000)}...` }}
+      <!--      {{ `${JSON.stringify(geo)}...` }}-->
+      <div class="map-container">
+        <Map :geo="geo" :stats="stats" />
+      </div>
     </template>
   </DashboardCard>
 
@@ -24,11 +27,19 @@
 
 <script setup lang="ts">
 import DashboardCard from "@/components/base/DashboardCard.vue";
+import Map from "@/components/dashboard/Map.vue";
 
 import { fetchKeys, fetchColdSpotData } from "../../../utils/firebase";
 const datasetName = "vax_first_dose_coldspots";
 const dates = await fetchKeys(datasetName);
-const data = await fetchColdSpotData(datasetName, dates[0]);
+const { geo, stats } = await fetchColdSpotData(datasetName, dates[0]);
 </script>
 
-<style scoped></style>
+<style scoped>
+.map-container {
+  max-width: 95vw;
+  height: 80vh;
+  max-height: 1280px;
+  position: relative;
+}
+</style>
