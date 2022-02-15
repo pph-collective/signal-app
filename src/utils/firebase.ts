@@ -7,14 +7,10 @@ import {
   getDoc,
   getDocs,
 } from "firebase/firestore/lite";
+import { getAnalytics, logEvent } from "firebase/analytics";
 import { parse } from "zipson";
 
-// import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDPQ4bLraU1JOyHyJnOZR6vwpOMzFG-14c",
   authDomain: "signal-ri.firebaseapp.com",
@@ -28,9 +24,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-// TODO: how to analytics with this?
-// const analytics = getAnalytics(app);
+const analytics = getAnalytics(app);
 
 const getDocWithDefault = async <T>(
   defaultValue: T,
@@ -64,3 +58,8 @@ export const fetchKeys = async (datasetName: string) => {
     .sort()
     .reverse();
 };
+
+// log a pre-defined or custom event (e.g. content interaction) to firebase analytics
+// https://firebase.google.com/docs/analytics/events?platform=web
+export const logAnalytics = (event: string, params: object) =>
+  logEvent(analytics, event, params);
