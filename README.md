@@ -47,3 +47,9 @@ $ firebase login
 ## Recommended IDE Setup (very optional)
 
 - [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+
+## Troubleshooting
+
+### Caching
+
+When fetching dataset data, we first check the local cache for the datset before querying the server. If you updated data and aren't seeing the change, try clearing your cache.  **NOTE**: because of this, also try really hard not to need to update data once in production as the original data might have a longer shelf life than you anticipate.
