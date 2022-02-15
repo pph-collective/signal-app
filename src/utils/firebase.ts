@@ -4,9 +4,12 @@ import {
   getFirestore,
   collection,
   doc,
-  getDoc,
+  enableIndexedDbPersistence,
+  getDocFromCache,
+  getDocFromServer,
   getDocs,
-} from "firebase/firestore/lite";
+  DocumentSnapshot,
+} from "firebase/firestore";
 import { parse } from "zipson";
 
 // import { getAnalytics } from "firebase/analytics";
@@ -29,26 +32,37 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Enable Firebase caching
+enableIndexedDbPersistence(db).catch(() => {
+  console.warn("unable to use cache");
+});
+
 // TODO: how to analytics with this?
 // const analytics = getAnalytics(app);
 
-const getDocWithDefault = async <T>(
+const getDocWithDefaultPreferCache = async <T>(
   defaultValue: T,
   collection: string,
   ...queryPath: string[]
 ) => {
   const docRef = doc(db, collection, ...queryPath);
-  const docSnap = await getDoc(docRef);
+  let docSnap: DocumentSnapshot;
+  try {
+    docSnap = await getDocFromCache(docRef);
+  } catch (e) {
+    docSnap = await getDocFromServer(docRef);
+  }
+
   return docSnap.exists() ? docSnap.data() : defaultValue;
 };
 
 export const fetchColdSpotData = async (datasetName: string, date: string) => {
-  const rawData = await getDocWithDefault({}, datasetName, date);
+  const rawData = await getDocWithDefaultPreferCache({}, datasetName, date);
 
   const result = {};
   Object.entries(rawData).forEach(([field, value]) => {
     if (["stats", "geo"].includes(field)) {
-      result[field] = parse(value);
+      result[field] = parse(value as string);
     } else {
       result[field] = value;
     }
