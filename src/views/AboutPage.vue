@@ -1,7 +1,7 @@
 <template>
   <DashboardLayout>
     <DashboardCard>
-      <template #title>Rhode Island Data Discovery Center</template>
+      <template #title>Project Signal</template>
       <template #subtitle>
         <div class="content">
           <p>
