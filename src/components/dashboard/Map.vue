@@ -63,7 +63,7 @@ const filteredGeo = computed(() => {
 });
 
 const tooltipSignal = `{
-  Name: datum.properties.name,
+  title: datum.properties.name,
   'Observed Count': datum.properties.observed_count,
   'Expected Count': datum.properties.expected_count,
 }`;
@@ -87,8 +87,9 @@ const spec = computed(() => {
       { name: "maxPoint", update: "invert('projection', [width, height])" },
       {
         name: "resolution",
-        // value: navigator?.connection?.downlink > 1.5 ? "@2x" : "",
-        value: "",
+        /* eslint-disable @typescript-eslint/ban-ts-comment */
+        // @ts-ignore
+        value: navigator?.connection?.downlink > 1.5 ? "@2x" : "",
       },
       {
         name: "hovered",
@@ -136,8 +137,8 @@ const spec = computed(() => {
         encode: {
           enter: {
             cursor: { value: "pointer" },
-            strokeWidth: { value: 1 },
-            fill: [{ value: "#2A3465" }],
+            strokeWidth: { value: 1.7 },
+            fill: [{ value: "#354156" }],
           },
           update: {
             stroke: [
@@ -146,7 +147,7 @@ const spec = computed(() => {
             ],
             fillOpacity: [
               //   { test: "datum === activeGeography", value: 0.5 },
-              { value: 0.2 },
+              { value: 0.3 },
             ],
             zindex: [
               //   { test: "datum === activeGeography", value: 1 },

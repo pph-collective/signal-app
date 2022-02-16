@@ -1,5 +1,5 @@
 <template>
-  <DashboardCard width="two-thirds">
+  <DashboardCard width="two-thirds" :height="4">
     <template #title>Vaccine Cold Spots</template>
     <template #content>
       <div class="map-container">
@@ -8,7 +8,7 @@
     </template>
   </DashboardCard>
 
-  <DashboardCard width="one-third">
+  <DashboardCard width="one-third" :height="4">
     <template #title>Side panel</template>
     <template #content> stats for days </template>
   </DashboardCard>

@@ -31,3 +31,30 @@ $family-secondary: "Sinhala MN", "avenir", sans-serif;
   overflow-wrap: break-word;
   height: revert;
 }
+
+
+#vg-tooltip-element.vg-tooltip {
+  white-space: pre-wrap;
+  color: #333333;
+  font-family: $family-sans-serif;
+  h2 {
+    margin-bottom: 0.2em;
+    font-weight: bold;
+  }
+  table {
+    tr {
+      td {
+        padding-top: 1px;
+        padding-bottom: 1px;
+
+        &.value {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    display: none;
+  }
+}
