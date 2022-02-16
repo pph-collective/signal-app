@@ -17,7 +17,7 @@ const props = defineProps({
     required: true,
   },
   stats: {
-    type: Array,
+    type: Array.of(Object),
     required: true,
   },
 });
@@ -25,8 +25,23 @@ const props = defineProps({
 const el = ref(null);
 
 const filteredGeo = computed(() => {
+  let filtered = props.geo;
+
+  filtered.forEach((g: { properties: { vax_first_: number } }) => {
+    const datum: object =
+      props.stats.find(
+        (d: { cluster_number: number }) =>
+          d.cluster_number === g.properties.vax_first_
+      ) ?? {};
+
+    g.properties = {
+      ...g.properties,
+      ...datum,
+    };
+  });
+
   const collection = {
-    blocks: { type: "FeatureCollection", features: props.geo },
+    blocks: { type: "FeatureCollection", features: filtered },
   };
 
   let topo = topology.topology(collection, 1e5);
@@ -46,6 +61,12 @@ const filteredGeo = computed(() => {
 
   return topo;
 });
+
+const tooltipSignal = `{
+  Name: datum.properties.name,
+  'Observed Count': datum.properties.observed_count,
+  'Expected Count': datum.properties.expected_count,
+}`;
 
 const spec = computed(() => {
   return {
@@ -68,6 +89,14 @@ const spec = computed(() => {
         name: "resolution",
         // value: navigator?.connection?.downlink > 1.5 ? "@2x" : "",
         value: "",
+      },
+      {
+        name: "hovered",
+        value: null,
+        on: [
+          { events: "@cluster_groups:mouseover", update: "datum" },
+          { events: "mouseout", update: "null" },
+        ],
       },
     ],
     data: [
@@ -102,29 +131,30 @@ const spec = computed(() => {
       },
       {
         type: "shape",
-        name: "block_groups",
+        name: "cluster_groups",
         from: { data: "cluster_outlines" },
         encode: {
           enter: {
             cursor: { value: "pointer" },
             strokeWidth: { value: 1 },
+            fill: [{ value: "#2A3465" }],
           },
           update: {
-            // stroke: [
-            //   { test: "datum === activeGeography", value: "#990000" },
-            //   { value: "#999999" },
-            // ],
-            // fillOpacity: [
-            //   { test: "datum === activeGeography", value: 0.5 },
-            //   { value: 0.2 },
-            // ],
-            // zindex: [
-            //   { test: "datum === activeGeography", value: 1 },
-            //   { value: 0 },
-            // ],
-            // tooltip: {
-            //   signal: tooltipSignal.value,
-            // },
+            stroke: [
+              //   { test: "datum === activeGeography", value: "#990000" },
+              { value: "#999999" },
+            ],
+            fillOpacity: [
+              //   { test: "datum === activeGeography", value: 0.5 },
+              { value: 0.2 },
+            ],
+            zindex: [
+              //   { test: "datum === activeGeography", value: 1 },
+              { value: 0 },
+            ],
+            tooltip: {
+              signal: tooltipSignal,
+            },
           },
         },
         transform: [{ type: "geoshape", projection: "projection" }],

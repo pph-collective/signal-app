@@ -2,9 +2,6 @@
   <DashboardCard width="two-thirds">
     <template #title>Vaccine Cold Spots</template>
     <template #content>
-      A Map someday
-      {{ dates }}
-      <!--      {{ `${JSON.stringify(geo)}...` }}-->
       <div class="map-container">
         <Map :geo="geo" :stats="stats" />
       </div>
@@ -16,7 +13,7 @@
     <template #content> stats for days </template>
   </DashboardCard>
 
-  <DashboardCard with="full">
+  <DashboardCard width="full">
     <template #title>Moar Info</template>
     <template #subtitle>Details about the things</template>
     <template #content>

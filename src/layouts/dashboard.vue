@@ -76,6 +76,7 @@ main {
 
 .dashboard-contents {
   grid-area: main-section;
+  grid-auto-rows: minmax(6rem, 15vh);
   @extend .px-4;
   @extend .py-4;
   z-index: 20;
