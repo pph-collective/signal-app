@@ -4,17 +4,16 @@ import {
   getFirestore,
   collection,
   doc,
-  getDoc,
+  enableIndexedDbPersistence,
+  getDocFromCache,
+  getDocFromServer,
   getDocs,
-} from "firebase/firestore/lite";
+  DocumentSnapshot,
+} from "firebase/firestore";
+import { getAnalytics, logEvent } from "firebase/analytics";
 import { parse } from "zipson";
 
-// import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDPQ4bLraU1JOyHyJnOZR6vwpOMzFG-14c",
   authDomain: "signal-ri.firebaseapp.com",
@@ -28,28 +27,36 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const analytics = getAnalytics(app);
 
-// TODO: how to analytics with this?
-// const analytics = getAnalytics(app);
+// Enable Firebase caching
+enableIndexedDbPersistence(db).catch(() => {
+  console.warn("unable to use cache");
+});
 
-const getDocWithDefault = async <T>(
+const getDocWithDefaultPreferCache = async <T>(
   defaultValue: T,
   collection: string,
   ...queryPath: string[]
 ) => {
   const docRef = doc(db, collection, ...queryPath);
-  const docSnap = await getDoc(docRef);
+  let docSnap: DocumentSnapshot;
+  try {
+    docSnap = await getDocFromCache(docRef);
+  } catch (e) {
+    docSnap = await getDocFromServer(docRef);
+  }
+
   return docSnap.exists() ? docSnap.data() : defaultValue;
 };
 
 export const fetchColdSpotData = async (datasetName: string, date: string) => {
   const result = { geo: "", stats: "", last_updated: "" }; // TODO: placeholder for a moment
-
-  const rawData = await getDocWithDefault(result, datasetName, date);
+  const rawData = await getDocWithDefaultPreferCache(result, datasetName, date);
 
   Object.entries(rawData).forEach(([field, value]) => {
     if (["stats", "geo"].includes(field)) {
-      result[field] = parse(value);
+      result[field] = parse(value as string);
     } else {
       result[field] = value;
     }
@@ -65,3 +72,8 @@ export const fetchKeys = async (datasetName: string) => {
     .sort()
     .reverse();
 };
+
+// log a pre-defined or custom event (e.g. content interaction) to firebase analytics
+// https://firebase.google.com/docs/analytics/events?platform=web
+export const logAnalytics = (event: string, params: object) =>
+  logEvent(analytics, event, params);

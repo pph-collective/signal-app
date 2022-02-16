@@ -68,6 +68,6 @@ import BaseLogo from "@/components/base/BaseLogo.vue";
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  background-color: #999;
+  background-color: $primary;
 }
 </style>
