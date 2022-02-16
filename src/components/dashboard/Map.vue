@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useVega } from "../../composables/useVega";
 
 import * as topology from "topojson-server";
@@ -88,7 +88,7 @@ const spec = computed(() => {
       {
         name: "resolution",
         /* eslint-disable @typescript-eslint/ban-ts-comment */
-        // @ts-ignore
+        // @ts-ignore:next-line
         value: navigator?.connection?.downlink > 1.5 ? "@2x" : "",
       },
       {
@@ -98,6 +98,24 @@ const spec = computed(() => {
           { events: "@cluster_groups:mouseover", update: "datum" },
           { events: "mouseout", update: "null" },
         ],
+      },
+      {
+        name: "clicked",
+        value: null,
+        on: [
+          {
+            events: "@cluster_groups:mousedown",
+            update: "clicked === datum ? null : datum",
+          },
+          {
+            events: "@cluster_groups:touchstart",
+            update: "clicked === datum ? null : datum",
+          },
+        ],
+      },
+      {
+        name: "activeGeography",
+        update: "clicked || hovered",
       },
     ],
     data: [
@@ -138,19 +156,22 @@ const spec = computed(() => {
           enter: {
             cursor: { value: "pointer" },
             strokeWidth: { value: 1.7 },
-            fill: [{ value: "#354156" }],
           },
           update: {
             stroke: [
-              //   { test: "datum === activeGeography", value: "#990000" },
+              { test: "datum === activeGeography", value: "#386540" },
               { value: "#999999" },
             ],
             fillOpacity: [
-              //   { test: "datum === activeGeography", value: 0.5 },
+              { test: "datum === activeGeography", value: 0.6 },
               { value: 0.3 },
             ],
+            fill: [
+              { test: "datum === activeGeography", value: "#7DBEA5" },
+              { value: "#354156" },
+            ],
             zindex: [
-              //   { test: "datum === activeGeography", value: 1 },
+              { test: "datum === activeGeography", value: 1 },
               { value: 0 },
             ],
             tooltip: {
@@ -160,28 +181,37 @@ const spec = computed(() => {
         },
         transform: [{ type: "geoshape", projection: "projection" }],
       },
-      // {
-      //   type: "shape",
-      //   from: { data: "cluster_outlines" },
-      //   encode: {
-      //     enter: {
-      //       strokeWidth: { value: 2 },
-      //       stroke: { value: "#393939" },
-      //       fillOpacity: { value: 0 },
-      //     },
-      //   },
-      //   transform: [{ type: "geoshape", projection: "projection" }],
-      // },
     ],
   };
 });
 
-useVega({
+const { view } = useVega({
   spec,
   el,
   minHeight: ref(400),
   maxHeight: ref(1280),
   maxWidth: ref(1280),
   includeActions: ref(true),
+});
+
+let currentCluster = "";
+const emit = defineEmits(["new-active-cluster"]);
+
+watch(view, () => {
+  if (view.value) {
+    view.value.addSignalListener("activeGeography", (name, value) => {
+      if (value) {
+        if (value.properties.name !== currentCluster) {
+          currentCluster = value.properties.name;
+          emit("new-active-cluster", currentCluster);
+        }
+      } else {
+        if (currentCluster) {
+          currentCluster = "";
+          emit("new-active-cluster", currentCluster);
+        }
+      }
+    });
+  }
 });
 </script>
