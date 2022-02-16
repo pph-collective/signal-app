@@ -10,6 +10,7 @@
  */
 
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 const shapefile = require("shapefile");
 const unzipper = require("unzipper");
@@ -70,6 +71,7 @@ const shpToGeo = async (source, geo) => {
 const getStats = async (csvFile) => {
   const fileContents = fs.readFileSync(csvFile, "utf8");
   const parser = parse(fileContents, {
+    cast: true,
     columns: true,
     skip_empty_lines: true
   });
@@ -115,10 +117,20 @@ argparse.add_argument("-o", "--overwrite", {
 argparse.add_argument("-n", "--newId", {
   action: "store_true",
   help: "if the collection id does not exist, creates a new collection"
+});
+
+argparse.add_argument("-s", "--saveLocal", {
+  action: "store_true",
+  help: "Saves json files out to ./data folder"
+})
+
+argparse.add_argument("-l", "--saveDir", {
+  default: `${os.homedir()}/Downloads`,
+  help: "path to local folder to save downloaded files to"
 })
 
 const main = async () => {
-  const { newId, overwrite, zip, csv, id, date } = argparse.parse_args();
+  const { newId, overwrite, zip, csv, id, date, saveLocal, saveDir } = argparse.parse_args();
 
   // Check Command Line Arguments
   if (!fs.existsSync(zip)) {
@@ -152,27 +164,70 @@ const main = async () => {
     }
   }
 
-  // Check if the document exists
+  const docPath = `${id}/${date}`;
   const docRef = db.collection(id).doc(date);
-  const docSnapshot = await docRef.get();
-  if (docSnapshot.exists) {
-    if (overwrite) {
-      console.warn(`WARNING! Document exists in Firestore. Overwriting... ${id}/${date}`);
-    } else {
-      warnAndExit(`ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: ${id}/${date}`);
+
+  const localDir = ` ${saveDir}/${docPath}`;
+
+  // Check if file exists
+  if (saveLocal) {
+    if (fs.existsSync(localDir)) {
+      if (overwrite) {
+        console.warn(`WARNING! Directory exists locally. Overwriting... ${localDir}`);
+      } else {
+        warnAndExit(`ERROR!: Directory exists locally. Use the overwrite flag if you wish to continue: ${localDir}`);
+      }
+    }
+  }
+  if (!saveLocal) {
+    // Check if the document exists
+    const docSnapshot = await docRef.get();
+    if (docSnapshot.exists) {
+      if (overwrite) {
+        console.warn(`WARNING! Document exists in Firestore. Overwriting... ${docPath}`);
+      } else {
+        warnAndExit(`ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: ${docPath}`);
+      }
     }
   }
 
+  // Convert data
   const geo = await getGeo(zip);
   const stats = await getStats(csv);
 
-  await docRef.set({
-    geo: stringify(geo),
-    stats: stringify(stats),
-    last_updated: Date.now()
-  });
+  if (saveLocal) {
+    // Make directory, no harm done if already exists
+    fs.mkdir(localDir, { recursive: true }, (err) => {
+      if (err) {
+        warnAndExit(err);
+      }
 
-  console.log(`SUCCESS! Created document in firestore: ${id}/${date}`);
+      const geoPath = `${localDir}/geo.json`;
+      const statsPath = `${localDir}/stats.json`;
+
+      fs.writeFile(geoPath, JSON.stringify(geo), function(err) {
+        if (err) {
+          warnAndExit(err);
+        }
+        console.log(`SUCCESS! Created file: ${geoPath}`);
+      });
+
+      fs.writeFile(statsPath, JSON.stringify(stats), function(err) {
+        if (err) {
+          warnAndExit(err);
+        }
+        console.log(`SUCCESS! Created file: ${statsPath}`);
+      });
+    });
+  } else {
+    await docRef.set({
+      geo: stringify(geo),
+      stats: stringify(stats),
+      last_updated: Date.now()
+    });
+
+    console.log(`SUCCESS! Created document in firestore: ${docPath}`);
+  }
 };
 
 main();
