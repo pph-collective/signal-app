@@ -22,8 +22,6 @@ const props = defineProps({
   },
 });
 
-const el = ref(null);
-
 const filteredGeo = computed(() => {
   let filtered = props.geo;
 
@@ -185,6 +183,7 @@ const spec = computed(() => {
   };
 });
 
+const el = ref(null);
 const { view } = useVega({
   spec,
   el,

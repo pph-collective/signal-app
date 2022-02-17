@@ -178,8 +178,7 @@ const main = async () => {
         warnAndExit(`ERROR!: Directory exists locally. Use the overwrite flag if you wish to continue: ${localDir}`);
       }
     }
-  }
-  if (!saveLocal) {
+  } else {
     // Check if the document exists
     const docSnapshot = await docRef.get();
     if (docSnapshot.exists) {
@@ -205,14 +204,14 @@ const main = async () => {
       const geoPath = `${localDir}/geo.json`;
       const statsPath = `${localDir}/stats.json`;
 
-      fs.writeFile(geoPath, JSON.stringify(geo), function(err) {
+      fs.writeFile(geoPath, JSON.stringify(geo), (err) => {
         if (err) {
           warnAndExit(err);
         }
         console.log(`SUCCESS! Created file: ${geoPath}`);
       });
 
-      fs.writeFile(statsPath, JSON.stringify(stats), function(err) {
+      fs.writeFile(statsPath, JSON.stringify(stats), (err) => {
         if (err) {
           warnAndExit(err);
         }
