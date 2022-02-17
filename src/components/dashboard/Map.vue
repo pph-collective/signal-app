@@ -6,6 +6,7 @@
 import { computed, ref, watch } from "vue";
 import { useVega } from "../../composables/useVega";
 
+import { cloneDeep } from "lodash/lang";
 import * as topology from "topojson-server";
 import * as tc from "topojson-client";
 import * as ts from "topojson-simplify";
@@ -23,7 +24,7 @@ const props = defineProps({
 });
 
 const filteredGeo = computed(() => {
-  let filtered = props.geo;
+  let filtered = cloneDeep(props.geo);
 
   filtered.forEach((g: { properties: { vax_first_: number } }) => {
     const datum: object =
@@ -78,8 +79,7 @@ const spec = computed(() => {
       },
       {
         name: "mapboxToken",
-        value:
-          "?access_token=pk.eyJ1IjoiY2N2LWJvdCIsImEiOiJja3ZsY2JzMHY2ZGRiMm9xMTQ0eW1nZTJsIn0.uydOaXlX1uQfxPrKfucB2A",
+        value: `?access_token=${import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}`,
       },
       { name: "basePoint", update: "invert('projection',[0,0])" },
       { name: "maxPoint", update: "invert('projection', [width, height])" },
