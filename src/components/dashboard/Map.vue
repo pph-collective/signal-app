@@ -18,7 +18,7 @@ const props = defineProps({
     required: true,
   },
   stats: {
-    type: Array.of(Object),
+    type: Object,
     required: true,
   },
 });
