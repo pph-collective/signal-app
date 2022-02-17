@@ -31,26 +31,29 @@ const getGeo = async (zipFile) => {
     .createReadStream(zipFile, { autoClose: true });
   const zipPipe = zipReader.pipe(unzipper.Parse({ forceStream: true }));
 
+  const geo = [];
+  let shpFile, dbfFile;
+
   for await (const entry of zipPipe) {
     const filename = entry.path;
-
     if (filename.endsWith(".shp")) {
-      const geo = [];
-      const content = await entry.buffer();
-      const source = await shapefile.open(content);
-
-      await shpToGeo(source, geo);
-
-      // Close reader
-      zipReader.unpipe();
-
-      return geo
+      shpFile = await entry.buffer();
+    } else if (filename.endsWith(".dbf")) {
+      dbfFile = await entry.buffer();
     } else {
       // Dispose of entry's contents otherwise the stream will halt
       // Source: https://www.npmjs.com/package/unzipper
       entry.autodrain();
     }
   }
+
+  if (shpFile) {
+    const source = await shapefile.open(shpFile, dbfFile);
+    await shpToGeo(source, geo);
+  }
+
+  zipReader.unpipe();
+  return geo;
 };
 
 // Source: https://www.npmjs.com/package/shapefile
@@ -67,6 +70,7 @@ const shpToGeo = async (source, geo) => {
 const getStats = async (csvFile) => {
   const fileContents = fs.readFileSync(csvFile, "utf8");
   const parser = parse(fileContents, {
+    cast: true,
     columns: true,
     skip_empty_lines: true
   });
@@ -112,10 +116,14 @@ argparse.add_argument("-o", "--overwrite", {
 argparse.add_argument("-n", "--newId", {
   action: "store_true",
   help: "if the collection id does not exist, creates a new collection"
+});
+
+argparse.add_argument("-s", "--saveDir", {
+  help: "path to local folder to save downloaded files to"
 })
 
 const main = async () => {
-  const { newId, overwrite, zip, csv, id, date } = argparse.parse_args();
+  const { newId, overwrite, zip, csv, id, date, saveDir } = argparse.parse_args();
 
   // Check Command Line Arguments
   if (!fs.existsSync(zip)) {
@@ -149,27 +157,69 @@ const main = async () => {
     }
   }
 
-  // Check if the document exists
+  const docPath = `${id}/${date}`;
   const docRef = db.collection(id).doc(date);
-  const docSnapshot = await docRef.get();
-  if (docSnapshot.exists) {
-    if (overwrite) {
-      console.warn(`WARNING! Document exists in Firestore. Overwriting... ${id}/${date}`);
-    } else {
-      warnAndExit(`ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: ${id}/${date}`);
+
+  const localDir = ` ${saveDir}/${docPath}`;
+
+  if (saveDir) {
+    // Check if directory exists locally
+    if (fs.existsSync(localDir)) {
+      if (overwrite) {
+        console.warn(`WARNING! Directory exists locally. Overwriting... ${localDir}`);
+      } else {
+        warnAndExit(`ERROR!: Directory exists locally. Use the overwrite flag if you wish to continue: ${localDir}`);
+      }
+    }
+  } else {
+    // Check if the document exists
+    const docSnapshot = await docRef.get();
+    if (docSnapshot.exists) {
+      if (overwrite) {
+        console.warn(`WARNING! Document exists in Firestore. Overwriting... ${docPath}`);
+      } else {
+        warnAndExit(`ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: ${docPath}`);
+      }
     }
   }
 
+  // Convert data
   const geo = await getGeo(zip);
   const stats = await getStats(csv);
 
-  await docRef.set({
-    geo: stringify(geo),
-    stats: stringify(stats),
-    last_updated: Date.now()
-  });
+  if (saveDir) {
+    // Make directory, no harm done if already exists
+    fs.mkdir(localDir, { recursive: true }, (err) => {
+      if (err) {
+        warnAndExit(err);
+      }
 
-  console.log(`SUCCESS! Created document in firestore: ${id}/${date}`);
+      const geoPath = `${localDir}/geo.json`;
+      const statsPath = `${localDir}/stats.json`;
+
+      fs.writeFile(geoPath, JSON.stringify(geo), (err) => {
+        if (err) {
+          warnAndExit(err);
+        }
+        console.log(`SUCCESS! Created file: ${geoPath}`);
+      });
+
+      fs.writeFile(statsPath, JSON.stringify(stats), (err) => {
+        if (err) {
+          warnAndExit(err);
+        }
+        console.log(`SUCCESS! Created file: ${statsPath}`);
+      });
+    });
+  } else {
+    await docRef.set({
+      geo: stringify(geo),
+      stats: stringify(stats),
+      last_updated: Date.now()
+    });
+
+    console.log(`SUCCESS! Created document in firestore: ${docPath}`);
+  }
 };
 
 main();

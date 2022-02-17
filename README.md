@@ -4,6 +4,11 @@ A dashboard for COVID-19 data in RI
 
 ## Project Setup
 
+For the map to work, you'll need a `.env` file in your project root directory with the following keys.
+```
+VITE_MAPBOX_ACCESS_TOKEN=
+```
+
 Node version: 16+
 
 ```bash
