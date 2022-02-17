@@ -10,7 +10,6 @@
  */
 
 const fs = require("fs");
-const os = require("os");
 const path = require("path");
 const shapefile = require("shapefile");
 const unzipper = require("unzipper");
@@ -119,18 +118,12 @@ argparse.add_argument("-n", "--newId", {
   help: "if the collection id does not exist, creates a new collection"
 });
 
-argparse.add_argument("-s", "--saveLocal", {
-  action: "store_true",
-  help: "Saves json files out to ./data folder"
-})
-
-argparse.add_argument("-l", "--saveDir", {
-  default: `${os.homedir()}/Downloads`,
+argparse.add_argument("-s", "--saveDir", {
   help: "path to local folder to save downloaded files to"
 })
 
 const main = async () => {
-  const { newId, overwrite, zip, csv, id, date, saveLocal, saveDir } = argparse.parse_args();
+  const { newId, overwrite, zip, csv, id, date, saveDir } = argparse.parse_args();
 
   // Check Command Line Arguments
   if (!fs.existsSync(zip)) {
@@ -169,8 +162,8 @@ const main = async () => {
 
   const localDir = ` ${saveDir}/${docPath}`;
 
-  // Check if file exists
-  if (saveLocal) {
+  if (saveDir) {
+    // Check if directory exists locally
     if (fs.existsSync(localDir)) {
       if (overwrite) {
         console.warn(`WARNING! Directory exists locally. Overwriting... ${localDir}`);
@@ -194,7 +187,7 @@ const main = async () => {
   const geo = await getGeo(zip);
   const stats = await getStats(csv);
 
-  if (saveLocal) {
+  if (saveDir) {
     // Make directory, no harm done if already exists
     fs.mkdir(localDir, { recursive: true }, (err) => {
       if (err) {
