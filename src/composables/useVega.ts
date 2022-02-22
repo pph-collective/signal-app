@@ -18,6 +18,8 @@ export function useVega({
   spec,
   minWidth = ref(180),
   maxWidth = ref(2000),
+  minHeight = ref(200),
+  maxHeight = ref(4000),
   includeActions = ref(false),
   hasData = ref(true),
   el,
@@ -25,6 +27,8 @@ export function useVega({
   spec: Ref | ComputedRef;
   minWidth?: Ref<number>;
   maxWidth?: Ref<number>;
+  minHeight?: Ref<number>;
+  maxHeight?: Ref<number>;
   includeActions?: Ref<boolean>;
   hasData?: Ref<boolean>;
   el: Ref<HTMLDivElement | null>;
@@ -46,9 +50,22 @@ export function useVega({
     return minWidth.value;
   };
 
+  const getHeight = () => {
+    if (el.value) {
+      return Math.min(
+        maxHeight.value,
+        Math.max(
+          minHeight.value,
+          Math.min(el.value.parentElement.clientHeight - 10, window.innerHeight)
+        )
+      );
+    }
+    return minHeight.value;
+  };
+
   const resizePlot = () => {
     if (view.value) {
-      view.value.width(getWidth()).resize().run();
+      view.value.width(getWidth()).height(getHeight()).resize().run();
     }
   };
 
@@ -85,6 +102,7 @@ export function useVega({
         autosize: "fit",
       },
       width: getWidth(),
+      height: getHeight(),
     })
       .then((res) => {
         view.value = res.view;

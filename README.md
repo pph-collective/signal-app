@@ -4,6 +4,11 @@ A dashboard for COVID-19 data in RI
 
 ## Project Setup
 
+For the map to work, you'll need a `.env` file in your project root directory with the following keys.
+```
+VITE_MAPBOX_ACCESS_TOKEN=
+```
+
 Node version: 16+
 
 ```bash
@@ -44,11 +49,12 @@ $ firebase login
 2. Click **Generate New Private Key** and save the JSON file as `serviceAccount.json`
 3. Add that JSON file to the project root directory. This file is listed in the `.gitignore`. Do not share this private key.
 
-## CORS Configuration
-In order to get out data from storage, we configured our Cloud Storage bucket for cross-origin access (CORS). It's
-currently set to `cors.json`. In order to change it, 
-follow [these instructions](https://firebase.google.com/docs/storage/web/download-files#cors_configuration).
-
 ## Recommended IDE Setup (very optional)
 
 - [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+
+## Troubleshooting
+
+### Caching
+
+When fetching dataset data, we first check the local cache for the datset before querying the server. If you updated data and aren't seeing the change, try clearing your cache.  **NOTE**: because of this, also try really hard not to need to update data once in production as the original data might have a longer shelf life than you anticipate.

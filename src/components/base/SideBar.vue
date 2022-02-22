@@ -9,7 +9,7 @@
     <div class="sidebar-body" :class="{ 'is-hidden-mobile': collapsed }">
       <p v-if="!collapsed" class="menu-label">Project SIGNAL</p>
       <p v-else class="menu-label">
-        <abbr title="Narragansett Bay Data Explorer">NBDE</abbr>
+        <abbr title="Project SIGNAL">PS</abbr>
       </p>
       <ul class="menu-list">
         <li>
