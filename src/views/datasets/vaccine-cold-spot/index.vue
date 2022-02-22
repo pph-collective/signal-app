@@ -1,7 +1,7 @@
 <template>
   <DashboardCard width="two-thirds" :height="1" style="">
     <template #content>
-      <ControlPanel :drop-downs="dropDowns" />
+      <ControlPanel :drop-downs="dropDowns" @selected="updateControls" />
     </template>
   </DashboardCard>
 
@@ -41,16 +41,18 @@ import Map from "@/components/dashboard/Map.vue";
 
 import { fetchKeys, fetchColdSpotData } from "../../../utils/firebase";
 
+const activeCluster = ref("");
+const geo = ref([]);
+const stats = ref([]);
+
 const datasetName = "vax_first_dose_coldspots";
 const dates = await fetchKeys(datasetName);
-const { geo, stats } = await fetchColdSpotData(datasetName, dates[0]);
-const activeCluster = ref("");
 
 const dropDowns = computed(() => {
   return {
     cluster: {
       icon: "fas fa-globe",
-      values: stats ? stats.map((cluster) => cluster.name).sort() : [],
+      values: stats.value.map((cluster) => cluster.name).sort(),
     },
     date: {
       icon: "fas fa-calendar-alt",
@@ -58,6 +60,19 @@ const dropDowns = computed(() => {
     },
   };
 });
+
+const controls = ref({
+  cluster: "",
+  date: "",
+});
+const updateControls = (newControls) => {
+  if (newControls.date !== controls.value.date) {
+    fetchColdSpotData(datasetName, newControls.date).then((res) => {
+      geo.value = res.geo;
+      stats.value = res.stats;
+    });
+  }
+};
 </script>
 
 <style scoped>
