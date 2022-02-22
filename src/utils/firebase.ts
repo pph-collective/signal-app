@@ -51,7 +51,7 @@ const getDocWithDefaultPreferCache = async <T>(
 };
 
 export const fetchColdSpotData = async (datasetName: string, date: string) => {
-  const result = { geo: "", stats: "" };
+  const result = { geo: [], stats: [] };
   const rawData = await getDocWithDefaultPreferCache(result, datasetName, date);
 
   Object.entries(rawData).forEach(([field, value]) => {
