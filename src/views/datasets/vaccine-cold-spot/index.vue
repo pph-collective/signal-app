@@ -1,8 +1,13 @@
 <template>
-  <DashboardCard width="two-thirds" :height="1">
+  <DashboardCard width="two-thirds" :height="1" style="">
     <template #content>
       <ControlPanel :drop-downs="dropDowns" />
     </template>
+  </DashboardCard>
+
+  <DashboardCard width="one-third" :height="5">
+    <template #title>Side panel</template>
+    <template #content> Active Cluster: {{ activeCluster }} </template>
   </DashboardCard>
 
   <DashboardCard width="two-thirds" :height="4">
@@ -16,11 +21,6 @@
         />
       </div>
     </template>
-  </DashboardCard>
-
-  <DashboardCard width="one-third" :height="4">
-    <template #title>Side panel</template>
-    <template #content> Active Cluster: {{ activeCluster }} </template>
   </DashboardCard>
 
   <DashboardCard width="full">
@@ -52,7 +52,7 @@ const dropDowns = computed(() => {
       icon: "fas fa-globe",
       values: stats ? stats.map((cluster) => cluster.name).sort() : [],
     },
-    dates: {
+    date: {
       icon: "fas fa-calendar-alt",
       values: dates,
     },
