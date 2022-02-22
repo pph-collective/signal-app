@@ -17,6 +17,7 @@
         <Map
           :geo="geo"
           :stats="stats"
+          :filter-clusters="controls.cluster"
           @new-active-cluster="activeCluster = $event"
         />
       </div>
@@ -40,6 +41,7 @@ import DashboardCard from "@/components/base/DashboardCard.vue";
 import Map from "@/components/dashboard/Map.vue";
 
 import { fetchKeys, fetchColdSpotData } from "../../../utils/firebase";
+import { sortByProperty } from "../../../utils/utils";
 
 const activeCluster = ref("");
 const geo = ref([]);
@@ -48,11 +50,21 @@ const stats = ref([]);
 const datasetName = "vax_first_dose_coldspots";
 const dates = await fetchKeys(datasetName);
 
+const ri = { name: "All of Rhode Island", cluster_number: -1 };
 const dropDowns = computed(() => {
+  const clusters = stats.value
+    .map((cluster) => {
+      return {
+        name: cluster.name,
+        cluster_number: cluster.cluster_number,
+      };
+    })
+    .sort(sortByProperty("name"));
+
   return {
     cluster: {
       icon: "fas fa-globe",
-      values: stats.value.map((cluster) => cluster.name).sort(),
+      values: [ri, ...clusters],
     },
     date: {
       icon: "fas fa-calendar-alt",
@@ -62,7 +74,7 @@ const dropDowns = computed(() => {
 });
 
 const controls = ref({
-  cluster: "",
+  cluster: ri,
   date: "",
 });
 const updateControls = (newControls) => {
@@ -71,6 +83,11 @@ const updateControls = (newControls) => {
       geo.value = res.geo;
       stats.value = res.stats;
     });
+  }
+
+  // update the control selections
+  for (const [k, v] of Object.entries(newControls)) {
+    controls.value[k] = v;
   }
 };
 </script>

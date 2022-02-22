@@ -21,16 +21,39 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  filterClusters: {
+    type: Object,
+    required: true,
+  },
 });
+
+interface Cluster {
+  geometry: Record<string, unknown>;
+  type: "Feature";
+  properties: {
+    vax_first_: number;
+  };
+}
+
+interface ClusterStats {
+  cluster_number: number;
+  name: string;
+}
 
 const filteredGeo = computed(() => {
   let filtered = cloneDeep(props.geo);
+  if (props.filterClusters.cluster_number > 0) {
+    filtered = [
+      filtered.find((g: Cluster) => {
+        return props.filterClusters.cluster_number === g.properties.vax_first_;
+      }),
+    ];
+  }
 
-  filtered.forEach((g: { properties: { vax_first_: number } }) => {
+  filtered.forEach((g: Cluster) => {
     const datum: object =
       props.stats.find(
-        (d: { cluster_number: number }) =>
-          d.cluster_number === g.properties.vax_first_
+        (d: ClusterStats) => d.cluster_number === g.properties.vax_first_
       ) ?? {};
 
     g.properties = {
