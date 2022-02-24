@@ -25,6 +25,7 @@ const expected = computed(
   () => props.stats[0].expected_count / props.stats[0].coldspot_population
 );
 
+// TODO: these fields will change when the data reporting is normalized to have actual / population
 const fieldData = computed(() => {
   const upperFirst = (val) =>
     val.substring(0, 1).toUpperCase() + val.substring(1).toLowerCase();
@@ -40,6 +41,7 @@ const fieldData = computed(() => {
 const parseNum = (val) =>
   typeof val === "string" ? parseInt(val.replaceAll(",", "")) : val;
 
+// TODO: these calcs will change when the data reporting is normalized to have actual / population
 const activeStats = computed(() => {
   const row = props.stats.find((stat) => stat.name === props.activeCluster);
 
@@ -114,7 +116,7 @@ const spec = computed(() => {
         domainColor: COLORS.dark,
         labelFontWeight: 700,
         labelPadding: 5,
-        offset: 1,
+        offset: 1.5,
       },
     ],
 
@@ -132,6 +134,7 @@ const spec = computed(() => {
             },
             height: { scale: "yscale", band: 1 },
             fill: { scale: "color", field: "name" },
+            stroke: { scale: "color", field: "name" },
           },
           update: {
             opacity: { value: 0.9 },
@@ -146,18 +149,43 @@ const spec = computed(() => {
         },
       },
       {
-        type: "text",
-        from: { data: "bars" },
+        name: "gaps",
+        type: "rect",
+        from: { data: "stats" },
         encode: {
           enter: {
-            x: { field: "x2", offset: 5 },
+            x: { scale: "xscale", field: "pct" },
+            x2: { scale: "xscale", value: expected.value },
+            yc: {
+              signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
+            },
+            height: { scale: "yscale", band: 1 },
+            stroke: { scale: "color", field: "name" },
+            strokeDash: { value: [1, 1] },
+            fill: { value: "transparent" },
+          },
+          update: {
+            tooltip: {
+              signal:
+                "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
+            },
+          },
+        },
+      },
+      {
+        type: "text",
+        interactive: false,
+        from: { data: "gaps" },
+        encode: {
+          enter: {
+            xc: { signal: "datum.x + datum.width / 2" },
             y: { field: "y", offset: { field: "height", mult: 0.5 } },
             fill: { value: COLORS.dark },
-            align: { value: "left" },
+            align: { value: "center" },
             baseline: { value: "middle" },
             text: {
               signal:
-                "datum.datum.gap > 0 ? datum.datum.gap + ' dose gap' : ''",
+                "datum.datum.gap > 0 && datum.width > 60 ? datum.datum.gap + ' doses' : datum.datum.gap > 0 && datum.width > 25 ? datum.datum.gap : ''",
             },
           },
         },
@@ -186,6 +214,6 @@ useVega({
   minHeight: ref(150),
   maxHeight: ref(1280),
   maxWidth: ref(1280),
-  includeActions: ref(true),
+  includeActions: ref(false),
 });
 </script>

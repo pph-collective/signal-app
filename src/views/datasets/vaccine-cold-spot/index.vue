@@ -20,7 +20,7 @@
   <DashboardCard width="one-third" :height="2">
     <template #title>Gap by Race</template>
     <template #content>
-      <BulletChart
+      <GapChart
         :stats="stats"
         :active-cluster="activeCluster"
         :field-names="['asian', 'black', 'latino', 'white']"
@@ -40,7 +40,7 @@ import { ref } from "vue";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import Map from "@/components/dashboard/Map.vue";
-import BulletChart from "@/components/dashboard/BulletChart.vue";
+import GapChart from "@/components/dashboard/GapChart.vue";
 
 import { fetchKeys, fetchColdSpotData } from "../../../utils/firebase";
 
