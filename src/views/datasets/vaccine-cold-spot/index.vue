@@ -1,5 +1,5 @@
 <template>
-  <DashboardCard width="two-thirds" :height="4">
+  <DashboardCard width="two-thirds" :height="5">
     <template #title>Vaccine Cold Spots</template>
     <template #content>
       <div class="map-container">
@@ -12,17 +12,26 @@
     </template>
   </DashboardCard>
 
-  <DashboardCard width="one-third" :height="4">
+  <DashboardCard width="one-third" :height="3">
     <template #title>Side panel</template>
     <template #content> Active Cluster: {{ activeCluster }} </template>
+  </DashboardCard>
+
+  <DashboardCard width="one-third" :height="2">
+    <template #title>Gap by Race</template>
+    <template #content>
+      <BulletChart
+        :stats="stats"
+        :active-cluster="activeCluster"
+        :field-names="['asian', 'black', 'latino', 'white']"
+      />
+    </template>
   </DashboardCard>
 
   <DashboardCard width="full">
     <template #title>Moar Info</template>
     <template #subtitle>Details about the things</template>
-    <template #content>
-      <p>below the fold things</p>
-    </template>
+    <template #content> Below the fold things </template>
   </DashboardCard>
 </template>
 
@@ -31,6 +40,7 @@ import { ref } from "vue";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import Map from "@/components/dashboard/Map.vue";
+import BulletChart from "@/components/dashboard/BulletChart.vue";
 
 import { fetchKeys, fetchColdSpotData } from "../../../utils/firebase";
 
