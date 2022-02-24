@@ -49,6 +49,14 @@ const stats = ref([]);
 
 const datasetName = "vax_first_dose_coldspots";
 const dates = await fetchKeys(datasetName);
+const datesDropdownValues = dates.map((date) => {
+  const dateString = new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  return { name: dateString, value: date };
+});
 
 const ri = { name: "All of Rhode Island", cluster_number: -1 };
 const dropDowns = computed(() => {
@@ -68,18 +76,18 @@ const dropDowns = computed(() => {
     },
     date: {
       icon: "fas fa-calendar-alt",
-      values: dates,
+      values: datesDropdownValues,
     },
   };
 });
 
 const controls = ref({
   cluster: ri,
-  date: "",
+  date: datesDropdownValues[0],
 });
 const updateControls = (newControls) => {
-  if (newControls.date !== controls.value.date) {
-    fetchColdSpotData(datasetName, newControls.date).then((res) => {
+  if (newControls.date !== controls.value.date.value) {
+    fetchColdSpotData(datasetName, newControls.date.value).then((res) => {
       geo.value = res.geo;
       stats.value = res.stats;
     });
