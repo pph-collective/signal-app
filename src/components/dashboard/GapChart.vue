@@ -21,6 +21,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
+// the expected percent is constant, so we can calculate it from the first row of data
 const expected = computed(
   () => props.stats[0].expected_count / props.stats[0].coldspot_population
 );
