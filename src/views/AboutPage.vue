@@ -1,7 +1,7 @@
 <template>
   <DashboardLayout>
     <DashboardCard>
-      <template #title>Project Signal</template>
+      <template #title>About This Project</template>
       <template #subtitle>
         <div class="content">
           <p>
@@ -9,16 +9,21 @@
             We all want resources to help us and our families thrive at home,
             work, or school. But we don’t all get these same opportunities
             because of where we live. This means that some communities are
-            affected by COVID-19 more than others. At Project Signal, we use
-            data to show how COVID-19 has impacted the hardest-hit
-            neighborhoods. We make this data available to support policies that
-            protect the most vulnerable Rhode Islanders.
+            affected by COVID-19 more than others.
+          </p>
+          <p>
+            <b
+              >At Project Signal, we use data to show how COVID-19 has impacted
+              the hardest-hit neighborhoods. We make this data available to
+              support policies that protect the most vulnerable Rhode
+              Islanders.</b
+            >
           </p>
         </div>
       </template>
     </DashboardCard>
     <DashboardCard>
-      <template #title>About The PPHC</template>
+      <template #title>About Our Team</template>
       <template #subtitle>
         <div class="content">
           <p>
