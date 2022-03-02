@@ -18,7 +18,7 @@
       </template>
     </DashboardCard>
     <DashboardCard>
-      <template #title>About Us</template>
+      <template #title>About The PPHC</template>
       <template #subtitle>
         <div class="content">
           <p>
