@@ -7,6 +7,7 @@ import { computed, ref, watch } from "vue";
 import { useVega } from "../../composables/useVega";
 
 import RI_GEOJSON from "@/assets/geojson/ri.json";
+import { COLORS } from "../../utils/constants";
 
 import { cloneDeep } from "lodash/lang";
 import * as topology from "topojson-server";
@@ -173,8 +174,8 @@ const spec = computed(() => {
         from: { data: "town_outlines" },
         encode: {
           enter: {
-            strokeWidth: { value: 2 },
-            stroke: { value: "#C7B3F9" },
+            strokeWidth: { value: 1 },
+            stroke: { value: COLORS.info },
           },
         },
         transform: [{ type: "geoshape", projection: "projection" }],
@@ -190,7 +191,7 @@ const spec = computed(() => {
           },
           update: {
             stroke: [
-              { test: "datum === activeGeography", value: "#386540" },
+              { test: "datum === activeGeography", value: COLORS.green },
               { value: "#999999" },
             ],
             fillOpacity: [
@@ -198,8 +199,8 @@ const spec = computed(() => {
               { value: 0.3 },
             ],
             fill: [
-              { test: "datum === activeGeography", value: "#7DBEA5" },
-              { value: "#354156" },
+              { test: "datum === activeGeography", value: COLORS.link },
+              { value: COLORS.green },
             ],
             zindex: [
               { test: "datum === activeGeography", value: 1 },
