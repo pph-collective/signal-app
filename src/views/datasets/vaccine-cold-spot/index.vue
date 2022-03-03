@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-import riTopo from "@/assets/geojson/ri-profound.json";
+import RI_GEOJSON from "@/assets/geojson/ri.json";
 import ControlPanel from "@/components/dashboard/ControlPanel.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import Map from "@/components/dashboard/Map.vue";
@@ -58,7 +58,7 @@ const datesDropdownValues = dates.map((date) => {
   return { name: dateString, value: date };
 });
 
-const towns = riTopo.map((geo) => geo.properties.name).sort();
+const towns = RI_GEOJSON.map((geo) => geo.properties.name).sort();
 const dropDowns = computed(() => {
   return {
     town: {

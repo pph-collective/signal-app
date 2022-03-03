@@ -6,7 +6,7 @@
 import { computed, ref, watch } from "vue";
 import { useVega } from "../../composables/useVega";
 
-import riGeoJson from "@/assets/geojson/ri-profound.json";
+import RI_GEOJSON from "@/assets/geojson/ri.json";
 
 import { cloneDeep } from "lodash/lang";
 import * as topology from "topojson-server";
@@ -43,12 +43,10 @@ interface ClusterStats {
 }
 
 const filteredTown = computed(() => {
-  let filtered = cloneDeep(riGeoJson);
+  let filtered = cloneDeep(RI_GEOJSON);
 
   if (props.filterTown !== "All of Rhode Island") {
-    // console.log(props.filterTown);
     filtered = filtered.filter((g) => props.filterTown === g.properties.name);
-    console.log(filtered);
   }
 
   return filtered;
