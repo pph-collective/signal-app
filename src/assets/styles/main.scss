@@ -32,6 +32,11 @@ $family-secondary: "Sinhala MN", "avenir", sans-serif;
   height: revert;
 }
 
+// used in vega lite svgs
+text {
+  font-family: $family-sans-serif;
+  font-size: 0.7rem;
+}
 
 #vg-tooltip-element.vg-tooltip {
   white-space: pre-wrap;
