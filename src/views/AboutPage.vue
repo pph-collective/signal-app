@@ -11,10 +11,12 @@
             because of where we live. This means that some communities are
             affected by COVID-19 more than others.
           </p>
-          <p class="has-text-weight-semibold">
-            At Project SIGNAL, we use data to show how COVID-19 has impacted the
-            hardest-hit neighborhoods. We make this data available to support
-            policies that protect the most vulnerable Rhode Islanders.
+          <p>
+            <strong>
+              At Project SIGNAL, we use data to show how COVID-19 has impacted
+              the hardest-hit neighborhoods. We make this data available to
+              support policies that protect the most vulnerable Rhode Islanders.
+            </strong>
           </p>
         </div>
       </template>
