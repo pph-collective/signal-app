@@ -29,19 +29,6 @@ const props = defineProps({
   },
 });
 
-interface Cluster {
-  geometry: Record<string, unknown>;
-  type: "Feature";
-  properties: {
-    vax_first_: number;
-  };
-}
-
-interface ClusterStats {
-  cluster_number: number;
-  name: string;
-}
-
 const filteredTown = computed(() => {
   let filtered = cloneDeep(RI_GEOJSON);
 
@@ -55,10 +42,11 @@ const filteredTown = computed(() => {
 const filteredGeo = computed(() => {
   let filtered = cloneDeep(props.geo);
 
-  filtered.forEach((g: Cluster) => {
+  filtered.forEach((g: { properties: { vax_first_: number } }) => {
     const datum: object =
       props.stats.find(
-        (d: ClusterStats) => d.cluster_number === g.properties.vax_first_
+        (d: { cluster_number: number }) =>
+          d.cluster_number === g.properties.vax_first_
       ) ?? {};
 
     g.properties = {
