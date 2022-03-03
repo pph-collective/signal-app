@@ -7,3 +7,5 @@ export const COLORS = {
   green: "#386540",
   beige: "#F8E3CA",
 };
+
+export const NULL_CLUSTER = { name: "", cluster_number: -1 };

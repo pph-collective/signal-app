@@ -1,9 +1,12 @@
 <template>
   <div class="dashboard-card" :class="['is-' + width, 'is-height-' + height]">
-    <header class="dashboard-card-header">
-      <h2 class="title">
-        <slot name="title" />
-      </h2>
+    <header class="dashboard-card-header fullwidth">
+      <div
+        class="is-flex is-flex-direction-row is-justify-content-space-between fullwidth"
+      >
+        <h2 class="title mb-3 is-flex-grow-1"><slot name="title"></slot></h2>
+        <div><slot name="top-right"></slot></div>
+      </div>
       <h3 class="subtitle">
         <slot name="subtitle" />
       </h3>
@@ -38,6 +41,7 @@ withDefaults(defineProps<Props>(), {
   align-items: flex-start;
   overflow-x: visible;
 }
+
 .dashboard-card-header {
   display: flex;
   flex-direction: column;
@@ -45,10 +49,16 @@ withDefaults(defineProps<Props>(), {
   @extend .px-4;
   @extend .py-4;
 }
+
+.fullwidth {
+  width: 100%;
+}
+
 .card-content {
   padding: 0;
   width: 100%;
 }
+
 .is-one-third {
   grid-column-start: span 2;
   @include mobile {

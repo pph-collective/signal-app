@@ -7,10 +7,9 @@ import { computed, ref, watch } from "vue";
 import { useVega } from "../../composables/useVega";
 
 import { cloneDeep } from "lodash/lang";
-import * as topology from "topojson-server";
-import * as tc from "topojson-client";
-import * as ts from "topojson-simplify";
-const topojson = { ...ts, ...tc };
+
+import { NULL_CLUSTER } from "../../utils/constants";
+import { geoToTopo } from "../../utils/utils";
 
 const props = defineProps({
   geo: {
@@ -39,26 +38,7 @@ const filteredGeo = computed(() => {
     };
   });
 
-  const collection = {
-    blocks: { type: "FeatureCollection", features: filtered },
-  };
-
-  let topo = topology.topology(collection, 1e5);
-
-  // simplify/smooth out the geometry a bit
-  const sphericalArea = 1e-9;
-  topo = topojson.presimplify(topo, topojson.sphericalTriangleArea);
-  topo = topojson.simplify(topo, sphericalArea);
-  topo = topojson.filter(
-    topo,
-    topojson.filterAttachedWeight(
-      topo,
-      sphericalArea,
-      topojson.sphericalRingArea
-    )
-  );
-
-  return topo;
+  return geoToTopo(filtered);
 });
 
 const tooltipSignal = `{
@@ -190,26 +170,32 @@ const { view } = useVega({
   minHeight: ref(400),
   maxHeight: ref(1280),
   maxWidth: ref(1280),
-  includeActions: ref(true),
+  includeActions: ref(false),
 });
 
-let currentCluster = "";
-const emit = defineEmits(["new-active-cluster"]);
+let currentCluster = NULL_CLUSTER;
+const emit = defineEmits(["new-active-cluster", "cluster-clicked"]);
 
 watch(view, () => {
   if (view.value) {
     view.value.addSignalListener("activeGeography", (name, value) => {
       if (value) {
-        if (value.properties.name !== currentCluster) {
-          currentCluster = value.properties.name;
+        const { name, cluster_number } = value.properties;
+        if (name !== currentCluster.name) {
+          currentCluster = { name, cluster_number };
           emit("new-active-cluster", currentCluster);
         }
       } else {
         if (currentCluster) {
-          currentCluster = "";
+          currentCluster = NULL_CLUSTER;
           emit("new-active-cluster", currentCluster);
         }
       }
+    });
+
+    view.value.addSignalListener("clicked", (name, value) => {
+      const clicked = value !== null;
+      emit("cluster-clicked", clicked);
     });
   }
 });
