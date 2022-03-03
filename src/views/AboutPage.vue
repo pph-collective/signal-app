@@ -1,7 +1,7 @@
 <template>
   <DashboardLayout>
     <DashboardCard>
-      <template #title>About This Project</template>
+      <template #title>Project SIGNAL</template>
       <template #subtitle>
         <div class="content">
           <p>
@@ -20,7 +20,7 @@
       </template>
     </DashboardCard>
     <DashboardCard>
-      <template #title>About Our Team</template>
+      <template #title>Our Team</template>
       <template #subtitle>
         <div class="content">
           <p>
