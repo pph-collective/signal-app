@@ -17,7 +17,7 @@
         <Map
           :geo="geo"
           :stats="stats"
-          :filter-clusters="controls.cluster"
+          :filter-town="controls.town"
           @new-active-cluster="activeCluster = $event"
         />
       </div>
@@ -36,12 +36,12 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
+import riTopo from "@/assets/geojson/ri-profound.json";
 import ControlPanel from "@/components/dashboard/ControlPanel.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import Map from "@/components/dashboard/Map.vue";
 
 import { fetchKeys, fetchColdSpotData } from "../../../utils/firebase";
-import { sortByProperty } from "../../../utils/utils";
 
 const activeCluster = ref("");
 const geo = ref([]);
@@ -58,21 +58,12 @@ const datesDropdownValues = dates.map((date) => {
   return { name: dateString, value: date };
 });
 
-const ri = { name: "All of Rhode Island", cluster_number: -1 };
+const towns = riTopo.map((geo) => geo.properties.name).sort();
 const dropDowns = computed(() => {
-  const clusters = stats.value
-    .map((cluster) => {
-      return {
-        name: cluster.name,
-        cluster_number: cluster.cluster_number,
-      };
-    })
-    .sort(sortByProperty("name"));
-
   return {
-    cluster: {
+    town: {
       icon: "fas fa-globe",
-      values: [ri, ...clusters],
+      values: ["All of Rhode Island", ...towns],
     },
     date: {
       icon: "fas fa-calendar-alt",
@@ -82,8 +73,8 @@ const dropDowns = computed(() => {
 });
 
 const controls = ref({
-  cluster: ri,
   date: datesDropdownValues[0],
+  town: "All of Rhode Island",
 });
 const updateControls = (newControls) => {
   if (newControls.date !== controls.value.date.value) {

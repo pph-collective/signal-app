@@ -6,6 +6,8 @@
 import { computed, ref, watch } from "vue";
 import { useVega } from "../../composables/useVega";
 
+import riGeoJson from "@/assets/geojson/ri-profound.json";
+
 import { cloneDeep } from "lodash/lang";
 import * as topology from "topojson-server";
 import * as tc from "topojson-client";
@@ -21,8 +23,8 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  filterClusters: {
-    type: Object,
+  filterTown: {
+    type: String,
     required: true,
   },
 });
@@ -40,15 +42,20 @@ interface ClusterStats {
   name: string;
 }
 
+const filteredTown = computed(() => {
+  let filtered = cloneDeep(riGeoJson);
+
+  if (props.filterTown !== "All of Rhode Island") {
+    // console.log(props.filterTown);
+    filtered = filtered.filter((g) => props.filterTown === g.properties.name);
+    console.log(filtered);
+  }
+
+  return filtered;
+});
+
 const filteredGeo = computed(() => {
   let filtered = cloneDeep(props.geo);
-  if (props.filterClusters.cluster_number > 0) {
-    filtered = [
-      filtered.find((g: Cluster) => {
-        return props.filterClusters.cluster_number === g.properties.vax_first_;
-      }),
-    ];
-  }
 
   filtered.forEach((g: Cluster) => {
     const datum: object =
@@ -94,6 +101,7 @@ const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
     background: "transparent",
+    autosize: "none",
     signals: [
       {
         name: "tileUrl",
@@ -145,13 +153,18 @@ const spec = computed(() => {
         values: filteredGeo.value,
         format: { type: "topojson", feature: "blocks" },
       },
+      {
+        name: "town_outlines",
+        values: filteredTown.value,
+        // format: { type: "topojson", feature: "blocks" },
+      },
     ],
     projections: [
       {
         name: "projection",
         type: "mercator",
         size: { signal: "[width, height]" },
-        fit: { signal: 'data("cluster_outlines")' },
+        fit: { signal: 'data("town_outlines")' },
       },
     ],
     marks: [
@@ -168,6 +181,18 @@ const spec = computed(() => {
             height: { signal: "height" },
           },
         },
+      },
+      {
+        type: "shape",
+        name: "town_groups",
+        from: { data: "town_outlines" },
+        encode: {
+          enter: {
+            strokeWidth: { value: 2 },
+            stroke: { value: "#C7B3F9" },
+          },
+        },
+        transform: [{ type: "geoshape", projection: "projection" }],
       },
       {
         type: "shape",
