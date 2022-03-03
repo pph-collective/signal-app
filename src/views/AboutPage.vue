@@ -6,8 +6,8 @@
         <div class="content">
           <p>
             All Rhode Islanders have the right to live a healthy and happy life.
-            We all want resources to help us and our families thrive at home,
-            work, or school. But we don’t all get these same opportunities
+            We all need resources to help us and our families thrive at home,
+            work, or school. But we don't all get these same opportunities
             because of where we live. This means that some communities are
             affected by COVID-19 more than others.
           </p>
