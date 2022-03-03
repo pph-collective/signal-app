@@ -24,12 +24,16 @@
       <template #subtitle>
         <div class="content">
           <p>
-            Project SIGNAL is a collaboration between the Rhode Island
-            Department of Health; the People, Place, and Health Collective in
-            the Department of Epidemiology at the
-            <a href="https://www.brown.edu/academics/public-health/home"
-              >Brown University School of Public Health</a
-            >; and the
+            Project SIGNAL is a collaboration between the
+            <a href="https://health.ri.gov/"
+              >Rhode Island Department of Health</a
+            >
+            ; the People, Place, and Health Collective in the Department of
+            Epidemiology at the
+            <a href="https://www.brown.edu/academics/public-health/home">
+              Brown University School of Public Health</a
+            >
+            ; and the
             <a href="https://ccv.brown.edu/"
               >Center for Computation and Visualization</a
             >. The People, Place, and Health Collective conducts research to
