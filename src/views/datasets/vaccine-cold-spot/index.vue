@@ -28,6 +28,7 @@
     <template #title>Gap by Race</template>
     <template #content>
       <GapChart
+        v-if="stats.length > 0"
         :stats="stats"
         :active-cluster="activeCluster"
         :field-names="['asian', 'black', 'latino', 'white']"
