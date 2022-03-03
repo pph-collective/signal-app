@@ -154,7 +154,6 @@ const spec = computed(() => {
       {
         name: "town_outlines",
         values: filteredTown.value,
-        // format: { type: "topojson", feature: "blocks" },
       },
     ],
     projections: [
