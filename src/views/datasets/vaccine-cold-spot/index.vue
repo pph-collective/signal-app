@@ -69,12 +69,13 @@ const datesDropdownValues = dates.map((date) => {
   return { name: dateString, value: date };
 });
 
+const townDefault = "All of Rhode Island";
 const towns = RI_GEOJSON.map((geo) => geo.properties.name).sort();
 const dropDowns = computed(() => {
   return {
     town: {
       icon: "fas fa-globe",
-      values: ["All of Rhode Island", ...towns],
+      values: [townDefault, ...towns],
     },
     date: {
       icon: "fas fa-calendar-alt",
@@ -85,7 +86,7 @@ const dropDowns = computed(() => {
 
 const controls = ref({
   date: datesDropdownValues[0],
-  town: "All of Rhode Island",
+  town: townDefault,
 });
 const updateControls = (newControls) => {
   if (newControls.date !== controls.value.date.value) {
