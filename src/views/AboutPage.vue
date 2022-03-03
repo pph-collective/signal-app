@@ -11,13 +11,10 @@
             because of where we live. This means that some communities are
             affected by COVID-19 more than others.
           </p>
-          <p>
-            <b
-              >At Project Signal, we use data to show how COVID-19 has impacted
-              the hardest-hit neighborhoods. We make this data available to
-              support policies that protect the most vulnerable Rhode
-              Islanders.</b
-            >
+          <p class="has-text-weight-semibold">
+            At Project SIGNAL, we use data to show how COVID-19 has impacted the
+            hardest-hit neighborhoods. We make this data available to support
+            policies that protect the most vulnerable Rhode Islanders.
           </p>
         </div>
       </template>
@@ -28,35 +25,34 @@
         <div class="content">
           <p>
             Project SIGNAL is a collaboration between the Rhode Island
-            Department of Health and the People, Place, and Health Collective in
+            Department of Health; the People, Place, and Health Collective in
             the Department of Epidemiology at the
             <a href="https://www.brown.edu/academics/public-health/home"
-              >Brown University School of Public Health.</a
-            >
-            The People, Place, and Health Collective conducts research to
+              >Brown University School of Public Health</a
+            >; and the
+            <a href="https://ccv.brown.edu/"
+              >Center for Computation and Visualization</a
+            >. The People, Place, and Health Collective conducts research to
             support public health policies and programs that are data-driven,
             people-centered, and place-oriented. Some of the People, Place, and
             Health Collective's other signature initiatives include
             <a href="https://www.preventoverdoseri.org/">PreventOverdoseRI</a>,
-            <a href="https://profoundmodel.web.app/">PROFOUND</a>,
-            <a href="http://provident.preventoverdoseri.org/">PROVIDENT</a>, and
-            <a href="https://www.titanmodel.org/">TITAN</a>. For more about the
-            People, Place, and Health Collective, visit our website
-            <a href="https://medium.com/pphc">here</a>.
+            <a href="https://profoundmodel.org/">PROFOUND</a>,
+            <a href="https://provident.preventoverdoseri.org/">PROVIDENT</a>,
+            and <a href="https://www.titanmodel.org/">TITAN</a>. For more about
+            the People, Place, and Health Collective,
+            <a href="https://medium.com/pphc">visit our website</a>.
           </p>
           <p>
-            <a style="padding-left: 20px" href="#"
-              ><a href="https://github.com/pph-collective"
-                ><i class="fab fa-github"></i></a
-            ></a>
-            <a style="padding-left: 25px" href="#"
-              ><a href="https://twitter.com/pph_collective"
-                ><i class="fab fa-twitter"></i></a
-            ></a>
-            <a style="padding-left: 25px" href="#"
-              ><a href="https://www.instagram.com/pph_collective"
-                ><i class="fab fa-instagram"></i></a
-            ></a>
+            <a class="pl-4" href="https://github.com/pph-collective">
+              <i class="fab fa-github"></i>
+            </a>
+            <a class="pl-4" href="https://twitter.com/pph_collective">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a class="pl-4" href="https://www.instagram.com/pph_collective">
+              <i class="fab fa-instagram"></i>
+            </a>
           </p>
         </div>
       </template>
