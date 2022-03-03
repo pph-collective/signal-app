@@ -1,8 +1,13 @@
 <template>
-  <DashboardCard width="two-thirds" :height="1" style="">
+  <DashboardCard width="two-thirds" :height="1">
     <template #content>
       <ControlPanel :drop-downs="dropDowns" @selected="updateControls" />
     </template>
+  </DashboardCard>
+
+  <DashboardCard width="one-third" :height="4">
+    <template #title>Side panel</template>
+    <template #content> Active Cluster: {{ activeCluster }} </template>
   </DashboardCard>
 
   <DashboardCard width="two-thirds" :height="5">
@@ -17,11 +22,6 @@
         />
       </div>
     </template>
-  </DashboardCard>
-
-  <DashboardCard width="one-third" :height="3">
-    <template #title>Side panel</template>
-    <template #content> Active Cluster: {{ activeCluster }} </template>
   </DashboardCard>
 
   <DashboardCard width="one-third" :height="2">
