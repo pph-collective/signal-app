@@ -7,11 +7,10 @@ import { computed, ref, watch } from "vue";
 import { useVega } from "../../composables/useVega";
 
 import RI_GEOJSON from "@/assets/geojson/ri.json";
-import { COLORS } from "../../utils/constants";
+import { COLORS, NULL_CLUSTER } from "../../utils/constants";
 
 import { cloneDeep } from "lodash/lang";
 
-import { NULL_CLUSTER } from "../../utils/constants";
 import { geoToTopo } from "../../utils/utils";
 
 const props = defineProps({
