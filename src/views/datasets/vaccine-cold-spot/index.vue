@@ -56,7 +56,6 @@
     <template #title>Gap by Race</template>
     <template #content>
       <GapChart
-        v-if="stats.length > 0"
         :stats="stats"
         :active-cluster="activeCluster.name"
         :field-names="['asian', 'black', 'latino', 'white']"
@@ -87,11 +86,16 @@ import { NULL_CLUSTER } from "../../../utils/constants";
 const activeCluster = ref(NULL_CLUSTER);
 const activeClusterClicked = ref(false);
 const zoomed = ref(false);
-const geo = ref([]);
-const stats = ref([]);
 
 const datasetName = "vax_first_dose_coldspots";
 const dates = await fetchKeys(datasetName);
+const { geo: initialGeo, stats: initialStats } = await fetchColdSpotData(
+  datasetName,
+  dates[0]
+);
+const geo = ref(initialGeo);
+const stats = ref(initialStats);
+
 const datesDropdownValues = dates.map((date) => {
   const dateString = new Date(date).toLocaleDateString("en-US", {
     month: "short",
