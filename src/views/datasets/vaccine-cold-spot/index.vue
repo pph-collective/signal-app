@@ -1,4 +1,15 @@
 <template>
+  <DashboardCard width="two-thirds" :height="1">
+    <template #content>
+      <ControlPanel :drop-downs="dropDowns" @selected="updateControls" />
+    </template>
+  </DashboardCard>
+
+  <DashboardCard width="one-third" :height="4">
+    <template #title>Side panel</template>
+    <template #content> Active Cluster: {{ activeCluster.name }} </template>
+  </DashboardCard>
+
   <DashboardCard width="two-thirds" :height="5">
     <template #title
       >Map: {{ zoomed ? activeCluster.name : "All Cold Spots" }}</template
@@ -25,6 +36,7 @@
         <Map
           :geo="geo"
           :stats="stats"
+          :filter-town="controls.town"
           class="is-absolute"
           @new-active-cluster="activeCluster = $event"
           @cluster-clicked="activeClusterClicked = $event"
@@ -38,11 +50,6 @@
         />
       </div>
     </template>
-  </DashboardCard>
-
-  <DashboardCard width="one-third" :height="3">
-    <template #title>Side panel</template>
-    <template #content> Active Cluster: {{ activeCluster.name }} </template>
   </DashboardCard>
 
   <DashboardCard width="one-third" :height="2">
@@ -64,8 +71,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
+import RI_GEOJSON from "@/assets/geojson/ri.json";
+import ControlPanel from "@/components/dashboard/ControlPanel.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import Map from "@/components/dashboard/Map.vue";
 import ClusterMap from "@/components/dashboard/ClusterMap.vue";
@@ -74,13 +83,60 @@ import GapChart from "@/components/dashboard/GapChart.vue";
 import { fetchKeys, fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
 
-const datasetName = "vax_first_dose_coldspots";
-const dates = await fetchKeys(datasetName);
-const { geo, stats } = await fetchColdSpotData(datasetName, dates[0]);
-
 const activeCluster = ref(NULL_CLUSTER);
 const activeClusterClicked = ref(false);
 const zoomed = ref(false);
+
+const datasetName = "vax_first_dose_coldspots";
+const dates = await fetchKeys(datasetName);
+const { geo: initialGeo, stats: initialStats } = await fetchColdSpotData(
+  datasetName,
+  dates[0]
+);
+const geo = ref(initialGeo);
+const stats = ref(initialStats);
+
+const datesDropdownValues = dates.map((date) => {
+  const dateString = new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  return { name: dateString, value: date };
+});
+
+const townDefault = "All of Rhode Island";
+const towns = RI_GEOJSON.map((geo) => geo.properties.name).sort();
+const dropDowns = computed(() => {
+  return {
+    town: {
+      icon: "fas fa-globe",
+      values: [townDefault, ...towns],
+    },
+    date: {
+      icon: "fas fa-calendar-alt",
+      values: datesDropdownValues,
+    },
+  };
+});
+
+const controls = ref({
+  date: datesDropdownValues[0],
+  town: townDefault,
+});
+const updateControls = (newControls) => {
+  if (newControls.date !== controls.value.date.value) {
+    fetchColdSpotData(datasetName, newControls.date.value).then((res) => {
+      geo.value = res.geo;
+      stats.value = res.stats;
+    });
+  }
+
+  // update the control selections
+  for (const [k, v] of Object.entries(newControls)) {
+    controls.value[k] = v;
+  }
+};
 </script>
 
 <style scoped>

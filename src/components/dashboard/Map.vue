@@ -6,9 +6,11 @@
 import { computed, ref, watch } from "vue";
 import { useVega } from "../../composables/useVega";
 
+import RI_GEOJSON from "@/assets/geojson/ri.json";
+import { COLORS, NULL_CLUSTER } from "../../utils/constants";
+
 import { cloneDeep } from "lodash/lang";
 
-import { NULL_CLUSTER } from "../../utils/constants";
 import { geoToTopo } from "../../utils/utils";
 
 const props = defineProps({
@@ -20,6 +22,20 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  filterTown: {
+    type: String,
+    required: true,
+  },
+});
+
+const filteredTown = computed(() => {
+  let filtered = cloneDeep(RI_GEOJSON);
+
+  if (props.filterTown !== "All of Rhode Island") {
+    filtered = filtered.filter((g) => props.filterTown === g.properties.name);
+  }
+
+  return filtered;
 });
 
 const filteredGeo = computed(() => {
@@ -51,6 +67,7 @@ const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
     background: "transparent",
+    autosize: "none",
     signals: [
       {
         name: "tileUrl",
@@ -102,13 +119,17 @@ const spec = computed(() => {
         values: filteredGeo.value,
         format: { type: "topojson", feature: "blocks" },
       },
+      {
+        name: "town_outlines",
+        values: filteredTown.value,
+      },
     ],
     projections: [
       {
         name: "projection",
         type: "mercator",
         size: { signal: "[width, height]" },
-        fit: { signal: 'data("cluster_outlines")' },
+        fit: { signal: 'data("town_outlines")' },
       },
     ],
     marks: [
@@ -128,6 +149,18 @@ const spec = computed(() => {
       },
       {
         type: "shape",
+        name: "town_groups",
+        from: { data: "town_outlines" },
+        encode: {
+          enter: {
+            strokeWidth: { value: 1 },
+            stroke: { value: COLORS.info },
+          },
+        },
+        transform: [{ type: "geoshape", projection: "projection" }],
+      },
+      {
+        type: "shape",
         name: "cluster_groups",
         from: { data: "cluster_outlines" },
         encode: {
@@ -137,7 +170,7 @@ const spec = computed(() => {
           },
           update: {
             stroke: [
-              { test: "datum === activeGeography", value: "#386540" },
+              { test: "datum === activeGeography", value: COLORS.green },
               { value: "#999999" },
             ],
             fillOpacity: [
@@ -145,8 +178,8 @@ const spec = computed(() => {
               { value: 0.3 },
             ],
             fill: [
-              { test: "datum === activeGeography", value: "#7DBEA5" },
-              { value: "#354156" },
+              { test: "datum === activeGeography", value: COLORS.link },
+              { value: COLORS.green },
             ],
             zindex: [
               { test: "datum === activeGeography", value: 1 },
