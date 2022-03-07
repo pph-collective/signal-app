@@ -37,7 +37,7 @@ const filteredGeo = computed(() => {
     (g) => props.cluster.cluster_number === g.properties.vax_first_
   );
 
-  return geoToTopo(features, 6e-10);
+  return geoToTopo(features);
 });
 
 const filteredLocations = computed(() =>

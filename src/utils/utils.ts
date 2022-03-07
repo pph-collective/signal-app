@@ -35,24 +35,26 @@ export const localISODateToUTC = (d: string) =>
     parseInt(d.slice(8, 10))
   );
 
-export const geoToTopo = (features, sphericalArea = 1e-9) => {
+export const geoToTopo = (features, sphericalArea = undefined) => {
   const collection = {
     blocks: { type: "FeatureCollection", features },
   };
 
   let topo = topology.topology(collection, 1e5);
 
-  // simplify/smooth out the geometry a bit
-  topo = topojson.presimplify(topo, topojson.sphericalTriangleArea);
-  topo = topojson.simplify(topo, sphericalArea);
-  topo = topojson.filter(
-    topo,
-    topojson.filterAttachedWeight(
+  if (sphericalArea) {
+    // simplify/smooth out the geometry a bit
+    topo = topojson.presimplify(topo, topojson.sphericalTriangleArea);
+    topo = topojson.simplify(topo, sphericalArea);
+    topo = topojson.filter(
       topo,
-      sphericalArea,
-      topojson.sphericalRingArea
-    )
-  );
+      topojson.filterAttachedWeight(
+        topo,
+        sphericalArea,
+        topojson.sphericalRingArea
+      )
+    );
+  }
 
   return topo;
 };

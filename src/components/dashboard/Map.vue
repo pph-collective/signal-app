@@ -54,7 +54,7 @@ const filteredGeo = computed(() => {
     };
   });
 
-  return geoToTopo(filtered);
+  return geoToTopo(filtered, 1e-9);
 });
 
 const tooltipSignal = `{
