@@ -39,19 +39,22 @@ const filteredTown = computed(() => {
 });
 
 const filteredGeo = computed(() => {
-  let filtered = cloneDeep(props.geo);
+  let deepCopy = cloneDeep(props.geo);
+  const filtered = [];
 
-  filtered.forEach((g: { properties: { vax_first_: number } }) => {
-    const datum: object =
-      props.stats.find(
-        (d: { cluster_number: number }) =>
-          d.cluster_number === g.properties.vax_first_
-      ) ?? {};
+  deepCopy.forEach((g: { properties: { vax_first_: number } }) => {
+    const datum: object = props.stats.find(
+      (d: { cluster_number: number }) =>
+        d.cluster_number === g.properties.vax_first_
+    );
 
-    g.properties = {
-      ...g.properties,
-      ...datum,
-    };
+    if (datum) {
+      g.properties = {
+        ...g.properties,
+        ...datum,
+      };
+      filtered.push(g);
+    }
   });
 
   return geoToTopo(filtered);
@@ -124,6 +127,13 @@ const spec = computed(() => {
         values: filteredTown.value,
       },
     ],
+    scales: {
+      name: "color",
+      type: "linear",
+      domain: { data: "cluster_outlines", field: "properties.observed_count" },
+      zero: false,
+      range: { scheme: "blues", count: 10 },
+    },
     projections: [
       {
         name: "projection",
@@ -174,12 +184,12 @@ const spec = computed(() => {
               { value: "#999999" },
             ],
             fillOpacity: [
-              { test: "datum === activeGeography", value: 0.6 },
-              { value: 0.3 },
+              { test: "datum === activeGeography", value: 0.8 },
+              { value: 0.8 },
             ],
             fill: [
               { test: "datum === activeGeography", value: COLORS.link },
-              { value: COLORS.green },
+              { scale: "color", field: "properties.observed_count" },
             ],
             zindex: [
               { test: "datum === activeGeography", value: 1 },

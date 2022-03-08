@@ -33,7 +33,7 @@
 
     <template #content>
       <div class="map-container">
-        <Map
+        <ColdMap
           :geo="geo"
           :stats="stats"
           :filter-town="controls.town"
@@ -76,7 +76,7 @@ import { computed, ref } from "vue";
 import RI_GEOJSON from "@/assets/geojson/ri.json";
 import ControlPanel from "@/components/dashboard/ControlPanel.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
-import Map from "@/components/dashboard/Map.vue";
+import ColdMap from "@/components/dashboard/ColdMap.vue";
 import ClusterMap from "@/components/dashboard/ClusterMap.vue";
 import GapChart from "@/components/dashboard/GapChart.vue";
 
