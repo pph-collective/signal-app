@@ -38,24 +38,32 @@ const filteredTown = computed(() => {
   return filtered;
 });
 
-const filteredGeo = computed(() => {
+const clusters = computed(() => {
   let deepCopy = cloneDeep(props.geo);
   const filtered = [];
 
-  deepCopy.forEach((g: { properties: { vax_first_: number } }) => {
-    const datum: object = props.stats.find(
-      (d: { cluster_number: number }) =>
-        d.cluster_number === g.properties.vax_first_
-    );
+  deepCopy.forEach(
+    (g: {
+      properties: { vax_first_: number; observed_expected_rate: number };
+    }) => {
+      const datum: { observed_count: number; expected_count: number } =
+        props.stats.find(
+          (d: { cluster_number: number }) =>
+            d.cluster_number === g.properties.vax_first_
+        );
 
-    if (datum) {
-      g.properties = {
-        ...g.properties,
-        ...datum,
-      };
-      filtered.push(g);
+      if (datum) {
+        g.properties = {
+          ...g.properties,
+          ...datum,
+          observed_expected_rate:
+            Math.round((datum.observed_count / datum.expected_count) * 100) /
+            100,
+        };
+        filtered.push(g);
+      }
     }
-  });
+  );
 
   return geoToTopo(filtered);
 });
@@ -64,6 +72,7 @@ const tooltipSignal = `{
   title: datum.properties.name,
   'Observed Count': datum.properties.observed_count,
   'Expected Count': datum.properties.expected_count,
+  'Observed / Expected Count': datum.properties.observed_expected_rate
 }`;
 
 const spec = computed(() => {
@@ -119,7 +128,7 @@ const spec = computed(() => {
     data: [
       {
         name: "cluster_outlines",
-        values: filteredGeo.value,
+        values: clusters.value,
         format: { type: "topojson", feature: "blocks" },
       },
       {
@@ -130,9 +139,13 @@ const spec = computed(() => {
     scales: {
       name: "color",
       type: "linear",
-      domain: { data: "cluster_outlines", field: "properties.observed_count" },
+      domain: {
+        data: "cluster_outlines",
+        field: "properties.observed_expected_rate",
+      },
       zero: false,
-      range: { scheme: "blues", count: 10 },
+      range: { scheme: "blues", count: 5 },
+      reverse: true,
     },
     projections: [
       {
@@ -189,7 +202,7 @@ const spec = computed(() => {
             ],
             fill: [
               { test: "datum === activeGeography", value: COLORS.link },
-              { scale: "color", field: "properties.observed_count" },
+              { scale: "color", field: "properties.observed_expected_rate" },
             ],
             zindex: [
               { test: "datum === activeGeography", value: 1 },
