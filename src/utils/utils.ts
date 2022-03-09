@@ -40,7 +40,7 @@ export const geoToTopo = (features, sphericalArea = undefined) => {
     blocks: { type: "FeatureCollection", features },
   };
 
-  let topo = topology.topology(collection, 1e5);
+  let topo = topology.topology(collection);
 
   if (sphericalArea) {
     // simplify/smooth out the geometry a bit
