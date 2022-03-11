@@ -73,7 +73,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-import RI_GEOJSON from "@/assets/geography/ri.json";
+import RI_GEOJSON from "@/assets/geojson/ri.json";
 import ControlPanel from "@/components/dashboard/ControlPanel.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import Map from "@/components/dashboard/Map.vue";
