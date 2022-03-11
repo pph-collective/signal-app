@@ -1,0 +1,149 @@
+{
+  "Barrington": [
+    "Warren"
+  ],
+  "Bristol": [
+    "Warren"
+  ],
+  "Burrillville": [
+    "Glocester",
+    "North Smithfield"
+  ],
+  "Central Falls": [
+    "Pawtucket"
+  ],
+  "Charlestown": [
+    "Richmond",
+    "Westerley"
+  ],
+  "Coventry": [
+    "West Greenwich",
+    "West Warwick"
+  ],
+  "Cranston": [
+    "Providence",
+    "Warwick"
+  ],
+  "Cumberland": [
+    "Lincoln",
+    "Woonsocket"
+  ],
+  "East Greenwich": [
+    "North Kingstown"
+  ],
+  "East Providence": [
+    "Pawtucket",
+    "Providence"
+  ],
+  "Exeter": [
+    "Richmond",
+    "West Greenwich"
+  ],
+  "Foster": [
+    "Glocester",
+    "Scituate"
+  ],
+  "Glocester": [
+    "Burrillville",
+    "Foster"
+  ],
+  "Hopkinton": [
+    "Richmond",
+    "Westerly"
+  ],
+  "Jamestown": [
+    "North Kingstown",
+    "Newport"
+  ],
+  "Johnston": [
+    "Cranston",
+    "Scituate"
+  ],
+  "Lincoln": [
+    "Cumberland",
+    "Smithfield"
+  ],
+  "Little Compton": [
+    "Tiverton"
+  ],
+  "Middletown": [
+    "Newport",
+    "Portsmouth"
+  ],
+  "Narragansett": [
+    "South Kingstown"
+  ],
+  "New Shoreham": [],
+  "Newport": [
+    "Jamestown",
+    "Middletown"
+  ],
+  "North Kingstown": [
+    "East Greenwich",
+    "Exeter"
+  ],
+  "North Providence": [
+    "Johnston",
+    "Providence"
+  ],
+  "North Smithfield": [
+    "Burrillville",
+    "Woonsocket"
+  ],
+  "Pawtucket": [
+    "Central Falls",
+    "Providence"
+  ],
+  "Portsmouth": [
+    "Middletown",
+    "Tiverton"
+  ],
+  "Providence": [
+    "Cranston",
+    "Pawtucket"
+  ],
+  "Richmond": [
+    "Charlestown",
+    "Hopkinton"
+  ],
+  "Scituate": [
+    "Foster",
+    "Johnston"
+  ],
+  "Smithfield": [
+    "Lincoln",
+    "North Smithfield"
+  ],
+  "South Kingstown": [
+    "North Kingstown",
+    "Narragansett"
+  ],
+  "Tiverton": [
+    "Little Compton",
+    "Portsmouth"
+  ],
+  "Warren": [
+    "Barrington",
+    "Bristol"
+  ],
+  "Warwick": [
+    "Cranston",
+    "West Warwick"
+  ],
+  "West Greenwich": [
+    "Coventry",
+    "East Greenwich"
+  ],
+  "West Warwick": [
+    "Coventry",
+    "Warwick"
+  ],
+  "Westerly": [
+    "Charlestown",
+    "Hopkinton"
+  ],
+  "Woonsocket": [
+    "Cumberland",
+    "North Smithfield"
+  ]
+}
