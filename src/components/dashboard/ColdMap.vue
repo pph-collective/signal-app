@@ -8,7 +8,7 @@ import { useVega } from "../../composables/useVega";
 
 import RI_GEOJSON from "@/assets/geography/ri.json";
 import NEIGHBORS from "@/assets/geography/neighbors.json";
-import { COLORS, NULL_CLUSTER } from "../../utils/constants";
+import { COLORS, NULL_CLUSTER, COLOR_SCALES } from "../../utils/constants";
 
 import { cloneDeep } from "lodash/lang";
 
@@ -149,8 +149,7 @@ const spec = computed(() => {
         field: "properties.observed_expected_rate",
       },
       zero: false,
-      range: { scheme: "blues", count: 5 },
-      reverse: true,
+      range: COLOR_SCALES.primary,
     },
     projections: [
       {
@@ -201,10 +200,7 @@ const spec = computed(() => {
               { test: "datum === activeGeography", value: COLORS.green },
               { value: "#999999" },
             ],
-            fillOpacity: [
-              { test: "datum === activeGeography", value: 0.8 },
-              { value: 0.8 },
-            ],
+            fillOpacity: [{ value: 0.8 }],
             fill: [
               { test: "datum === activeGeography", value: COLORS.link },
               { scale: "color", field: "properties.observed_expected_rate" },

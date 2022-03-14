@@ -8,4 +8,9 @@ export const COLORS = {
   beige: "#F8E3CA",
 };
 
+// Source: https://hihayk.github.io/scale/
+export const COLOR_SCALES = {
+  primary: ["#2D3045", "#4E5663", "#707A81", "#919C9F", "#B3BDBD", "#D5DAD9"],
+};
+
 export const NULL_CLUSTER = { name: "", cluster_number: -1 };
