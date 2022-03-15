@@ -91,12 +91,6 @@ const spec = computed(() => {
         range: "height",
         padding: 0.2,
       },
-      {
-        name: "color",
-        type: "ordinal",
-        domain: { data: "yFields", field: "name" },
-        range: [COLORS.pink, COLORS.beige, COLORS.green, COLORS.info],
-      },
     ],
 
     axes: [
@@ -134,8 +128,8 @@ const spec = computed(() => {
               signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
             },
             height: { scale: "yscale", band: 1 },
-            fill: { scale: "color", field: "name" },
-            stroke: { scale: "color", field: "name" },
+            fill: { value: COLORS.dark },
+            stroke: { value: COLORS.dark },
           },
           update: {
             opacity: { value: 0.9 },
@@ -161,7 +155,7 @@ const spec = computed(() => {
               signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
             },
             height: { scale: "yscale", band: 1 },
-            stroke: { scale: "color", field: "name" },
+            stroke: { value: COLORS.dark },
             strokeDash: { value: [1, 1] },
             fill: { value: "transparent" },
           },
