@@ -62,8 +62,7 @@ const clusters = computed(() => {
           ...g.properties,
           ...datum,
           observed_expected_rate:
-            Math.round((datum.observed_count / datum.expected_count) * 100) /
-            100,
+            1 - datum.observed_count / datum.expected_count,
         };
         filtered.push(g);
       }
@@ -77,7 +76,7 @@ const tooltipSignal = `{
   title: datum.properties.name,
   'Observed Count': datum.properties.observed_count,
   'Expected Count': datum.properties.expected_count,
-  'Observed / Expected Count': datum.properties.observed_expected_rate
+  'Gap': format(datum.properties.observed_expected_rate, ".0%")
 }`;
 
 const spec = computed(() => {
@@ -144,11 +143,8 @@ const spec = computed(() => {
     scales: {
       name: "color",
       type: "linear",
-      domain: {
-        data: "cluster_outlines",
-        field: "properties.observed_expected_rate",
-      },
-      zero: false,
+      domain: [0, 0.5],
+      clamp: true,
       range: COLOR_SCALES.primary,
     },
     projections: [
@@ -200,7 +196,7 @@ const spec = computed(() => {
               { test: "datum === activeGeography", value: COLORS.green },
               { value: "#999999" },
             ],
-            fillOpacity: [{ value: 0.8 }],
+            fillOpacity: [{ value: 0.7 }],
             fill: [
               { test: "datum === activeGeography", value: COLORS.link },
               { scale: "color", field: "properties.observed_expected_rate" },
