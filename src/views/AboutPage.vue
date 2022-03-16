@@ -29,13 +29,11 @@
             Project SIGNAL is a collaboration between the
             <a href="https://health.ri.gov/"
               >Rhode Island Department of Health</a
-            >
-            ; the People, Place, and Health Collective in the Department of
+            >; the People, Place, and Health Collective in the Department of
             Epidemiology at the
             <a href="https://www.brown.edu/academics/public-health/home">
               Brown University School of Public Health</a
-            >
-            ; and the
+            >; and the
             <a href="https://ccv.brown.edu/"
               >Center for Computation and Visualization</a
             >. The People, Place, and Health Collective conducts research to
@@ -52,12 +50,15 @@
           <p>
             <a class="pl-4" href="https://github.com/pph-collective">
               <i class="fab fa-github"></i>
+              <VisuallyHidden>GitHub</VisuallyHidden>
             </a>
             <a class="pl-4" href="https://twitter.com/pph_collective">
               <i class="fab fa-twitter"></i>
+              <VisuallyHidden>Twitter</VisuallyHidden>
             </a>
             <a class="pl-4" href="https://www.instagram.com/pph_collective">
               <i class="fab fa-instagram"></i>
+              <VisuallyHidden>Instagram</VisuallyHidden>
             </a>
           </p>
         </div>
@@ -91,4 +92,5 @@
 <script setup lang="ts">
 import DashboardLayout from "@/layouts/dashboard.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
+import VisuallyHidden from "@/components/base/VisuallyHidden.vue";
 </script>
