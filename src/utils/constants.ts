@@ -6,6 +6,7 @@ export const COLORS = {
   pink: "#B9336A",
   green: "#386540",
   beige: "#F8E3CA",
+  grey: "#999999",
 };
 
 // light to dark

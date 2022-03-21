@@ -1,6 +1,9 @@
 <template>
   <div class="dashboard-card" :class="['is-' + width, 'is-height-' + height]">
-    <header class="dashboard-card-header fullwidth">
+    <header
+      v-if="$slots.title || $slots.topRight || $slots.subtitle"
+      class="dashboard-card-header fullwidth"
+    >
       <div
         class="is-flex is-flex-direction-row is-justify-content-space-between fullwidth"
       >

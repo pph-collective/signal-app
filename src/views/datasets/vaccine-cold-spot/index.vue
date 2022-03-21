@@ -1,4 +1,13 @@
 <template>
+  <DashboardCard width="full" :height="1">
+    <template #content>
+      <ControlPanel
+        :drop-downs="questionDropDowns"
+        flex-direction="column"
+        @selected="updateQuestionControls"
+      />
+    </template>
+  </DashboardCard>
   <DashboardCard width="two-thirds" :height="1">
     <template #content>
       <ControlPanel :drop-downs="dropDowns" @selected="updateControls" />
@@ -37,6 +46,7 @@
           :geo="geo"
           :stats="stats"
           :filter-town="controls.town"
+          :fill-stat="questionControls.fillStat"
           class="is-absolute"
           @new-active-cluster="activeCluster = $event"
           @cluster-clicked="activeClusterClicked = $event"
@@ -120,6 +130,17 @@ const dropDowns = computed(() => {
   };
 });
 
+const questionDropDowns = {
+  fillStat: {
+    label: "Which statistic would you like to highlight on the map?",
+    icon: "fas fa-fill-drip",
+    values: [
+      { name: " ", value: "" }, // name needed to be more than empty otherwise the obj would display
+      { name: "Gap", value: "observed_expected_rate" },
+    ],
+  },
+};
+
 const controls = ref({
   date: datesDropdownValues[0],
   town: townDefault,
@@ -135,6 +156,16 @@ const updateControls = (newControls) => {
   // update the control selections
   for (const [k, v] of Object.entries(newControls)) {
     controls.value[k] = v;
+  }
+};
+
+const questionControls = ref({
+  fillStat: questionDropDowns.fillStat.values[0],
+});
+
+const updateQuestionControls = (newControls) => {
+  for (const [k, v] of Object.entries(newControls)) {
+    questionControls.value[k] = v;
   }
 };
 </script>

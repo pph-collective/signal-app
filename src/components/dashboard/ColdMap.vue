@@ -27,6 +27,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  fillStat: {
+    type: Object,
+    required: true,
+  },
 });
 
 const filteredTown = computed(() => {
@@ -41,6 +45,15 @@ const filteredTown = computed(() => {
   }
 
   return filtered;
+});
+
+const fill = computed(() => {
+  return [
+    { test: "datum === activeGeography", value: COLORS.link },
+    props.fillStat.value
+      ? { scale: "color", field: `properties.${props.fillStat.value}` }
+      : { value: COLORS.grey },
+  ];
 });
 
 const clusters = computed(() => {
@@ -194,13 +207,10 @@ const spec = computed(() => {
           update: {
             stroke: [
               { test: "datum === activeGeography", value: COLORS.green },
-              { value: "#999999" },
+              { value: COLORS.grey },
             ],
             fillOpacity: [{ value: 0.7 }],
-            fill: [
-              { test: "datum === activeGeography", value: COLORS.link },
-              { scale: "color", field: "properties.observed_expected_rate" },
-            ],
+            fill: fill.value,
             zindex: [
               { test: "datum === activeGeography", value: 1 },
               { value: 0 },
