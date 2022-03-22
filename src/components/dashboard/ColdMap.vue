@@ -60,37 +60,41 @@ const clusters = computed(() => {
   let deepCopy = cloneDeep(props.geo);
   const filtered = [];
 
-  deepCopy.forEach(
-    (g: {
-      properties: { vax_first_: number; observed_expected_rate: number };
-    }) => {
-      const datum: { observed_count: number; expected_count: number } =
-        props.stats.find(
-          (d: { cluster_number: number }) =>
-            d.cluster_number === g.properties.vax_first_
-        );
+  deepCopy.forEach((g: { properties: Record<string, any> }) => {
+    const datum: Record<string, any> = props.stats.find(
+      (d: { cluster_number: number }) =>
+        d.cluster_number === g.properties.vax_first_
+    );
 
-      if (datum) {
-        g.properties = {
-          ...g.properties,
-          ...datum,
-          observed_expected_rate:
-            1 - datum.observed_count / datum.expected_count,
-        };
-        filtered.push(g);
-      }
+    if (datum) {
+      g.properties = {
+        ...g.properties,
+        ...datum,
+        overall_gap: 1 - datum.observed_count / datum.expected_count,
+        youth_gap: datum.expected_youth - datum.doses_youth,
+        adult_gap: datum.expected_adult - datum.doses_adult,
+      };
+      filtered.push(g);
     }
-  );
+  });
 
   return geoToTopo(filtered);
 });
 
-const tooltipSignal = `{
+const tooltipSignal = computed(() => {
+  let tooltip = `{
   title: datum.properties.name,
   'Observed Count': datum.properties.observed_count,
   'Expected Count': datum.properties.expected_count,
-  'Gap': format(datum.properties.observed_expected_rate, ".0%")
-}`;
+  'Overall Gap': format(datum.properties.overall_gap, ".0%"),`;
+
+  if (props.fillStat.value && props.fillStat.value !== "overall_gap") {
+    tooltip += `'${props.fillStat.name}': datum.properties.${props.fillStat.value},`;
+  }
+  tooltip += "}";
+
+  return tooltip;
+});
 
 const spec = computed(() => {
   return {
@@ -153,13 +157,17 @@ const spec = computed(() => {
         values: filteredTown.value,
       },
     ],
-    scales: {
-      name: "color",
-      type: "linear",
-      domain: [0, 0.5],
-      clamp: true,
-      range: COLOR_SCALES.primary,
-    },
+    scales: props.fillStat.value
+      ? {
+          name: "color",
+          type: "linear",
+          domain: {
+            data: "cluster_outlines",
+            field: `properties.${props.fillStat.value}`,
+          },
+          range: COLOR_SCALES.primary,
+        }
+      : {},
     projections: [
       {
         name: "projection",
@@ -209,14 +217,14 @@ const spec = computed(() => {
               { test: "datum === activeGeography", value: COLORS.green },
               { value: COLORS.grey },
             ],
-            fillOpacity: [{ value: 0.7 }],
+            fillOpacity: { value: 0.7 },
             fill: fill.value,
             zindex: [
               { test: "datum === activeGeography", value: 1 },
               { value: 0 },
             ],
             tooltip: {
-              signal: tooltipSignal,
+              signal: tooltipSignal.value,
             },
           },
         },

@@ -136,7 +136,25 @@ const questionDropDowns = {
     icon: "fas fa-fill-drip",
     values: [
       { name: " ", value: "" }, // name needed to be more than empty otherwise the obj would display
-      { name: "Gap", value: "observed_expected_rate" },
+      { name: "Overall Gap", value: "overall_gap" },
+      {
+        name: "Doses to close gap for White residents",
+        value: "doses_to_close_gap_white",
+      },
+      {
+        name: "Doses to close gap for Black residents",
+        value: "doses_to_close_gap_black",
+      },
+      {
+        name: "Doses to close gap for Latino residents",
+        value: "doses_to_close_gap_latino",
+      },
+      {
+        name: "Doses to close gap for Asian residents",
+        value: "doses_to_close_gap_asian",
+      },
+      { name: "Doses to close gap for youth", value: "youth_gap" },
+      { name: "Doses to close gap for adults", value: "adult_gap" },
     ],
   },
 };
