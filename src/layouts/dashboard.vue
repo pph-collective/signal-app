@@ -89,6 +89,9 @@ main {
   justify-content: space-between;
   align-content: start;
   grid-auto-flow: row;
+  @include tablet-only {
+    grid-template-columns: repeat(2, 1fr);
+  }
   @include mobile {
     grid-template-columns: 100vw;
     column-gap: 0px;

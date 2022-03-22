@@ -61,28 +61,35 @@ withDefaults(defineProps<Props>(), {
 
 .is-one-third {
   grid-column-start: span 2;
-  @include mobile {
+  @include touch {
     grid-column-start: span 1;
   }
 }
 .is-half {
   grid-column-start: span 3;
+  @include touch {
+    grid-column-start: span 1;
+  }
+}
+.is-two-thirds {
+  grid-column-start: span 4;
+  @include tablet-only {
+    grid-column-start: span 2;
+  }
   @include mobile {
     grid-column-start: span 1;
   }
 }
 .is-full {
   grid-column-start: span 6;
+  @include tablet-only {
+    grid-column-start: span 2;
+  }
   @include mobile {
     grid-column-start: span 1;
   }
 }
-.is-two-thirds {
-  grid-column-start: span 4;
-  @include mobile {
-    grid-column-start: span 1;
-  }
-}
+
 .is-height-1 {
   grid-row-start: span 1;
 }
