@@ -95,6 +95,8 @@ main {
     padding-left: 0px !important; // overrides @extend px-4
     padding-right: 0px !important; // overrides @extend px-4
   }
+  max-width: 1600px;
+  margin: auto;
 }
 
 .main-header {

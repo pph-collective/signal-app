@@ -57,6 +57,7 @@ withDefaults(defineProps<Props>(), {
 .card-content {
   padding: 0;
   width: 100%;
+  flex: 1;
 }
 
 .is-one-third {

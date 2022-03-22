@@ -64,6 +64,7 @@ const activeStats = computed(() => {
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
+    description: "Bar chart showing the gap in vaccinations by race",
     background: "transparent",
     padding: { left: 5, top: 0, right: 5, bottom: 0 },
 

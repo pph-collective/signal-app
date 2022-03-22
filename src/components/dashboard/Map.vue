@@ -71,6 +71,7 @@ const tooltipSignal = `{
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
+    description: "Map of COVID-19 vaccination cold spots in Rhode Island",
     background: "transparent",
     autosize: "none",
     signals: [
@@ -92,30 +93,18 @@ const spec = computed(() => {
         value: navigator?.connection?.downlink > 1.5 ? "@2x" : "",
       },
       {
-        name: "hovered",
-        value: null,
-        on: [
-          { events: "@cluster_groups:mouseover", update: "datum" },
-          { events: "mouseout", update: "null" },
-        ],
-      },
-      {
-        name: "clicked",
+        name: "activeGeography",
         value: null,
         on: [
           {
             events: "@cluster_groups:mousedown",
-            update: "clicked === datum ? null : datum",
+            update: "activeGeography === datum ? null : datum",
           },
           {
             events: "@cluster_groups:touchstart",
-            update: "clicked === datum ? null : datum",
+            update: "activeGeography === datum ? null : datum",
           },
         ],
-      },
-      {
-        name: "activeGeography",
-        update: "clicked || hovered",
       },
     ],
     data: [
@@ -205,14 +194,14 @@ const el = ref(null);
 const { view } = useVega({
   spec,
   el,
-  minHeight: ref(400),
+  minHeight: ref(300),
   maxHeight: ref(1280),
   maxWidth: ref(1280),
   includeActions: ref(false),
 });
 
 let currentCluster = NULL_CLUSTER;
-const emit = defineEmits(["new-active-cluster", "cluster-clicked"]);
+const emit = defineEmits(["new-active-cluster"]);
 
 watch(view, () => {
   if (view.value) {
@@ -229,11 +218,6 @@ watch(view, () => {
           emit("new-active-cluster", currentCluster);
         }
       }
-    });
-
-    view.value.addSignalListener("clicked", (name, value) => {
-      const clicked = value !== null;
-      emit("cluster-clicked", clicked);
     });
   }
 });
