@@ -51,7 +51,7 @@ main {
 .dashboard-grid {
   background-image: linear-gradient(to top left, whitesmoke, white);
   display: grid;
-  grid-template-columns: 2fr 10fr;
+  grid-template-columns: minmax(13rem, 2fr) 10fr;
   grid-template-areas: "sidebar main";
   @include mobile {
     grid-template-columns: 100vw;

@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar-container" :class="[collapsed ? 'p-2' : 'p-4']">
+  <div :class="[collapsed ? 'p-2' : 'p-4']">
     <div class="has-text-right">
       <button type="button" class="button bars px-0" @click="toggle">
         <i v-if="!collapsed" class="fas fa-times" />
@@ -16,12 +16,14 @@
           <router-link to="/">
             <i class="fas fa-home mr-1" />
             <span v-if="!collapsed">Home</span>
+            <VisuallyHidden v-else>Home</VisuallyHidden>
           </router-link>
         </li>
         <li>
           <router-link to="/about">
             <i class="fas fa-info-circle mr-1" />
             <span v-if="!collapsed">About</span>
+            <VisuallyHidden v-else>About</VisuallyHidden>
           </router-link>
         </li>
       </ul>
@@ -71,16 +73,14 @@
       <ul class="menu-list">
         <li v-for="(item, i) in RESOURCES" :key="i">
           <a :href="item.link">
-            <span v-if="!collapsed">
+            <div v-if="!collapsed" class="is-flex is-align-items-center">
               <i class="fas mr-1" :class="item.icon" />
-              <span>{{ item.title }}</span>
-            </span>
-            <span v-else>
-              <abbr :title="item.title" class="collapsed-flex-item">
-                <i class="fas mr-1" :class="item.icon" />
-                <span>{{ item.initials }}</span>
-              </abbr>
-            </span>
+              <div>{{ item.title }}</div>
+            </div>
+            <abbr v-else :title="item.title" class="collapsed-flex-item">
+              <i class="fas mr-1" :class="item.icon" />
+              <span>{{ item.initials }}</span>
+            </abbr>
           </a>
         </li>
       </ul>
@@ -90,6 +90,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+
+import VisuallyHidden from "@/components/base/VisuallyHidden.vue";
 
 const emit = defineEmits(["toggle"]);
 
@@ -149,7 +151,6 @@ const activeRoute = computed(() => {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
-
 .not-allowed-cursor {
   cursor: not-allowed;
 }
@@ -165,5 +166,10 @@ const activeRoute = computed(() => {
   span {
     font-size: 0.6rem;
   }
+}
+
+.menu-list a {
+  padding-right: 0;
+  padding-left: 0.5em;
 }
 </style>
