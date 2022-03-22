@@ -36,10 +36,6 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  flexDirection: {
-    type: String,
-    default: "row",
-  },
 });
 
 const emit = defineEmits(["selected"]);
