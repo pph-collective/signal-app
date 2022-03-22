@@ -14,8 +14,6 @@ defineProps<{ show: boolean }>();
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/main.scss";
-
 .content-container {
   position: relative;
   height: 100%;
@@ -33,7 +31,6 @@ defineProps<{ show: boolean }>();
   background-color: white;
 
   p {
-    color: $dark;
     font-style: italic;
     text-align: center;
     filter: brightness(185%);
