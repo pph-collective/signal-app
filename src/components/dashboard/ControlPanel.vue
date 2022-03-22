@@ -56,17 +56,12 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/main.scss";
-
 .control-panel {
   display: grid;
   grid-gap: 1rem;
   justify-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-
-  @include mobile {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  }
+  align-items: end;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 25rem), 1fr));
 }
 .control-panel-dropdown {
   width: 100%;
