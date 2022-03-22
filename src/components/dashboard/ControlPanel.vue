@@ -1,7 +1,6 @@
 <template>
   <div
-    class="control-panel is-family-secondary is-flex"
-    :class="`is-flex-direction-${flexDirection}`"
+    class="control-panel is-family-secondary is-flex is-flex-direction-column"
   >
     <div
       v-for="(options, type) in dropDowns"

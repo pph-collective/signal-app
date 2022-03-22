@@ -1,22 +1,8 @@
 <template>
   <DashboardCard width="full" :height="1">
     <template #content>
-      <ControlPanel
-        :drop-downs="questionDropDowns"
-        flex-direction="column"
-        @selected="updateQuestionControls"
-      />
-    </template>
-  </DashboardCard>
-  <DashboardCard width="two-thirds" :height="1">
-    <template #content>
       <ControlPanel :drop-downs="dropDowns" @selected="updateControls" />
     </template>
-  </DashboardCard>
-
-  <DashboardCard width="one-third" :height="4">
-    <template #title>Side panel</template>
-    <template #content> Active Cluster: {{ activeCluster.name }} </template>
   </DashboardCard>
 
   <DashboardCard width="two-thirds" :height="5">
@@ -46,7 +32,7 @@
           :geo="geo"
           :stats="stats"
           :filter-town="controls.town"
-          :fill-stat="questionControls.fillStat"
+          :fill-stat="controls.fillStat"
           class="is-absolute"
           @new-active-cluster="activeCluster = $event"
           @cluster-clicked="activeClusterClicked = $event"
@@ -60,6 +46,11 @@
         />
       </div>
     </template>
+  </DashboardCard>
+
+  <DashboardCard width="one-third" :height="4">
+    <template #title>Side panel</template>
+    <template #content> Active Cluster: {{ activeCluster.name }} </template>
   </DashboardCard>
 
   <DashboardCard width="one-third" :height="2">
@@ -119,47 +110,47 @@ const townDefault = "All of Rhode Island";
 const towns = RI_GEOJSON.map((geo) => geo.properties.name).sort();
 const dropDowns = computed(() => {
   return {
+    fillStat: {
+      label: "Which statistic would you like to highlight on the map?",
+      icon: "fas fa-fill-drip",
+      values: [
+        { name: "None", value: "" },
+        { name: "Overall Gap", value: "overall_gap" },
+        {
+          name: "Doses to close gap for White residents",
+          value: "doses_to_close_gap_white",
+        },
+        {
+          name: "Doses to close gap for Black residents",
+          value: "doses_to_close_gap_black",
+        },
+        {
+          name: "Doses to close gap for Latino residents",
+          value: "doses_to_close_gap_latino",
+        },
+        {
+          name: "Doses to close gap for Asian residents",
+          value: "doses_to_close_gap_asian",
+        },
+        { name: "Doses to close gap for youth", value: "youth_gap" },
+        { name: "Doses to close gap for adults", value: "adult_gap" },
+      ],
+    },
     town: {
       icon: "fas fa-globe",
+      label: "Where do you want to look into?",
       values: [townDefault, ...towns],
     },
     date: {
       icon: "fas fa-calendar-alt",
+      label: "When are you interested in?",
       values: datesDropdownValues,
     },
   };
 });
 
-const questionDropDowns = {
-  fillStat: {
-    label: "Which statistic would you like to highlight on the map?",
-    icon: "fas fa-fill-drip",
-    values: [
-      { name: " ", value: "" }, // name needed to be more than empty otherwise the obj would display
-      { name: "Overall Gap", value: "overall_gap" },
-      {
-        name: "Doses to close gap for White residents",
-        value: "doses_to_close_gap_white",
-      },
-      {
-        name: "Doses to close gap for Black residents",
-        value: "doses_to_close_gap_black",
-      },
-      {
-        name: "Doses to close gap for Latino residents",
-        value: "doses_to_close_gap_latino",
-      },
-      {
-        name: "Doses to close gap for Asian residents",
-        value: "doses_to_close_gap_asian",
-      },
-      { name: "Doses to close gap for youth", value: "youth_gap" },
-      { name: "Doses to close gap for adults", value: "adult_gap" },
-    ],
-  },
-};
-
 const controls = ref({
+  fillStat: dropDowns.value.fillStat.values[0],
   date: datesDropdownValues[0],
   town: townDefault,
 });
@@ -174,16 +165,6 @@ const updateControls = (newControls) => {
   // update the control selections
   for (const [k, v] of Object.entries(newControls)) {
     controls.value[k] = v;
-  }
-};
-
-const questionControls = ref({
-  fillStat: questionDropDowns.fillStat.values[0],
-});
-
-const updateQuestionControls = (newControls) => {
-  for (const [k, v] of Object.entries(newControls)) {
-    questionControls.value[k] = v;
   }
 };
 </script>
