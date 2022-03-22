@@ -1,11 +1,9 @@
 <template>
-  <div
-    class="control-panel is-family-secondary is-flex is-flex-direction-column"
-  >
+  <div class="control-panel is-family-secondary">
     <div
       v-for="(options, type) in dropDowns"
       :key="'control-panel-dropdown-' + type"
-      class="control-panel-dropdown control has-icons-left m-2"
+      class="control-panel-dropdown control has-icons-left"
     >
       <label class="is-family-primary"
         ><strong>{{ options.label }}</strong></label
@@ -58,6 +56,18 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/main.scss";
+
+.control-panel {
+  display: grid;
+  grid-gap: 1rem;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+
+  @include mobile {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
 .control-panel-dropdown {
   width: 100%;
   .select,

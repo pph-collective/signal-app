@@ -110,6 +110,11 @@ const townDefault = "All of Rhode Island";
 const towns = RI_GEOJSON.map((geo) => geo.properties.name).sort();
 const dropDowns = computed(() => {
   return {
+    town: {
+      icon: "fas fa-globe",
+      label: "Where do you want to look into?",
+      values: [townDefault, ...towns],
+    },
     fillStat: {
       label: "Which statistic would you like to highlight on the map?",
       icon: "fas fa-fill-drip",
@@ -135,11 +140,6 @@ const dropDowns = computed(() => {
         { name: "Doses to close gap for youth", value: "youth_gap" },
         { name: "Doses to close gap for adults", value: "adult_gap" },
       ],
-    },
-    town: {
-      icon: "fas fa-globe",
-      label: "Where do you want to look into?",
-      values: [townDefault, ...towns],
     },
     date: {
       icon: "fas fa-calendar-alt",

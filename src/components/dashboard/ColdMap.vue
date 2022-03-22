@@ -57,7 +57,7 @@ const fill = computed(() => {
 });
 
 const clusters = computed(() => {
-  let deepCopy = cloneDeep(props.geo);
+  const deepCopy = cloneDeep(props.geo);
   const filtered = [];
 
   deepCopy.forEach((g: { properties: Record<string, any> }) => {
@@ -158,16 +158,18 @@ const spec = computed(() => {
       },
     ],
     scales: props.fillStat.value
-      ? {
-          name: "color",
-          type: "linear",
-          domain: {
-            data: "cluster_outlines",
-            field: `properties.${props.fillStat.value}`,
+      ? [
+          {
+            name: "color",
+            type: "linear",
+            domain: {
+              data: "cluster_outlines",
+              field: `properties.${props.fillStat.value}`,
+            },
+            range: COLOR_SCALES.primary,
           },
-          range: COLOR_SCALES.primary,
-        }
-      : {},
+        ]
+      : [],
     projections: [
       {
         name: "projection",
