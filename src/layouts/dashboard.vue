@@ -51,7 +51,7 @@ main {
 .dashboard-grid {
   background-image: linear-gradient(to top left, whitesmoke, white);
   display: grid;
-  grid-template-columns: 2fr 10fr;
+  grid-template-columns: minmax(13rem, 2fr) 10fr;
   grid-template-areas: "sidebar main";
   @include mobile {
     grid-template-columns: 100vw;
@@ -89,12 +89,17 @@ main {
   justify-content: space-between;
   align-content: start;
   grid-auto-flow: row;
+  @include tablet-only {
+    grid-template-columns: repeat(2, 1fr);
+  }
   @include mobile {
     grid-template-columns: 100vw;
     column-gap: 0px;
     padding-left: 0px !important; // overrides @extend px-4
     padding-right: 0px !important; // overrides @extend px-4
   }
+  max-width: 1600px;
+  margin: auto;
 }
 
 .main-header {

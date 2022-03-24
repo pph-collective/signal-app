@@ -8,22 +8,9 @@ $dark: #434343;
 $menu-item-active-background-color: $primary;
 $family-sans-serif: "avenir", "Montserrat", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 $family-secondary: "Sinhala MN", "Assistant", $family-sans-serif;
+
 @import "../../../node_modules/bulma/bulma.sass";
 
-// widely used utility classes
-.is-flex-column {
-  @extend .is-flex;
-  flex-direction: column;
-}
-
-/* used by download form and explore form fields */
-.control-item {
-  @extend .py-2;
-  @extend .px-2;
-  width: 100%;
-  flex-grow: 1;
-  min-width: 250px;
-}
 
 // have buttons wrap lines - this is overwriting bulma
 .button {
@@ -35,16 +22,17 @@ $family-secondary: "Sinhala MN", "Assistant", $family-sans-serif;
 // used in vega lite svgs
 text {
   font-family: $family-sans-serif;
-  font-size: 0.7rem;
 }
 
 #vg-tooltip-element.vg-tooltip {
   white-space: pre-wrap;
   color: #333333;
   font-family: $family-sans-serif;
+  font-size: 0.7rem;
   h2 {
     margin-bottom: 0.2em;
     font-weight: bold;
+    font-size: 1rem;
   }
   table {
     tr {

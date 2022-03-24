@@ -5,14 +5,14 @@
     </template>
   </DashboardCard>
 
-  <DashboardCard width="two-thirds" :height="5">
+  <DashboardCard width="full" :height="5">
     <template #title
       >Map: {{ zoomed ? activeCluster.name : "All Cold Spots" }}</template
     >
 
     <template #top-right>
       <button
-        :disabled="!activeCluster.name || !activeClusterClicked"
+        :disabled="!activeCluster.name"
         class="zoom-button button is-secondary is-light ml-4"
         @click="zoomed = !zoomed"
       >
@@ -35,7 +35,6 @@
           :fill-stat="controls.fillStat"
           class="is-absolute"
           @new-active-cluster="activeCluster = $event"
-          @cluster-clicked="activeClusterClicked = $event"
         />
         <ClusterMap
           v-if="activeCluster && zoomed"
@@ -48,19 +47,25 @@
     </template>
   </DashboardCard>
 
-  <DashboardCard width="one-third" :height="4">
+  <DashboardCard width="one-third" :height="2">
     <template #title>Side panel</template>
-    <template #content> Active Cluster: {{ activeCluster.name }} </template>
+    <template #content>
+      <HiddenContent :show="activeCluster.name !== ''">
+        Active Cluster: {{ activeCluster.name }}
+      </HiddenContent>
+    </template>
   </DashboardCard>
 
-  <DashboardCard width="one-third" :height="2">
+  <DashboardCard width="two-thirds" :height="2">
     <template #title>Gap by Race</template>
     <template #content>
-      <GapChart
-        :stats="stats"
-        :active-cluster="activeCluster.name"
-        :field-names="['asian', 'black', 'latino', 'white']"
-      />
+      <HiddenContent :show="activeCluster.name !== ''">
+        <GapChart
+          :stats="stats"
+          :active-cluster="activeCluster.name"
+          :field-names="['asian', 'black', 'latino', 'white']"
+        />
+      </HiddenContent>
     </template>
   </DashboardCard>
 
@@ -78,6 +83,7 @@ import RI_GEOJSON from "@/assets/geography/ri.json";
 import ControlPanel from "@/components/dashboard/ControlPanel.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import ColdMap from "@/components/dashboard/ColdMap.vue";
+import HiddenContent from "@/components/base/HiddenContent.vue";
 import ClusterMap from "@/components/dashboard/ClusterMap.vue";
 import GapChart from "@/components/dashboard/GapChart.vue";
 
@@ -85,7 +91,6 @@ import { fetchKeys, fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
 
 const activeCluster = ref(NULL_CLUSTER);
-const activeClusterClicked = ref(false);
 const zoomed = ref(false);
 
 const datasetName = "vax_first_dose_coldspots";
@@ -171,10 +176,11 @@ const updateControls = (newControls) => {
 
 <style scoped>
 .map-container {
-  max-width: 95vw;
-  height: 80vh;
+  max-width: min(1280px, 95vw);
+  height: max(300px, 75vh);
   max-height: 1280px;
   position: relative;
+  margin: auto;
 }
 
 .zoom-button {

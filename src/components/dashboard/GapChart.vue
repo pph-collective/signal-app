@@ -61,11 +61,14 @@ const activeStats = computed(() => {
   }
 });
 
+const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
+    description: "Bar chart showing the gap in vaccinations by race",
     background: "transparent",
-    padding: { left: 5, top: 0, right: 5, bottom: 0 },
+    padding: { left: 0, top: 0, right: 0, bottom: -1 },
 
     data: [
       {
@@ -102,6 +105,7 @@ const spec = computed(() => {
         labelSeparation: 4,
         domain: false,
         ticks: false,
+        labelFontSize: remSize * 0.7,
       },
       {
         orient: "left",
@@ -112,6 +116,7 @@ const spec = computed(() => {
         labelFontWeight: 700,
         labelPadding: 5,
         offset: 1.5,
+        labelFontSize: remSize * 0.7,
       },
     ],
 
@@ -178,9 +183,13 @@ const spec = computed(() => {
             fill: { value: COLORS.dark },
             align: { value: "center" },
             baseline: { value: "middle" },
+            fontSize: { value: remSize * 0.7 },
             text: {
-              signal:
-                "datum.datum.gap > 0 && datum.width > 60 ? datum.datum.gap + ' doses' : datum.datum.gap > 0 && datum.width > 25 ? datum.datum.gap : ''",
+              signal: `datum.datum.gap > 0 && datum.width > ${
+                remSize * 3.75
+              } ? datum.datum.gap + ' doses' : datum.datum.gap > 0 && datum.width > ${
+                remSize * 1.75
+              } ? datum.datum.gap : ''`,
             },
           },
         },

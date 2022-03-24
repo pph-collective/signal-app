@@ -47,6 +47,7 @@ const filteredLocations = computed(() =>
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
+    description: `Map zoomed in to the ${props.cluster.name} cold spot`,
     background: "white",
     signals: [
       {
