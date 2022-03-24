@@ -5,6 +5,9 @@
       :key="'control-panel-dropdown-' + type"
       class="control-panel-dropdown control has-icons-left"
     >
+      <label class="is-family-primary"
+        ><strong>{{ options.label }}</strong></label
+      >
       <span class="select">
         <select :id="type" v-model="selected[type]">
           <option
@@ -15,9 +18,9 @@
             {{ option.name || option }}
           </option>
         </select>
-      </span>
-      <span class="icon is-small is-left pl-1">
-        <i :class="options.icon"></i>
+        <span class="icon is-small is-left pl-1">
+          <i :class="options.icon"></i>
+        </span>
       </span>
     </div>
   </div>
@@ -55,13 +58,13 @@ watch(
 <style lang="scss" scoped>
 .control-panel {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   grid-gap: 1rem;
   justify-items: center;
+  align-items: end;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 25rem), 1fr));
 }
 .control-panel-dropdown {
   width: 100%;
-  max-width: 400px;
   .select,
   select {
     width: 100%;

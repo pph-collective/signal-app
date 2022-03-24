@@ -61,7 +61,7 @@ const activeStats = computed(() => {
   }
 });
 
-const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize)
+const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 
 const spec = computed(() => {
   return {
@@ -185,8 +185,11 @@ const spec = computed(() => {
             baseline: { value: "middle" },
             fontSize: { value: remSize * 0.7 },
             text: {
-              signal:
-                `datum.datum.gap > 0 && datum.width > ${remSize * 3.75} ? datum.datum.gap + ' doses' : datum.datum.gap > 0 && datum.width > ${remSize * 1.75} ? datum.datum.gap : ''`,
+              signal: `datum.datum.gap > 0 && datum.width > ${
+                remSize * 3.75
+              } ? datum.datum.gap + ' doses' : datum.datum.gap > 0 && datum.width > ${
+                remSize * 1.75
+              } ? datum.datum.gap : ''`,
             },
           },
         },

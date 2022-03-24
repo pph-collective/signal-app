@@ -8,7 +8,7 @@ import { useVega } from "../../composables/useVega";
 
 import RI_GEOJSON from "@/assets/geography/ri.json";
 import NEIGHBORS from "@/assets/geography/neighbors.json";
-import { COLORS, NULL_CLUSTER } from "../../utils/constants";
+import { COLORS, NULL_CLUSTER, COLOR_SCALES } from "../../utils/constants";
 
 import { cloneDeep } from "lodash/lang";
 
@@ -27,6 +27,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  fillStat: {
+    type: Object,
+    required: true,
+  },
 });
 
 const filteredTown = computed(() => {
@@ -43,30 +47,54 @@ const filteredTown = computed(() => {
   return filtered;
 });
 
-const filteredGeo = computed(() => {
-  let filtered = cloneDeep(props.geo);
+const fill = computed(() => {
+  return [
+    { test: "datum === activeGeography", value: COLORS.link },
+    props.fillStat.value
+      ? { scale: "color", field: `properties.${props.fillStat.value}` }
+      : { value: COLORS.grey },
+  ];
+});
 
-  filtered.forEach((g: { properties: { vax_first_: number } }) => {
-    const datum: object =
-      props.stats.find(
-        (d: { cluster_number: number }) =>
-          d.cluster_number === g.properties.vax_first_
-      ) ?? {};
+const clusters = computed(() => {
+  const deepCopy = cloneDeep(props.geo);
+  const filtered = [];
 
-    g.properties = {
-      ...g.properties,
-      ...datum,
-    };
+  deepCopy.forEach((g: { properties: Record<string, any> }) => {
+    const datum: Record<string, any> = props.stats.find(
+      (d: { cluster_number: number }) =>
+        d.cluster_number === g.properties.vax_first_
+    );
+
+    if (datum) {
+      g.properties = {
+        ...g.properties,
+        ...datum,
+        overall_gap: 1 - datum.observed_count / datum.expected_count,
+        youth_gap: datum.expected_youth - datum.doses_youth,
+        adult_gap: datum.expected_adult - datum.doses_adult,
+      };
+      filtered.push(g);
+    }
   });
 
   return geoToTopo(filtered);
 });
 
-const tooltipSignal = `{
+const tooltipSignal = computed(() => {
+  let tooltip = `{
   title: datum.properties.name,
   'Observed Count': datum.properties.observed_count,
   'Expected Count': datum.properties.expected_count,
-}`;
+  'Overall Gap': format(datum.properties.overall_gap, ".0%"),`;
+
+  if (props.fillStat.value && props.fillStat.value !== "overall_gap") {
+    tooltip += `'${props.fillStat.name}': datum.properties.${props.fillStat.value},`;
+  }
+  tooltip += "}";
+
+  return tooltip;
+});
 
 const spec = computed(() => {
   return {
@@ -110,7 +138,7 @@ const spec = computed(() => {
     data: [
       {
         name: "cluster_outlines",
-        values: filteredGeo.value,
+        values: clusters.value,
         format: { type: "topojson", feature: "blocks" },
       },
       {
@@ -118,6 +146,19 @@ const spec = computed(() => {
         values: filteredTown.value,
       },
     ],
+    scales: props.fillStat.value
+      ? [
+          {
+            name: "color",
+            type: "linear",
+            domain: {
+              data: "cluster_outlines",
+              field: `properties.${props.fillStat.value}`,
+            },
+            range: COLOR_SCALES.primary,
+          },
+        ]
+      : [],
     projections: [
       {
         name: "projection",
@@ -165,22 +206,16 @@ const spec = computed(() => {
           update: {
             stroke: [
               { test: "datum === activeGeography", value: COLORS.green },
-              { value: "#999999" },
+              { value: COLORS.grey },
             ],
-            fillOpacity: [
-              { test: "datum === activeGeography", value: 0.6 },
-              { value: 0.3 },
-            ],
-            fill: [
-              { test: "datum === activeGeography", value: COLORS.link },
-              { value: COLORS.green },
-            ],
+            fillOpacity: { value: 0.7 },
+            fill: fill.value,
             zindex: [
               { test: "datum === activeGeography", value: 1 },
               { value: 0 },
             ],
             tooltip: {
-              signal: tooltipSignal,
+              signal: tooltipSignal.value,
             },
           },
         },

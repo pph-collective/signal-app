@@ -28,10 +28,11 @@
 
     <template #content>
       <div class="map-container">
-        <Map
+        <ColdMap
           :geo="geo"
           :stats="stats"
           :filter-town="controls.town"
+          :fill-stat="controls.fillStat"
           class="is-absolute"
           @new-active-cluster="activeCluster = $event"
         />
@@ -81,8 +82,8 @@ import { computed, ref } from "vue";
 import RI_GEOJSON from "@/assets/geography/ri.json";
 import ControlPanel from "@/components/dashboard/ControlPanel.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
+import ColdMap from "@/components/dashboard/ColdMap.vue";
 import HiddenContent from "@/components/base/HiddenContent.vue";
-import Map from "@/components/dashboard/Map.vue";
 import ClusterMap from "@/components/dashboard/ClusterMap.vue";
 import GapChart from "@/components/dashboard/GapChart.vue";
 
@@ -116,16 +117,45 @@ const dropDowns = computed(() => {
   return {
     town: {
       icon: "fas fa-globe",
+      label: "Where do you want to look into?",
       values: [townDefault, ...towns],
+    },
+    fillStat: {
+      label: "Which statistic would you like to highlight on the map?",
+      icon: "fas fa-fill-drip",
+      values: [
+        { name: "None", value: "" },
+        { name: "Overall Gap", value: "overall_gap" },
+        {
+          name: "Doses to close gap for White residents",
+          value: "doses_to_close_gap_white",
+        },
+        {
+          name: "Doses to close gap for Black residents",
+          value: "doses_to_close_gap_black",
+        },
+        {
+          name: "Doses to close gap for Latino residents",
+          value: "doses_to_close_gap_latino",
+        },
+        {
+          name: "Doses to close gap for Asian residents",
+          value: "doses_to_close_gap_asian",
+        },
+        { name: "Doses to close gap for youth", value: "youth_gap" },
+        { name: "Doses to close gap for adults", value: "adult_gap" },
+      ],
     },
     date: {
       icon: "fas fa-calendar-alt",
+      label: "When are you interested in?",
       values: datesDropdownValues,
     },
   };
 });
 
 const controls = ref({
+  fillStat: dropDowns.value.fillStat.values[0],
   date: datesDropdownValues[0],
   town: townDefault,
 });
