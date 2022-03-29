@@ -6,13 +6,11 @@
  *  node ./scripts/upload-data.js -h
  *
  * Example Run
- * node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-01-17 --zip ./data/vax_first_dose_coldspots_01_17_2022.zip --csv ./data/vaccine_first_dose_coldspot_summaries_01_17_2022.csv
+ * node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-03-15 --geojson ./data/vaccine_coldspot_polygons_03_15_2022.geojson --statsfile ./data/vaccine_coldspot_statistics_03_15_2022.json
  */
 
 const fs = require("fs");
 const path = require("path");
-const shapefile = require("shapefile");
-const unzipper = require("unzipper");
 const { ArgumentParser } = require("argparse");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
@@ -29,36 +27,6 @@ const getJson = (jsonFile) => {
   const rawdata = fs.readFileSync(jsonFile);
   return JSON.parse(rawdata)
 }
-
-const getGeo = async (zipFile) => {
-  const zipReader = fs
-    .createReadStream(zipFile, { autoClose: true });
-  const zipPipe = zipReader.pipe(unzipper.Parse({ forceStream: true }));
-
-  const geo = [];
-  let shpFile, dbfFile;
-
-  for await (const entry of zipPipe) {
-    const filename = entry.path;
-    if (filename.endsWith(".shp")) {
-      shpFile = await entry.buffer();
-    } else if (filename.endsWith(".dbf")) {
-      dbfFile = await entry.buffer();
-    } else {
-      // Dispose of entry's contents otherwise the stream will halt
-      // Source: https://www.npmjs.com/package/unzipper
-      entry.autodrain();
-    }
-  }
-
-  if (shpFile) {
-    const source = await shapefile.open(shpFile, dbfFile);
-    await shpToGeo(source, geo);
-  }
-
-  zipReader.unpipe();
-  return geo;
-};
 
 // Source: https://www.npmjs.com/package/shapefile
 const shpToGeo = async (source, geo) => {
@@ -122,7 +90,7 @@ const main = async () => {
   }
 
   const geoExt = path.extname(geojson).toUpperCase();
-  if (![".GEOJSON", ".ZIP"].includes(geoExt)){
+  if (path.extname(geojson).toUpperCase() !== ".GEOJSON"){
     warnAndExit(`ERROR! Expected a geojson file: ${geojson}`);
   }
 
@@ -176,7 +144,7 @@ const main = async () => {
   }
 
   // Convert data
-  const geo = geoExt === ".GEOJSON" ? getJson(geojson) : await getGeo(geojson);
+  const geo = getJson(geojson);
   const stats = getJson(statsfile);
 
   if (localDir) {
