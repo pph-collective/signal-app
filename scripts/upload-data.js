@@ -26,6 +26,11 @@ const warnAndExit = (warning) => {
   process.exit(1);
 };
 
+const getJson = (jsonFile) => {
+  const rawdata = fs.readFileSync(jsonFile);
+  return JSON.parse(rawdata)
+}
+
 const getGeo = async (zipFile) => {
   const zipReader = fs
     .createReadStream(zipFile, { autoClose: true });
@@ -98,12 +103,12 @@ argparse.add_argument("-d", "--date", {
   help: "Date of dataset, formatted in yyyy-mm-dd"
 });
 
-argparse.add_argument("-z", "--zip", {
+argparse.add_argument("-g", "--geojson", {
   required: true,
-  help: "Path to shape file zip",
-});
+  help: "Path to geojson shape file"
+})
 
-argparse.add_argument("-c", "--csv", {
+argparse.add_argument("-s", "--statsfile", {
   required: true,
   help: "Path to stats csv",
 });
@@ -118,28 +123,33 @@ argparse.add_argument("-n", "--newId", {
   help: "if the collection id does not exist, creates a new collection"
 });
 
-argparse.add_argument("-s", "--saveDir", {
+argparse.add_argument("-l", "--localDir", {
   help: "path to local folder to save downloaded files to"
 })
 
 const main = async () => {
-  const { newId, overwrite, zip, csv, id, date, saveDir } = argparse.parse_args();
-
-  // Check Command Line Arguments
-  if (!fs.existsSync(zip)) {
-    warnAndExit(`ERROR! File does not exist: ${zip}`);
-  }
-
-  if (path.extname(zip).toUpperCase() !== ".ZIP") {
-    warnAndExit(`ERROR! Expected a zip file: ${zip}`);
-  }
+  const { newId, overwrite, geojson, statsfile, id, date, localDir } = argparse.parse_args();
 
   if (!dateRegex.test(date)) {
     warnAndExit(`ERROR! Incorrect date format. Use yyyy-mm-dd format: ${date}`);
   }
 
-  if (path.extname(csv).toUpperCase() !== ".CSV") {
-    warnAndExit(`ERROR! Expected a csv file: ${csv}`);
+  if (!fs.existsSync(geojson)) {
+    warnAndExit(`ERROR! File does not exist: ${geojson}`);
+  }
+
+  const geoExt = path.extname(geojson).toUpperCase();
+  if (![".GEOJSON", ".ZIP"].includes(geoExt)){
+    warnAndExit(`ERROR! Expected a geojson file: ${geojson}`);
+  }
+
+  if (!fs.existsSync(statsfile)) {
+    warnAndExit(`ERROR! File does not exist: ${statsfile}`);
+  }
+
+  const statsExt = path.extname(statsfile).toUpperCase();
+  if (![".JSON", ".CSV"].includes(statsExt)) {
+    warnAndExit(`ERROR! Expected a stats file to be JSON or CSV: ${statsfile}`);
   }
 
   process.env.GOOGLE_APPLICATION_CREDENTIALS = "serviceAccount.json";
@@ -160,15 +170,15 @@ const main = async () => {
   const docPath = `${id}/${date}`;
   const docRef = db.collection(id).doc(date);
 
-  const localDir = ` ${saveDir}/${docPath}`;
+  const dir = ` ${localDir}/${docPath}`;
 
-  if (saveDir) {
+  if (localDir) {
     // Check if directory exists locally
-    if (fs.existsSync(localDir)) {
+    if (fs.existsSync(dir)) {
       if (overwrite) {
-        console.warn(`WARNING! Directory exists locally. Overwriting... ${localDir}`);
+        console.warn(`WARNING! Directory exists locally. Overwriting... ${dir}`);
       } else {
-        warnAndExit(`ERROR!: Directory exists locally. Use the overwrite flag if you wish to continue: ${localDir}`);
+        warnAndExit(`ERROR!: Directory exists locally. Use the overwrite flag if you wish to continue: ${dir}`);
       }
     }
   } else {
@@ -184,18 +194,18 @@ const main = async () => {
   }
 
   // Convert data
-  const geo = await getGeo(zip);
-  const stats = await getStats(csv);
+  const geo = geoExt === ".GEOJSON" ? getJson(geojson) : await getGeo(geojson);
+  const stats = statsExt === ".JSON" ? getJson(statsfile) : await getStats(statsfile);
 
-  if (saveDir) {
+  if (localDir) {
     // Make directory, no harm done if already exists
-    fs.mkdir(localDir, { recursive: true }, (err) => {
+    fs.mkdir(dir, { recursive: true }, (err) => {
       if (err) {
         warnAndExit(err);
       }
 
-      const geoPath = `${localDir}/geo.json`;
-      const statsPath = `${localDir}/stats.json`;
+      const geoPath = `${dir}/geo.json`;
+      const statsPath = `${dir}/stats.json`;
 
       fs.writeFile(geoPath, JSON.stringify(geo), (err) => {
         if (err) {
