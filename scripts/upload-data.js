@@ -14,7 +14,6 @@ const path = require("path");
 const shapefile = require("shapefile");
 const unzipper = require("unzipper");
 const { ArgumentParser } = require("argparse");
-const { parse } = require("csv-parse");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
 const { stringify } = require("zipson");
@@ -72,22 +71,6 @@ const shpToGeo = async (source, geo) => {
   return shpToGeo(source, geo);
 }
 
-const getStats = async (csvFile) => {
-  const fileContents = fs.readFileSync(csvFile, "utf8");
-  const parser = parse(fileContents, {
-    cast: true,
-    columns: true,
-    skip_empty_lines: true
-  });
-
-  const records = [];
-  for await (const record of parser) {
-    records.push(record)
-  }
-
-  return records
-}
-
 const argparse = new ArgumentParser({
   description: "SIGNAL - upload data to Firestore",
   add_help: true,
@@ -110,7 +93,7 @@ argparse.add_argument("-g", "--geojson", {
 
 argparse.add_argument("-s", "--statsfile", {
   required: true,
-  help: "Path to stats csv",
+  help: "Path to stats json file",
 });
 
 argparse.add_argument("-o", "--overwrite", {
@@ -147,9 +130,8 @@ const main = async () => {
     warnAndExit(`ERROR! File does not exist: ${statsfile}`);
   }
 
-  const statsExt = path.extname(statsfile).toUpperCase();
-  if (![".JSON", ".CSV"].includes(statsExt)) {
-    warnAndExit(`ERROR! Expected a stats file to be JSON or CSV: ${statsfile}`);
+  if (path.extname(statsfile).toUpperCase() !== ".JSON") {
+    warnAndExit(`ERROR! Expected the stats file to be a json file: ${statsfile}`);
   }
 
   process.env.GOOGLE_APPLICATION_CREDENTIALS = "serviceAccount.json";
@@ -195,7 +177,7 @@ const main = async () => {
 
   // Convert data
   const geo = geoExt === ".GEOJSON" ? getJson(geojson) : await getGeo(geojson);
-  const stats = statsExt === ".JSON" ? getJson(statsfile) : await getStats(statsfile);
+  const stats = getJson(statsfile);
 
   if (localDir) {
     // Make directory, no harm done if already exists
