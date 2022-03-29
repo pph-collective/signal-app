@@ -144,7 +144,7 @@ const main = async () => {
   }
 
   // Convert data
-  const geo = getJson(geojson);
+  const geo = getJson(geojson).features;
   const stats = getJson(statsfile);
 
   if (localDir) {
