@@ -124,26 +124,28 @@ const dropDowns = computed(() => {
       label: "Which statistic would you like to highlight on the map?",
       icon: "fas fa-fill-drip",
       values: [
-        { name: "None", value: "" },
-        { name: "Overall Gap", value: "overall_gap" },
+        { name: "None", value: "", tooltip: "" },
+        { name: "Overall Gap", value: "gap_total_pct", tooltip: "gap_total" },
         {
           name: "Doses to close gap for White residents",
-          value: "doses_to_close_gap_white",
+          value: "gap_white_pct",
+          tooltip: "gap_white",
         },
         {
           name: "Doses to close gap for Black residents",
-          value: "doses_to_close_gap_black",
+          value: "gap_black_pct",
+          tooltip: "gap_black",
         },
         {
           name: "Doses to close gap for Latino residents",
-          value: "doses_to_close_gap_latino",
+          value: "gap_latino_pct",
+          tooltip: "gap_latino",
         },
         {
           name: "Doses to close gap for Asian residents",
-          value: "doses_to_close_gap_asian",
+          value: "gap_asian_pct",
+          tooltip: "gap_asian",
         },
-        { name: "Doses to close gap for youth", value: "youth_gap" },
-        { name: "Doses to close gap for adults", value: "adult_gap" },
       ],
     },
     date: {

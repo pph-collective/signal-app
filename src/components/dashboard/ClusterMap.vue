@@ -12,7 +12,7 @@ import { geoToTopo } from "../../utils/utils";
 // TODO: abstract these somewhere central?
 interface Geo {
   properties: {
-    vax_first_: number;
+    cluster_id: number;
   };
 }
 
@@ -34,7 +34,7 @@ const props = defineProps<Props>();
 // filter the geo to the cluster
 const filteredGeo = computed(() => {
   const features = props.geo.filter(
-    (g) => props.cluster.cluster_number === g.properties.vax_first_
+    (g) => props.cluster.cluster_number === g.properties.cluster_id
   );
 
   return geoToTopo(features, 6e-10);
