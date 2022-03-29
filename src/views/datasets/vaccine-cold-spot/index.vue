@@ -9,7 +9,7 @@
     <template #title>{{
       activeCluster.name
         ? `Cold spot: ${activeCluster.name}`
-        : "Select a cold spot to explore more"
+        : "Select a cold spot to explore"
     }}</template>
 
     <template #top-right>
