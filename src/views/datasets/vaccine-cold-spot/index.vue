@@ -6,9 +6,11 @@
   </DashboardCard>
 
   <DashboardCard width="full" :height="5">
-    <template #title
-      >Map: {{ zoomed ? activeCluster.name : "All Cold Spots" }}</template
-    >
+    <template #title>{{
+      activeCluster.name
+        ? `Cold spot: ${activeCluster.name}`
+        : "Select a cold spot to explore"
+    }}</template>
 
     <template #top-right>
       <button
