@@ -103,7 +103,7 @@ const geo = ref(initialGeo);
 const stats = ref(initialStats);
 
 const datesDropdownValues = dates.map((date) => {
-  const dateString = new Date(date).toLocaleDateString("en-US", {
+  const dateString = new Date(`${date} 00:00`).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
