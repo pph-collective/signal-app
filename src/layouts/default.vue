@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="is-isolated">
     <a class="logo-container" href="/">
       <span class="brand-title is-family-secondary">Project SIGNAL</span>
       <BaseLogo />

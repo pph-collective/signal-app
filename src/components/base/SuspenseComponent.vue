@@ -1,5 +1,4 @@
 <template>
-  <ErrorPage v-if="errored" :message="errorMessage" @clear="errored = false" />
   <Suspense :key="$route.path">
     <slot />
 
@@ -7,6 +6,8 @@
       <LoadingSpinner :loading="true" />
     </template>
   </Suspense>
+
+  <ErrorPage v-if="errored" :message="errorMessage" @clear="errored = false" />
 </template>
 
 <script setup lang="ts">

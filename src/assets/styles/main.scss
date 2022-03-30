@@ -19,6 +19,10 @@ $family-secondary: "Sinhala MN", "Assistant", $family-sans-serif;
   height: revert;
 }
 
+.is-isolated {
+  isolation: isolate;
+}
+
 // used in vega lite svgs
 text {
   font-family: $family-sans-serif;

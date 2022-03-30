@@ -1,11 +1,11 @@
 <template>
-  <DashboardLayout>
-    <router-view v-slot="{ Component }">
-      <SuspenseComponent :key="$route.path">
+  <router-view v-slot="{ Component }">
+    <SuspenseComponent :key="$route.path">
+      <DashboardLayout>
         <component :is="Component"></component>
-      </SuspenseComponent>
-    </router-view>
-  </DashboardLayout>
+      </DashboardLayout>
+    </SuspenseComponent>
+  </router-view>
 </template>
 
 <script setup lang="ts">
