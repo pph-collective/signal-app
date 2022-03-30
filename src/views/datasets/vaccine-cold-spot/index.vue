@@ -105,6 +105,9 @@ const geo = ref(initialGeo);
 const stats = ref(initialStats);
 
 const datesDropdownValues = dates.map((date) => {
+  // Support for ISO 8601 formats differs in that date-only strings (e.g. "1970-01-01") are treated as UTC, not local.
+  // This hack, sets the time to the start of the day such that we get back the day we specified in the yyyy-mm-dd
+  // https://stackoverflow.com/questions/48351987/create-javascript-date-object-from-string-yyyy-mm-dd-in-local-timezone
   const dateString = new Date(`${date} 00:00`).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",

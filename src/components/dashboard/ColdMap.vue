@@ -91,11 +91,12 @@ const clusters = computed(() => {
 
 const tooltipSignal = computed(() => {
   let tooltip = `{
-  title: datum.properties.name,
-  'Overall Gap': datum.properties.gap_total,`;
+  title: datum.properties.name,`;
 
   if (props.fillStat.tooltip && props.fillStat.tooltip !== "gap_total") {
     tooltip += `'${props.fillStat.name}': datum.properties.${props.fillStat.tooltip},`;
+  } else {
+    tooltip += "'Overall Gap': datum.properties.gap_total,";
   }
   tooltip += "}";
 
