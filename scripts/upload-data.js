@@ -28,17 +28,6 @@ const getJson = (jsonFile) => {
   return JSON.parse(rawdata)
 }
 
-// Source: https://www.npmjs.com/package/shapefile
-const shpToGeo = async (source, geo) => {
-  const result = await source.read();
-  if (result.done) {
-    return;
-  }
-
-  geo.push(result.value);
-  return shpToGeo(source, geo);
-}
-
 const argparse = new ArgumentParser({
   description: "SIGNAL - upload data to Firestore",
   add_help: true,
@@ -89,9 +78,8 @@ const main = async () => {
     warnAndExit(`ERROR! File does not exist: ${geojson}`);
   }
 
-  const geoExt = path.extname(geojson).toUpperCase();
   if (path.extname(geojson).toUpperCase() !== ".GEOJSON"){
-    warnAndExit(`ERROR! Expected a geojson file: ${geojson}`);
+    warnAndExit(`ERROR! Expected a .geojson file: ${geojson}`);
   }
 
   if (!fs.existsSync(statsfile)) {
@@ -143,7 +131,6 @@ const main = async () => {
     }
   }
 
-  // Convert data
   const geo = getJson(geojson).features;
   const stats = getJson(statsfile);
 

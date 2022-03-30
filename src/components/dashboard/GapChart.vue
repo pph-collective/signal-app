@@ -35,7 +35,6 @@ const fieldData = computed(() => {
     observedField: `observed_${f}`,
     expectedField: `expected_${f}`,
     populationField: `population_${f}`,
-    gapField: `expected_${f}`,
   }));
 });
 
@@ -48,7 +47,7 @@ const activeStats = computed(() => {
     return fieldData.value.map((f) => ({
       name: f.name,
       pct: Math.min(1, row[f.observedField] / row[f.populationField]),
-      gap: row[f.gapField],
+      gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
     }));
   } else {
     return [];

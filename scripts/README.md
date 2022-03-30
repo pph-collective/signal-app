@@ -30,7 +30,7 @@ The shape file zip and stats csv are converted to json. Then are compressed and 
 
 Run
 
-`node ./scripts/upload-data.js --id <dataset id> --date <date in yyyy-mm-dd> --geojson <path to shape file geojson> --statsfile <path to stats json> [--overwrite] [--newId]`
+`node ./scripts/upload-data.js --id <dataset id> --date <date in yyyy-mm-dd> --geojson <path to cluster geojson> --statsfile <path to stats json> [--overwrite] [--newId]`
 
 ### Example
 
