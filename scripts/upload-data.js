@@ -6,15 +6,12 @@
  *  node ./scripts/upload-data.js -h
  *
  * Example Run
- * node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-01-17 --zip ./data/vax_first_dose_coldspots_01_17_2022.zip --csv ./data/vaccine_first_dose_coldspot_summaries_01_17_2022.csv
+ * node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-03-15 --geojson ./data/vaccine_coldspot_polygons_03_15_2022.geojson --statsfile ./data/vaccine_coldspot_statistics_03_15_2022.json
  */
 
 const fs = require("fs");
 const path = require("path");
-const shapefile = require("shapefile");
-const unzipper = require("unzipper");
 const { ArgumentParser } = require("argparse");
-const { parse } = require("csv-parse");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
 const { stringify } = require("zipson");
@@ -26,61 +23,9 @@ const warnAndExit = (warning) => {
   process.exit(1);
 };
 
-const getGeo = async (zipFile) => {
-  const zipReader = fs
-    .createReadStream(zipFile, { autoClose: true });
-  const zipPipe = zipReader.pipe(unzipper.Parse({ forceStream: true }));
-
-  const geo = [];
-  let shpFile, dbfFile;
-
-  for await (const entry of zipPipe) {
-    const filename = entry.path;
-    if (filename.endsWith(".shp")) {
-      shpFile = await entry.buffer();
-    } else if (filename.endsWith(".dbf")) {
-      dbfFile = await entry.buffer();
-    } else {
-      // Dispose of entry's contents otherwise the stream will halt
-      // Source: https://www.npmjs.com/package/unzipper
-      entry.autodrain();
-    }
-  }
-
-  if (shpFile) {
-    const source = await shapefile.open(shpFile, dbfFile);
-    await shpToGeo(source, geo);
-  }
-
-  zipReader.unpipe();
-  return geo;
-};
-
-// Source: https://www.npmjs.com/package/shapefile
-const shpToGeo = async (source, geo) => {
-  const result = await source.read();
-  if (result.done) {
-    return;
-  }
-
-  geo.push(result.value);
-  return shpToGeo(source, geo);
-}
-
-const getStats = async (csvFile) => {
-  const fileContents = fs.readFileSync(csvFile, "utf8");
-  const parser = parse(fileContents, {
-    cast: true,
-    columns: true,
-    skip_empty_lines: true
-  });
-
-  const records = [];
-  for await (const record of parser) {
-    records.push(record)
-  }
-
-  return records
+const getJson = (jsonFile) => {
+  const rawdata = fs.readFileSync(jsonFile);
+  return JSON.parse(rawdata)
 }
 
 const argparse = new ArgumentParser({
@@ -98,14 +43,14 @@ argparse.add_argument("-d", "--date", {
   help: "Date of dataset, formatted in yyyy-mm-dd"
 });
 
-argparse.add_argument("-z", "--zip", {
+argparse.add_argument("-g", "--geojson", {
   required: true,
-  help: "Path to shape file zip",
-});
+  help: "Path to geojson shape file"
+})
 
-argparse.add_argument("-c", "--csv", {
+argparse.add_argument("-s", "--statsfile", {
   required: true,
-  help: "Path to stats csv",
+  help: "Path to stats json file",
 });
 
 argparse.add_argument("-o", "--overwrite", {
@@ -118,28 +63,31 @@ argparse.add_argument("-n", "--newId", {
   help: "if the collection id does not exist, creates a new collection"
 });
 
-argparse.add_argument("-s", "--saveDir", {
+argparse.add_argument("-l", "--localDir", {
   help: "path to local folder to save downloaded files to"
 })
 
 const main = async () => {
-  const { newId, overwrite, zip, csv, id, date, saveDir } = argparse.parse_args();
-
-  // Check Command Line Arguments
-  if (!fs.existsSync(zip)) {
-    warnAndExit(`ERROR! File does not exist: ${zip}`);
-  }
-
-  if (path.extname(zip).toUpperCase() !== ".ZIP") {
-    warnAndExit(`ERROR! Expected a zip file: ${zip}`);
-  }
+  const { newId, overwrite, geojson, statsfile, id, date, localDir } = argparse.parse_args();
 
   if (!dateRegex.test(date)) {
     warnAndExit(`ERROR! Incorrect date format. Use yyyy-mm-dd format: ${date}`);
   }
 
-  if (path.extname(csv).toUpperCase() !== ".CSV") {
-    warnAndExit(`ERROR! Expected a csv file: ${csv}`);
+  if (!fs.existsSync(geojson)) {
+    warnAndExit(`ERROR! File does not exist: ${geojson}`);
+  }
+
+  if (path.extname(geojson).toUpperCase() !== ".GEOJSON"){
+    warnAndExit(`ERROR! Expected a .geojson file: ${geojson}`);
+  }
+
+  if (!fs.existsSync(statsfile)) {
+    warnAndExit(`ERROR! File does not exist: ${statsfile}`);
+  }
+
+  if (path.extname(statsfile).toUpperCase() !== ".JSON") {
+    warnAndExit(`ERROR! Expected the stats file to be a json file: ${statsfile}`);
   }
 
   process.env.GOOGLE_APPLICATION_CREDENTIALS = "serviceAccount.json";
@@ -160,15 +108,15 @@ const main = async () => {
   const docPath = `${id}/${date}`;
   const docRef = db.collection(id).doc(date);
 
-  const localDir = ` ${saveDir}/${docPath}`;
+  const dir = ` ${localDir}/${docPath}`;
 
-  if (saveDir) {
+  if (localDir) {
     // Check if directory exists locally
-    if (fs.existsSync(localDir)) {
+    if (fs.existsSync(dir)) {
       if (overwrite) {
-        console.warn(`WARNING! Directory exists locally. Overwriting... ${localDir}`);
+        console.warn(`WARNING! Directory exists locally. Overwriting... ${dir}`);
       } else {
-        warnAndExit(`ERROR!: Directory exists locally. Use the overwrite flag if you wish to continue: ${localDir}`);
+        warnAndExit(`ERROR!: Directory exists locally. Use the overwrite flag if you wish to continue: ${dir}`);
       }
     }
   } else {
@@ -183,19 +131,18 @@ const main = async () => {
     }
   }
 
-  // Convert data
-  const geo = await getGeo(zip);
-  const stats = await getStats(csv);
+  const geo = getJson(geojson).features;
+  const stats = getJson(statsfile);
 
-  if (saveDir) {
+  if (localDir) {
     // Make directory, no harm done if already exists
-    fs.mkdir(localDir, { recursive: true }, (err) => {
+    fs.mkdir(dir, { recursive: true }, (err) => {
       if (err) {
         warnAndExit(err);
       }
 
-      const geoPath = `${localDir}/geo.json`;
-      const statsPath = `${localDir}/stats.json`;
+      const geoPath = `${dir}/geo.json`;
+      const statsPath = `${dir}/stats.json`;
 
       fs.writeFile(geoPath, JSON.stringify(geo), (err) => {
         if (err) {

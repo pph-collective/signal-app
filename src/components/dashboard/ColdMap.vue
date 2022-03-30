@@ -62,17 +62,25 @@ const clusters = computed(() => {
 
   deepCopy.forEach((g: { properties: Record<string, any> }) => {
     const datum: Record<string, any> = props.stats.find(
-      (d: { cluster_number: number }) =>
-        d.cluster_number === g.properties.vax_first_
+      (d: { cluster_id: number }) => d.cluster_id === g.properties.cluster_id
     );
+
+    const additionalFields = {};
+    ["total", "asian", "black", "latino", "white"].forEach((field) => {
+      // Floored the gap such that it's always >= 0
+      additionalFields[`gap_${field}`] = Math.max(
+        0,
+        datum[`expected_${field}`] - datum[`observed_${field}`]
+      );
+      additionalFields[`gap_${field}_pct`] =
+        additionalFields[`gap_${field}`] / datum[`population_${field}`];
+    });
 
     if (datum) {
       g.properties = {
         ...g.properties,
         ...datum,
-        overall_gap: 1 - datum.observed_count / datum.expected_count,
-        youth_gap: datum.expected_youth - datum.doses_youth,
-        adult_gap: datum.expected_adult - datum.doses_adult,
+        ...additionalFields,
       };
       filtered.push(g);
     }
@@ -83,13 +91,12 @@ const clusters = computed(() => {
 
 const tooltipSignal = computed(() => {
   let tooltip = `{
-  title: datum.properties.name,
-  'Observed Count': datum.properties.observed_count,
-  'Expected Count': datum.properties.expected_count,
-  'Overall Gap': format(datum.properties.overall_gap, ".0%"),`;
+  title: datum.properties.name,`;
 
-  if (props.fillStat.value && props.fillStat.value !== "overall_gap") {
-    tooltip += `'${props.fillStat.name}': datum.properties.${props.fillStat.value},`;
+  if (props.fillStat.tooltip && props.fillStat.tooltip !== "gap_total") {
+    tooltip += `'${props.fillStat.name}': datum.properties.${props.fillStat.tooltip},`;
+  } else {
+    tooltip += "'Overall Gap': datum.properties.gap_total,";
   }
   tooltip += "}";
 
@@ -242,9 +249,9 @@ watch(view, () => {
   if (view.value) {
     view.value.addSignalListener("activeGeography", (name, value) => {
       if (value) {
-        const { name, cluster_number } = value.properties;
+        const { name, cluster_id } = value.properties;
         if (name !== currentCluster.name) {
-          currentCluster = { name, cluster_number };
+          currentCluster = { name, cluster_id };
           emit("new-active-cluster", currentCluster);
         }
       } else {

@@ -9,8 +9,8 @@ import { COLORS } from "../../utils/constants";
 
 interface Stat {
   name: string;
-  expected_count: number;
-  coldspot_population: number;
+  expected_total: number;
+  population_total: number;
 }
 
 interface Props {
@@ -23,7 +23,7 @@ const props = defineProps<Props>();
 
 // the expected percent is constant, so we can calculate it from the first row of data
 const expected = computed(
-  () => props.stats[0].expected_count / props.stats[0].coldspot_population
+  () => props.stats[0].expected_total / props.stats[0].population_total
 );
 
 // TODO: these fields will change when the data reporting is normalized to have actual / population
@@ -32,15 +32,11 @@ const fieldData = computed(() => {
     val.substring(0, 1).toUpperCase() + val.substring(1).toLowerCase();
   return props.fieldNames.map((f) => ({
     name: upperFirst(f),
-    actualField: `doses_${f}`,
-    expectedField: `doses_to_close_gap_${f}`,
+    observedField: `observed_${f}`,
+    expectedField: `expected_${f}`,
     populationField: `population_${f}`,
   }));
 });
-
-// TODO: this is temporary as this should be fixed on the data side
-const parseNum = (val) =>
-  typeof val === "string" ? parseInt(val.replaceAll(",", "")) : val;
 
 // TODO: these calcs will change when the data reporting is normalized to have actual / population
 const activeStats = computed(() => {
@@ -50,11 +46,8 @@ const activeStats = computed(() => {
     // don't let a population be more than 100% vaccinated
     return fieldData.value.map((f) => ({
       name: f.name,
-      pct: Math.min(
-        1,
-        parseNum(row[f.actualField]) / parseNum(row[f.populationField])
-      ),
-      gap: parseNum(row[f.expectedField]),
+      pct: Math.min(1, row[f.observedField] / row[f.populationField]),
+      gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
     }));
   } else {
     return [];
