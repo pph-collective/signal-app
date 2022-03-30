@@ -14,4 +14,4 @@ export const COLOR_SCALES = {
   primary: ["#FFFFFF", COLORS.primary],
 };
 
-export const NULL_CLUSTER = { name: "", cluster_number: -1 };
+export const NULL_CLUSTER = { name: "", cluster_id: -1 };

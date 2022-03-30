@@ -248,9 +248,9 @@ watch(view, () => {
   if (view.value) {
     view.value.addSignalListener("activeGeography", (name, value) => {
       if (value) {
-        const { name, cluster_number } = value.properties;
+        const { name, cluster_id } = value.properties;
         if (name !== currentCluster.name) {
-          currentCluster = { name, cluster_number };
+          currentCluster = { name, cluster_id };
           emit("new-active-cluster", currentCluster);
         }
       } else {

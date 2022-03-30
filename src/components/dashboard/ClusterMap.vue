@@ -23,7 +23,7 @@ interface Location {
 interface Props {
   cluster: {
     name: string;
-    cluster_number: number;
+    cluster_id: number;
   };
   geo: Geo[];
   locations: Location[];
@@ -34,7 +34,7 @@ const props = defineProps<Props>();
 // filter the geo to the cluster
 const filteredGeo = computed(() => {
   const features = props.geo.filter(
-    (g) => props.cluster.cluster_number === g.properties.cluster_id
+    (g) => props.cluster.cluster_id === g.properties.cluster_id
   );
 
   return geoToTopo(features, 6e-10);
