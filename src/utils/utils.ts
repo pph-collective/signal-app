@@ -35,7 +35,7 @@ export const localISODateToUTC = (d: string) =>
     parseInt(d.slice(8, 10))
   );
 
-export const geoToTopo = (features, sphericalArea = 1e-9) => {
+export const geoToTopo = (features, sphericalArea) => {
   const collection = {
     blocks: { type: "FeatureCollection", features },
   };
