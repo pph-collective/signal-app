@@ -93,18 +93,18 @@ const main = async () => {
     {
       filePath: geojson,
       extension: "geojson",
-      collection: "geo",
+      field: "geo",
       property: "features",
     },
     {
       filePath: statsfile,
       extension: "json",
-      collection: "stats",
+      field: "stats",
     },
     {
       filePath: barriersfile,
       extension: "json",
-      collection: "barriers",
+      field: "barriers",
     },
   ];
 
@@ -188,8 +188,8 @@ const main = async () => {
         warnAndExit(err);
       }
 
-      files.forEach(({ collection, data }) => {
-        const path = `${dir}/${collection}.json`;
+      files.forEach(({ field, data }) => {
+        const path = `${dir}/${field}.json`;
 
         fs.writeFile(path, JSON.stringify(data), (err) => {
           if (err) {
@@ -200,11 +200,10 @@ const main = async () => {
       });
     });
   } else {
-    console.log(keys);
     await docRef.set({
       ...files.reduce(
-        (previous, { data, collection }) => ({
-          [collection]: stringify(data),
+        (previous, { data, field }) => ({
+          [field]: stringify(data),
           ...previous,
         }),
         {}
