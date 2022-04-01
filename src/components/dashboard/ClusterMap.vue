@@ -12,6 +12,12 @@ import { geoToTopo } from "../../utils/utils";
 // TODO: abstract these somewhere central?
 interface Location {
   name: string;
+  street_address: string;
+  city: string;
+  state: string;
+  zip_code: string;
+  longitude: number;
+  latitude: number;
 }
 
 interface Props {
@@ -36,6 +42,7 @@ const spec = computed(() => {
     $schema: "https://vega.github.io/schema/vega/v5.json",
     description: `Map zoomed in to the ${props.cluster.name} cold spot`,
     background: "white",
+    autosize: "none",
     signals: [
       {
         name: "tileUrl",
