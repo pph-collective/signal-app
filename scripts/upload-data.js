@@ -59,6 +59,11 @@ argparse.add_argument("-b", "--barriersfile", {
   help: "Path to barriers json file",
 });
 
+argparse.add_argument("-loc", "--locationsfile", {
+  required: true,
+  help: "Path to locations json file"
+})
+
 argparse.add_argument("-o", "--overwrite", {
   action: "store_true",
   help: "if files already exists, overwrite it",
@@ -80,6 +85,7 @@ const main = async () => {
     geojson,
     statsfile,
     barriersfile,
+    locationsfile,
     id,
     date,
     localDir,
@@ -106,6 +112,11 @@ const main = async () => {
       extension: "json",
       field: "barriers",
     },
+    {
+      filePath: locationsfile,
+      extension: "json",
+      field: "locations"
+    }
   ];
 
   files.forEach(({ filePath, extension }) => {
