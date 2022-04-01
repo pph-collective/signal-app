@@ -42,7 +42,7 @@
           v-if="activeCluster && zoomed"
           :cluster="activeCluster"
           :geo="geo"
-          :locations="[]"
+          :locations="LOCATIONS"
           class="is-absolute"
         />
       </div>
@@ -81,6 +81,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
+import LOCATIONS from "@/assets/geography/locations.json";
 import RI_GEOJSON from "@/assets/geography/ri.json";
 import ControlPanel from "@/components/dashboard/ControlPanel.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
