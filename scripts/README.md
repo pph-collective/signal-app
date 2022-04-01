@@ -30,13 +30,13 @@ The shape file zip and stats csv are converted to json. Then are compressed and 
 
 Run
 
-`node ./scripts/upload-data.js --id <dataset id> --date <date in yyyy-mm-dd> --geojson <path to cluster geojson> --statsfile <path to stats json> [--overwrite] [--newId]`
+`node ./scripts/upload-data.js --id <dataset id> --date <date in yyyy-mm-dd> --geojson <path to cluster geojson> --statsfile <path to stats json> --barriersfile <path to barriers json> [--overwrite] [--newId]`
 
 ### Example
 
 Example Run Command
 
-`node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-03-15 --geojson ./data/vaccine_coldspot_polygons_03_15_2022.geojson --statsfile ./data/vaccine_coldspot_statistics_03_15_2022.json`
+`node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-03-15 --geojson ./data/vaccine_coldspot_polygons_03_15_2022.geojson --statsfile ./data/vaccine_coldspot_statistics_03_15_2022.json --barriersfile ./data/vaccine_coldspot_side_panel_percentages_03_15_2022.json`
 
 ### Command Line Arguments
 ```
@@ -45,6 +45,7 @@ Example Run Command
 -d, --date DATE       Date of dataset, formatted in yyyy-mm-dd
 -g, --geojson         Path to geojson shape file
 -s, --statsfile       Path to stats json file
+-b, --barriersfile    Path to barriers json file
 -o, --overwrite       if files already exists, overwrite it
 -n, --newId           if the collection id does not exist, creates a new collection
 ```
