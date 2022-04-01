@@ -10,7 +10,7 @@
     </section>
     <section class="footer-bottom has-text-light has-text-weight-medium">
       <i class="far fa-copyright" />
-      <span class="copyright-span">{{ year }} </span>
+      <span class="copyright-span">{{ year }}{{ " " }}</span>
       <span class="copyright-span">People, Place and Health Collective</span>
     </section>
   </footer>

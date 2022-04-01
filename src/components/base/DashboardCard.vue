@@ -4,10 +4,8 @@
       v-if="$slots.title || $slots.topRight || $slots.subtitle"
       class="dashboard-card-header fullwidth"
     >
-      <div
-        class="is-flex is-flex-direction-row is-justify-content-space-between fullwidth"
-      >
-        <h2 class="title mb-3 is-flex-grow-1"><slot name="title"></slot></h2>
+      <div class="dashboard-title-row fullwidth mb-3">
+        <h2 class="title mb-0 title-flex"><slot name="title"></slot></h2>
         <div><slot name="top-right"></slot></div>
       </div>
       <h3 class="subtitle">
@@ -51,6 +49,18 @@ withDefaults(defineProps<Props>(), {
   align-items: flex-start;
   @extend .px-4;
   @extend .py-4;
+}
+
+.dashboard-title-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.title-flex {
+  flex: 1 0 15rem;
 }
 
 .fullwidth {

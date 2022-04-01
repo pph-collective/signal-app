@@ -61,8 +61,8 @@ argparse.add_argument("-b", "--barriersfile", {
 
 argparse.add_argument("-loc", "--locationsfile", {
   required: true,
-  help: "Path to locations json file"
-})
+  help: "Path to locations json file",
+});
 
 argparse.add_argument("-o", "--overwrite", {
   action: "store_true",
@@ -115,8 +115,8 @@ const main = async () => {
     {
       filePath: locationsfile,
       extension: "json",
-      field: "locations"
-    }
+      field: "locations",
+    },
   ];
 
   files.forEach(({ filePath, extension }) => {
