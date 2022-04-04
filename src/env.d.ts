@@ -38,3 +38,14 @@ interface FillStat {
   value: string;
   tooltip: string;
 }
+
+// TODO: what other fields go here?
+interface Location {
+  name: string;
+  street_address: string;
+  city: string;
+  state: string;
+  zip_code: string;
+  longitude: number;
+  latitude: number;
+}

@@ -20,7 +20,6 @@ const expected = computed(
   () => props.stats[0].expected_total / props.stats[0].population_total
 );
 
-// TODO: these fields will change when the data reporting is normalized to have actual / population
 const fieldData = computed(() => {
   const upperFirst = (val) =>
     val.substring(0, 1).toUpperCase() + val.substring(1).toLowerCase();
@@ -32,7 +31,6 @@ const fieldData = computed(() => {
   }));
 });
 
-// TODO: these calcs will change when the data reporting is normalized to have actual / population
 const activeStats = computed(() => {
   const row = props.stats.find((stat) => stat.name === props.activeCluster);
 
