@@ -44,6 +44,7 @@ Example Run Command
 -g, --geojson         Path to geojson shape file
 -s, --statsfile       Path to stats json file
 -b, --barriersfile    Path to barriers json file
+-l, --locationsfile   Path to locations json file
 -o, --overwrite       if files already exists, overwrite it
 -n, --newId           if the collection id does not exist, creates a new collection
 ```

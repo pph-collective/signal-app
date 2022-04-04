@@ -26,6 +26,13 @@ const filteredGeo = computed(() => {
   return geoToTopo(features, 6e-10);
 });
 
+// TODO: switch to filtering by cluster_id once it is in the data
+const filteredLocations = computed(
+  () =>
+    // props.locations.filter((l) => l.cluster_id === props.cluster.cluster_id)
+    props.locations
+);
+
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
@@ -59,7 +66,7 @@ const spec = computed(() => {
       },
       {
         name: "landmarks",
-        values: props.locations,
+        values: filteredLocations.value,
         transform: [
           {
             type: "geopoint",

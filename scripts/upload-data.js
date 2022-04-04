@@ -59,7 +59,7 @@ argparse.add_argument("-b", "--barriersfile", {
   help: "Path to barriers json file",
 });
 
-argparse.add_argument("-loc", "--locationsfile", {
+argparse.add_argument("-l", "--locationsfile", {
   required: true,
   help: "Path to locations json file",
 });
@@ -74,7 +74,7 @@ argparse.add_argument("-n", "--newId", {
   help: "if the collection id does not exist, creates a new collection",
 });
 
-argparse.add_argument("-l", "--localDir", {
+argparse.add_argument("-z", "--localDir", {
   help: "path to local folder to save downloaded files to",
 });
 
