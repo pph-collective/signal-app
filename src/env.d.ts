@@ -38,3 +38,8 @@ interface FillStat {
   value: string;
   tooltip: string;
 }
+
+// TODO: what other fields go here?
+interface Location {
+  name: string;
+}
