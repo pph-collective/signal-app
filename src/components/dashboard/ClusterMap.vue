@@ -9,22 +9,8 @@ import { useVega } from "../../composables/useVega";
 import { COLORS } from "../../utils/constants";
 import { geoToTopo } from "../../utils/utils";
 
-// TODO: abstract these somewhere central?
-interface Geo {
-  properties: {
-    cluster_id: number;
-  };
-}
-
-interface Location {
-  name: string;
-}
-
 interface Props {
-  cluster: {
-    name: string;
-    cluster_id: number;
-  };
+  cluster: Cluster;
   geo: Geo[];
   locations: Location[];
 }

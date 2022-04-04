@@ -14,24 +14,12 @@ import { cloneDeep } from "lodash/lang";
 
 import { geoToTopo } from "../../utils/utils";
 
-const props = defineProps({
-  geo: {
-    type: Array,
-    required: true,
-  },
-  stats: {
-    type: Object,
-    required: true,
-  },
-  filterTown: {
-    type: String,
-    required: true,
-  },
-  fillStat: {
-    type: Object,
-    required: true,
-  },
-});
+const props = defineProps<{
+  geo: Geo[];
+  stats: Stat[];
+  filterTown: string;
+  fillStat: FillStat;
+}>();
 
 const filteredTown = computed(() => {
   let filtered = cloneDeep(RI_GEOJSON);
@@ -60,8 +48,8 @@ const clusters = computed(() => {
   const deepCopy = cloneDeep(props.geo);
   const filtered = [];
 
-  deepCopy.forEach((g: { properties: Record<string, any> }) => {
-    const datum: Record<string, any> = props.stats.find(
+  deepCopy.forEach((g: Geo) => {
+    const datum = props.stats.find(
       (d: { cluster_id: number }) => d.cluster_id === g.properties.cluster_id
     );
 

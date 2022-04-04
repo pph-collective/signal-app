@@ -1,4 +1,13 @@
 <template>
+  <DashboardCard width="full">
+    <template #subtitle>
+      Direct trade jianbing pug blog letterpress. Meditation slow-carb raclette
+      meggings. Vice chia polaroid cronut, gentrify tumblr typewriter art party
+      knausgaard. Tilde brooklyn listicle photo booth XOXO cardigan kinfolk
+      live-edge twee tumeric.
+    </template>
+  </DashboardCard>
+
   <DashboardCard width="full" :height="1">
     <template #content>
       <ControlPanel :drop-downs="dropDowns" @selected="updateControls" />
@@ -15,7 +24,7 @@
     <template #top-right>
       <button
         :disabled="!activeCluster.name"
-        class="zoom-button button is-secondary is-light ml-4"
+        class="zoom-button button is-secondary is-light"
         @click="zoomed = !zoomed"
       >
         <span class="icon">
@@ -28,11 +37,19 @@
       </button>
     </template>
 
+    <template #subtitle>
+      Tacos freegan activated charcoal eu hell of humblebrag tofu raw denim duis
+      bicycle rights irure pinterest. Live-edge tote bag tattooed pabst
+      biodiesel etsy knausgaard lo-fi tbh bushwick ethical lorem humblebrag
+      tumeric. Cardigan four dollar toast yr, affogato eu plaid disrupt man bun
+      man braid tote bag trust fund ea meditation.
+    </template>
+
     <template #content>
       <div class="map-container">
         <ColdMap
-          :geo="geo"
-          :stats="stats"
+          :geo="data.geo"
+          :stats="data.stats"
           :filter-town="controls.town"
           :fill-stat="controls.fillStat"
           class="is-absolute"
@@ -41,7 +58,7 @@
         <ClusterMap
           v-if="activeCluster && zoomed"
           :cluster="activeCluster"
-          :geo="geo"
+          :geo="data.geo"
           :locations="[]"
           class="is-absolute"
         />
@@ -49,24 +66,23 @@
     </template>
   </DashboardCard>
 
-  <DashboardCard width="one-third" :height="2">
-    <template #title>Side panel</template>
+  <DashboardCard width="half" :height="2">
+    <template #title>Potential Barriers</template>
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
-        Active Cluster: {{ activeCluster.name }}
+        <PotentialBarriers
+          :barriers="data.barriers"
+          :active-cluster="activeCluster"
+        />
       </HiddenContent>
     </template>
   </DashboardCard>
 
-  <DashboardCard width="two-thirds" :height="2">
+  <DashboardCard width="half" :height="2">
     <template #title>Gap by Race</template>
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
-        <GapChart
-          :stats="stats"
-          :active-cluster="activeCluster.name"
-          :field-names="['asian', 'black', 'latino', 'white']"
-        />
+        <GapByRace :stats="data.stats" :active-cluster="activeCluster" />
       </HiddenContent>
     </template>
   </DashboardCard>
@@ -74,7 +90,34 @@
   <DashboardCard width="full">
     <template #title>Moar Info</template>
     <template #subtitle>Details about the things</template>
-    <template #content> Below the fold things </template>
+    <template #content>
+      <div class="px-4 content">
+        <p>
+          Cred etsy farm-to-table af, proident selfies forage. Hella est
+          keffiyeh master cleanse, ad etsy venmo letterpress brooklyn fanny pack
+          squid ut roof party. In 90's sriracha DIY, la croix ipsum 3 wolf moon
+          gochujang dolore leggings raclette. You probably haven't heard of them
+          gastropub labore hammock lomo jianbing gluten-free cold-pressed irony
+          fam. Air plant ea adaptogen, ullamco austin excepteur meditation.
+          Shaman vice flexitarian polaroid.
+        </p>
+
+        <p>
+          Snackwave wolf gentrify deserunt iPhone pabst. Woke reprehenderit you
+          probably haven't heard of them portland sint. Listicle pitchfork
+          veniam PBRB try-hard disrupt salvia cornhole man bun incididunt.
+          Adaptogen eiusmod fugiat air plant. Eiusmod tilde in celiac la croix.
+          Pitchfork photo booth keffiyeh godard kitsch minim distillery.
+        </p>
+
+        <ul>
+          <li><a href="/">One Link</a></li>
+          <li><a href="/">Two Link</a></li>
+          <li><a href="/" style="color: red">Red Link</a></li>
+          <li><a href="/" style="color: blue">Blue Link</a></li>
+        </ul>
+      </div>
+    </template>
   </DashboardCard>
 </template>
 
@@ -87,7 +130,8 @@ import DashboardCard from "@/components/base/DashboardCard.vue";
 import ColdMap from "@/components/dashboard/ColdMap.vue";
 import HiddenContent from "@/components/base/HiddenContent.vue";
 import ClusterMap from "@/components/dashboard/ClusterMap.vue";
-import GapChart from "@/components/dashboard/GapChart.vue";
+import GapByRace from "@/components/dashboard/GapByRace.vue";
+import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
 
 import { fetchKeys, fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
@@ -97,12 +141,7 @@ const zoomed = ref(false);
 
 const datasetName = "vax_first_dose_coldspots";
 const dates = await fetchKeys(datasetName);
-const { geo: initialGeo, stats: initialStats } = await fetchColdSpotData(
-  datasetName,
-  dates[0]
-);
-const geo = ref(initialGeo);
-const stats = ref(initialStats);
+const data = ref(await fetchColdSpotData(datasetName, dates[0]));
 
 const datesDropdownValues = dates.map((date) => {
   // Support for ISO 8601 formats differs in that date-only strings (e.g. "1970-01-01") are treated as UTC, not local.
@@ -167,10 +206,10 @@ const controls = ref({
   town: townDefault,
 });
 const updateControls = (newControls) => {
+  // TODO: make sure this makes the spinner spin
   if (newControls.date !== controls.value.date.value) {
     fetchColdSpotData(datasetName, newControls.date.value).then((res) => {
-      geo.value = res.geo;
-      stats.value = res.stats;
+      data.value = res;
     });
   }
 
