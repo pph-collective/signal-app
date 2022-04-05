@@ -59,7 +59,7 @@
           v-if="activeCluster && zoomed"
           :cluster="activeCluster"
           :geo="data.geo"
-          :locations="[]"
+          :locations="data.locations"
           class="is-absolute"
         />
       </div>

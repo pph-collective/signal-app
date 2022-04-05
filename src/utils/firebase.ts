@@ -51,7 +51,7 @@ const getDocWithDefaultPreferCache = async <T>(
 };
 
 export const fetchColdSpotData = async (datasetName: string, date: string) => {
-  const defaults = { geo: [], stats: [], barriers: [] };
+  const defaults = { geo: [], stats: [], barriers: [], locations: [] };
   const result = await getDocWithDefaultPreferCache(
     defaults,
     datasetName,

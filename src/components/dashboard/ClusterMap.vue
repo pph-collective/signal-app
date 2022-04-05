@@ -26,15 +26,12 @@ const filteredGeo = computed(() => {
   return geoToTopo(features, 6e-10);
 });
 
-const filteredLocations = computed(() =>
-  props.locations.filter((l) => l.name === props.cluster.name)
-);
-
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
     description: `Map zoomed in to the ${props.cluster.name} cold spot`,
     background: "white",
+    autosize: "none",
     signals: [
       {
         name: "tileUrl",
@@ -62,7 +59,7 @@ const spec = computed(() => {
       },
       {
         name: "landmarks",
-        values: filteredLocations.value,
+        values: props.locations,
         transform: [
           {
             type: "geopoint",
@@ -125,10 +122,8 @@ const spec = computed(() => {
           },
           update: {
             tooltip: {
-              signal: `{'title': datum.location_name,
-                'Address': datum.street_address + ', ' + datum.city + ', RI ' + datum.postal_code,
-                'Category': datum.top_category,
-                'Rank': datum.rank}`,
+              signal: `{'title': datum.name,
+               'Address': datum.street_address + ', ' + datum.city + ', ' + datum.state + ' ' + datum.zip_code}`,
             },
           },
         },
