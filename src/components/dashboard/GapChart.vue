@@ -7,12 +7,6 @@ import { computed, ref } from "vue";
 import { useVega } from "../../composables/useVega";
 import { COLORS } from "../../utils/constants";
 
-interface Stat {
-  name: string;
-  expected_total: number;
-  population_total: number;
-}
-
 interface Props {
   stats: Stat[];
   activeCluster: string;
@@ -26,7 +20,6 @@ const expected = computed(
   () => props.stats[0].expected_total / props.stats[0].population_total
 );
 
-// TODO: these fields will change when the data reporting is normalized to have actual / population
 const fieldData = computed(() => {
   const upperFirst = (val) =>
     val.substring(0, 1).toUpperCase() + val.substring(1).toLowerCase();
@@ -38,7 +31,6 @@ const fieldData = computed(() => {
   }));
 });
 
-// TODO: these calcs will change when the data reporting is normalized to have actual / population
 const activeStats = computed(() => {
   const row = props.stats.find((stat) => stat.name === props.activeCluster);
 
@@ -85,7 +77,7 @@ const spec = computed(() => {
         type: "band",
         domain: { data: "yFields", field: "name" },
         range: "height",
-        padding: 0.2,
+        padding: 0.3,
       },
     ],
 
@@ -166,28 +158,6 @@ const spec = computed(() => {
         },
       },
       {
-        type: "text",
-        interactive: false,
-        from: { data: "gaps" },
-        encode: {
-          enter: {
-            xc: { signal: "datum.x + datum.width / 2" },
-            y: { field: "y", offset: { field: "height", mult: 0.5 } },
-            fill: { value: COLORS.dark },
-            align: { value: "center" },
-            baseline: { value: "middle" },
-            fontSize: { value: remSize * 0.7 },
-            text: {
-              signal: `datum.datum.gap > 0 && datum.width > ${
-                remSize * 3.75
-              } ? datum.datum.gap + ' doses' : datum.datum.gap > 0 && datum.width > ${
-                remSize * 1.75
-              } ? datum.datum.gap : ''`,
-            },
-          },
-        },
-      },
-      {
         type: "rule",
         encode: {
           enter: {
@@ -208,7 +178,7 @@ const el = ref(null);
 useVega({
   spec,
   el,
-  minHeight: ref(150),
+  minHeight: ref(180),
   maxHeight: ref(1280),
   maxWidth: ref(1280),
   includeActions: ref(false),
