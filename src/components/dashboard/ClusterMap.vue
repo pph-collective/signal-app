@@ -7,7 +7,7 @@ import { ref, computed } from "vue";
 
 import { useVega } from "../../composables/useVega";
 import { COLORS } from "../../utils/constants";
-import { geoToTopo } from "../../utils/utils";
+import { geoToTopo, sortByProperty } from "../../utils/utils";
 
 interface Props {
   cluster: Cluster;
@@ -24,6 +24,29 @@ const filteredGeo = computed(() => {
   );
 
   return geoToTopo(features, 6e-10);
+});
+
+const distance = (x1, y1, x2, y2) => {
+  return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+};
+
+const filteredLocations = computed(() => {
+  const { bbox } = filteredGeo.value;
+  return props.locations
+    .map((location) => {
+      const { longitude, latitude } = location;
+      return {
+        ...location,
+        distance: distance(
+          longitude,
+          latitude,
+          (bbox[0] + bbox[2]) / 2,
+          (bbox[1] + bbox[3]) / 2
+        ),
+      };
+    })
+    .sort(sortByProperty("distance"))
+    .slice(0, 10);
 });
 
 const spec = computed(() => {
@@ -59,7 +82,7 @@ const spec = computed(() => {
       },
       {
         name: "landmarks",
-        values: props.locations,
+        values: filteredLocations.value,
         transform: [
           {
             type: "geopoint",
@@ -140,6 +163,6 @@ useVega({
   minHeight: ref(400),
   maxHeight: ref(1280),
   maxWidth: ref(1280),
-  includeActions: ref(false),
+  includeActions: ref(true),
 });
 </script>
