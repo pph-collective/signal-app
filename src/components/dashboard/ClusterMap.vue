@@ -26,6 +26,32 @@ const filteredGeo = computed(() => {
   return geoToTopo(features, 6e-10);
 });
 
+const filteredLocations = computed(() => {
+  const { bbox } = filteredGeo.value;
+
+  // 1deg longitude = 288200 ft (54.6 miles)
+  // 1deg latitude = 364000 ft (69 miles)
+  // .3 miles each way
+  const margin = [1 / 182, 1 / 230];
+  const locationsBbox = [
+    bbox[0] - margin[0],
+    bbox[1] - margin[1],
+    bbox[2] + margin[0],
+    bbox[3] + margin[1],
+  ];
+
+  return props.locations.filter((location) => {
+    const { longitude, latitude } = location;
+
+    return (
+      longitude >= locationsBbox[0] &&
+      longitude <= locationsBbox[2] &&
+      latitude >= locationsBbox[1] &&
+      latitude <= locationsBbox[3]
+    );
+  });
+});
+
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
@@ -59,7 +85,7 @@ const spec = computed(() => {
       },
       {
         name: "landmarks",
-        values: props.locations,
+        values: filteredLocations.value,
         transform: [
           {
             type: "geopoint",
