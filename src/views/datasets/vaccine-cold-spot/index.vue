@@ -26,6 +26,6 @@ const currentDate = ref(dates[0]);
 const scrollRef = ref(null);
 const handleDateChange = (newDate) => {
   currentDate.value = newDate;
-  scrollHere.value.scrollIntoView({ smooth: true });
+  scrollRef.value.scrollIntoView({ smooth: true });
 };
 </script>
