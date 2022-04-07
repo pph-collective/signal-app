@@ -1,5 +1,5 @@
 <template>
-  <a ref="scrollHere" />
+  <a ref="scrollRef" />
   <SuspenseComponent :key="currentDate">
     <Dashboard
       :dataset-name="datasetName"
@@ -23,7 +23,7 @@ const datasetName = "vax_first_dose_coldspots";
 const dates = await fetchKeys(datasetName);
 const currentDate = ref(dates[0]);
 
-const scrollHere = ref(null);
+const scrollRef = ref(null);
 const handleDateChange = (newDate) => {
   currentDate.value = newDate;
   scrollHere.value.scrollIntoView({ smooth: true });
