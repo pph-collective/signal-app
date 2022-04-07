@@ -1,7 +1,12 @@
 <template>
   <a ref="scrollRef" class="scroll-anchor" />
   <SuspenseComponent :key="currentDate">
-    <p class="update-date">Data last updated {{ prettyDate(currentDate) }}</p>
+    <p v-if="currentDate === dates[0]" class="update-date">
+      Data last updated {{ prettyDate(currentDate) }}
+    </p>
+    <p v-else class="update-date">
+      Archived data from {{ prettyDate(currentDate) }}
+    </p>
     <div class="vertical-spacing" />
     <Dashboard
       :dataset-name="datasetName"
