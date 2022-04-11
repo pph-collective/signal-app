@@ -26,7 +26,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "vaccine-cold-spot",
-        name: "Vaccine Cold Spots",
+        name: "Closing the Gap in COVID-19 Vaccination",
         component: () => import(`./views/datasets/vaccine-cold-spot/index.vue`),
       },
     ],

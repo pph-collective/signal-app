@@ -1,10 +1,10 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      Direct trade jianbing pug blog letterpress. Meditation slow-carb raclette
-      meggings. Vice chia polaroid cronut, gentrify tumblr typewriter art party
-      knausgaard. Tilde brooklyn listicle photo booth XOXO cardigan kinfolk
-      live-edge twee tumeric.
+      This tool shows us places where fewer people are vaccinated compared to
+      state levels. We call this difference in vaccinations a gap. Vaccines can
+      keep us from getting very sick with COVID-19. You can use this information
+      to find where the gaps are in our state and take steps to help close them.
     </template>
   </DashboardCard>
 
@@ -17,8 +17,8 @@
   <DashboardCard width="full" :height="5">
     <template #title>{{
       activeCluster.name
-        ? `Cold spot: ${activeCluster.name}`
-        : "Select a cold spot to explore"
+        ? `Community: ${activeCluster.name}`
+        : "Select a community to explore"
     }}</template>
 
     <template #top-right>
@@ -33,16 +33,16 @@
             :class="[zoomed ? 'fa-search-minus' : 'fa-search-plus']"
           ></i>
         </span>
-        <span>{{ zoomed ? "Zoom Back Out" : "Zoom to Cold Spot" }}</span>
+        <span>{{
+          zoomed ? "Zoom Back Out" : "Zoom to Selected Community"
+        }}</span>
       </button>
     </template>
 
     <template #subtitle>
-      Tacos freegan activated charcoal eu hell of humblebrag tofu raw denim duis
-      bicycle rights irure pinterest. Live-edge tote bag tattooed pabst
-      biodiesel etsy knausgaard lo-fi tbh bushwick ethical lorem humblebrag
-      tumeric. Cardigan four dollar toast yr, affogato eu plaid disrupt man bun
-      man braid tote bag trust fund ea meditation.
+      This map shows where there are gaps in vaccination. [Darker areas show
+      bigger gaps in vaccination among [selected group]]. Select a community,
+      click the Zoom button, and scroll down to learn more.
     </template>
 
     <template #content>
@@ -161,32 +161,32 @@ const dropDowns = computed(() => {
   return {
     town: {
       icon: "fas fa-globe",
-      label: "Where do you want to look into?",
+      label: "Where do you want to look?",
       values: [townDefault, ...towns],
     },
     fillStat: {
-      label: "Which statistic would you like to highlight on the map?",
+      label: "Which group do you want to focus on?",
       icon: "fas fa-fill-drip",
       values: [
         { name: "None", value: "", tooltip: "" },
-        { name: "Overall Gap", value: "gap_total_pct", tooltip: "gap_total" },
+        { name: "All residents", value: "gap_total_pct", tooltip: "gap_total" },
         {
-          name: "Doses to close gap for White residents",
+          name: "White residents",
           value: "gap_white_pct",
           tooltip: "gap_white",
         },
         {
-          name: "Doses to close gap for Black residents",
+          name: "Black residents",
           value: "gap_black_pct",
           tooltip: "gap_black",
         },
         {
-          name: "Doses to close gap for Latino residents",
+          name: "Latino residents",
           value: "gap_latino_pct",
           tooltip: "gap_latino",
         },
         {
-          name: "Doses to close gap for Asian residents",
+          name: "Asian residents",
           value: "gap_asian_pct",
           tooltip: "gap_asian",
         },
