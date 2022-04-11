@@ -26,6 +26,59 @@ const filteredGeo = computed(() => {
   return geoToTopo(features, 6e-10);
 });
 
+const largeBboxGeojson = computed(() => {
+  const { bbox } = filteredGeo.value;
+  const scale = 0.1;
+  const horizontalMargin = (Math.abs(bbox[0] - bbox[2]) * scale) / 2;
+  const verticalMargin = (Math.abs(bbox[1] - bbox[3]) * scale) / 2;
+
+  // [left, bottom, right, top]
+  const largeBbox = [
+    bbox[0] - horizontalMargin,
+    bbox[1] - verticalMargin,
+    bbox[2] + horizontalMargin,
+    bbox[3] + verticalMargin,
+  ];
+  const bottomLeft = [largeBbox[0], largeBbox[1]];
+  const bottomRight = [largeBbox[2], largeBbox[1]];
+  const topLeft = [largeBbox[0], largeBbox[3]];
+  const topRight = [largeBbox[2], largeBbox[3]];
+
+  return {
+    type: "Feature",
+    properties: {},
+    geometry: {
+      type: "Polygon",
+      coordinates: [[bottomLeft, topLeft, topRight, bottomRight, bottomLeft]],
+    },
+  };
+});
+
+const filteredLocations = computed(() => {
+  const { bbox } = filteredGeo.value;
+  // 1deg longitude is 288200 ft (54.6 miles)
+  // 1deg latitude is 364000 ft (69 miles)
+  const margin = [1 / 54.6, 1 / 69]; // 1 mile
+
+  const locationsBbox = [
+    bbox[0] - margin[0],
+    bbox[1] - margin[1],
+    bbox[2] + margin[0],
+    bbox[3] + margin[1],
+  ];
+
+  return props.locations.filter((location) => {
+    const { longitude, latitude } = location;
+
+    return (
+      longitude >= locationsBbox[0] &&
+      longitude <= locationsBbox[2] &&
+      latitude >= locationsBbox[1] &&
+      latitude <= locationsBbox[3]
+    );
+  });
+});
+
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
@@ -58,8 +111,12 @@ const spec = computed(() => {
         format: { type: "topojson", feature: "blocks" },
       },
       {
-        name: "landmarks",
-        values: props.locations,
+        name: "large_bbox",
+        values: largeBboxGeojson.value,
+      },
+      {
+        name: "locations",
+        values: filteredLocations.value,
         transform: [
           {
             type: "geopoint",
@@ -74,7 +131,7 @@ const spec = computed(() => {
         name: "projection",
         type: "mercator",
         size: { signal: "[width, height]" },
-        fit: { signal: 'data("cluster_outline")' },
+        fit: { signal: 'data("large_bbox")' },
       },
     ],
     marks: [
@@ -107,8 +164,8 @@ const spec = computed(() => {
       },
       {
         type: "symbol",
-        name: "landmark_symbols",
-        from: { data: "landmarks" },
+        name: "location_symbols",
+        from: { data: "locations" },
         encode: {
           enter: {
             size: { value: 300 },
