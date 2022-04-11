@@ -38,8 +38,8 @@
     </template>
 
     <template #subtitle>
-      This map shows where there are gaps in vaccination. [Darker areas show
-      bigger gaps in vaccination among [selected group]]. Select a community,
+      This map shows where there are gaps in vaccination. Darker areas show
+      bigger gaps in vaccination among [selected group]. Select a community,
       click the Zoom button, and scroll down to learn more.
     </template>
 
@@ -65,7 +65,7 @@
   </DashboardCard>
 
   <DashboardCard width="half" :height="2">
-    <template #title>Potential Barriers</template>
+    <template #title>What resources do people need in this community?</template>
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <PotentialBarriers
@@ -197,7 +197,6 @@ const dropDowns = computed(() => {
       label: "Which group do you want to focus on?",
       icon: "fas fa-fill-drip",
       values: [
-        { name: "None", value: "", tooltip: "" },
         { name: "All residents", value: "gap_total_pct", tooltip: "gap_total" },
         {
           name: "White residents",
