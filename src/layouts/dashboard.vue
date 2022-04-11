@@ -83,6 +83,7 @@ main {
   @extend .py-4;
   z-index: 20;
   display: grid;
+  position: relative;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: auto;
   column-gap: 15px;
