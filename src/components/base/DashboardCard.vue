@@ -1,5 +1,8 @@
 <template>
-  <div class="dashboard-card" :class="['is-' + width, 'is-height-' + height]">
+  <div
+    class="dashboard-card is-isolated"
+    :class="['is-' + width, 'is-height-' + height]"
+  >
     <header
       v-if="$slots.title || $slots.topRight || $slots.subtitle"
       class="dashboard-card-header fullwidth"
