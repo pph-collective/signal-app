@@ -39,8 +39,10 @@
 
     <template #subtitle>
       This map shows where there are gaps in vaccination. Darker areas show
-      bigger gaps in vaccination among [selected group]. Select a community,
-      click the Zoom button, and scroll down to learn more.
+      bigger gaps in vaccination among
+      <strong>{{ controls.fillStat.name.toLowerCase() }}</strong
+      >. Select a community, click the Zoom button, and scroll down to learn
+      more.
     </template>
 
     <template #content>
@@ -77,7 +79,7 @@
   </DashboardCard>
 
   <DashboardCard width="half" :height="2">
-    <template #title>Gap by Race</template>
+    <template #title>How many doses do we need to close the gap?</template>
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <GapByRace :stats="data.stats" :active-cluster="activeCluster" />
