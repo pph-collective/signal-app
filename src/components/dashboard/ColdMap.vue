@@ -241,15 +241,15 @@ const { view } = useVega({
 });
 
 /* eslint-disable vue/no-setup-props-destructure */
-let currentCluster = props.initialActiveCluster.cluster_id;
-const emit = defineEmits(["new-active-cluster"]);
+let currentClusterId = props.initialActiveCluster.cluster_id;
+const emit = defineEmits(["new-active-cluster-id"]);
 
 watch(view, () => {
   if (view.value) {
     view.value.addSignalListener("activeGeography", (name, value) => {
-      if (value !== currentCluster) {
-        currentCluster = value;
-        emit("new-active-cluster", currentCluster);
+      if (value !== currentClusterId) {
+        currentClusterId = value;
+        emit("new-active-cluster-id", currentClusterId);
       }
     });
   }

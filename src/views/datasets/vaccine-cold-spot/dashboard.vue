@@ -54,7 +54,7 @@
           :fill-stat="controls.fillStat"
           :initial-active-cluster="dashboardActiveCluster"
           class="is-absolute"
-          @new-active-cluster="updateCluster"
+          @new-active-cluster-id="updateCluster"
         />
         <ClusterMap
           v-if="activeCluster && zoomed"
