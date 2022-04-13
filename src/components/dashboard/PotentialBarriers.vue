@@ -1,16 +1,25 @@
 <template>
   <div class="px-4">
     <p>
-      Mlkshk consequat etsy celiac, fanny pack poke photo booth. Tbh narwhal
-      pork belly wolf af chia. Plaid reprehenderit commodo swag actually anim
-      VHS.
+      People with fewer resources have a harder time getting vaccinated. People
+      without health insurance might have trouble paying for health care. People
+      without internet access might have trouble making appointments online.
+      People without any cars need to rely on public transit to get around.
+      People who speak limited English might have trouble understanding
+      materials in English.
     </p>
 
     <table class="mt-4 centered">
       <tbody>
+        <tr>
+          <th>Potential Barrier</th>
+          <th>Community</th>
+          <th>State</th>
+        </tr>
         <tr v-for="(row, i) in rows" :key="i">
-          <th>{{ row.fieldName }}:</th>
+          <td>{{ row.fieldName }}:</td>
           <td class="pl-2">{{ formatPct(barrier[row.property]) }}</td>
+          <td class="pl-3">State number here</td>
         </tr>
       </tbody>
     </table>
