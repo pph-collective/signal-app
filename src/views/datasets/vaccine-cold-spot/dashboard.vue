@@ -33,7 +33,7 @@
             :class="[zoomed ? 'fa-search-minus' : 'fa-search-plus']"
           ></i>
         </span>
-        <span>{{ zoomed ? "Zoom Back Out" : "Zoom to Cold Spot" }}</span>
+        <span>{{ zoomed ? "Zoom Back Out" : "Zoom to Community" }}</span>
       </button>
     </template>
 

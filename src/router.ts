@@ -22,10 +22,10 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: "",
-        redirect: "/dataset/vaccine-cold-spot",
+        redirect: "/dataset/vaccine-gap",
       },
       {
-        path: "vaccine-cold-spot",
+        path: "vaccine-gap",
         name: "Closing the Gap in COVID-19 Vaccination",
         component: () => import(`./views/datasets/vaccine-cold-spot/index.vue`),
       },
