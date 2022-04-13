@@ -52,8 +52,9 @@
           :stats="data.stats"
           :filter-town="controls.town"
           :fill-stat="controls.fillStat"
+          :initial-active-cluster="dashboardActiveCluster"
           class="is-absolute"
-          @new-active-cluster="activeCluster = $event"
+          @new-active-cluster-id="updateCluster"
         />
         <ClusterMap
           v-if="activeCluster && zoomed"
@@ -168,6 +169,7 @@ import { NULL_CLUSTER } from "../../../utils/constants";
 import { prettyDate } from "../../../utils/utils";
 
 const activeCluster = ref(NULL_CLUSTER);
+const dashboardActiveCluster = ref(NULL_CLUSTER);
 const zoomed = ref(false);
 
 defineEmits(["newDate"]);
@@ -231,9 +233,34 @@ const controls = ref({
   town: townDefault,
 });
 const updateControls = (newControls) => {
+  // only update when the controls change to avoid a render loop
+  dashboardActiveCluster.value = activeCluster.value;
+
+  // zoom back out, selections don't make sense with zoom in
+  if (zoomed.value) {
+    zoomed.value = false;
+  }
+
+  // new town selected, unselect active cluster
+  if (newControls.town !== controls.value.town) {
+    activeCluster.value = NULL_CLUSTER;
+    dashboardActiveCluster.value = NULL_CLUSTER;
+  }
+
   // update the control selections
   for (const [k, v] of Object.entries(newControls)) {
     controls.value[k] = v;
+  }
+};
+
+const updateCluster = (newClusterId) => {
+  if (newClusterId === NULL_CLUSTER.cluster_id) {
+    activeCluster.value = NULL_CLUSTER;
+  } else {
+    const { cluster_id, name } = data.stats.find(
+      (s) => s.cluster_id === newClusterId
+    );
+    activeCluster.value = { cluster_id, name };
   }
 };
 </script>

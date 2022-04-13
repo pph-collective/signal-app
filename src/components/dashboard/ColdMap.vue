@@ -8,7 +8,7 @@ import { useVega } from "../../composables/useVega";
 
 import RI_GEOJSON from "@/assets/geography/ri.json";
 import NEIGHBORS from "@/assets/geography/neighbors.json";
-import { COLORS, NULL_CLUSTER, COLOR_SCALES } from "../../utils/constants";
+import { COLORS, COLOR_SCALES, NULL_CLUSTER } from "../../utils/constants";
 
 import { cloneDeep } from "lodash/lang";
 
@@ -19,6 +19,7 @@ const props = defineProps<{
   stats: Stat[];
   filterTown: string;
   fillStat: FillStat;
+  initialActiveCluster: Cluster;
 }>();
 
 const filteredTown = computed(() => {
@@ -37,7 +38,10 @@ const filteredTown = computed(() => {
 
 const fill = computed(() => {
   return [
-    { test: "datum === activeGeography", value: COLORS.link },
+    {
+      test: "datum.properties.cluster_id === activeGeography",
+      value: COLORS.link,
+    },
     props.fillStat.value
       ? { scale: "color", field: `properties.${props.fillStat.value}` }
       : { value: COLORS.grey },
@@ -117,15 +121,15 @@ const spec = computed(() => {
       },
       {
         name: "activeGeography",
-        value: null,
+        value: props.initialActiveCluster.cluster_id,
         on: [
           {
             events: "@cluster_groups:mousedown",
-            update: "activeGeography === datum ? null : datum",
+            update: `activeGeography === datum.properties.cluster_id ? ${NULL_CLUSTER.cluster_id} : datum.properties.cluster_id`,
           },
           {
             events: "@cluster_groups:touchstart",
-            update: "activeGeography === datum ? null : datum",
+            update: `activeGeography === datum.properties.cluster_id ? ${NULL_CLUSTER.cluster_id} : datum.properties.cluster_id`,
           },
         ],
       },
@@ -200,13 +204,19 @@ const spec = computed(() => {
           },
           update: {
             stroke: [
-              { test: "datum === activeGeography", value: COLORS.green },
+              {
+                test: "datum.properties.cluster_id === activeGeography",
+                value: COLORS.green,
+              },
               { value: COLORS.grey },
             ],
             fillOpacity: { value: 0.7 },
             fill: fill.value,
             zindex: [
-              { test: "datum === activeGeography", value: 1 },
+              {
+                test: "datum.properties.cluster_id === activeGeography",
+                value: 1,
+              },
               { value: 0 },
             ],
             tooltip: {
@@ -230,23 +240,16 @@ const { view } = useVega({
   includeActions: ref(false),
 });
 
-let currentCluster = NULL_CLUSTER;
-const emit = defineEmits(["new-active-cluster"]);
+/* eslint-disable vue/no-setup-props-destructure */
+let currentClusterId = props.initialActiveCluster.cluster_id;
+const emit = defineEmits(["new-active-cluster-id"]);
 
 watch(view, () => {
   if (view.value) {
     view.value.addSignalListener("activeGeography", (name, value) => {
-      if (value) {
-        const { name, cluster_id } = value.properties;
-        if (name !== currentCluster.name) {
-          currentCluster = { name, cluster_id };
-          emit("new-active-cluster", currentCluster);
-        }
-      } else {
-        if (currentCluster) {
-          currentCluster = NULL_CLUSTER;
-          emit("new-active-cluster", currentCluster);
-        }
+      if (value !== currentClusterId) {
+        currentClusterId = value;
+        emit("new-active-cluster-id", currentClusterId);
       }
     });
   }
