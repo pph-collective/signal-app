@@ -1,13 +1,14 @@
 <template>
   <div class="px-4">
     <p>
-      People with fewer resources have a harder time getting vaccinated. People
-      without health insurance might have trouble paying for health care. People
-      without internet access might have trouble making appointments online.
-      People without any cars need to rely on public transit to get around.
-      People who speak limited English might have trouble understanding
-      materials in English.
+    People with fewer resources have a harder time getting vaccinated.
     </p>
+    <ul style="list-style-type:disc;">
+      <li>Without any cars, people rely on public transit to get around.</li>
+      <li>Without health insurance, people might have trouble paying for health care.</li>
+      <li>Without internet access, people might have trouble making appointments online.</li>
+      <li>People who speak limited English might have trouble understanding materials in English.</li>
+    </ul>
 
     <table class="mt-4 centered table is-narrow">
       <tbody>

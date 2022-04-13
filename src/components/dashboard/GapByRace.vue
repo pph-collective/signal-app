@@ -9,13 +9,9 @@
     </div>
     <div class="centered">
       <p class="has-text-centered">
-        x In this community, the largest gap is among [group]. Only [X%] of
+        In this community, the largest gap is among [group]. Only [X%] of
         [group] are vaccinated compared to [X%] statewide. [count] more people
         need to be vaccinated to close this gap.
-      </p>
-      <p class="has-text-centered">
-        x Only [X%] of [group] are vaccinated compared to [X%] statewide.
-        [count] more people need to be vaccinated to close this gap.
       </p>
     </div>
   </div>

@@ -81,11 +81,7 @@ const tooltipSignal = computed(() => {
   let tooltip = `{
   title: datum.properties.name,`;
 
-  if (props.fillStat.tooltip && props.fillStat.tooltip !== "gap_total") {
-    tooltip += `'${props.fillStat.name}': datum.properties.${props.fillStat.tooltip},`;
-  } else {
-    tooltip += "'Overall Gap': datum.properties.gap_total,";
-  }
+  tooltip += `'Gap among ${props.fillStat.name.toLowerCase()}': datum.properties.${props.fillStat.tooltip},`;
   tooltip += "}";
 
   return tooltip;
