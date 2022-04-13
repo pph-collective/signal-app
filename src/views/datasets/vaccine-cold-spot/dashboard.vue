@@ -66,23 +66,23 @@
     </template>
   </DashboardCard>
 
-  <DashboardCard width="half" :height="2">
-    <template #title>What resources do people need in this community?</template>
+  <DashboardCard width="full" :height="2">
+    <template #title>How many doses do we need to close the gap?</template>
+    <template #content>
+      <HiddenContent :show="activeCluster.name !== ''">
+        <GapByRace :stats="data.stats" :active-cluster="activeCluster" />
+      </HiddenContent>
+    </template>
+  </DashboardCard>
+
+  <DashboardCard width="full" :height="2">
+    <template #title>How do we reach people who need vaccines?</template>
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <PotentialBarriers
           :barriers="data.barriers"
           :active-cluster="activeCluster"
         />
-      </HiddenContent>
-    </template>
-  </DashboardCard>
-
-  <DashboardCard width="half" :height="2">
-    <template #title>How many doses do we need to close the gap?</template>
-    <template #content>
-      <HiddenContent :show="activeCluster.name !== ''">
-        <GapByRace :stats="data.stats" :active-cluster="activeCluster" />
       </HiddenContent>
     </template>
   </DashboardCard>

@@ -9,7 +9,7 @@
       materials in English.
     </p>
 
-    <table class="mt-4 centered">
+    <table class="mt-4 centered table is-narrow">
       <tbody>
         <tr>
           <th>Potential Barrier</th>
