@@ -29,7 +29,7 @@
       >
         <span class="icon">
           <i
-            class="fas fa-search-plus"
+            class="fas"
             :class="[zoomed ? 'fa-search-minus' : 'fa-search-plus']"
           ></i>
         </span>
