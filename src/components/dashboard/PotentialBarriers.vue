@@ -1,13 +1,20 @@
 <template>
   <div class="px-4">
-    <p>
-    People with fewer resources have a harder time getting vaccinated.
-    </p>
-    <ul style="list-style-type:disc;">
+    <p>People with fewer resources have a harder time getting vaccinated.</p>
+    <ul style="list-style-type: disc">
       <li>Without any cars, people rely on public transit to get around.</li>
-      <li>Without health insurance, people might have trouble paying for health care.</li>
-      <li>Without internet access, people might have trouble making appointments online.</li>
-      <li>People who speak limited English might have trouble understanding materials in English.</li>
+      <li>
+        Without health insurance, people might have trouble paying for health
+        care.
+      </li>
+      <li>
+        Without internet access, people might have trouble making appointments
+        online.
+      </li>
+      <li>
+        People who speak limited English might have trouble understanding
+        materials in English.
+      </li>
     </ul>
 
     <table class="mt-4 centered table is-narrow">
@@ -29,7 +36,8 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { format } from "d3-format";
+
+import { formatPct } from "../../utils/utils";
 
 const props = defineProps<{
   barriers: Barrier[];
@@ -61,8 +69,6 @@ const rows = [
     property: "pct_w_no_english",
   },
 ];
-
-const formatPct = format(".0%");
 </script>
 
 <style scoped>

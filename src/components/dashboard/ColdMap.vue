@@ -81,7 +81,9 @@ const tooltipSignal = computed(() => {
   let tooltip = `{
   title: datum.properties.name,`;
 
-  tooltip += `'Gap among ${props.fillStat.name.toLowerCase()}': datum.properties.${props.fillStat.tooltip},`;
+  tooltip += `'Gap among ${props.fillStat.name.toLowerCase()}': datum.properties.${
+    props.fillStat.tooltip
+  },`;
   tooltip += "}";
 
   return tooltip;

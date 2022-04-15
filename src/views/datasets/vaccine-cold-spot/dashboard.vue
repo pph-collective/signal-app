@@ -70,7 +70,11 @@
     <template #title>How many doses do we need to close the gap?</template>
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
-        <GapByRace :stats="data.stats" :active-cluster="activeCluster" />
+        <GapByRace
+          :stats="data.stats"
+          :active-cluster="activeCluster"
+          :field-names="['asian', 'black', 'latino', 'white']"
+        />
       </HiddenContent>
     </template>
   </DashboardCard>

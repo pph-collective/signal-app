@@ -1,3 +1,4 @@
+import { format } from "d3-format";
 import * as topology from "topojson-server";
 import * as tc from "topojson-client";
 import * as ts from "topojson-simplify";
@@ -36,3 +37,5 @@ export const prettyDate = (date: string): string => {
     year: "numeric",
   });
 };
+
+export const formatPct = format(".0%");
