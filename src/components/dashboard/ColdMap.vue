@@ -78,15 +78,12 @@ const clusters = computed(() => {
 });
 
 const tooltipSignal = computed(() => {
-  let tooltip = `{
-  title: datum.properties.name,`;
-
-  tooltip += `'Gap among ${props.fillStat.name.toLowerCase()}': datum.properties.${
+  return `{
+    title: datum.properties.name,
+    'Gap among ${props.fillStat.name.toLowerCase()}': datum.properties.${
     props.fillStat.tooltip
-  },`;
-  tooltip += "}";
-
-  return tooltip;
+  }
+  }`;
 });
 
 const spec = computed(() => {

@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import Dashboard from "@/views/datasets/vaccine-cold-spot/dashboard.vue";
+import Dashboard from "@/views/datasets/vaccine-gap/dashboard.vue";
 import SuspenseComponent from "@/components/base/SuspenseComponent.vue";
 
 import { fetchKeys } from "../../../utils/firebase";

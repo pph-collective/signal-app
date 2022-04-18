@@ -8,9 +8,6 @@ import { useVega } from "../../composables/useVega";
 import { COLORS } from "../../utils/constants";
 
 interface Props {
-  stats: Stat[];
-  activeCluster: string;
-  fieldNames: string[];
   activeStats: Stat[];
   expected: number;
   fieldData: Stat[];

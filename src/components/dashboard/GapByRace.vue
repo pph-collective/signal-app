@@ -2,9 +2,6 @@
   <div class="gap-container">
     <div>
       <GapChart
-        :stats="stats"
-        :active-cluster="activeCluster.name"
-        :field-names="['asian', 'black', 'latino', 'white']"
         :active-stats="activeStats"
         :expected="expected"
         :field-data="fieldData"

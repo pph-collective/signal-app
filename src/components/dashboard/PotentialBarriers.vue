@@ -27,7 +27,7 @@
         <tr v-for="(row, i) in rows" :key="i">
           <td>{{ row.fieldName }}:</td>
           <td class="pl-2">{{ formatPct(barrier[row.property]) }}</td>
-          <td class="pl-3">State number here</td>
+          <td class="pl-2">State number here</td>
         </tr>
       </tbody>
     </table>
