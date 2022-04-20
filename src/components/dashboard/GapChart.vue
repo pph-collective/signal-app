@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useVega } from "../../composables/useVega";
-import { COLORS } from "../../utils/constants";
+import { COLORS, NA_TEXT } from "../../utils/constants";
 
 interface Props {
   stats: Stat[];
@@ -36,11 +36,17 @@ const activeStats = computed(() => {
 
   if (row) {
     // don't let a population be more than 100% vaccinated
-    return fieldData.value.map((f) => ({
-      name: f.name,
-      pct: Math.min(1, row[f.observedField] / row[f.populationField]),
-      gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
-    }));
+    return fieldData.value.map((f) => {
+      const population = row[f.populationField];
+
+      return {
+        name: f.name,
+        pct:
+          population > 0 ? Math.min(1, row[f.observedField] / population) : 0,
+        gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
+        population,
+      };
+    });
   } else {
     return [];
   }
@@ -140,7 +146,10 @@ const spec = computed(() => {
         encode: {
           enter: {
             x: { scale: "xscale", field: "pct" },
-            x2: { scale: "xscale", value: expected.value },
+            x2: {
+              scale: "xscale",
+              value: `datum.population > 0 ? ${expected.value} : 0`,
+            },
             yc: {
               signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
             },
@@ -151,8 +160,27 @@ const spec = computed(() => {
           },
           update: {
             tooltip: {
-              signal:
-                "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
+              signal: `{
+                title: datum.name,
+                'Percent Vaccinated': datum.population > 0 ? format(datum.pct, '.0%') : '${NA_TEXT}',
+                'Doses to Close Gap': datum.population > 0 ? datum.gap : '${NA_TEXT}'
+                }`,
+            },
+          },
+        },
+      },
+      {
+        type: "text",
+        interactive: false,
+        from: { data: "gaps" },
+        encode: {
+          enter: {
+            xc: { signal: "datum.x + 5" },
+            y: { field: "y", offset: { field: "height", mult: 0.5 } },
+            fill: { value: COLORS.dark },
+            baseline: { value: "middle" },
+            text: {
+              signal: `datum.datum.population === 0 ? '${NA_TEXT}' : ''`,
             },
           },
         },
@@ -181,6 +209,6 @@ useVega({
   minHeight: ref(180),
   maxHeight: ref(1280),
   maxWidth: ref(1280),
-  includeActions: ref(false),
+  includeActions: ref(true),
 });
 </script>

@@ -15,3 +15,5 @@ export const COLOR_SCALES = {
 };
 
 export const NULL_CLUSTER = { name: "", cluster_id: -1 };
+
+export const NA_TEXT = "Not enough information";
