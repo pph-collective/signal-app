@@ -125,7 +125,7 @@ const spec = computed(() => {
             },
             height: { scale: "yscale", band: 1 },
             fill: { value: COLORS.dark },
-            stroke: { value: COLORS.dark },
+            stroke: [{ value: COLORS.dark, test: `datum.population > 0` }],
           },
           update: {
             opacity: { value: 0.9 },
@@ -148,13 +148,13 @@ const spec = computed(() => {
             x: { scale: "xscale", field: "pct" },
             x2: {
               scale: "xscale",
-              value: `datum.population > 0 ? ${expected.value} : 0`,
+              value: expected.value,
             },
             yc: {
               signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
             },
             height: { scale: "yscale", band: 1 },
-            stroke: { value: COLORS.dark },
+            stroke: [{ value: COLORS.dark, test: `datum.population > 0` }],
             strokeDash: { value: [1, 1] },
             fill: { value: "transparent" },
           },
