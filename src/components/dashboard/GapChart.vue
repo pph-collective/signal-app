@@ -160,11 +160,11 @@ const spec = computed(() => {
           },
           update: {
             tooltip: {
-              signal: `{
+              signal: `datum.population > 0 ? {
                 title: datum.name,
-                'Percent Vaccinated': datum.population > 0 ? format(datum.pct, '.0%') : '${NA_TEXT}',
-                'Doses to Close Gap': datum.population > 0 ? datum.gap : '${NA_TEXT}'
-                }`,
+                'Percent Vaccinated': format(datum.pct, '.0%'),
+                'Doses to Close Gap': datum.gap
+                } : ''`,
             },
           },
         },
