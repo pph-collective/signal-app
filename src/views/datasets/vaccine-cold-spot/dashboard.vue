@@ -309,7 +309,7 @@ const updateCluster = (newClusterId) => {
   margin: 6px 6px 0px;
   background-color: hsl(0deg 0% 100% / 60%);
   font-size: 0.875rem;
-  animation: fade-in 500ms both;
+  animation: fade-in 500ms ease-in-out both;
   animation-delay: 250ms;
 }
 
