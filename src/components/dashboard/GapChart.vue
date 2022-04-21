@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useVega } from "../../composables/useVega";
-import { COLORS, NA_TEXT } from "../../utils/constants";
+import { COLORS } from "../../utils/constants";
 
 interface Props {
   stats: Stat[];
@@ -186,7 +186,7 @@ const spec = computed(() => {
             fill: { value: COLORS.dark },
             baseline: { value: "middle" },
             text: {
-              signal: `datum.datum.population === 0 ? '${NA_TEXT}' : ''`,
+              signal: `datum.datum.population === 0 ? 'Not enough information' : ''`,
             },
           },
         },
