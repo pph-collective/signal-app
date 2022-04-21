@@ -206,7 +206,7 @@ const spec = computed(() => {
                 scale: "color",
                 field: `properties.${focusFields.value.fill}`,
               },
-              { value: "steelblue" },
+              { value: "url(#diagonalHatch)" },
             ],
             zindex: [
               { test: "datum === activeGeography", value: 1 },
@@ -230,7 +230,7 @@ const { view } = useVega({
   minHeight: ref(300),
   maxHeight: ref(1280),
   maxWidth: ref(1280),
-  includeActions: ref(true),
+  includeActions: ref(false),
 });
 
 let currentCluster = NULL_CLUSTER;
