@@ -68,6 +68,15 @@ const clusters = computed(() => {
   return geoToTopo(filtered);
 });
 
+const focusFields = computed(() => {
+  return {
+    name: props.focusStat.name,
+    fill: `gap_${props.focusStat.value}_pct`,
+    tooltip: `gap_${props.focusStat.value}`,
+    population: `population_${props.focusStat.value}`,
+  };
+});
+
 const tooltipSignal = computed(() => {
   return `{
     title: datum.properties.name,
@@ -77,15 +86,6 @@ const tooltipSignal = computed(() => {
     focusFields.value.tooltip
   } : 'Not enough information'
   }`;
-});
-
-const focusFields = computed(() => {
-  return {
-    name: props.focusStat.name,
-    fill: `gap_${props.focusStat.value}_pct`,
-    tooltip: `gap_${props.focusStat.value}`,
-    population: `population_${props.focusStat.value}`,
-  };
 });
 
 const spec = computed(() => {
