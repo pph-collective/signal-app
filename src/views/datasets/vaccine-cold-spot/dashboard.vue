@@ -65,7 +65,8 @@
         />
         <div v-if="activeCluster && zoomed" class="instructions">
           <p>
-            The <RedDot class="red-dot" /> indicate previous vaccination clinics
+            The <RedDot class="red-dot" /> indicates a previous vaccination
+            clinic
           </p>
         </div>
       </div>
