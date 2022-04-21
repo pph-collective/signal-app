@@ -72,8 +72,10 @@ const tooltipSignal = computed(() => {
   return `{
     title: datum.properties.name,
     'Gap among ${focusFields.value.name.toLowerCase()}': datum.properties.${
+    focusFields.value.population
+  } > 0 ? datum.properties.${
     focusFields.value.tooltip
-  }
+  } : 'Not enough information'
   }`;
 });
 
@@ -82,6 +84,7 @@ const focusFields = computed(() => {
     name: props.focusStat.name,
     fill: `gap_${props.focusStat.value}_pct`,
     tooltip: `gap_${props.focusStat.value}`,
+    population: `population_${props.focusStat.value}`,
   };
 });
 
@@ -198,7 +201,12 @@ const spec = computed(() => {
             fillOpacity: { value: 0.7 },
             fill: [
               { test: "datum === activeGeography", value: COLORS.link },
-              { scale: "color", field: `properties.${focusFields.value.fill}` },
+              {
+                test: `datum.properties.${focusFields.value.population} > 0`,
+                scale: "color",
+                field: `properties.${focusFields.value.fill}`,
+              },
+              { value: "steelblue" },
             ],
             zindex: [
               { test: "datum === activeGeography", value: 1 },
@@ -222,7 +230,7 @@ const { view } = useVega({
   minHeight: ref(300),
   maxHeight: ref(1280),
   maxWidth: ref(1280),
-  includeActions: ref(false),
+  includeActions: ref(true),
 });
 
 let currentCluster = NULL_CLUSTER;
