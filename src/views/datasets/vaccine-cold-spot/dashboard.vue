@@ -63,6 +63,11 @@
           :locations="data.locations"
           class="is-absolute"
         />
+        <div v-if="activeCluster && zoomed" class="instructions">
+          <p>
+            The <RedDot class="red-dot" /> indicate previous vaccination clinics
+          </p>
+        </div>
       </div>
     </template>
   </DashboardCard>
@@ -163,6 +168,7 @@ import HiddenContent from "@/components/base/HiddenContent.vue";
 import ClusterMap from "@/components/dashboard/ClusterMap.vue";
 import GapByRace from "@/components/dashboard/GapByRace.vue";
 import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
+import RedDot from "@/components/dashboard/RedDot.vue";
 
 import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
@@ -285,5 +291,18 @@ const updateCluster = (newClusterId) => {
 
 .has-flex-gap {
   gap: 1rem;
+}
+
+.instructions {
+  position: absolute;
+  top: 0;
+  padding: 4px 4px;
+  margin: 6px 6px 0px;
+  background-color: hsl(0deg 0% 100% / 60%);
+  font-size: 0.875rem;
+}
+
+.red-dot {
+  margin-bottom: -5px;
 }
 </style>
