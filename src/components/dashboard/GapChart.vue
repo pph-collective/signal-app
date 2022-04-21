@@ -129,10 +129,13 @@ const spec = computed(() => {
           },
           update: {
             opacity: { value: 0.9 },
-            tooltip: {
-              signal:
-                "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
-            },
+            tooltip: [
+              {
+                signal:
+                  "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
+                test: "datum.population > 0",
+              },
+            ],
           },
           hover: {
             opacity: { value: 1.0 },
@@ -159,13 +162,16 @@ const spec = computed(() => {
             fill: { value: "transparent" },
           },
           update: {
-            tooltip: {
-              signal: `datum.population > 0 ? {
+            tooltip: [
+              {
+                signal: `{
                 title: datum.name,
                 'Percent Vaccinated': format(datum.pct, '.0%'),
                 'Doses to Close Gap': datum.gap
-                } : ''`,
-            },
+                }`,
+                test: "datum.population > 0",
+              },
+            ],
           },
         },
       },
