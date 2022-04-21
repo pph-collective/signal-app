@@ -41,7 +41,7 @@
     <template #subtitle>
       This map shows where there are gaps in vaccination. Darker areas show
       bigger gaps in vaccination among
-      <strong>{{ controls.fillStat.name.toLowerCase() }}</strong
+      <strong>{{ controls.focusStat.name.toLowerCase() }}</strong
       >. Select a community, click the <em>Zoom to Community</em> button, and
       scroll down to learn more.
     </template>
@@ -52,7 +52,7 @@
           :geo="data.geo"
           :stats="data.stats"
           :filter-town="controls.town"
-          :fill-stat="controls.fillStat"
+          :focus-stat="controls.focusStat"
           class="is-absolute"
           @new-active-cluster="activeCluster = $event"
         />
@@ -200,38 +200,22 @@ const dropDowns = computed(() => {
       label: "Where do you want to look?",
       values: [townDefault, ...towns],
     },
-    fillStat: {
+    focusStat: {
       label: "Which group do you want to focus on?",
       icon: "fas fa-fill-drip",
       values: [
-        { name: "All residents", value: "gap_total_pct", tooltip: "gap_total" },
-        {
-          name: "White residents",
-          value: "gap_white_pct",
-          tooltip: "gap_white",
-        },
-        {
-          name: "Black residents",
-          value: "gap_black_pct",
-          tooltip: "gap_black",
-        },
-        {
-          name: "Latino residents",
-          value: "gap_latino_pct",
-          tooltip: "gap_latino",
-        },
-        {
-          name: "Asian residents",
-          value: "gap_asian_pct",
-          tooltip: "gap_asian",
-        },
+        { name: "All residents", value: "total" },
+        { name: "White residents", value: "white" },
+        { name: "Black residents", value: "black" },
+        { name: "Latino residents", value: "latino" },
+        { name: "Asian residents", value: "asian" },
       ],
     },
   };
 });
 
 const controls = ref({
-  fillStat: dropDowns.value.fillStat.values[0],
+  focusStat: dropDowns.value.focusStat.values[0],
   town: townDefault,
 });
 const updateControls = (newControls) => {
