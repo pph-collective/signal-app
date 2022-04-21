@@ -65,8 +65,7 @@
         />
         <div v-if="activeCluster && zoomed" class="instructions">
           <p>
-            The <RedDot class="red-dot" /> indicates a previous vaccination
-            clinic
+            A <RedDot class="red-dot" /> indicates a previous vaccination clinic
           </p>
         </div>
       </div>
@@ -294,6 +293,15 @@ const updateCluster = (newClusterId) => {
   gap: 1rem;
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .instructions {
   position: absolute;
   top: 0;
@@ -301,6 +309,8 @@ const updateCluster = (newClusterId) => {
   margin: 6px 6px 0px;
   background-color: hsl(0deg 0% 100% / 60%);
   font-size: 0.875rem;
+  animation: fade-in 500ms both;
+  animation-delay: 250ms;
 }
 
 .red-dot {
