@@ -36,11 +36,17 @@ const activeStats = computed(() => {
 
   if (row) {
     // don't let a population be more than 100% vaccinated
-    return fieldData.value.map((f) => ({
-      name: f.name,
-      pct: Math.min(1, row[f.observedField] / row[f.populationField]),
-      gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
-    }));
+    return fieldData.value.map((f) => {
+      const population = row[f.populationField];
+
+      return {
+        name: f.name,
+        pct:
+          population > 0 ? Math.min(1, row[f.observedField] / population) : 0,
+        gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
+        population,
+      };
+    });
   } else {
     return [];
   }
@@ -119,14 +125,17 @@ const spec = computed(() => {
             },
             height: { scale: "yscale", band: 1 },
             fill: { value: COLORS.dark },
-            stroke: { value: COLORS.dark },
+            stroke: [{ value: COLORS.dark, test: `datum.population > 0` }],
           },
           update: {
             opacity: { value: 0.9 },
-            tooltip: {
-              signal:
-                "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
-            },
+            tooltip: [
+              {
+                signal:
+                  "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
+                test: "datum.population > 0",
+              },
+            ],
           },
           hover: {
             opacity: { value: 1.0 },
@@ -140,19 +149,44 @@ const spec = computed(() => {
         encode: {
           enter: {
             x: { scale: "xscale", field: "pct" },
-            x2: { scale: "xscale", value: expected.value },
+            x2: {
+              scale: "xscale",
+              value: expected.value,
+            },
             yc: {
               signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
             },
             height: { scale: "yscale", band: 1 },
-            stroke: { value: COLORS.dark },
+            stroke: [{ value: COLORS.dark, test: `datum.population > 0` }],
             strokeDash: { value: [1, 1] },
             fill: { value: "transparent" },
           },
           update: {
-            tooltip: {
-              signal:
-                "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
+            tooltip: [
+              {
+                signal: `{
+                title: datum.name,
+                'Percent Vaccinated': format(datum.pct, '.0%'),
+                'Doses to Close Gap': datum.gap
+                }`,
+                test: "datum.population > 0",
+              },
+            ],
+          },
+        },
+      },
+      {
+        type: "text",
+        interactive: false,
+        from: { data: "gaps" },
+        encode: {
+          enter: {
+            xc: { signal: "datum.x + 5" },
+            y: { field: "y", offset: { field: "height", mult: 0.5 } },
+            fill: { value: COLORS.dark },
+            baseline: { value: "middle" },
+            text: {
+              signal: `datum.datum.population === 0 ? 'Not enough information' : ''`,
             },
           },
         },
