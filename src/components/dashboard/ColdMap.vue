@@ -199,7 +199,10 @@ const spec = computed(() => {
             ],
             fillOpacity: { value: 0.7 },
             fill: [
-              { test: "datum === activeGeography", value: COLORS.link },
+              {
+                test: "datum.properties.cluster_id === activeGeography",
+                value: COLORS.link,
+              },
               {
                 test: `datum.properties.${focusFields.value.population} > 0`,
                 scale: "color",
