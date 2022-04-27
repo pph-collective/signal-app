@@ -88,14 +88,17 @@ const spec = computed(() => {
             },
             height: { scale: "yscale", band: 1 },
             fill: { value: COLORS.dark },
-            stroke: { value: COLORS.dark },
+            stroke: [{ value: COLORS.dark, test: `datum.population > 0` }],
           },
           update: {
             opacity: { value: 0.9 },
-            tooltip: {
-              signal:
-                "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
-            },
+            tooltip: [
+              {
+                signal:
+                  "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
+                test: "datum.population > 0",
+              },
+            ],
           },
           hover: {
             opacity: { value: 1.0 },
@@ -114,14 +117,36 @@ const spec = computed(() => {
               signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
             },
             height: { scale: "yscale", band: 1 },
-            stroke: { value: COLORS.dark },
+            stroke: [{ value: COLORS.dark, test: `datum.population > 0` }],
             strokeDash: { value: [1, 1] },
             fill: { value: "transparent" },
           },
           update: {
-            tooltip: {
-              signal:
-                "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
+            tooltip: [
+              {
+                signal: `{
+                title: datum.name,
+                'Percent Vaccinated': format(datum.pct, '.0%'),
+                'Doses to Close Gap': datum.gap
+                }`,
+                test: "datum.population > 0",
+              },
+            ],
+          },
+        },
+      },
+      {
+        type: "text",
+        interactive: false,
+        from: { data: "gaps" },
+        encode: {
+          enter: {
+            xc: { signal: "datum.x + 5" },
+            y: { field: "y", offset: { field: "height", mult: 0.5 } },
+            fill: { value: COLORS.dark },
+            baseline: { value: "middle" },
+            text: {
+              signal: `datum.datum.population === 0 ? 'Not enough information' : ''`,
             },
           },
         },

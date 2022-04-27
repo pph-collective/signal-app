@@ -30,11 +30,13 @@
       >
         <span class="icon">
           <i
-            class="fas fa-search-plus"
+            class="fas"
             :class="[zoomed ? 'fa-search-minus' : 'fa-search-plus']"
           ></i>
         </span>
-        <span>{{ zoomed ? "Zoom Back Out" : "Zoom to Community" }}</span>
+        <span>{{
+          zoomed ? "Zoom Back Out" : "Zoom to Selected Community"
+        }}</span>
       </button>
     </template>
 
@@ -53,8 +55,9 @@
           :stats="data.stats"
           :filter-town="controls.town"
           :focus-stat="controls.focusStat"
+          :initial-active-cluster="dashboardActiveCluster"
           class="is-absolute"
-          @new-active-cluster="activeCluster = $event"
+          @new-active-cluster-id="updateCluster"
         />
         <ClusterMap
           v-if="activeCluster && zoomed"
@@ -63,6 +66,11 @@
           :locations="data.locations"
           class="is-absolute"
         />
+        <div v-if="activeCluster && zoomed" class="instructions">
+          <p>
+            A <RedDot class="red-dot" /> indicates a previous vaccination clinic
+          </p>
+        </div>
       </div>
     </template>
   </DashboardCard>
@@ -167,12 +175,14 @@ import HiddenContent from "@/components/base/HiddenContent.vue";
 import ClusterMap from "@/components/dashboard/ClusterMap.vue";
 import GapByRace from "@/components/dashboard/GapByRace.vue";
 import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
+import RedDot from "@/components/dashboard/RedDot.vue";
 
 import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
 import { prettyDate } from "../../../utils/utils";
 
 const activeCluster = ref(NULL_CLUSTER);
+const dashboardActiveCluster = ref(NULL_CLUSTER);
 const zoomed = ref(false);
 
 defineEmits(["newDate"]);
@@ -219,9 +229,34 @@ const controls = ref({
   town: townDefault,
 });
 const updateControls = (newControls) => {
+  // only update when the controls change to avoid a render loop
+  dashboardActiveCluster.value = activeCluster.value;
+
+  // zoom back out, selections don't make sense with zoom in
+  if (zoomed.value) {
+    zoomed.value = false;
+  }
+
+  // new town selected, unselect active cluster
+  if (newControls.town !== controls.value.town) {
+    activeCluster.value = NULL_CLUSTER;
+    dashboardActiveCluster.value = NULL_CLUSTER;
+  }
+
   // update the control selections
   for (const [k, v] of Object.entries(newControls)) {
     controls.value[k] = v;
+  }
+};
+
+const updateCluster = (newClusterId) => {
+  if (newClusterId === NULL_CLUSTER.cluster_id) {
+    activeCluster.value = NULL_CLUSTER;
+  } else {
+    const { cluster_id, name } = data.stats.find(
+      (s) => s.cluster_id === newClusterId
+    );
+    activeCluster.value = { cluster_id, name };
   }
 };
 </script>
@@ -246,5 +281,29 @@ const updateControls = (newControls) => {
 
 .has-flex-gap {
   gap: 1rem;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.instructions {
+  position: absolute;
+  top: 0;
+  padding: 4px 4px;
+  margin: 6px 6px 0px;
+  background-color: hsl(0deg 0% 100% / 60%);
+  font-size: 0.875rem;
+  animation: fade-in 500ms ease-in-out both;
+  animation-delay: 250ms;
+}
+
+.red-dot {
+  margin-bottom: -5px;
 }
 </style>
