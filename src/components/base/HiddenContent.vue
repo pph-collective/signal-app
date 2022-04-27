@@ -4,7 +4,7 @@
       <slot></slot>
     </div>
     <div v-if="!show" class="message">
-      <p>Select a cold spot on the map to learn more</p>
+      <p>Select a community on the map to learn more</p>
     </div>
   </div>
 </template>

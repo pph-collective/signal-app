@@ -8,49 +8,12 @@ import { useVega } from "../../composables/useVega";
 import { COLORS } from "../../utils/constants";
 
 interface Props {
-  stats: Stat[];
-  activeCluster: string;
-  fieldNames: string[];
+  activeStats: Stat[];
+  expected: number;
+  fieldData: Stat[];
 }
 
 const props = defineProps<Props>();
-
-// the expected percent is constant, so we can calculate it from the first row of data
-const expected = computed(
-  () => props.stats[0].expected_total / props.stats[0].population_total
-);
-
-const fieldData = computed(() => {
-  const upperFirst = (val) =>
-    val.substring(0, 1).toUpperCase() + val.substring(1).toLowerCase();
-  return props.fieldNames.map((f) => ({
-    name: upperFirst(f),
-    observedField: `observed_${f}`,
-    expectedField: `expected_${f}`,
-    populationField: `population_${f}`,
-  }));
-});
-
-const activeStats = computed(() => {
-  const row = props.stats.find((stat) => stat.name === props.activeCluster);
-
-  if (row) {
-    // don't let a population be more than 100% vaccinated
-    return fieldData.value.map((f) => {
-      const population = row[f.populationField];
-
-      return {
-        name: f.name,
-        pct:
-          population > 0 ? Math.min(1, row[f.observedField] / population) : 0,
-        gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
-        population,
-      };
-    });
-  } else {
-    return [];
-  }
-});
 
 const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 
@@ -64,11 +27,11 @@ const spec = computed(() => {
     data: [
       {
         name: "yFields",
-        values: fieldData.value,
+        values: props.fieldData,
       },
       {
         name: "stats",
-        values: activeStats.value,
+        values: props.activeStats,
       },
     ],
 
@@ -149,10 +112,7 @@ const spec = computed(() => {
         encode: {
           enter: {
             x: { scale: "xscale", field: "pct" },
-            x2: {
-              scale: "xscale",
-              value: expected.value,
-            },
+            x2: { scale: "xscale", value: props.expected },
             yc: {
               signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
             },
@@ -195,7 +155,7 @@ const spec = computed(() => {
         type: "rule",
         encode: {
           enter: {
-            x: { scale: "xscale", value: expected.value },
+            x: { scale: "xscale", value: props.expected },
             y: { value: 0 },
             y2: { signal: "height" },
             stroke: { value: COLORS.dark },

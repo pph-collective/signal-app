@@ -106,13 +106,13 @@ const collapsed = ref(false);
 
 const DATASETS = [
   {
-    name: "Vaccine Cold Spots",
-    route: "vaccine-cold-spot",
+    name: "Vaccine Gaps",
+    route: "vaccine-gap",
     available: true,
   },
   {
-    name: "Testing Cold Spots",
-    route: "testing-cold-spot",
+    name: "Testing Gaps",
+    route: "testing-gap",
     available: false,
   },
 ];
