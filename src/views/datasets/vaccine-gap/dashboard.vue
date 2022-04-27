@@ -34,7 +34,9 @@
             :class="[zoomed ? 'fa-search-minus' : 'fa-search-plus']"
           ></i>
         </span>
-        <span>{{ zoomed ? "Zoom Back Out" : "Zoom to Community" }}</span>
+        <span>{{
+          zoomed ? "Zoom Back Out" : "Zoom to Selected Community"
+        }}</span>
       </button>
     </template>
 
