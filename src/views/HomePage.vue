@@ -8,7 +8,7 @@
           Project SIGNAL
         </h1>
         <h2 class="home-subtitle pb-4 has-text-light">
-          Explore COVID-19 RI datsets from Project SIGNAL
+          Explore COVID-19 RI datasets from Project SIGNAL
         </h2>
         <div class="is-flex is-justify-content-center">
           <router-link

@@ -63,7 +63,7 @@ creates the town borders by merging the block groups.
 
 ### Caching
 
-When fetching dataset data, we first check the local cache for the datset before querying the server. If you updated data and aren't seeing the change, try clearing your cache.  **NOTE**: because of this, also try really hard not to need to update data once in production as the original data might have a longer shelf life than you anticipate.
+When fetching dataset data, we first check the local cache for the dataset before querying the server. If you updated data and aren't seeing the change, try clearing your cache.  **NOTE**: because of this, also try really hard not to need to update data once in production as the original data might have a longer shelf life than you anticipate.
 
 ### Analytics in development
 

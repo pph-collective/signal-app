@@ -33,10 +33,9 @@ interface Stat {
   population_total: number;
 }
 
-interface FillStat {
+interface FocusStat {
   name: string;
   value: string;
-  tooltip: string;
 }
 
 // TODO: what other fields go here?

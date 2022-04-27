@@ -17,7 +17,7 @@ const props = defineProps<{
   geo: Geo[];
   stats: Stat[];
   filterTown: string;
-  fillStat: FillStat;
+  focusStat: FocusStat;
   initialActiveCluster: Cluster;
 }>();
 
@@ -29,18 +29,6 @@ const filteredTown = computed(() => {
   }
 
   return filtered;
-});
-
-const fill = computed(() => {
-  return [
-    {
-      test: "datum.properties.cluster_id === activeGeography",
-      value: COLORS.link,
-    },
-    props.fillStat.value
-      ? { scale: "color", field: `properties.${props.fillStat.value}` }
-      : { value: COLORS.grey },
-  ];
 });
 
 const clusters = computed(() => {
@@ -76,12 +64,23 @@ const clusters = computed(() => {
   return geoToTopo(filtered);
 });
 
+const focusFields = computed(() => {
+  return {
+    name: props.focusStat.name,
+    fill: `gap_${props.focusStat.value}_pct`,
+    tooltip: `gap_${props.focusStat.value}`,
+    population: `population_${props.focusStat.value}`,
+  };
+});
+
 const tooltipSignal = computed(() => {
   return `{
     title: datum.properties.name,
-    'Gap among ${props.fillStat.name.toLowerCase()}': datum.properties.${
-    props.fillStat.tooltip
-  }
+    'Gap among ${focusFields.value.name.toLowerCase()}': datum.properties.${
+    focusFields.value.population
+  } > 0 ? datum.properties.${
+    focusFields.value.tooltip
+  } : 'Not enough information'
   }`;
 });
 
@@ -135,19 +134,17 @@ const spec = computed(() => {
         values: filteredTown.value,
       },
     ],
-    scales: props.fillStat.value
-      ? [
-          {
-            name: "color",
-            type: "linear",
-            domain: {
-              data: "cluster_outlines",
-              field: `properties.${props.fillStat.value}`,
-            },
-            range: COLOR_SCALES.primary,
-          },
-        ]
-      : [],
+    scales: [
+      {
+        name: "color",
+        type: "linear",
+        domain: {
+          data: "cluster_outlines",
+          field: `properties.${focusFields.value.fill}`,
+        },
+        range: COLOR_SCALES.primary,
+      },
+    ],
     projections: [
       {
         name: "projection",
@@ -201,7 +198,18 @@ const spec = computed(() => {
               { value: COLORS.grey },
             ],
             fillOpacity: { value: 0.7 },
-            fill: fill.value,
+            fill: [
+              {
+                test: "datum.properties.cluster_id === activeGeography",
+                value: COLORS.link,
+              },
+              {
+                test: `datum.properties.${focusFields.value.population} > 0`,
+                scale: "color",
+                field: `properties.${focusFields.value.fill}`,
+              },
+              { value: "url(#diagonalHatch)" },
+            ],
             zindex: [
               {
                 test: "datum.properties.cluster_id === activeGeography",
