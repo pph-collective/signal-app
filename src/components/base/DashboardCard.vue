@@ -37,8 +37,11 @@ withDefaults(defineProps<Props>(), {
 @import "@/assets/styles/main.scss";
 
 .dashboard-card {
-  @extend .box;
-  margin-bottom: 0 !important; /* overrides .box */
+  background-color: $box-background-color;
+  border-radius: $box-radius;
+  color: $box-color;
+  padding: $box-padding;
+  margin-bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
