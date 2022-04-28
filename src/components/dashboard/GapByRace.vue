@@ -58,11 +58,18 @@ const activeStats = computed(() => {
   );
   if (row) {
     // don't let a population be more than 100% vaccinated
-    return fieldData.value.map((f) => ({
-      name: f.name,
-      pct: Math.min(1, row[f.observedField] / row[f.populationField]),
-      gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
-    }));
+    return fieldData.value.map((f) => {
+      const population = row[f.populationField];
+      return {
+        name: f.name,
+        pct:
+          population > 0
+            ? Math.min(1, row[f.observedField] / row[f.populationField])
+            : 0,
+        gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
+        population,
+      };
+    });
   } else {
     return [];
   }
