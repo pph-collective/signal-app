@@ -1,51 +1,55 @@
 <template>
-  <div class="gap-container" :class="{ hidden: focusStat.value !== 'total' }">
-    <div>
-      <GapChart
-        :active-stats="activeStats"
-        :expected="expected"
-        :field-data="fieldData"
-      />
+  <div class="outer-container">
+    <div class="gap-container" :class="{ hidden: focusStat.value !== 'total' }">
+      <div>
+        <GapChart
+          :active-stats="activeStats"
+          :expected="expected"
+          :field-data="fieldData"
+        />
+      </div>
+      <div class="centered">
+        <p class="has-text-centered">
+          In {{ activeCluster.name }}, the largest gap is among
+          {{ minVaxRace?.name }} residents. Only
+          <strong
+            >{{ formatPct(minVaxRace?.pct) }} of
+            {{ minVaxRace?.name }} residents</strong
+          >
+          are vaccinated compared to {{ formatPct(expected) }} statewide.
+          <strong
+            >{{ minVaxRace?.gap }} more {{ minVaxRace?.name }} residents</strong
+          >
+          need to be vaccinated to close this gap.
+        </p>
+      </div>
     </div>
-    <div class="centered">
-      <p class="has-text-centered">
-        In {{ activeCluster.name }}, the largest gap is among
-        {{ minVaxRace?.name }} residents. Only
-        <strong
-          >{{ formatPct(minVaxRace?.pct) }} of
-          {{ minVaxRace?.name }} residents</strong
-        >
-        are vaccinated compared to {{ formatPct(expected) }} statewide.
-        <strong
-          >{{ minVaxRace?.gap }} more {{ minVaxRace?.name }} residents</strong
-        >
-        need to be vaccinated to close this gap.
-      </p>
-    </div>
-  </div>
-  <div class="gap-container" :class="{ hidden: focusStat.value === 'total' }">
-    <div class="is-flex is-flex-direction-row is-justify-content-space-around">
-      <KeyPerformanceIndicator
-        :value="formatPct(activeFocusStats?.pct)"
-        title="Vaccinated in Community"
-      />
-      <KeyPerformanceIndicator
-        :value="activeFocusStats?.gap ?? NaN"
-        title="Doses to Close Gap"
-      />
-    </div>
-    <div class="centered">
-      <p class="has-text-centered">
-        In {{ activeCluster.name }},
-        <strong>{{ formatPct(activeFocusStats?.pct) }}</strong>
-        {{ activeFocusStats?.name }} residents are are vaccinated compared to
-        our target {{ formatPct(expected) }} within this community.
-        <strong
-          >{{ activeFocusStats?.gap }} more
-          {{ activeFocusStats?.name }} residents</strong
-        >
-        need to be vaccinated to close this gap.
-      </p>
+    <div class="gap-container" :class="{ hidden: focusStat.value === 'total' }">
+      <div
+        class="is-flex is-flex-direction-row is-justify-content-space-around"
+      >
+        <KeyPerformanceIndicator
+          :value="formatPct(activeFocusStats?.pct)"
+          title="Vaccinated in Community"
+        />
+        <KeyPerformanceIndicator
+          :value="activeFocusStats?.gap ?? NaN"
+          title="Doses to Close Gap"
+        />
+      </div>
+      <div class="centered">
+        <p class="has-text-centered">
+          In {{ activeCluster.name }},
+          <strong>{{ formatPct(activeFocusStats?.pct) }}</strong>
+          {{ activeFocusStats?.name }} residents are are vaccinated compared to
+          our target {{ formatPct(expected) }} within this community.
+          <strong
+            >{{ activeFocusStats?.gap }} more
+            {{ activeFocusStats?.name }} residents</strong
+          >
+          need to be vaccinated to close this gap.
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -119,7 +123,7 @@ const minVaxRace = computed(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .gap-container {
   display: grid;
   gap: 1.5rem;
@@ -134,5 +138,17 @@ const minVaxRace = computed(() => {
 
 .hidden {
   visibility: hidden;
+}
+
+// Stacks all children on top of each other
+.outer-container {
+  display: grid;
+  grid-template: 1fr / 1fr;
+  place-items: center;
+
+  > * {
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
+  }
 }
 </style>
