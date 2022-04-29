@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <p class="has-text-centered">
+    People with fewer resources have a harder time getting vaccinated.
+  </p>
+  <div class="potential-barriers-container">
     <div class="content">
-      <p>People with fewer resources have a harder time getting vaccinated.</p>
       <ul>
         <li>Without any cars, people rely on public transit to get around.</li>
         <li>
@@ -74,8 +76,10 @@ const rows = [
 </script>
 
 <style scoped>
-.centered {
-  margin-left: auto;
-  margin-right: auto;
+.potential-barriers-container {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  max-width: 100%;
 }
 </style>

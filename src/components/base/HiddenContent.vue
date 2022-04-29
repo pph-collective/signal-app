@@ -17,7 +17,6 @@ defineProps<{ show: boolean }>();
 .content-container {
   position: relative;
   height: 100%;
-  display: grid;
   place-content: center;
 }
 
