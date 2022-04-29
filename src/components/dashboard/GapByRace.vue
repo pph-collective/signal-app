@@ -1,6 +1,9 @@
 <template>
   <div class="outer-container">
-    <div class="gap-container" :class="{ hidden: focusStat.value !== 'total' }">
+    <div
+      class="gap-container"
+      :class="{ visible: focusStat.value === 'total' }"
+    >
       <div>
         <GapChart
           :active-stats="activeStats"
@@ -24,7 +27,13 @@
         </p>
       </div>
     </div>
-    <div class="gap-container" :class="{ hidden: focusStat.value === 'total' }">
+    <div
+      class="gap-container"
+      :class="{
+        visible:
+          focusStat.value !== 'total' && activeFocusStats?.population > 0,
+      }"
+    >
       <div
         class="is-flex is-flex-direction-row is-justify-content-space-around"
       >
@@ -50,6 +59,16 @@
           need to be vaccinated to close this gap.
         </p>
       </div>
+    </div>
+    <div
+      class="gap-container"
+      :class="{
+        visible:
+          focusStat.value !== 'total' && activeFocusStats?.population === 0,
+      }"
+    >
+      There isn't enough vaccine data on {{ activeFocusStats?.name }} residents
+      in {{ activeCluster.name }}.
     </div>
   </div>
 </template>
@@ -129,6 +148,7 @@ const minVaxRace = computed(() => {
   gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
   max-width: 100%;
+  visibility: hidden;
 }
 
 .centered {
@@ -136,8 +156,8 @@ const minVaxRace = computed(() => {
   place-content: center;
 }
 
-.hidden {
-  visibility: hidden;
+.visible {
+  visibility: visible;
 }
 
 // Stacks all children on top of each other
