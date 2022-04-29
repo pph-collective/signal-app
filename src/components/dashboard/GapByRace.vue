@@ -49,7 +49,7 @@
       <div class="centered">
         <p class="has-text-centered">
           In {{ activeCluster.name }},
-          <strong>{{ formatPct(activeFocusStats?.pct) }}</strong>
+          <strong>{{ formatPct(activeFocusStats?.pct) }}</strong> of
           {{ activeFocusStats?.name }} residents are are vaccinated compared to
           our target {{ formatPct(expected) }} within this community.
           <strong
