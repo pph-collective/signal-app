@@ -51,7 +51,7 @@
           In {{ activeCluster.name }},
           <strong>{{ formatPct(activeFocusStats?.pct) }}</strong> of
           {{ activeFocusStats?.name }} residents are are vaccinated compared to
-          our target {{ formatPct(expected) }} within this community.
+          our goal of {{ formatPct(expected) }} total vaccinations statewide.
           <strong
             >{{ activeFocusStats?.gap }} more
             {{ activeFocusStats?.name }} residents</strong
