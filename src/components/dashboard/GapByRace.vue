@@ -1,5 +1,5 @@
 <template>
-  <div class="gap-container">
+  <div class="gap-container" :class="{ hidden: focusStat.value !== 'total' }">
     <div>
       <GapChart
         :active-stats="activeStats"
@@ -23,18 +23,45 @@
       </p>
     </div>
   </div>
+  <div class="gap-container" :class="{ hidden: focusStat.value === 'total' }">
+    <div class="is-flex is-flex-direction-row is-justify-content-space-around">
+      <KeyPerformanceIndicator
+        :value="formatPct(activeFocusStats?.pct)"
+        title="Vaccinated in Community"
+      />
+      <KeyPerformanceIndicator
+        :value="activeFocusStats?.gap ?? NaN"
+        title="Doses to Close Gap"
+      />
+    </div>
+    <div class="centered">
+      <p class="has-text-centered">
+        In {{ activeCluster.name }},
+        <strong>{{ formatPct(activeFocusStats?.pct) }}</strong>
+        {{ activeFocusStats?.name }} residents are are vaccinated compared to
+        our target {{ formatPct(expected) }} within this community.
+        <strong
+          >{{ activeFocusStats?.gap }} more
+          {{ activeFocusStats?.name }} residents</strong
+        >
+        need to be vaccinated to close this gap.
+      </p>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { computed } from "vue";
 
 import GapChart from "@/components/dashboard/GapChart.vue";
+import KeyPerformanceIndicator from "./KeyPerformanceIndicator.vue";
 import { formatPct } from "../../utils/utils";
 
 const props = defineProps<{
   stats: Stat[];
   activeCluster: Cluster;
   fieldNames: string[];
+  focusStat: FocusStat;
 }>();
 
 const expected = computed(
@@ -75,6 +102,12 @@ const activeStats = computed(() => {
   }
 });
 
+const activeFocusStats = computed(() => {
+  return activeStats.value.find(
+    (a) => a.name.toUpperCase() === props.focusStat.value.toUpperCase()
+  );
+});
+
 const minVaxRace = computed(() => {
   let minRow = activeStats.value[0];
   activeStats.value.forEach((stat) => {
@@ -97,5 +130,9 @@ const minVaxRace = computed(() => {
 .centered {
   display: grid;
   place-content: center;
+}
+
+.hidden {
+  visibility: hidden;
 }
 </style>
