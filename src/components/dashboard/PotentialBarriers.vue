@@ -1,7 +1,9 @@
 <template>
-  <p class="has-text-centered">
-    People with fewer resources have a harder time getting vaccinated.
-  </p>
+  <div class="content">
+    <p class="has-text-centered">
+      People with fewer resources have a harder time getting vaccinated.
+    </p>
+  </div>
   <div class="potential-barriers-container">
     <div class="content m-auto">
       <ul>
