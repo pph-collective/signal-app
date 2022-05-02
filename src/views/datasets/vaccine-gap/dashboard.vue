@@ -101,34 +101,96 @@
   </DashboardCard>
 
   <DashboardCard width="full">
-    <template #title>Moar Info</template>
-    <template #subtitle>Details about the things</template>
+    <template #title>What can I do to close the gap?</template>
     <template #content>
       <div class="px-4 content">
         <p>
-          Cred etsy farm-to-table af, proident selfies forage. Hella est
-          keffiyeh master cleanse, ad etsy venmo letterpress brooklyn fanny pack
-          squid ut roof party. In 90's sriracha DIY, la croix ipsum 3 wolf moon
-          gochujang dolore leggings raclette. You probably haven't heard of them
-          gastropub labore hammock lomo jianbing gluten-free cold-pressed irony
-          fam. Air plant ea adaptogen, ullamco austin excepteur meditation.
-          Shaman vice flexitarian polaroid.
+          I can raise awareness and address my community's concerns about
+          vaccines:
         </p>
-
-        <p>
-          Snackwave wolf gentrify deserunt iPhone pabst. Woke reprehenderit you
-          probably haven't heard of them portland sint. Listicle pitchfork
-          veniam PBRB try-hard disrupt salvia cornhole man bun incididunt.
-          Adaptogen eiusmod fugiat air plant. Eiusmod tilde in celiac la croix.
-          Pitchfork photo booth keffiyeh godard kitsch minim distillery.
-        </p>
-
         <ul>
-          <li><a href="/">One Link</a></li>
-          <li><a href="/">Two Link</a></li>
-          <li><a href="/" style="color: red">Red Link</a></li>
-          <li><a href="/" style="color: blue">Blue Link</a></li>
+          <li>
+            You can
+            <a
+              href="https://health.ri.gov/publications/actionplans/COVID-vaccine-outreach.pdf"
+              >educate your community about vaccines and build trust</a
+            >. This document has videos and messages you can share with people
+            in your community.
+          </li>
+          <li>
+            You can also promote
+            <a
+              href="https://drive.google.com/drive/folders/11NgvrZgqLs34MO2qicAp48Cnn5O_5Cg7"
+              >resources for communities with special needs</a
+            >.
+          </li>
         </ul>
+        <p>I can promote upcoming vaccine clinics in my neighborhood:</p>
+        <ul>
+          <li>
+            First, check the
+            <a
+              href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSv20xMlWQJON8jXvPtzdAo1KU-Rr6Eu6u02nUuVEu-Bz2t_M6JBzYLfFaL_jPZqLiAQZVigFcssKwx/pubhtml"
+              >list of upcoming vaccine clinics</a
+            >
+            to get information about the clinic(s) you want to promote.
+          </li>
+          <li>
+            Next, you can create
+            <a
+              href="https://drive.google.com/drive/folders/1ZpYrchu-srZJJSmn-yMDRPw-LfgbWIzB"
+              >promotional materials and promote</a
+            >
+            upcoming clinics. This will help you let people in your community
+            know what is happening.
+          </li>
+          <li>
+            You can also let people know
+            <a href="https://covid.ri.gov/vaccination#athome"
+              >how to get vaccinated at home</a
+            >.This is a good option for people who may have a harder time
+            accessing a clinic.
+          </li>
+        </ul>
+        <p>I can set up a new vaccine clinic in my neighborhood:</p>
+        <ul>
+          <li>
+            Get started by
+            <a
+              href="https://forms.office.com/Pages/ResponsePage.aspx?id=VGrKUmVENUa_82XQqEEiiDhbUGCR_dNCilNlrWlEGs1UN1A3UVY1QlhJQVZJNTFFTTM4WUkwREtEMS4u"
+              >filling out an interest form</a
+            >. A member of the RIDOH team will reach out to you within 3-5
+            business days.
+          </li>
+          <li>
+            Next, you can create
+            <a
+              href="https://drive.google.com/drive/folders/1ZpYrchu-srZJJSmn-yMDRPw-LfgbWIzB"
+              >promotional materials and promote</a
+            >
+            your clinic. This toolkit has resources that you may need to reach
+            people in your neighborhood.
+          </li>
+        </ul>
+        <p>
+          I can make sure people know where to go to get treatment for COVID-19:
+        </p>
+        <ul>
+          <li>
+            Find out
+            <a
+              href="https://covid-19-test-to-treat-locator-dhhs.hub.arcgis.com/"
+              >where you can find treatment in your neighborhood</a
+            >. COVID-19 medication can help you...
+          </li>
+        </ul>
+        <p>
+          I can find more resources at the
+          <a
+            href="https://covid.ri.gov/public/covid-19-community-partner-toolkit"
+            >Community Partner Toolkit website</a
+          >.
+        </p>
       </div>
     </template>
   </DashboardCard>
