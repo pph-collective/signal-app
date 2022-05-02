@@ -1,5 +1,15 @@
 <template>
+  <!--
+    Depending on the controls, display different charts and layouts
+
+    Implementation:
+    Each child of the outer-container is stacked on top of each other taking up space and his hidden based on the
+    visible class. Conditional rendering would cause resizing of the container which is jarring for the user.
+
+    Use the visible class to determine which is shown rather than v-if / v-else-if / v-else
+  -->
   <div class="outer-container">
+    <!-- All Residents, display the Gap Chart -->
     <div
       class="gap-container"
       :class="{ visible: focusStat.value === 'total' }"
@@ -27,6 +37,8 @@
         </p>
       </div>
     </div>
+
+    <!-- A focus stat selected and the population for the focus group is valid, display KPI -->
     <div
       class="gap-container"
       :class="{
@@ -39,11 +51,11 @@
       >
         <KeyPerformanceIndicator
           :value="formatPct(activeFocusStats?.pct)"
-          title="Vaccinated in Community"
+          :title="`${activeFocusStats?.name} residents vaccinated in ${activeCluster.name}`"
         />
         <KeyPerformanceIndicator
           :value="activeFocusStats?.gap ?? NaN"
-          title="Doses to Close Gap"
+          :title="`Vaccine doses for ${activeFocusStats?.name} residents needed to close the gap`"
         />
       </div>
       <div class="centered">
@@ -60,6 +72,8 @@
         </p>
       </div>
     </div>
+
+    <!-- A focus stat selected and population for the focus group is invalid, display a message -->
     <div
       class="gap-container"
       :class="{
@@ -77,7 +91,7 @@
 import { computed } from "vue";
 
 import GapChart from "@/components/dashboard/GapChart.vue";
-import KeyPerformanceIndicator from "./KeyPerformanceIndicator.vue";
+import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
 import { formatPct } from "../../utils/utils";
 
 const props = defineProps<{
@@ -161,6 +175,7 @@ const minVaxRace = computed(() => {
 }
 
 // Stacks all children on top of each other
+// Source: https://stackoverflow.com/questions/1909648/stacking-divs-on-top-of-each-other
 .outer-container {
   display: grid;
   grid-template: 1fr / 1fr;

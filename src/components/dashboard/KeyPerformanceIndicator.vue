@@ -1,5 +1,5 @@
 <template>
-  <div class="kpi-container">
+  <div class="kpi-container mx-3">
     <div class="centered">
       <span class="has-text-weight-bold is-size-1 has-text-centered">
         {{ value }}
@@ -20,7 +20,7 @@ defineProps<{
 
 <style scoped>
 .kpi-container {
-  gap: 1.5rem;
+  max-width: 200px;
 }
 
 .centered {
