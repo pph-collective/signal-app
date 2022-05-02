@@ -1,5 +1,5 @@
 <template>
-  <div class="gap-container">
+  <div class="signal-grid-container">
     <div>
       <GapChart
         :active-stats="activeStats"
@@ -87,13 +87,6 @@ const minVaxRace = computed(() => {
 </script>
 
 <style scoped>
-.gap-container {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
-  max-width: 100%;
-}
-
 .centered {
   display: grid;
   place-content: center;

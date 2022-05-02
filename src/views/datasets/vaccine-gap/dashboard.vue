@@ -90,6 +90,10 @@
 
   <DashboardCard width="full" :height="2">
     <template #title>How do we reach people who need vaccines?</template>
+    <template #subtitle
+      >People with fewer resources have a harder time getting
+      vaccinated.</template
+    >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <PotentialBarriers
