@@ -113,7 +113,9 @@
             You can
             <a
               href="https://health.ri.gov/publications/actionplans/COVID-vaccine-outreach.pdf"
-              >educate your community about vaccines and build trust</a
+              target="_blank"
+              >educate your community about vaccines and build trust
+              <i class="fas fa-external-link-alt fa-sm"></i></a
             >. This document has videos and messages you can share with people
             in your community.
           </li>
@@ -121,7 +123,9 @@
             You can also promote
             <a
               href="https://drive.google.com/drive/folders/11NgvrZgqLs34MO2qicAp48Cnn5O_5Cg7"
-              >resources for communities with special needs</a
+              target="blank"
+              >resources for communities with special needs
+              <i class="fas fa-external-link-alt fa-sm"></i></a
             >.
           </li>
         </ul>
@@ -131,23 +135,28 @@
             First, check the
             <a
               href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSv20xMlWQJON8jXvPtzdAo1KU-Rr6Eu6u02nUuVEu-Bz2t_M6JBzYLfFaL_jPZqLiAQZVigFcssKwx/pubhtml"
-              >list of upcoming vaccine clinics</a
-            >
+              target="blank"
+              >list of upcoming vaccine clinics
+              <i class="fas fa-external-link-alt fa-sm"></i
+            ></a>
             to get information about the clinic(s) you want to promote.
           </li>
           <li>
             Next, you can create
             <a
               href="https://drive.google.com/drive/folders/1ZpYrchu-srZJJSmn-yMDRPw-LfgbWIzB"
-              >promotional materials and promote</a
-            >
+              target="blank"
+              >promotional materials and promote
+              <i class="fas fa-external-link-alt fa-sm"></i
+            ></a>
             upcoming clinics. This will help you let people in your community
             know what is happening.
           </li>
           <li>
             You can also let people know
-            <a href="https://covid.ri.gov/vaccination#athome"
-              >how to get vaccinated at home</a
+            <a href="https://covid.ri.gov/vaccination#athome" target="blank"
+              >how to get vaccinated at home
+              <i class="fas fa-external-link-alt fa-sm"></i></a
             >.This is a good option for people who may have a harder time
             accessing a clinic.
           </li>
@@ -158,7 +167,9 @@
             Get started by
             <a
               href="https://forms.office.com/Pages/ResponsePage.aspx?id=VGrKUmVENUa_82XQqEEiiDhbUGCR_dNCilNlrWlEGs1UN1A3UVY1QlhJQVZJNTFFTTM4WUkwREtEMS4u"
-              >filling out an interest form</a
+              target="blank"
+              >filling out an interest form
+              <i class="fas fa-external-link-alt fa-sm"></i></a
             >. A member of the RIDOH team will reach out to you within 3-5
             business days.
           </li>
@@ -166,8 +177,10 @@
             Next, you can create
             <a
               href="https://drive.google.com/drive/folders/1ZpYrchu-srZJJSmn-yMDRPw-LfgbWIzB"
-              >promotional materials and promote</a
-            >
+              target="blank"
+              >promotional materials and promote
+              <i class="fas fa-external-link-alt fa-sm"></i
+            ></a>
             your clinic. This toolkit has resources that you may need to reach
             people in your neighborhood.
           </li>
@@ -180,7 +193,9 @@
             Find out
             <a
               href="https://covid-19-test-to-treat-locator-dhhs.hub.arcgis.com/"
-              >where you can find treatment in your neighborhood</a
+              target="blank"
+              >where you can find treatment in your neighborhood
+              <i class="fas fa-external-link-alt fa-sm"></i></a
             >. COVID-19 medication can help you...
           </li>
         </ul>
@@ -188,7 +203,9 @@
           I can find more resources at the
           <a
             href="https://covid.ri.gov/public/covid-19-community-partner-toolkit"
-            >Community Partner Toolkit website</a
+            target="blank"
+            >Community Partner Toolkit website
+            <i class="fas fa-external-link-alt fa-sm"></i></a
           >.
         </h5>
       </div>
