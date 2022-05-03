@@ -104,10 +104,10 @@
     <template #title>What can I do to close the gap?</template>
     <template #content>
       <div class="px-4 content">
-        <p>
+        <h5>
           I can raise awareness and address my community's concerns about
           vaccines:
-        </p>
+        </h5>
         <ul>
           <li>
             You can
@@ -125,7 +125,7 @@
             >.
           </li>
         </ul>
-        <p>I can promote upcoming vaccine clinics in my neighborhood:</p>
+        <h5>I can promote upcoming vaccine clinics in my neighborhood:</h5>
         <ul>
           <li>
             First, check the
@@ -152,7 +152,7 @@
             accessing a clinic.
           </li>
         </ul>
-        <p>I can set up a new vaccine clinic in my neighborhood:</p>
+        <h5>I can set up a new vaccine clinic in my neighborhood:</h5>
         <ul>
           <li>
             Get started by
@@ -172,9 +172,9 @@
             people in your neighborhood.
           </li>
         </ul>
-        <p>
+        <h5>
           I can make sure people know where to go to get treatment for COVID-19:
-        </p>
+        </h5>
         <ul>
           <li>
             Find out
@@ -184,13 +184,13 @@
             >. COVID-19 medication can help you...
           </li>
         </ul>
-        <p>
+        <h5>
           I can find more resources at the
           <a
             href="https://covid.ri.gov/public/covid-19-community-partner-toolkit"
             >Community Partner Toolkit website</a
           >.
-        </p>
+        </h5>
       </div>
     </template>
   </DashboardCard>
