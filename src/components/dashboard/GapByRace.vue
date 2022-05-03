@@ -39,23 +39,26 @@
       </div>
     </div>
 
-    <!-- A focus stat selected and the population for the focus group is valid, display KPI -->
+    <!-- A focus stat selected, display KPI -->
     <div
       class="gap-container"
-      :class="{
-        visible:
-          focusStat.value !== 'total' && activeFocusStats?.population > 0,
-      }"
+      :class="{ visible: focusStat.value !== 'total' }"
     >
       <div
         class="is-flex is-flex-direction-row is-justify-content-space-around"
       >
         <KeyPerformanceIndicator
-          :value="formatPct(activeFocusStats?.pct)"
+          :value="
+            activeFocusStats?.population > 0
+              ? formatPct(activeFocusStats?.pct)
+              : '?'
+          "
           :title="`${activeFocusStats?.name} residents vaccinated in ${activeCluster.name}`"
         />
         <KeyPerformanceIndicator
-          :value="activeFocusStats?.gap ?? NaN"
+          :value="
+            activeFocusStats?.population > 0 ? activeFocusStats?.gap : '?'
+          "
           :title="`Vaccine doses for ${activeFocusStats?.name} residents needed to close the gap`"
         />
       </div>
@@ -74,15 +77,26 @@
         </p>
         <!-- There is no gap in this focus group, display the largest gap -->
         <span v-else class="has-text-centered">
-          <p>
+          <!-- Fully Vaccinated -->
+          <p v-if="activeFocusStats?.population > 0">
             In {{ activeCluster.name }},
             <strong>{{ formatPct(activeFocusStats?.pct) }}</strong> of
             {{ activeFocusStats?.name }} residents are vaccinated compared to
             our goal of {{ formatPct(expected) }} total vaccinations statewide.
           </p>
+
+          <!-- Not Enough Information-->
+          <p else>
+            In {{ activeCluster.name }}, there isn't enough vaccine data on
+            <strong>{{ activeFocusStats?.name }} residents</strong> to determine
+            their vaccination status or the number of vaccine doses needed to
+            close the gap.
+          </p>
+
+          <!-- Largest Gap -->
           <p>
             The largest gap is among
-            {{ activeStats[0]?.name }} residents. Only
+            <strong>{{ activeStats[0]?.name }} residents</strong>. Only
             <strong>{{ formatPct(activeStats[0]?.pct) }}</strong> of
             {{ activeStats[0]?.name }} residents are vaccinated.
             <strong>{{ activeStats[0]?.gap }}</strong> more
@@ -91,18 +105,6 @@
           </p>
         </span>
       </div>
-    </div>
-
-    <!-- A focus stat selected and population for the focus group is invalid, display a message -->
-    <div
-      class="gap-container"
-      :class="{
-        visible:
-          focusStat.value !== 'total' && activeFocusStats?.population === 0,
-      }"
-    >
-      There isn't enough vaccine data on {{ activeFocusStats?.name }} residents
-      in {{ activeCluster.name }}.
     </div>
   </div>
 </template>
