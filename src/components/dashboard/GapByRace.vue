@@ -86,7 +86,7 @@
           </p>
 
           <!-- Not Enough Information-->
-          <p else>
+          <p v-else>
             In {{ activeCluster.name }}, there isn't enough vaccine data on
             <strong>{{ activeFocusStats?.name }} residents</strong> to determine
             their vaccination status or the number of vaccine doses needed to
