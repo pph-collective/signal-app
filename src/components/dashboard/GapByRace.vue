@@ -178,12 +178,11 @@ const minVaxRace = computed(() => {
 // Source: https://stackoverflow.com/questions/1909648/stacking-divs-on-top-of-each-other
 .outer-container {
   display: grid;
-  grid-template: 1fr / 1fr;
+  grid-template-areas: "content";
   place-items: center;
 
   > * {
-    grid-column: 1 / 1;
-    grid-row: 1 / 1;
+    grid-area: content;
   }
 }
 </style>
