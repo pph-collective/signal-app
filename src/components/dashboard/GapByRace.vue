@@ -24,14 +24,15 @@
       <div class="centered">
         <p class="has-text-centered">
           In {{ activeCluster.name }}, the largest gap is among
-          {{ minVaxRace?.name }} residents. Only
+          {{ activeStats[0].name }} residents. Only
           <strong
-            >{{ formatPct(minVaxRace?.pct) }} of
-            {{ minVaxRace?.name }} residents</strong
+            >{{ formatPct(activeStats[0].pct) }} of
+            {{ activeStats[0]?.name }} residents</strong
           >
           are vaccinated compared to {{ formatPct(expected) }} statewide.
           <strong
-            >{{ minVaxRace?.gap }} more {{ minVaxRace?.name }} residents</strong
+            >{{ activeStats[0].gap }} more
+            {{ activeStats[0].name }} residents</strong
           >
           need to be vaccinated to close this gap.
         </p>
@@ -59,7 +60,8 @@
         />
       </div>
       <div class="centered">
-        <p class="has-text-centered">
+        <!-- There is a vaccine gap within this focus group in this community -->
+        <p v-if="activeFocusStats?.gap > 0" class="has-text-centered">
           In {{ activeCluster.name }},
           <strong>{{ formatPct(activeFocusStats?.pct) }}</strong> of
           {{ activeFocusStats?.name }} residents are are vaccinated compared to
@@ -70,6 +72,9 @@
           >
           need to be vaccinated to close this gap.
         </p>
+
+        <!-- No vaccine gap, next largest -->
+        <p v-else class="has-text-centered"></p>
       </div>
     </div>
 
@@ -92,7 +97,7 @@ import { computed } from "vue";
 
 import GapChart from "@/components/dashboard/GapChart.vue";
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
-import { formatPct } from "../../utils/utils";
+import { formatPct, sortByProperty } from "../../utils/utils";
 
 const props = defineProps<{
   stats: Stat[];
@@ -122,18 +127,20 @@ const activeStats = computed(() => {
   );
   if (row) {
     // don't let a population be more than 100% vaccinated
-    return fieldData.value.map((f) => {
-      const population = row[f.populationField];
-      return {
-        name: f.name,
-        pct:
-          population > 0
-            ? Math.min(1, row[f.observedField] / row[f.populationField])
-            : 0,
-        gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
-        population,
-      };
-    });
+    return fieldData.value
+      .map((f) => {
+        const population = row[f.populationField];
+        return {
+          name: f.name,
+          pct:
+            population > 0
+              ? Math.min(1, row[f.observedField] / row[f.populationField])
+              : NaN,
+          gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
+          population,
+        };
+      })
+      .sort(sortByProperty("pct"));
   } else {
     return [];
   }
@@ -143,16 +150,6 @@ const activeFocusStats = computed(() => {
   return activeStats.value.find(
     (a) => a.name.toUpperCase() === props.focusStat.value.toUpperCase()
   );
-});
-
-const minVaxRace = computed(() => {
-  let minRow = activeStats.value[0];
-  activeStats.value.forEach((stat) => {
-    if (stat.pct < minRow.pct) {
-      minRow = stat;
-    }
-  });
-  return minRow;
 });
 </script>
 
