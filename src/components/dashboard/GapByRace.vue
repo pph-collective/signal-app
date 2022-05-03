@@ -24,15 +24,15 @@
       <div class="centered">
         <p class="has-text-centered">
           In {{ activeCluster.name }}, the largest gap is among
-          {{ activeStats[0].name }} residents. Only
+          {{ activeStats[0]?.name }} residents. Only
           <strong
-            >{{ formatPct(activeStats[0].pct) }} of
+            >{{ formatPct(activeStats[0]?.pct) }} of
             {{ activeStats[0]?.name }} residents</strong
           >
           are vaccinated compared to {{ formatPct(expected) }} statewide.
           <strong
-            >{{ activeStats[0].gap }} more
-            {{ activeStats[0].name }} residents</strong
+            >{{ activeStats[0]?.gap }} more
+            {{ activeStats[0]?.name }} residents</strong
           >
           need to be vaccinated to close this gap.
         </p>
@@ -59,22 +59,37 @@
           :title="`Vaccine doses for ${activeFocusStats?.name} residents needed to close the gap`"
         />
       </div>
-      <div class="centered">
-        <!-- There is a vaccine gap within this focus group in this community -->
+      <div class="content centered">
+        <!-- In this community, there is a gap in this focus group -->
         <p v-if="activeFocusStats?.gap > 0" class="has-text-centered">
           In {{ activeCluster.name }},
           <strong>{{ formatPct(activeFocusStats?.pct) }}</strong> of
-          {{ activeFocusStats?.name }} residents are are vaccinated compared to
-          our goal of {{ formatPct(expected) }} total vaccinations statewide.
+          {{ activeFocusStats?.name }} residents are vaccinated compared to our
+          goal of {{ formatPct(expected) }} total vaccinations statewide.
           <strong
             >{{ activeFocusStats?.gap }} more
             {{ activeFocusStats?.name }} residents</strong
           >
           need to be vaccinated to close this gap.
         </p>
-
-        <!-- No vaccine gap, next largest -->
-        <p v-else class="has-text-centered"></p>
+        <!-- There is no gap in this focus group, display the largest gap -->
+        <span v-else class="has-text-centered">
+          <p>
+            In {{ activeCluster.name }},
+            <strong>{{ formatPct(activeFocusStats?.pct) }}</strong> of
+            {{ activeFocusStats?.name }} residents are vaccinated compared to
+            our goal of {{ formatPct(expected) }} total vaccinations statewide.
+          </p>
+          <p>
+            The largest gap is among
+            {{ activeStats[0]?.name }} residents. Only
+            <strong>{{ formatPct(activeStats[0]?.pct) }}</strong> of
+            {{ activeStats[0]?.name }} residents are vaccinated.
+            <strong>{{ activeStats[0]?.gap }}</strong> more
+            {{ activeStats[0]?.name }} residents need to be vaccinated to close
+            this gap.
+          </p>
+        </span>
       </div>
     </div>
 
