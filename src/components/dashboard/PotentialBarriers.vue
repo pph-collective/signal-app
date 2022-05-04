@@ -29,7 +29,7 @@
           <tr v-for="row in rows" :key="row.fieldName">
             <td>{{ row.fieldName }}</td>
             <td>{{ formatPct(barrier[row.property]) }}</td>
-            <td>State number here</td>
+            <td>99%</td>
           </tr>
         </tbody>
       </table>
