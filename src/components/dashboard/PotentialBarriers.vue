@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <div class="content">
-      <p>People with fewer resources have a harder time getting vaccinated.</p>
+  <div class="signal-grid-container px-4">
+    <div class="content m-auto">
       <ul>
         <li>Without any cars, people rely on public transit to get around.</li>
         <li>
@@ -19,20 +18,22 @@
       </ul>
     </div>
 
-    <table class="mt-4 centered table is-narrow">
-      <tbody>
-        <tr>
-          <th>Potential Barrier</th>
-          <th>Community</th>
-          <th>State</th>
-        </tr>
-        <tr v-for="(row, i) in rows" :key="i">
-          <td>{{ row.fieldName }}:</td>
-          <td class="pl-2">{{ formatPct(barrier[row.property]) }}</td>
-          <td class="pl-2">State number here</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-container m-auto">
+      <table class="table is-narrow">
+        <tbody>
+          <tr>
+            <th>Potential Barrier</th>
+            <th>Community</th>
+            <th>State</th>
+          </tr>
+          <tr v-for="row in rows" :key="row.fieldName">
+            <td>{{ row.fieldName }}</td>
+            <td>{{ formatPct(barrier[row.property]) }}</td>
+            <td>99%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -73,9 +74,8 @@ const rows = [
 ];
 </script>
 
-<style scoped>
-.centered {
-  margin-left: auto;
-  margin-right: auto;
+<style lang="scss" scoped>
+.table td {
+  vertical-align: middle;
 }
 </style>
