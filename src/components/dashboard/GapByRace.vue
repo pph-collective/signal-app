@@ -14,7 +14,7 @@
     <!-- All Residents, display the Gap Chart -->
     <div
       class="signal-grid-container"
-      :class="{ visible: focusStat.value === 'total' }"
+      :class="focusStat.value === 'total' ? 'visible' : 'hidden'"
     >
       <div>
         <GapChart
@@ -43,7 +43,7 @@
     <!-- A focus stat selected, display KPI -->
     <div
       class="signal-grid-container"
-      :class="{ visible: focusStat.value !== 'total' }"
+      :class="focusStat.value === 'total' ? 'hidden' : 'visible'"
     >
       <div
         class="is-flex is-flex-direction-row is-justify-content-space-around"
@@ -191,6 +191,10 @@ const activeFocusStats = computed(() => {
 
 .visible {
   visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 // Stacks all children on top of each other
