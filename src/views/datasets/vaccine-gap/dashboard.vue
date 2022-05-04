@@ -111,21 +111,17 @@
         <ul>
           <li>
             You can
-            <a
+            <ExternalLink
               href="https://health.ri.gov/publications/actionplans/COVID-vaccine-outreach.pdf"
-              target="_blank"
-              >educate your community about vaccines and build trust
-              <i class="fas fa-external-link-alt fa-sm"></i></a
+              >educate your community about vaccines and build trust </ExternalLink
             >. This document has videos and messages you can share with people
             in your community.
           </li>
           <li>
             You can also promote
-            <a
+            <ExternalLink
               href="https://drive.google.com/drive/folders/11NgvrZgqLs34MO2qicAp48Cnn5O_5Cg7"
-              target="blank"
-              >resources for communities with special needs
-              <i class="fas fa-external-link-alt fa-sm"></i></a
+              >resources for communities with special needs </ExternalLink
             >.
           </li>
         </ul>
@@ -133,30 +129,25 @@
         <ul>
           <li>
             First, check the
-            <a
+            <ExternalLink
               href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSv20xMlWQJON8jXvPtzdAo1KU-Rr6Eu6u02nUuVEu-Bz2t_M6JBzYLfFaL_jPZqLiAQZVigFcssKwx/pubhtml"
-              target="blank"
               >list of upcoming vaccine clinics
-              <i class="fas fa-external-link-alt fa-sm"></i
-            ></a>
+            </ExternalLink>
             to get information about the clinic(s) you want to promote.
           </li>
           <li>
             Next, you can create
-            <a
+            <ExternalLink
               href="https://drive.google.com/drive/folders/1ZpYrchu-srZJJSmn-yMDRPw-LfgbWIzB"
-              target="blank"
               >promotional materials and promote
-              <i class="fas fa-external-link-alt fa-sm"></i
-            ></a>
+            </ExternalLink>
             upcoming clinics. This will help you let people in your community
             know what is happening.
           </li>
           <li>
             You can also let people know
-            <a href="https://covid.ri.gov/vaccination#athome" target="blank"
-              >how to get vaccinated at home
-              <i class="fas fa-external-link-alt fa-sm"></i></a
+            <ExternalLink href="https://covid.ri.gov/vaccination#athome"
+              >how to get vaccinated at home </ExternalLink
             >.This is a good option for people who may have a harder time
             accessing a clinic.
           </li>
@@ -165,22 +156,18 @@
         <ul>
           <li>
             Get started by
-            <a
+            <ExternalLink
               href="https://forms.office.com/Pages/ResponsePage.aspx?id=VGrKUmVENUa_82XQqEEiiDhbUGCR_dNCilNlrWlEGs1UN1A3UVY1QlhJQVZJNTFFTTM4WUkwREtEMS4u"
-              target="blank"
-              >filling out an interest form
-              <i class="fas fa-external-link-alt fa-sm"></i></a
+              >filling out an interest form </ExternalLink
             >. A member of the RIDOH team will reach out to you within 3-5
             business days.
           </li>
           <li>
             Next, you can create
-            <a
+            <ExternalLink
               href="https://drive.google.com/drive/folders/1ZpYrchu-srZJJSmn-yMDRPw-LfgbWIzB"
-              target="blank"
               >promotional materials and promote
-              <i class="fas fa-external-link-alt fa-sm"></i
-            ></a>
+            </ExternalLink>
             your clinic. This toolkit has resources that you may need to reach
             people in your neighborhood.
           </li>
@@ -191,21 +178,17 @@
         <ul>
           <li>
             Find out
-            <a
+            <ExternalLink
               href="https://covid-19-test-to-treat-locator-dhhs.hub.arcgis.com/"
-              target="blank"
-              >where you can find treatment in your neighborhood
-              <i class="fas fa-external-link-alt fa-sm"></i></a
-            >. COVID-19 medication can help you...
+              >where you can find treatment in your neighborhood </ExternalLink
+            >.
           </li>
         </ul>
         <h5>
           I can find more resources at the
-          <a
+          <ExternalLink
             href="https://covid.ri.gov/public/covid-19-community-partner-toolkit"
-            target="blank"
-            >Community Partner Toolkit website
-            <i class="fas fa-external-link-alt fa-sm"></i></a
+            >Community Partner Toolkit website </ExternalLink
           >.
         </h5>
       </div>
@@ -255,6 +238,7 @@ import ClusterMap from "@/components/dashboard/ClusterMap.vue";
 import GapByRace from "@/components/dashboard/GapByRace.vue";
 import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
 import RedDot from "@/components/dashboard/RedDot.vue";
+import ExternalLink from "@/components/base/ExternalLink.vue";
 
 import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";

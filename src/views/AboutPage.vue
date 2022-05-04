@@ -27,25 +27,36 @@
         <div class="content">
           <p>
             Project SIGNAL is a collaboration between the
-            <a href="https://health.ri.gov/"
-              >Rhode Island Department of Health</a
+            <ExternalLink href="https://health.ri.gov/"
+              >Rhode Island Department of Health</ExternalLink
             >; the People, Place, and Health Collective in the Department of
             Epidemiology at the
-            <a href="https://www.brown.edu/academics/public-health/home">
-              Brown University School of Public Health</a
+            <ExternalLink
+              href="https://www.brown.edu/academics/public-health/home"
+            >
+              Brown University School of Public Health </ExternalLink
             >; and the
-            <a href="https://ccv.brown.edu/"
-              >Center for Computation and Visualization</a
+            <ExternalLink href="https://ccv.brown.edu/"
+              >Center for Computation and Visualization </ExternalLink
             >. The People, Place, and Health Collective conducts research to
             support public health policies and programs that are data-driven,
             people-centered, and place-oriented. Some of the People, Place, and
             Health Collective's other signature initiatives include
-            <a href="https://www.preventoverdoseri.org/">PreventOverdoseRI</a>,
-            <a href="https://profoundmodel.org/">PROFOUND</a>,
-            <a href="https://provident.preventoverdoseri.org/">PROVIDENT</a>,
-            and <a href="https://www.titanmodel.org/">TITAN</a>. For more about
-            the People, Place, and Health Collective,
-            <a href="https://medium.com/pphc">visit our website</a>.
+            <ExternalLink href="https://www.preventoverdoseri.org/"
+              >PreventOverdoseRI </ExternalLink
+            >,
+            <ExternalLink href="https://profoundmodel.org/"
+              >PROFOUND </ExternalLink
+            >,
+            <ExternalLink href="https://provident.preventoverdoseri.org/"
+              >PROVIDENT </ExternalLink
+            >, and
+            <ExternalLink href="https://www.titanmodel.org/"
+              >TITAN </ExternalLink
+            >. For more about the People, Place, and Health Collective,
+            <ExternalLink href="https://medium.com/pphc"
+              >visit our website </ExternalLink
+            >.
           </p>
           <p>
             <a class="pl-4" href="https://github.com/pph-collective">
@@ -93,4 +104,5 @@
 import DashboardLayout from "@/layouts/dashboard.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import VisuallyHidden from "@/components/base/VisuallyHidden.vue";
+import ExternalLink from "@/components/base/ExternalLink.vue";
 </script>
