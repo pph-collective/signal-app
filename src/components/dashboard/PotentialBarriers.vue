@@ -1,5 +1,5 @@
 <template>
-  <div class="signal-grid-container">
+  <div class="signal-grid-container px-4">
     <div class="content m-auto">
       <ul>
         <li>Without any cars, people rely on public transit to get around.</li>
@@ -26,10 +26,10 @@
             <th>Community</th>
             <th>State</th>
           </tr>
-          <tr v-for="(row, i) in rows" :key="i">
-            <td>{{ row.fieldName }}:</td>
-            <td class="pl-2">{{ formatPct(barrier[row.property]) }}</td>
-            <td class="pl-2">State number here</td>
+          <tr v-for="row in rows" :key="row.fieldName">
+            <td>{{ row.fieldName }}</td>
+            <td>{{ formatPct(barrier[row.property]) }}</td>
+            <td>State number here</td>
           </tr>
         </tbody>
       </table>
@@ -73,3 +73,9 @@ const rows = [
   },
 ];
 </script>
+
+<style lang="scss" scoped>
+.table td {
+  vertical-align: middle;
+}
+</style>
