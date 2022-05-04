@@ -63,9 +63,9 @@
           :title="`Vaccine doses for ${activeFocusStats?.name} residents needed to close the gap`"
         />
       </div>
-      <div class="content centered">
+      <div class="content centered has-text-centered">
         <!-- In this community, there is a gap in this focus group -->
-        <p v-if="activeFocusStats?.gap > 0" class="has-text-centered">
+        <p v-if="activeFocusStats?.gap > 0">
           In {{ activeCluster.name }},
           <strong>{{ formatPct(activeFocusStats?.pct) }}</strong> of
           {{ activeFocusStats?.name }} residents are vaccinated compared to our
@@ -77,7 +77,7 @@
           need to be vaccinated to close this gap.
         </p>
         <!-- There is no gap in this focus group, display the largest gap -->
-        <span v-else class="has-text-centered">
+        <span v-else>
           <!-- Fully Vaccinated -->
           <p v-if="activeFocusStats?.population > 0">
             In {{ activeCluster.name }},
