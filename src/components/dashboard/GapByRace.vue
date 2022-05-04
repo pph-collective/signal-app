@@ -164,7 +164,17 @@ const activeStats = computed(() => {
   }
 });
 
-const minVaxRace = computed(() => activeStats.value[0]);
+// activeStats is sorted by pct, minVaxRace is the first group whose percentage gap is not NaN
+const minVaxRace = computed(() => {
+  for (let i = 0; i < activeStats.value.length; i++) {
+    if (!isNaN(activeStats.value[i].pct)) {
+      return activeStats.value[i];
+    }
+  }
+
+  // shouldn't reach here, but if it does return the first one
+  return activeStats.value[0];
+});
 
 const activeFocusStats = computed(() => {
   return activeStats.value.find(
