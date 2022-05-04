@@ -3,10 +3,12 @@
     Depending on the controls, display different charts and layouts
 
     Implementation:
-    Each child of the outer-container is stacked on top of each other taking up space and his hidden based on the
-    visible class. Conditional rendering would cause resizing of the container which is jarring for the user.
+    Each child of the outer-container is stacked on top of each other taking
+    up space and is hidden based on the visible class. Conditional rendering
+    would cause resizing of the container which is jarring for the user.
 
-    Use the visible class to determine which is shown rather than v-if / v-else-if / v-else
+    Use the visible class to determine which is shown rather than
+    v-if / v-else-if / v-else
   -->
   <div class="outer-container">
     <!-- All Residents, display the Gap Chart -->
@@ -24,15 +26,14 @@
       <div class="centered">
         <p class="has-text-centered">
           In {{ activeCluster.name }}, the largest gap is among
-          {{ activeStats[0]?.name }} residents. Only
+          {{ minVaxRace?.name }} residents. Only
           <strong
-            >{{ formatPct(activeStats[0]?.pct) }} of
-            {{ activeStats[0]?.name }} residents</strong
+            >{{ formatPct(minVaxRace?.pct) }} of
+            {{ minVaxRace?.name }} residents</strong
           >
           are vaccinated compared to {{ formatPct(expected) }} statewide.
           <strong
-            >{{ activeStats[0]?.gap }} more
-            {{ activeStats[0]?.name }} residents</strong
+            >{{ minVaxRace?.gap }} more {{ minVaxRace?.name }} residents</strong
           >
           need to be vaccinated to close this gap.
         </p>
@@ -96,12 +97,12 @@
           <!-- Largest Gap -->
           <p>
             The largest gap is among
-            <strong>{{ activeStats[0]?.name }} residents</strong>. Only
-            <strong>{{ formatPct(activeStats[0]?.pct) }}</strong> of
-            {{ activeStats[0]?.name }} residents are vaccinated.
-            <strong>{{ activeStats[0]?.gap }}</strong> more
-            {{ activeStats[0]?.name }} residents need to be vaccinated to close
-            this gap.
+            <strong>{{ minVaxRace?.name }} residents</strong>. Only
+            <strong>{{ formatPct(minVaxRace?.pct) }}</strong> of
+            {{ minVaxRace?.name }} residents are vaccinated.
+            <strong>{{ minVaxRace?.gap }}</strong> more
+            {{ minVaxRace?.name }} residents need to be vaccinated to close this
+            gap.
           </p>
         </span>
       </div>
@@ -162,6 +163,8 @@ const activeStats = computed(() => {
     return [];
   }
 });
+
+const minVaxRace = computed(() => activeStats.value[0]);
 
 const activeFocusStats = computed(() => {
   return activeStats.value.find(
