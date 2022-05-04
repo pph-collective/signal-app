@@ -13,7 +13,7 @@
   <div class="outer-container">
     <!-- All Residents, display the Gap Chart -->
     <div
-      class="gap-container"
+      class="signal-grid-container"
       :class="{ visible: focusStat.value === 'total' }"
     >
       <div>
@@ -42,7 +42,7 @@
 
     <!-- A focus stat selected, display KPI -->
     <div
-      class="gap-container"
+      class="signal-grid-container"
       :class="{ visible: focusStat.value !== 'total' }"
     >
       <div
@@ -184,14 +184,6 @@ const activeFocusStats = computed(() => {
 </script>
 
 <style scoped lang="scss">
-.gap-container {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
-  max-width: 100%;
-  visibility: hidden;
-}
-
 .centered {
   display: grid;
   place-content: center;

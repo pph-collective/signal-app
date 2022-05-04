@@ -101,21 +101,171 @@ const main = async () => {
       extension: "geojson",
       field: "geo",
       property: "features",
+      schema: [
+        {
+          name: "geometry",
+          type: "object",
+        },
+        {
+          name: "properties",
+          type: "object",
+          schema: [
+            {
+              name: "cluster_id",
+              type: "number",
+            },
+          ],
+        },
+        {
+          name: "id",
+          type: "number",
+        },
+        {
+          name: "type",
+          type: "string",
+        },
+      ],
     },
     {
       filePath: statsfile,
       extension: "json",
       field: "stats",
+      schema: [
+        {
+          name: "cluster_id",
+          type: "number",
+        },
+        {
+          name: "name",
+          type: "string",
+        },
+        {
+          name: "observed_total",
+          type: "number",
+        },
+        {
+          name: "expected_total",
+          type: "number",
+        },
+        {
+          name: "population_total",
+          type: "number",
+        },
+        {
+          name: "observed_asian",
+          type: "number",
+        },
+        {
+          name: "expected_asian",
+          type: "number",
+        },
+        {
+          name: "population_asian",
+          type: "number",
+        },
+        {
+          name: "observed_black",
+          type: "number",
+        },
+        {
+          name: "expected_black",
+          type: "number",
+        },
+        {
+          name: "population_black",
+          type: "number",
+        },
+        {
+          name: "observed_latino",
+          type: "number",
+        },
+        {
+          name: "expected_latino",
+          type: "number",
+        },
+        {
+          name: "population_latino",
+          type: "number",
+        },
+        {
+          name: "observed_white",
+          type: "number",
+        },
+        {
+          name: "expected_white",
+          type: "number",
+        },
+        {
+          name: "population_white",
+          type: "number",
+        },
+      ],
     },
     {
       filePath: barriersfile,
       extension: "json",
       field: "barriers",
+      schema: [
+        {
+          name: "cluster_id",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_vehicle",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_english",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_insurance",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_internet",
+          type: "number",
+        },
+      ],
     },
     {
       filePath: locationsfile,
       extension: "json",
       field: "locations",
+      schema: [
+        {
+          name: "name",
+          type: "string",
+        },
+        {
+          name: "street_address",
+          type: "string",
+        },
+        {
+          name: "city",
+          type: "string",
+        },
+        {
+          name: "state",
+          type: "string",
+        },
+        {
+          name: "zip_code",
+          type: "string",
+        },
+        {
+          name: "longitude",
+          type: "number",
+        },
+        {
+          name: "latitude",
+          type: "number",
+        },
+        {
+          name: "active_in_past_period",
+          type: "boolean",
+        },
+      ],
     },
   ];
 
@@ -190,6 +340,13 @@ const main = async () => {
     } else {
       file.data = json;
     }
+
+    // check the schema
+    if (file.schema) {
+      file.data.forEach((row) => {
+        checkSchema(file.schema, row, file.filePath);
+      });
+    }
   });
 
   if (localDir) {
@@ -224,6 +381,31 @@ const main = async () => {
 
     console.log(`SUCCESS! Created document in firestore: ${docPath}`);
   }
+};
+
+const checkSchema = (schema, row, filePath) => {
+  schema.forEach((col) => {
+    const value = row[col.name];
+    if (value === undefined) {
+      warnAndExit(
+        `ERROR!: object ${JSON.stringify(
+          row
+        )} in ${filePath} is missing field ${col.name}`
+      );
+    }
+    if (typeof value !== col.type) {
+      warnAndExit(
+        `ERROR!: field ${col.name} in object ${JSON.stringify(
+          row
+        )} in ${filePath} has type ${typeof value}, but expected ${col.type}`
+      );
+    }
+
+    // recurse on an object with a nested schema
+    if (col.schema) {
+      checkSchema(col.schema, value, filePath);
+    }
+  });
 };
 
 main();
