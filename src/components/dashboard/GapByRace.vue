@@ -14,7 +14,7 @@
     <!-- All Residents, display the Gap Chart -->
     <div
       class="signal-grid-container"
-      :class="focusStat.value === 'total' ? 'visible' : 'hidden'"
+      :class="focusStat.value === 'total' ? '' : 'is-invisible'"
     >
       <div>
         <GapChart
@@ -43,7 +43,7 @@
     <!-- A focus stat selected, display KPI -->
     <div
       class="signal-grid-container"
-      :class="focusStat.value === 'total' ? 'hidden' : 'visible'"
+      :class="focusStat.value === 'total' ? 'is-invisible' : ''"
     >
       <div
         class="is-flex is-flex-direction-row is-justify-content-space-around"
@@ -166,9 +166,9 @@ const activeStats = computed(() => {
 
 // activeStats is sorted by pct, minVaxRace is the first group whose percentage gap is not NaN
 const minVaxRace = computed(() => {
-  for (let i = 0; i < activeStats.value.length; i++) {
-    if (!isNaN(activeStats.value[i].pct)) {
-      return activeStats.value[i];
+  for (const activeStat of activeStats.value) {
+    if (!isNaN(activeStat.pct)) {
+      return activeStat;
     }
   }
 
@@ -187,14 +187,6 @@ const activeFocusStats = computed(() => {
 .centered {
   display: grid;
   place-content: center;
-}
-
-.visible {
-  visibility: visible;
-}
-
-.hidden {
-  visibility: hidden;
 }
 
 // Stacks all children on top of each other
