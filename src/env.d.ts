@@ -20,6 +20,13 @@ interface Barrier {
   pct_w_no_english: number;
 }
 
+interface StateBarriers {
+  pct_w_no_vehicle: number;
+  pct_w_no_insurance: number;
+  pct_w_no_internet: number;
+  pct_w_no_english: number;
+}
+
 interface Geo {
   properties: {
     cluster_id: number;

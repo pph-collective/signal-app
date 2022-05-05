@@ -29,7 +29,7 @@
           <tr v-for="row in rows" :key="row.fieldName">
             <td>{{ row.fieldName }}</td>
             <td>{{ formatPct(barrier[row.property]) }}</td>
-            <td>99%</td>
+            <td>{{ formatPct(stateBarriers[row.property]) }}</td>
           </tr>
         </tbody>
       </table>
@@ -44,6 +44,7 @@ import { formatPct } from "../../utils/utils";
 
 const props = defineProps<{
   barriers: Barrier[];
+  stateBarriers: StateBarriers;
   activeCluster: Cluster;
 }>();
 
