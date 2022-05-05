@@ -28,7 +28,7 @@ Uploads the data for the SIGNAL project to Firestore.
 
 Run
 
-`node ./scripts/upload-data.js --id <dataset id> --date <date in yyyy-mm-dd> --geojson <path to cluster geojson> --statsfile <path to stats json> --barriersfile <path to barriers json> --locationsfile <path to locations file> [--overwrite] [--newId]`
+`node ./scripts/upload-data.js --id <dataset id> --date <date in yyyy-mm-dd> --geojson <path to cluster geojson> --statsfile <path to stats json> --barriersfile <path to barriers json> --statebarriersfile <path to state barriers json> --locationsfile <path to locations file> [--overwrite] [--newId]`
 
 ### Example
 
