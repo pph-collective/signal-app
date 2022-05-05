@@ -43,8 +43,8 @@ import { computed } from "vue";
 import { formatPct } from "../../utils/utils";
 
 const props = defineProps<{
-  barriers: Barrier[];
-  stateBarriers: StateBarriers;
+  barriers: ClusterBarrier[];
+  stateBarriers: Barrier;
   activeCluster: Cluster;
 }>();
 
