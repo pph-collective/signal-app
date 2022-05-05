@@ -47,6 +47,10 @@ withDefaults(defineProps<Props>(), {
   justify-content: flex-start;
   align-items: flex-start;
   overflow-x: visible;
+
+  filter: drop-shadow(0.25em 0.25em 0.25em rgba($scheme-invert, 0.1))
+    drop-shadow(0.05em 0.05em 0.05em rgba($scheme-invert, 0.02))
+    drop-shadow(0em 0em 0.1em rgba($scheme-invert, 0.05));
 }
 
 .dashboard-card-header {

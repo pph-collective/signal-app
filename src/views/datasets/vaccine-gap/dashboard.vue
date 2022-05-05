@@ -44,8 +44,9 @@
       This map shows where there are gaps in vaccination. Darker areas show
       bigger gaps in vaccination among
       <strong>{{ controls.focusStat.name.toLowerCase() }}</strong
-      >. Areas with dashes mean there is not enough information. Select a community, click the <em>Zoom to Community</em> button, and
-      scroll down to learn more.
+      >. Areas with dashes mean there is not enough information. Select a
+      community, click the <em>Zoom to Community</em> button, and scroll down to
+      learn more.
     </template>
 
     <template #content>
