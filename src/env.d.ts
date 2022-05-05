@@ -35,7 +35,7 @@ interface Stat {
 
 interface FocusStat {
   name: string;
-  value: string;
+  value: "total" | "white" | "black" | "latino" | "asian";
 }
 
 // TODO: what other fields go here?

@@ -83,6 +83,7 @@
           :stats="data.stats"
           :active-cluster="activeCluster"
           :field-names="['asian', 'black', 'latino', 'white']"
+          :focus-stat="controls.focusStat"
         />
       </HiddenContent>
     </template>
