@@ -34,17 +34,18 @@ Run
 
 Example Run Command
 
-`node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-03-15 --geojson ./data/vaccine_coldspot_polygons_03_15_2022.geojson --statsfile ./data/vaccine_coldspot_statistics_03_15_2022.json --barriersfile ./data/vaccine_coldspot_side_panel_percentages_03_15_2022.json --locationsfile ./data/vaccine_coldspot_locations_03_15_2022.json`
+`node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-03-15 --geojson ./data/vaccine_coldspot_polygons_03_15_2022.geojson --statsfile ./data/vaccine_coldspot_statistics_03_15_2022.json --barriersfile ./data/vaccine_coldspot_side_panel_percentages_03_15_2022.json --statebarriersfile ./data/statebarriers.json --locationsfile ./data/vaccine_coldspot_locations_03_15_2022.json`
 
 ### Command Line Arguments
 ```
--h, --help            show this help message and exit
--i, --id ID           ID of dataset for the collection
--d, --date DATE       Date of dataset, formatted in yyyy-mm-dd
--g, --geojson         Path to geojson shape file
--s, --statsfile       Path to stats json file
--b, --barriersfile    Path to barriers json file
--l, --locationsfile   Path to locations json file
--o, --overwrite       if files already exists, overwrite it
--n, --newId           if the collection id does not exist, creates a new collection
+-h, --help                show this help message and exit
+-i, --id ID               ID of dataset for the collection
+-d, --date DATE           Date of dataset, formatted in yyyy-mm-dd
+-g, --geojson             Path to geojson shape file
+-s, --statsfile           Path to stats json file
+-b, --barriersfile        Path to barriers json file
+-r, --statebarriersfile   Path to state barriers json file
+-l, --locationsfile       Path to locations json file
+-o, --overwrite           if files already exists, overwrite it
+-n, --newId               if the collection id does not exist, creates a new collection
 ```

@@ -6,7 +6,7 @@
  *  node ./scripts/upload-data.js -h
  *
  * Example Run
- * node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-03-15 --geojson ./data/vaccine_coldspot_polygons_03_15_2022.geojson --statsfile ./data/vaccine_coldspot_statistics_03_15_2022.json
+ * node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-03-15 --geojson ./data/vaccine_coldspot_polygons_03_15_2022.geojson --statsfile ./data/vaccine_coldspot_statistics_03_15_2022.json --barriersfile ./data/vaccine_coldspot_side_panel_percentages_03_15_2022.json --statebarriersfile ./data/statebarriers.json --locationsfile ./data/vaccine_coldspot_locations_03_15_2022.json
  */
 
 /* eslint "@typescript-eslint/no-var-requires": "off" */
@@ -122,10 +122,6 @@ const main = async () => {
               type: "number",
             },
           ],
-        },
-        {
-          name: "id",
-          type: "number",
         },
         {
           name: "type",
