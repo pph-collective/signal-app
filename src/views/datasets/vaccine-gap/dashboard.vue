@@ -233,7 +233,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 import RI_GEOJSON from "@/assets/geography/ri.json";
 import ControlPanel from "@/components/dashboard/ControlPanel.vue";
@@ -317,6 +318,47 @@ const updateControls = (newControls) => {
     controls.value[k] = v;
   }
 };
+
+const route = useRoute();
+const { path } = route;
+const router = useRouter();
+
+let initCluster = NULL_CLUSTER.cluster_id;
+if (route.query.cluster) {
+  const queryCluster = parseInt(route.query.cluster as string);
+  if (
+    queryCluster !== NULL_CLUSTER.cluster_id &&
+    !data.stats.find((s) => s.cluster_id === queryCluster)
+  ) {
+    throw new Error(
+      `No community with the identifier ${route.query.cluster} found`
+    );
+  }
+  initCluster = queryCluster;
+} else {
+  router.replace({ path, query: { ...route.query, cluster: initCluster } });
+}
+watch(activeCluster, () =>
+  router.replace({
+    path,
+    query: { ...route.query, cluster: activeCluster.value.cluster_id },
+  })
+);
+watch(
+  () => route.query,
+  () => {
+    const queryCluster = parseInt(route.query.cluster as string);
+    if (queryCluster !== activeCluster.value.cluster_id) {
+      if (queryCluster === NULL_CLUSTER.cluster_id) {
+        activeCluster.value = NULL_CLUSTER;
+      } else {
+        activeCluster.value = data.stats.find(
+          (s) => s.cluster_id === queryCluster
+        );
+      }
+    }
+  }
+);
 
 const updateCluster = (newClusterId) => {
   if (newClusterId === NULL_CLUSTER.cluster_id) {
