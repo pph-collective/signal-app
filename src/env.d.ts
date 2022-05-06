@@ -13,11 +13,14 @@ interface Cluster {
 }
 
 interface Barrier {
-  cluster_id: number;
   pct_w_no_vehicle: number;
   pct_w_no_insurance: number;
   pct_w_no_internet: number;
   pct_w_no_english: number;
+}
+
+interface ClusterBarrier extends Barrier {
+  cluster_id: number;
 }
 
 interface Geo {

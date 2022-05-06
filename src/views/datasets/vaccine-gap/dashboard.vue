@@ -100,6 +100,7 @@
       <HiddenContent :show="activeCluster.name !== ''">
         <PotentialBarriers
           :barriers="data.barriers"
+          :state-barriers="data.state_barriers"
           :active-cluster="activeCluster"
         />
       </HiddenContent>

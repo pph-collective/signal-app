@@ -6,7 +6,7 @@
  *  node ./scripts/upload-data.js -h
  *
  * Example Run
- * node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-03-15 --geojson ./data/vaccine_coldspot_polygons_03_15_2022.geojson --statsfile ./data/vaccine_coldspot_statistics_03_15_2022.json
+ * node ./scripts/upload-data.js --id vax_first_dose_coldspots --date 2022-03-15 --geojson ./data/vaccine_coldspot_polygons_03_15_2022.geojson --statsfile ./data/vaccine_coldspot_statistics_03_15_2022.json --barriersfile ./data/vaccine_coldspot_side_panel_percentages_03_15_2022.json --statebarriersfile ./data/statebarriers.json --locationsfile ./data/vaccine_coldspot_locations_03_15_2022.json
  */
 
 /* eslint "@typescript-eslint/no-var-requires": "off" */
@@ -59,6 +59,11 @@ argparse.add_argument("-b", "--barriersfile", {
   help: "Path to barriers json file",
 });
 
+argparse.add_argument("-r", "--statebarriersfile", {
+  required: true,
+  help: "Path to state barriers json file",
+});
+
 argparse.add_argument("-l", "--locationsfile", {
   required: true,
   help: "Path to locations json file",
@@ -85,6 +90,7 @@ const main = async () => {
     geojson,
     statsfile,
     barriersfile,
+    statebarriersfile,
     locationsfile,
     id,
     date,
@@ -101,6 +107,7 @@ const main = async () => {
       extension: "geojson",
       field: "geo",
       property: "features",
+      isArray: true,
       schema: [
         {
           name: "geometry",
@@ -117,10 +124,6 @@ const main = async () => {
           ],
         },
         {
-          name: "id",
-          type: "number",
-        },
-        {
           name: "type",
           type: "string",
         },
@@ -130,6 +133,7 @@ const main = async () => {
       filePath: statsfile,
       extension: "json",
       field: "stats",
+      isArray: true,
       schema: [
         {
           name: "cluster_id",
@@ -205,6 +209,7 @@ const main = async () => {
       filePath: barriersfile,
       extension: "json",
       field: "barriers",
+      isArray: true,
       schema: [
         {
           name: "cluster_id",
@@ -229,9 +234,34 @@ const main = async () => {
       ],
     },
     {
+      filePath: statebarriersfile,
+      extension: "json",
+      field: "state_barriers",
+      isArray: false,
+      schema: [
+        {
+          name: "pct_w_no_vehicle",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_english",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_insurance",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_internet",
+          type: "number",
+        },
+      ],
+    },
+    {
       filePath: locationsfile,
       extension: "json",
       field: "locations",
+      isArray: true,
       schema: [
         {
           name: "name",
@@ -341,9 +371,25 @@ const main = async () => {
       file.data = json;
     }
 
+    // check the file isArray
+    if (file.isArray !== Array.isArray(file.data)) {
+      warnAndExit(
+        `ERROR!: The file for ${file.field} at ${
+          file.filePath
+        } was expected to contain ${
+          file.isArray ? "an array" : "an object"
+        }, but is instead contained ${
+          Array.isArray(file.data) ? "an array" : "a " + typeof file.data
+        }.`
+      );
+    }
+
     // check the schema
     if (file.schema) {
-      file.data.forEach((row) => {
+      // Check data as an array of objects
+      const data = file.isArray ? file.data : [file.data];
+
+      data.forEach((row) => {
         checkSchema(file.schema, row, file.filePath);
       });
     }
