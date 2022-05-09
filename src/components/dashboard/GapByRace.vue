@@ -28,10 +28,11 @@
           In {{ activeCluster.name }}, the largest gap is among
           {{ minVaxRace?.name }} residents. Only
           <strong
-            >{{ formatPct(minVaxRace?.pct) }} of
+            >{{ capPct(minVaxRace?.pct) }} of
             {{ minVaxRace?.name }} residents</strong
           >
-          are vaccinated compared to {{ formatPct(expected) }} statewide.
+          are vaccinated compared to {{ capPct(expected) }} statewide.
+          Approximately
           <strong
             >{{ minVaxRace?.gap }} more {{ minVaxRace?.name }} residents</strong
           >
@@ -51,7 +52,7 @@
         <KeyPerformanceIndicator
           :value="
             activeFocusStats?.population > 0
-              ? formatPct(activeFocusStats?.pct)
+              ? capPct(activeFocusStats?.pct)
               : '?'
           "
           :title="`${activeFocusStats?.name} residents vaccinated in ${activeCluster.name}`"
@@ -60,16 +61,17 @@
           :value="
             activeFocusStats?.population > 0 ? activeFocusStats?.gap : '?'
           "
-          :title="`Vaccine doses for ${activeFocusStats?.name} residents needed to close the gap`"
+          :title="`Approximate vaccine doses for ${activeFocusStats?.name} residents needed to close the gap`"
         />
       </div>
       <div class="content centered has-text-centered">
         <!-- In this community, there is a gap in this focus group -->
         <p v-if="activeFocusStats?.gap > 0">
           In {{ activeCluster.name }},
-          <strong>{{ formatPct(activeFocusStats?.pct) }}</strong> of
+          <strong>{{ capPct(activeFocusStats?.pct) }}</strong> of
           {{ activeFocusStats?.name }} residents are vaccinated compared to our
-          goal of {{ formatPct(expected) }} total vaccinations statewide.
+          goal of {{ capPct(expected) }} total vaccinations statewide.
+          Approximately
           <strong
             >{{ activeFocusStats?.gap }} more
             {{ activeFocusStats?.name }} residents</strong
@@ -81,9 +83,9 @@
           <!-- Fully Vaccinated -->
           <p v-if="activeFocusStats?.population > 0">
             In {{ activeCluster.name }},
-            <strong>{{ formatPct(activeFocusStats?.pct) }}</strong> of
+            <strong>{{ capPct(activeFocusStats?.pct) }}</strong> of
             {{ activeFocusStats?.name }} residents are vaccinated compared to
-            our goal of {{ formatPct(expected) }} total vaccinations statewide.
+            our goal of {{ capPct(expected) }} total vaccinations statewide.
           </p>
 
           <!-- Not Enough Information-->
@@ -98,8 +100,8 @@
           <p>
             The largest gap is among
             <strong>{{ minVaxRace?.name }} residents</strong>. Only
-            <strong>{{ formatPct(minVaxRace?.pct) }}</strong> of
-            {{ minVaxRace?.name }} residents are vaccinated.
+            <strong>{{ capPct(minVaxRace?.pct) }}</strong> of
+            {{ minVaxRace?.name }} residents are vaccinated. Approximately
             <strong>{{ minVaxRace?.gap }}</strong> more
             {{ minVaxRace?.name }} residents need to be vaccinated to close this
             gap.
@@ -115,7 +117,7 @@ import { computed } from "vue";
 
 import GapChart from "@/components/dashboard/GapChart.vue";
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
-import { formatPct, sortByProperty } from "../../utils/utils";
+import { capPct, sortByProperty } from "../../utils/utils";
 
 const props = defineProps<{
   stats: Stat[];
