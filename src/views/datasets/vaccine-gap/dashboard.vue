@@ -1,11 +1,11 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where fewer people are vaccinated compared to
-      state levels. We call this difference in vaccinations a <em>gap</em>.
-      Vaccines can keep us from getting very sick with COVID-19. You can use
-      this information to find where the gaps are in our state and take steps to
-      help close them.
+      This tool shows us places where fewer people have received their first
+      COVID-19 vaccine dose compared to state levels. We call this difference in
+      vaccinations a <em>gap</em>. Vaccines can keep us from getting very sick
+      with COVID-19. You can use this information to find where the gaps are in
+      our state and take steps to help close them.
     </template>
   </DashboardCard>
 
@@ -41,9 +41,9 @@
     </template>
 
     <template #subtitle>
-      This map shows where there are gaps in vaccination. Darker areas show
-      bigger gaps in vaccination among
-      <strong>{{ controls.focusStat.name.toLowerCase() }}</strong
+      This map shows where there are gaps in first vaccine doses. Darker areas
+      show bigger gaps in vaccination among
+      <strong>{{ controls.focusStat.name }}</strong
       >. Areas with dashes mean there is not enough information. Select a
       community, click the <em>Zoom to Community</em> button, and scroll down to
       learn more.

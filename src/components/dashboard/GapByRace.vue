@@ -32,6 +32,7 @@
             {{ minVaxRace?.name }} residents</strong
           >
           are vaccinated compared to {{ formatPct(expected) }} statewide.
+          Approximately
           <strong
             >{{ minVaxRace?.gap }} more {{ minVaxRace?.name }} residents</strong
           >
@@ -60,7 +61,7 @@
           :value="
             activeFocusStats?.population > 0 ? activeFocusStats?.gap : '?'
           "
-          :title="`Vaccine doses for ${activeFocusStats?.name} residents needed to close the gap`"
+          :title="`Approximate vaccine doses for ${activeFocusStats?.name} residents needed to close the gap`"
         />
       </div>
       <div class="content centered has-text-centered">
@@ -70,6 +71,7 @@
           <strong>{{ formatPct(activeFocusStats?.pct) }}</strong> of
           {{ activeFocusStats?.name }} residents are vaccinated compared to our
           goal of {{ formatPct(expected) }} total vaccinations statewide.
+          Approximately
           <strong
             >{{ activeFocusStats?.gap }} more
             {{ activeFocusStats?.name }} residents</strong
@@ -99,7 +101,7 @@
             The largest gap is among
             <strong>{{ minVaxRace?.name }} residents</strong>. Only
             <strong>{{ formatPct(minVaxRace?.pct) }}</strong> of
-            {{ minVaxRace?.name }} residents are vaccinated.
+            {{ minVaxRace?.name }} residents are vaccinated. Approximately
             <strong>{{ minVaxRace?.gap }}</strong> more
             {{ minVaxRace?.name }} residents need to be vaccinated to close this
             gap.
@@ -144,7 +146,7 @@ const activeStats = computed(() => {
     (stat) => stat.name === props.activeCluster.name
   );
   if (row) {
-    // don't let a population be more than 100% vaccinated
+    // don't let a population be more than 99% vaccinated
     return fieldData.value
       .map((f) => {
         const population = row[f.populationField];
@@ -152,7 +154,7 @@ const activeStats = computed(() => {
           name: f.name,
           pct:
             population > 0
-              ? Math.min(1, row[f.observedField] / row[f.populationField])
+              ? Math.min(0.99, row[f.observedField] / row[f.populationField])
               : NaN,
           gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
           population,
