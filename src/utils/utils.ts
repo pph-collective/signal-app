@@ -40,10 +40,6 @@ export const prettyDate = (date: string): string => {
 
 export const formatPct = format(".0%");
 
-export const capPct = (number) => {
-  return formatPct(Math.min(number, 0.99));
-};
-
 export const sortByProperty = (property) => (a, b) => {
   let valA = a[property];
   let valB = b[property];

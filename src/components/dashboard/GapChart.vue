@@ -95,7 +95,7 @@ const spec = computed(() => {
             tooltip: [
               {
                 signal:
-                  "{ title: datum.name, 'Percent Vaccinated': format(clamp(datum.pct, 0.0, 0.99), '.0%'), 'Doses to Close Gap': datum.gap}",
+                  "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
                 test: "datum.population > 0",
               },
             ],
@@ -126,7 +126,7 @@ const spec = computed(() => {
               {
                 signal: `{
                 title: datum.name,
-                'Percent Vaccinated': format(clamp(datum.pct, 0.0, 0.99), '.0%'),
+                'Percent Vaccinated': format(datum.pct, '.0%'),
                 'Doses to Close Gap': datum.gap
                 }`,
                 test: "datum.population > 0",
