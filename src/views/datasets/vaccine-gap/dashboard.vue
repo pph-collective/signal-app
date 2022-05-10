@@ -11,7 +11,11 @@
 
   <DashboardCard width="full" :height="1">
     <template #content>
-      <ControlPanel :drop-downs="dropDowns" @selected="updateControls" />
+      <ControlPanel
+        :drop-downs="dropDowns"
+        :init-value="controls"
+        @selected="updateControls"
+      />
     </template>
   </DashboardCard>
 
@@ -233,8 +237,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { ref } from "vue";
 
 import RI_GEOJSON from "@/assets/geography/ri.json";
 import ControlPanel from "@/components/dashboard/ControlPanel.vue";
@@ -247,13 +250,20 @@ import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
 import RedDot from "@/components/dashboard/RedDot.vue";
 import ExternalLink from "@/components/base/ExternalLink.vue";
 
+import { useQueryParam } from "../../../composables/useQueryParam";
+
 import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
 import { prettyDate } from "../../../utils/utils";
 
-const activeCluster = ref(NULL_CLUSTER);
-const dashboardActiveCluster = ref(NULL_CLUSTER);
 const zoomed = ref(false);
+useQueryParam({
+  param: "zoom",
+  ref: zoomed,
+  valid: (p) => ["true", "false"].includes(p),
+  valToParam: (v) => v.toString(),
+  paramToVal: (p) => p === "true",
+});
 
 defineEmits(["newDate"]);
 
@@ -266,6 +276,29 @@ const props = defineProps<{
 // fetch the data
 const data = await fetchColdSpotData(props.datasetName, props.currentDate);
 
+const clusterIdToCluster = (id) => {
+  if (id === NULL_CLUSTER.cluster_id) {
+    return NULL_CLUSTER;
+  } else {
+    const { name, cluster_id } =
+      data.stats.find((s) => s.cluster_id === id) ?? NULL_CLUSTER;
+    return { name, cluster_id };
+  }
+};
+
+const activeCluster = ref(NULL_CLUSTER);
+useQueryParam({
+  param: "cluster",
+  ref: activeCluster,
+  valid: (id) =>
+    id === NULL_CLUSTER.cluster_id ||
+    data.stats.some((s) => s.cluster_id === id),
+  convertInt: true,
+  paramToVal: clusterIdToCluster,
+  valToParam: (cluster) => cluster.cluster_id,
+});
+const dashboardActiveCluster = ref(activeCluster.value);
+
 const dropdownDates = props.dates.map((date) => {
   const dateString = prettyDate(date);
   return { name: dateString, value: date };
@@ -273,31 +306,45 @@ const dropdownDates = props.dates.map((date) => {
 
 const townDefault = "All of Rhode Island";
 const towns = RI_GEOJSON.map((geo) => geo.properties.name).sort();
-const dropDowns = computed(() => {
-  return {
-    town: {
-      icon: "fas fa-globe",
-      label: "Where do you want to look?",
-      values: [townDefault, ...towns],
-    },
-    focusStat: {
-      label: "Which group do you want to focus on?",
-      icon: "fas fa-fill-drip",
-      values: [
-        { name: "All residents", value: "total" },
-        { name: "White residents", value: "white" },
-        { name: "Black residents", value: "black" },
-        { name: "Latino residents", value: "latino" },
-        { name: "Asian residents", value: "asian" },
-      ],
-    },
-  };
-});
+const dropDowns = {
+  town: {
+    icon: "fas fa-globe",
+    label: "Where do you want to look?",
+    values: [townDefault, ...towns],
+  },
+  focusStat: {
+    label: "Which group do you want to focus on?",
+    icon: "fas fa-fill-drip",
+    values: [
+      { name: "All residents", value: "total" },
+      { name: "White residents", value: "white" },
+      { name: "Black residents", value: "black" },
+      { name: "Latino residents", value: "latino" },
+      { name: "Asian residents", value: "asian" },
+    ],
+  },
+};
 
 const controls = ref({
-  focusStat: dropDowns.value.focusStat.values[0],
+  focusStat: dropDowns.focusStat.values[0],
   town: townDefault,
 });
+useQueryParam({
+  param: "stat",
+  ref: controls,
+  refField: "focusStat",
+  valid: (p) => dropDowns.focusStat.values.some((v) => p === v.value),
+  valToParam: (v) => v.value,
+  paramToVal: (p) => dropDowns.focusStat.values.find((v) => p === v.value),
+});
+useQueryParam({
+  param: "town",
+  ref: controls,
+  refField: "town",
+  valid: (p) => dropDowns.town.values.some((v) => p === v),
+  resetFields: ["cluster", "zoom"],
+});
+
 const updateControls = (newControls) => {
   // only update when the controls change to avoid a render loop
   dashboardActiveCluster.value = activeCluster.value;
@@ -319,56 +366,8 @@ const updateControls = (newControls) => {
   }
 };
 
-const route = useRoute();
-const { path } = route;
-const router = useRouter();
-
-let initCluster = NULL_CLUSTER.cluster_id;
-if (route.query.cluster) {
-  const queryCluster = parseInt(route.query.cluster as string);
-  if (
-    queryCluster !== NULL_CLUSTER.cluster_id &&
-    !data.stats.find((s) => s.cluster_id === queryCluster)
-  ) {
-    throw new Error(
-      `No community with the identifier ${route.query.cluster} found`
-    );
-  }
-  initCluster = queryCluster;
-} else {
-  router.replace({ path, query: { ...route.query, cluster: initCluster } });
-}
-watch(activeCluster, () =>
-  router.replace({
-    path,
-    query: { ...route.query, cluster: activeCluster.value.cluster_id },
-  })
-);
-watch(
-  () => route.query,
-  () => {
-    const queryCluster = parseInt(route.query.cluster as string);
-    if (queryCluster !== activeCluster.value.cluster_id) {
-      if (queryCluster === NULL_CLUSTER.cluster_id) {
-        activeCluster.value = NULL_CLUSTER;
-      } else {
-        activeCluster.value = data.stats.find(
-          (s) => s.cluster_id === queryCluster
-        );
-      }
-    }
-  }
-);
-
 const updateCluster = (newClusterId) => {
-  if (newClusterId === NULL_CLUSTER.cluster_id) {
-    activeCluster.value = NULL_CLUSTER;
-  } else {
-    const { cluster_id, name } = data.stats.find(
-      (s) => s.cluster_id === newClusterId
-    );
-    activeCluster.value = { cluster_id, name };
-  }
+  activeCluster.value = clusterIdToCluster(newClusterId);
 };
 </script>
 

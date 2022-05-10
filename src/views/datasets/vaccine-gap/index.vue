@@ -21,43 +21,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { ref } from "vue";
+import { useRoute } from "vue-router";
 
 import Dashboard from "@/views/datasets/vaccine-gap/dashboard.vue";
 import SuspenseComponent from "@/components/base/SuspenseComponent.vue";
+
+import { useQueryParam } from "../../../composables/useQueryParam";
 
 import { fetchKeys } from "../../../utils/firebase";
 import { prettyDate } from "../../../utils/utils";
 
 const datasetName = "vax_first_dose_coldspots";
-const route = useRoute();
-const { path } = route;
-const router = useRouter();
 
 const dates = await fetchKeys(datasetName);
-let initDate = dates[0];
-if (route.query.date) {
-  if (!dates.includes(route.query.date as string)) {
-    throw new Error(`No dataset available on date ${route.query.date}`);
-  }
-  initDate = route.query.date as string;
-} else {
-  router.replace({ path, query: { ...route.query, date: initDate } });
-}
-const currentDate = ref(initDate);
+const currentDate = ref(dates[0]);
+useQueryParam({
+  ref: currentDate,
+  param: "date",
+  push: true,
+  valid: (d) => dates.includes(d),
+  resetFields: ["cluster", "zoom"],
+});
 
-watch(currentDate, () =>
-  router.push({ path, query: { ...route.query, date: currentDate.value } })
-);
-watch(
-  () => route.query,
-  () => {
-    if (route.query.date !== currentDate.value) {
-      currentDate.value = route.query.date as string;
-    }
-  }
-);
+const route = useRoute();
+const { path } = route;
 
 const scrollRef = ref(null);
 const handleDateChange = (newDate) => {
