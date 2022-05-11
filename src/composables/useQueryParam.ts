@@ -87,16 +87,13 @@ export function useQueryParam({
 
   // Watch the ref's value for changes.  When it changes, create a new route, including
   // deleting any fields that need to be reset and updating the url accordingly
-  watch(
-    () => getRefValue(),
-    () => {
-      const newRoute = getRoute(getRefValue());
-      resetFields.forEach((field) => {
-        delete newRoute.query[field]; // this feels wrong...
-      });
-      routeUpdater(newRoute);
-    }
-  );
+  watch(getRefValue, (val) => {
+    const newRoute = getRoute(val);
+    resetFields.forEach((field) => {
+      delete newRoute.query[field]; // this feels wrong...
+    });
+    routeUpdater(newRoute);
+  });
 
   // What the url's query for changes.  If the param is unset, set it to the initial
   // value of the ref (this is how resetFields ultimately actually resets the field).
