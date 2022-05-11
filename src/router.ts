@@ -39,6 +39,12 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  scrollBehavior(to, from) {
+    // scroll to the top of the window on page change
+    if (to.path !== from.path) {
+      return { top: 0, behavior: "smooth" };
+    }
+  },
 });
 
 export default router;

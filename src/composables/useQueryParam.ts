@@ -80,7 +80,7 @@ export function useQueryParam({
     if (!valid(paramVal)) {
       throw new Error(`Invalid URL query parameter: ${param} = ${paramVal}`);
     }
-    setRef(paramVal); // THIS isn't actually updating the ref??
+    setRef(paramVal);
   } else {
     router.replace(getRoute(getRefValue()));
   }
@@ -101,11 +101,13 @@ export function useQueryParam({
   watch(
     () => route.query,
     () => {
-      const paramVal = parseParam(route.query[param]);
-      if (!paramVal) {
-        router.replace(getRoute(initVal));
-      } else if (paramVal !== getRefValue()) {
-        setRef(paramVal);
+      if (route.path === path) {
+        const paramVal = parseParam(route.query[param]);
+        if (!paramVal) {
+          router.replace(getRoute(initVal));
+        } else if (paramVal !== getRefValue()) {
+          setRef(paramVal);
+        }
       }
     }
   );
