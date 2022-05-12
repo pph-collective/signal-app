@@ -21,7 +21,7 @@ interface QueryParamProps {
 //  - param: the name of the url query param
 //  - ref: the Ref var to sync with
 //  - push: whether changes to the ref should trigger a push to the browser's history, or
-//          just update the url in place (defalut: false)
+//          just update the url in place (default: false)
 //  - valid: a function to validate a param value (post parsing)
 //  - convertInt: whether to parse the param as an int (default: false)
 //  - refField: a sub-field of the ref to track/update
