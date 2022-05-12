@@ -202,37 +202,8 @@
     </template>
   </DashboardCard>
 
-  <DashboardCard width="full" :height="1">
-    <template #content>
-      <div
-        class="field is-horizontal is-justify-content-center is-align-items-center has-flex-gap"
-      >
-        <label for="date">Looking for data from another time period?</label>
-        <div class="control has-icons-left is-flex is-justify-content-center">
-          <div class="select">
-            <select
-              id="date"
-              @change="$emit('newDate', ($event.target as HTMLSelectElement).value)"
-            >
-              <option
-                v-for="(option, index) in dropdownDates"
-                :key="'option-' + index"
-                :value="option.value"
-                :selected="option.value === currentDate"
-              >
-                {{ option.name }}
-              </option>
-            </select>
-            <span class="icon is-small is-left pl-1">
-              <i class="fas fa-calendar-alt"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-    </template>
-  </DashboardCard>
   <DashboardCard width="full" :height="2">
-    <template #title>Data Notes</template>
+    <template #subtitle>Data Notes</template>
     <template #content>
       <div class="content">
         <p>
@@ -266,6 +237,36 @@
             >Health's Small Numbers Reporting Policy</ExternalLink
           >. All vaccine coverage estimates are capped at 99%.
         </p>
+      </div>
+    </template>
+  </DashboardCard>
+
+  <DashboardCard width="full" :height="1">
+    <template #content>
+      <div
+        class="field is-horizontal is-justify-content-center is-align-items-center has-flex-gap"
+      >
+        <label for="date">Looking for data from another time period?</label>
+        <div class="control has-icons-left is-flex is-justify-content-center">
+          <div class="select">
+            <select
+              id="date"
+              @change="$emit('newDate', ($event.target as HTMLSelectElement).value)"
+            >
+              <option
+                v-for="(option, index) in dropdownDates"
+                :key="'option-' + index"
+                :value="option.value"
+                :selected="option.value === currentDate"
+              >
+                {{ option.name }}
+              </option>
+            </select>
+            <span class="icon is-small is-left pl-1">
+              <i class="fas fa-calendar-alt"></i>
+            </span>
+          </div>
+        </div>
       </div>
     </template>
   </DashboardCard>
