@@ -2,7 +2,7 @@
   <div class="signal-grid-container px-4">
     <div class="content m-auto">
       <ul>
-        <li>Without any cars, people rely on public transit to get around.</li>
+        <li>Without cars, people might have trouble traveling to certain vaccination sites.</li>
         <li>
           Without health insurance, people might have trouble paying for health
           care.
@@ -69,7 +69,7 @@ const rows = [
     property: "pct_w_no_internet",
   },
   {
-    fieldName: "Non-English Speakers",
+    fieldName: "Limited English",
     property: "pct_w_no_english",
   },
 ];

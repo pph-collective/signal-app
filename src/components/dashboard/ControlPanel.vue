@@ -34,17 +34,21 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  initValue: {
+    type: Object,
+    required: true,
+    default: () => ({}),
+  },
 });
 
 const emit = defineEmits(["selected"]);
 
 const res = {};
 Object.keys(props.dropDowns).forEach((k) => {
-  res[k] = props.dropDowns[k].values[0];
+  res[k] = props.initValue[k];
 });
 
 const selected = reactive(res);
-emit("selected", selected);
 
 watch(
   () => selected,
