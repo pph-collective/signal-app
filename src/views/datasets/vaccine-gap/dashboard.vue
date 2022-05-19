@@ -205,8 +205,8 @@
   <DashboardCard width="full" :height="2">
     <template #subtitle>Data Notes</template>
     <template #content>
-      <div class="content">
-        <p>
+      <div class="px-4 content">
+        <p style="font-size: 0.75rem">
           This web tool includes information on vaccines administered to Rhode
           Island residents as recorded in the
           <ExternalLink
@@ -218,10 +218,10 @@
           Data for Rhode Island residents who were vaccinated at federal
           facilities or in other states are not included unless they have
           submitted a copy of their vaccination record to the Rhode Island
-          Department of Health..
+          Department of Health.
         </p>
 
-        <p>
+        <p style="font-size: 0.75rem">
           Estimates of population size are sourced from the United States Census
           Bureau's
           <ExternalLink href="https://www.census.gov/programs-surveys/acs"
