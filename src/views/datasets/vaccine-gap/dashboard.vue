@@ -210,7 +210,7 @@
     <template #subtitle>Data Notes</template>
     <template #content>
       <div class="px-4 content">
-        <p style="font-size: 0.75rem">
+        <p class="is-size-7">
           This web tool includes information on vaccines administered to Rhode
           Island residents as recorded in the
           <ExternalLink
@@ -225,7 +225,7 @@
           Department of Health.
         </p>
 
-        <p style="font-size: 0.75rem">
+        <p class="is-size-7">
           Estimates of population size are sourced from the United States Census
           Bureau's
           <ExternalLink href="https://www.census.gov/programs-surveys/acs"
