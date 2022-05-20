@@ -2,7 +2,10 @@
   <div class="signal-grid-container px-4">
     <div class="content m-auto">
       <ul>
-        <li>Without cars, people might have trouble traveling to certain vaccination sites.</li>
+        <li>
+          Without cars, people might have trouble traveling to certain
+          vaccination sites.
+        </li>
         <li>
           Without health insurance, people might have trouble paying for health
           care.
