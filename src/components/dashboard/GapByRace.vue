@@ -36,7 +36,7 @@
           <strong
             >{{ minVaxRace?.gap }} more {{ minVaxRace?.name }} residents</strong
           >
-          need to be vaccinated to close this gap.
+          need to receive a {{ gapType }} to close this gap.
         </p>
       </div>
     </div>
@@ -124,6 +124,7 @@ const props = defineProps<{
   activeCluster: Cluster;
   fieldNames: string[];
   focusStat: FocusStat;
+  gapType: string;
 }>();
 
 const expected = computed(
