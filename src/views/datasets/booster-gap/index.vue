@@ -32,7 +32,7 @@ import { useQueryParam } from "../../../composables/useQueryParam";
 import { fetchKeys } from "../../../utils/firebase";
 import { prettyDate } from "../../../utils/utils";
 
-const datasetName = "vax_first_dose_coldspots";
+const datasetName = "booster_coldspots";
 // TODO: update dataset name
 
 const dates = await fetchKeys(datasetName);

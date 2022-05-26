@@ -92,14 +92,13 @@
           :active-cluster="activeCluster"
           :field-names="['asian', 'black', 'latino', 'white']"
           :focus-stat="controls.focusStat"
-          :gap-type="'booster'"
         />
       </HiddenContent>
     </template>
   </DashboardCard>
 
   <DashboardCard width="full" :height="2">
-    <template #title>How do we reach people who need vaccines?</template>
+    <template #title>How do we reach people who need boosters?</template>
     <template #subtitle
       >People with fewer resources have a harder time getting
       vaccinated.</template
