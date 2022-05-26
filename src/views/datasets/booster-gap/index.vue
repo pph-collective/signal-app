@@ -33,7 +33,6 @@ import { fetchKeys } from "../../../utils/firebase";
 import { prettyDate } from "../../../utils/utils";
 
 const datasetName = "booster_coldspots";
-// TODO: update dataset name
 
 const dates = await fetchKeys(datasetName);
 const currentDate = ref(dates[0]);
