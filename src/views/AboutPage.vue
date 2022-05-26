@@ -59,33 +59,30 @@
             >.
           </p>
           <p>
-            <a
+            <ExternalLink
               class="pl-4"
               href="https://github.com/pph-collective"
-              target="_blank"
-              rel="noopener noreferrer"
+              :show-icon="false"
             >
               <i class="fab fa-github"></i>
               <VisuallyHidden>GitHub</VisuallyHidden>
-            </a>
-            <a
+            </ExternalLink>
+            <ExternalLink
               class="pl-4"
               href="https://twitter.com/pph_collective"
-              target="_blank"
-              rel="noopener noreferrer"
+              :show-icon="false"
             >
               <i class="fab fa-twitter"></i>
               <VisuallyHidden>Twitter</VisuallyHidden>
-            </a>
-            <a
+            </ExternalLink>
+            <ExternalLink
               class="pl-4"
               href="https://www.instagram.com/pph_collective"
-              target="_blank"
-              rel="noopener noreferrer"
+              :show-icon="false"
             >
               <i class="fab fa-instagram"></i>
               <VisuallyHidden>Instagram</VisuallyHidden>
-            </a>
+            </ExternalLink>
           </p>
         </div>
       </template>
