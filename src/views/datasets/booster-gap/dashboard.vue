@@ -5,8 +5,8 @@
       compared to state levels. We call this difference in booster doses a
       <em>gap</em>. Vaccines can keep us from getting very sick with COVID-19,
       but protection decreases over time. A booster is another dose of the
-      vaccine that keeps you protected. You can use this information to find
-      where the gaps are in our state and take steps to help close them.
+      vaccine that keeps your community protected. You can use this information
+      to find where the gaps are in our state and take steps to help close them.
     </template>
   </DashboardCard>
 
@@ -82,7 +82,9 @@
   </DashboardCard>
 
   <DashboardCard width="full" :height="2">
-    <template #title>How many doses do we need to close the gap?</template>
+    <template #title
+      >How many booster doses do we need to close the gap?</template
+    >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <GapByRace

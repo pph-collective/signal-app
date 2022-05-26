@@ -81,7 +81,9 @@
   </DashboardCard>
 
   <DashboardCard width="full" :height="2">
-    <template #title>How many doses do we need to close the gap?</template>
+    <template #title
+      >How many first vaccine doses do we need to close the gap?</template
+    >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <GapByRace
@@ -89,7 +91,6 @@
           :active-cluster="activeCluster"
           :field-names="['asian', 'black', 'latino', 'white']"
           :focus-stat="controls.focusStat"
-          :gap-type="'vaccine'"
         />
       </HiddenContent>
     </template>

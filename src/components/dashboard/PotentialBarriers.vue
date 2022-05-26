@@ -25,7 +25,7 @@
       <table class="table is-narrow">
         <tbody>
           <tr>
-            <th>Potential Barrier</th>
+            <th>Considerations</th>
             <th>Community</th>
             <th>State</th>
           </tr>
