@@ -1,11 +1,12 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where fewer people have received their first
-      COVID-19 vaccine dose compared to state levels. We call this difference in
-      vaccinations a <em>gap</em>. Vaccines can keep us from getting very sick
-      with COVID-19. You can use this information to find where the gaps are in
-      our state and take steps to help close them.
+      This tool shows us places where fewer people have received a booster dose
+      compared to state levels. We call this difference in booster doses a
+      <em>gap</em>. Vaccines can keep us from getting very sick with COVID-19,
+      but protection decreases over time. A booster is another dose of the
+      vaccine that keeps your community protected. You can use this information
+      to find where the gaps are in our state and take steps to help close them.
     </template>
   </DashboardCard>
 
@@ -45,8 +46,8 @@
     </template>
 
     <template #subtitle>
-      This map shows where there are gaps in first vaccine doses. Darker areas
-      show bigger gaps in vaccination among
+      This map shows where there are gaps in booster doses. Darker areas show
+      bigger gaps in booster doses among
       <strong>{{ controls.focusStat.name }}</strong
       >. Areas with dashes mean there is not enough information. Select a
       community, click the <em>Zoom to Community</em> button, and scroll down to
@@ -82,7 +83,7 @@
 
   <DashboardCard width="full" :height="2">
     <template #title
-      >How many first vaccine doses do we need to close the gap?</template
+      >How many booster doses do we need to close the gap?</template
     >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
@@ -97,7 +98,7 @@
   </DashboardCard>
 
   <DashboardCard width="full" :height="2">
-    <template #title>How do we reach people who need vaccines?</template>
+    <template #title>How do we reach people who need boosters?</template>
     <template #subtitle
       >People with fewer resources have a harder time getting
       vaccinated.</template

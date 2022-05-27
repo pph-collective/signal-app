@@ -36,7 +36,7 @@
           <strong
             >{{ minVaxRace?.gap }} more {{ minVaxRace?.name }} residents</strong
           >
-          need to be vaccinated to close this gap.
+          need to receive a dose to close this gap.
         </p>
       </div>
     </div>

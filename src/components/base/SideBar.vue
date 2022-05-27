@@ -111,8 +111,13 @@ const DATASETS = [
     available: true,
   },
   {
-    name: "Testing Gaps",
-    route: "testing-gap",
+    name: "Booster Gaps",
+    route: "booster-gap",
+    available: true,
+  },
+  {
+    name: "Data Spotlights",
+    route: "spotlights",
     available: false,
   },
 ];
