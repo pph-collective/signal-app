@@ -42,12 +42,12 @@ This directory contains utility scripts for the SIGNAL web app.
           Which is the absolute path to my project directory.
 2. Go to the [signal-app repository](https://github.com/pph-collective/signal-app)
 3. Clone the repository. 
-  - On the page you'll see a green "Code" button, click it and copy the https `https://github.com/pph-collective/signal-app.git`
-  - In the terminal, run `git clone` with the https you just copied. The full command is as follows:
-    ```
-    git clone https://github.com/pph-collective/signal-app.git
-    ```
-    This will create the directory `signal-app`.
+    - On the page you'll see a green "Code" button, click it and copy the https `https://github.com/pph-collective/signal-app.git`
+    - In the terminal, run `git clone` with the https you just copied. The full command is as follows:
+      ```
+      git clone https://github.com/pph-collective/signal-app.git
+      ```
+      This will create the directory `signal-app`.
 4. Open VSCode and open the folder `signal-app`
 5. Create a new file in the root folder (`signal-app`) and name it `.env`. It'll be a text file.
    - In this file, it will have an environment variable key `VITE_MAPBOX_ACCESS_TOKEN` which allows us to use mapbox and 
