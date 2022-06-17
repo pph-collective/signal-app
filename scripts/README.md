@@ -35,9 +35,10 @@ This directory contains utility scripts for the SIGNAL web app.
 1. In terminal, navigate to the folder you want to put the `signal-app` project into.
     - [Terminal for beginners tutorial!](https://medium.com/@grace.m.nolan/terminal-for-beginners-e492ba10902a)
         - Only really need `ls`, `cd`, `pwd`
-        - Use `ls` command to see the folder you're in, and then `cd` to navigate.
-            - `ls` lists files in current directory
-            - `cd` change directory
+          - `pwd` displays the full path to the folder you're currently in
+          - `ls` lists files in current directory
+            - :exclamation: for windows users, the equivalent command is `dir`
+          - `cd` changes directory
         - Mine is at `/Users/ellen/Documents/Projects` so I could do `cd /Users/ellen/Documents/Projects`. 
           Which is the absolute path to my project directory.
 2. Go to the [signal-app repository](https://github.com/pph-collective/signal-app)
@@ -52,7 +53,7 @@ This directory contains utility scripts for the SIGNAL web app.
 5. Create a new file in the root folder (`signal-app`) and name it `.env`. It'll be a text file.
    - In this file, it will have an environment variable key `VITE_MAPBOX_ACCESS_TOKEN` which allows us to use mapbox and 
      show our map in the app when run locally.
-   - :exclamation: Ask another team member for what go into this file and do not share it publicly.
+   - :exclamation: Ask another team member for what goes into this file and do not share it publicly.
 6. Open a terminal in VSCode. This will open a terminal at the project folder root.
 7. Install dependencies. In the terminal you just opened run the following command:
    ```
@@ -62,7 +63,7 @@ This directory contains utility scripts for the SIGNAL web app.
    ```
    npm run dev
    ```
-   And then the project should be running on a local server!
+   And then the project should be running on a local server! You can `ctrl + click` the link in the terminal.
 9. To stop the server press `ctrl + c` instead of the terminal
 
 ## Set up for running the admin scripts
