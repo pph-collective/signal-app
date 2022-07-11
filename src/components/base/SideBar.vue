@@ -66,7 +66,7 @@
           >
         </li>
       </ul>
-      <p v-if="!collapsed" class="menu-label">COVID Case Data Spotlights</p>
+      <p v-if="!collapsed" class="menu-label">Data Spotlights</p>
       <p v-else class="menu-label">
         <abbr title="COVID Cases">DATA</abbr>
       </p>
@@ -159,17 +159,17 @@ const DATASETS = [
 
 const SPOTLIGHTS = [
   {
-    name: "Housing Type",
+    name: "Cases by Housing Type",
     route: "housing",
     available: false,
   },
   {
-    name: "School",
+    name: "Cases by School",
     route: "school",
     available: false,
   },
   {
-    name: "Workplace Type",
+    name: "Cases by Workplace Type",
     route: "workplace",
     available: false,
   },
