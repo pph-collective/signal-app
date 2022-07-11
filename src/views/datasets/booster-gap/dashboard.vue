@@ -214,7 +214,6 @@
     <template #content>
       <div class="px-4 content">
         <DataNotes />
-        <p class="is-size-7">insert more info here</p>
       </div>
     </template>
   </DashboardCard>
