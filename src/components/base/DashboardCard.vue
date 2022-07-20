@@ -4,14 +4,17 @@
     :class="['is-' + width, 'is-height-' + height]"
   >
     <header
-      v-if="$slots.title || $slots.topRight || $slots.subtitle"
+      v-if="$slots.title || $slots['top-right'] || $slots.subtitle"
       class="dashboard-card-header fullwidth"
     >
-      <div class="dashboard-title-row fullwidth mb-3">
+      <div
+        v-if="$slots.title || $slots['top-right']"
+        class="dashboard-title-row fullwidth mb-3"
+      >
         <h2 class="title mb-0 title-flex"><slot name="title"></slot></h2>
         <div><slot name="top-right"></slot></div>
       </div>
-      <h3 class="subtitle">
+      <h3 v-if="$slots.subtitle" class="subtitle">
         <slot name="subtitle" />
       </h3>
     </header>
