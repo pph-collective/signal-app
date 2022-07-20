@@ -61,7 +61,7 @@ const clusters = computed(() => {
     }
   });
 
-  return geoToTopo(filtered);
+  return geoToTopo(filtered, 6e-10);
 });
 
 const focusFields = computed(() => {

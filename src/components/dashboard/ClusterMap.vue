@@ -23,7 +23,7 @@ const filteredGeo = computed(() => {
     (g) => props.cluster.cluster_id === g.properties.cluster_id
   );
 
-  return geoToTopo(features, 6e-10);
+  return geoToTopo(features, 3e-10);
 });
 
 const largeBboxGeojson = computed(() => {

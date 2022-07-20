@@ -4,7 +4,7 @@ import * as tc from "topojson-client";
 import * as ts from "topojson-simplify";
 const topojson = { ...ts, ...tc };
 
-export const geoToTopo = (features, sphericalArea = 1e-9) => {
+export const geoToTopo = (features, sphericalArea) => {
   const collection = {
     blocks: { type: "FeatureCollection", features },
   };
