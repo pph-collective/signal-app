@@ -117,7 +117,7 @@
   <DashboardCard width="full">
     <template #title>What can I do to close the gap?</template>
     <template #content>
-      <VaccineResources></VaccineResources>
+      <VaccineResources />
     </template>
   </DashboardCard>
 
