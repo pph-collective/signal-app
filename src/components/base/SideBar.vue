@@ -29,7 +29,7 @@
       </ul>
       <p v-if="!collapsed" class="menu-label">Exploration Datasets</p>
       <p v-else class="menu-label">
-        <abbr title="Exploration Datasets">DATA</abbr>
+        <abbr title="Exploration Datasets">MAPS</abbr>
       </p>
       <ul class="menu-list">
         <li v-for="item in DATASETS" :key="item.route">
