@@ -42,7 +42,7 @@
             <span v-if="!collapsed">{{ item.name }}</span>
             <span v-else
               ><abbr :title="item.name" class="collapsed-flex-item">
-                <i class="fas fa-poll mr-1" />
+                <i class="fas fa-map mr-1" />
                 <span>{{ initials(item.name) }}</span>
               </abbr></span
             >
