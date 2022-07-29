@@ -76,7 +76,7 @@
             v-if="item.available"
             :class="{ 'is-active': activeRoute === item.route }"
             :aria-disabled="!item.available"
-            :to="'/dataset/' + item.route"
+            :to="'/spotlight/' + item.route"
           >
             <span v-if="!collapsed">{{ item.name }}</span>
             <span v-else
@@ -161,7 +161,7 @@ const SPOTLIGHTS = [
   {
     name: "Cases by Housing Type",
     route: "housing",
-    available: false,
+    available: true,
   },
   {
     name: "Cases by School",
