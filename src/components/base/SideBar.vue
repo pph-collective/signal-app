@@ -29,10 +29,49 @@
       </ul>
       <p v-if="!collapsed" class="menu-label">Exploration Datasets</p>
       <p v-else class="menu-label">
-        <abbr title="Exploration Datasets">DATA</abbr>
+        <abbr title="Exploration Datasets">MAPS</abbr>
       </p>
       <ul class="menu-list">
         <li v-for="item in DATASETS" :key="item.route">
+          <router-link
+            v-if="item.available"
+            :class="{ 'is-active': activeRoute === item.route }"
+            :aria-disabled="!item.available"
+            :to="'/dataset/' + item.route"
+          >
+            <span v-if="!collapsed">{{ item.name }}</span>
+            <span v-else
+              ><abbr :title="item.name" class="collapsed-flex-item">
+                <i class="fas fa-map mr-1" />
+                <span>{{ initials(item.name) }}</span>
+              </abbr></span
+            >
+          </router-link>
+          <a
+            v-else
+            disabled
+            :aria-disabled="!item.available"
+            class="not-allowed-cursor"
+          >
+            <span v-if="!collapsed">{{ item.name }}</span>
+            <span v-else
+              ><abbr :title="item.name" class="collapsed-flex-item">
+                <i class="fas fa-poll mr-1" />
+                <span>{{ initials(item.name) }}</span>
+              </abbr></span
+            >
+            <span v-if="!collapsed" class="tag is-light is-warning ml-2"
+              >coming soon</span
+            ></a
+          >
+        </li>
+      </ul>
+      <p v-if="!collapsed" class="menu-label">Data Spotlights</p>
+      <p v-else class="menu-label">
+        <abbr title="COVID Cases">DATA</abbr>
+      </p>
+      <ul class="menu-list">
+        <li v-for="item in SPOTLIGHTS" :key="item.route">
           <router-link
             v-if="item.available"
             :class="{ 'is-active': activeRoute === item.route }"
@@ -66,6 +105,7 @@
           >
         </li>
       </ul>
+
       <p v-if="!collapsed" class="menu-label">Resources</p>
       <p v-else class="menu-label">
         <abbr title="Resources">Src</abbr>
@@ -115,9 +155,22 @@ const DATASETS = [
     route: "booster-gap",
     available: true,
   },
+];
+
+const SPOTLIGHTS = [
   {
-    name: "Data Spotlights",
-    route: "spotlights",
+    name: "Cases by Housing Type",
+    route: "housing",
+    available: false,
+  },
+  {
+    name: "Cases by School",
+    route: "school",
+    available: false,
+  },
+  {
+    name: "Cases by Workplace Type",
+    route: "workplace",
     available: false,
   },
 ];
