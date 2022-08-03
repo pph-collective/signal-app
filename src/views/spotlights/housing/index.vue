@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 // import { ref } from "vue";
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 
 import Dashboard from "@/views/spotlights/housing/dashboard.vue";
 // import SuspenseComponent from "@/components/base/SuspenseComponent.vue";
