@@ -29,6 +29,8 @@ const spec = computed(() => {
       xOffset: { field: "group" },
       color: { field: "group" },
     },
+    width: 400,
+    height: 400,
   };
 });
 
@@ -38,7 +40,6 @@ useVega({
   el,
   minHeight: ref(360),
   maxHeight: ref(360),
-  minWidth: ref(360),
   maxWidth: ref(1280),
   includeActions: ref(true),
 });
