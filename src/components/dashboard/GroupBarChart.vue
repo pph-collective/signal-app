@@ -38,7 +38,8 @@ useVega({
   el,
   minHeight: ref(360),
   maxHeight: ref(360),
+  minWidth: ref(360),
   maxWidth: ref(1280),
-  includeActions: ref(false),
+  includeActions: ref(true),
 });
 </script>
