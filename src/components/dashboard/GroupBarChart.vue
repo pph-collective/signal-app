@@ -15,18 +15,10 @@ const spec = computed(() => {
     data: {
       name: "table",
       values: [
-        { category: "A", position: 0, value: 0.1 },
-        { category: "A", position: 1, value: 0.6 },
-        { category: "A", position: 2, value: 0.9 },
-        { category: "A", position: 3, value: 0.4 },
-        { category: "B", position: 0, value: 0.7 },
-        { category: "B", position: 1, value: 0.2 },
-        { category: "B", position: 2, value: 1.1 },
-        { category: "B", position: 3, value: 0.8 },
-        { category: "C", position: 0, value: 0.6 },
-        { category: "C", position: 1, value: 0.1 },
-        { category: "C", position: 2, value: 0.2 },
-        { category: "C", position: 3, value: 0.7 },
+        { category: "A", value: 0.1 },
+        { category: "B", value: 0.7 },
+        { category: "C", value: 0.6 },
+        { category: "D", value: 0.5 },
       ],
     },
     scales: [
@@ -40,7 +32,7 @@ const spec = computed(() => {
       {
         name: "xscale",
         type: "linear",
-        domain: { data: "table", field: "value" },
+        domain: [0, 1],
         range: "width",
         round: true,
         zero: true,
