@@ -29,7 +29,7 @@
     <template #top-right>
       <button
         :disabled="!activeCluster.name"
-        class="zoom-button button is-secondary is-light"
+        class="zoom-button button is-link"
         @click="zoomed = !zoomed"
       >
         <span class="icon">
