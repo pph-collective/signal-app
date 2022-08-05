@@ -179,7 +179,7 @@ import DataNotes from "@/components/dashboard/DataNotes.vue";
 import { useQueryParam } from "../../../composables/useQueryParam";
 
 import { fetchColdSpotData } from "../../../utils/firebase";
-import { NULL_CLUSTER, COLORS } from "../../../utils/constants";
+import { NULL_CLUSTER } from "../../../utils/constants";
 import { prettyDate } from "../../../utils/utils";
 import VaccineResources from "../../../components/dashboard/VaccineResources.vue";
 
