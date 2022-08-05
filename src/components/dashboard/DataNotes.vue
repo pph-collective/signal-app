@@ -7,9 +7,10 @@
     >
     at the Rhode Island Department of Health. Rhode Island residents with
     invalid or incomplete residential address information are excluded. Data for
-    Rhode Island residents who were vaccinated at federal facilities or in other
-    states are not included unless they have submitted a copy of their
-    vaccination record to the Rhode Island Department of Health.
+    Rhode Island residents who were vaccinated at federal facilities or in most
+    other states are not included unless they have submitted a copy of their
+    vaccination record to the Rhode Island Department of Health. Data are
+    included for residents vaccinated in MA and CT.
   </p>
 
   <p class="is-size-7">

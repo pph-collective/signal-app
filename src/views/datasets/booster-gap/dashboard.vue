@@ -173,7 +173,6 @@ import ClusterMap from "@/components/dashboard/ClusterMap.vue";
 import GapByRace from "@/components/dashboard/GapByRace.vue";
 import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
 import RedDot from "@/components/dashboard/RedDot.vue";
-import ExternalLink from "@/components/base/ExternalLink.vue";
 import DataNotes from "@/components/dashboard/DataNotes.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
