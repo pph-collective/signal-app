@@ -7,9 +7,10 @@
     >
     at the Rhode Island Department of Health. Rhode Island residents with
     invalid or incomplete residential address information are excluded. Data for
-    Rhode Island residents who were vaccinated at federal facilities or in other
-    states are not included unless they have submitted a copy of their
-    vaccination record to the Rhode Island Department of Health.
+    Rhode Island residents who were vaccinated at federal facilities or in most
+    other states are not included unless they have submitted a copy of their
+    vaccination record to the Rhode Island Department of Health. Data are
+    included for residents vaccinated in MA and CT.
   </p>
 
   <p class="is-size-7">
@@ -22,9 +23,11 @@
     with these estimates, particularly for small populations in small geographic
     areas, resulting in estimates of vaccine coverage that are unreliable. Some
     estimates may be suppressed in line with the Rhode Island Department of
+    Health's
     <ExternalLink
       href="https://health.ri.gov/publications/policies/SmallNumbersReporting.pdf"
-      >Health's Small Numbers Reporting Policy</ExternalLink
+    >
+      Small Numbers Reporting Policy</ExternalLink
     >. All vaccine coverage estimates are capped at 99%.
   </p>
 </template>
