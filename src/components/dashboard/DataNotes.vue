@@ -23,9 +23,11 @@
     with these estimates, particularly for small populations in small geographic
     areas, resulting in estimates of vaccine coverage that are unreliable. Some
     estimates may be suppressed in line with the Rhode Island Department of
+    Health's
     <ExternalLink
       href="https://health.ri.gov/publications/policies/SmallNumbersReporting.pdf"
-      >Health's Small Numbers Reporting Policy</ExternalLink
+    >
+      Small Numbers Reporting Policy</ExternalLink
     >. All vaccine coverage estimates are capped at 99%.
   </p>
 </template>
