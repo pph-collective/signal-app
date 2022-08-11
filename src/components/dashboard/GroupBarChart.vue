@@ -104,8 +104,8 @@ const el = ref(null);
 useVega({
   spec,
   el,
-  minHeight: ref(360),
-  maxHeight: ref(360),
+  minHeight: ref(250),
+  maxHeight: ref(250),
   maxWidth: ref(1280),
   includeActions: ref(true),
 });
