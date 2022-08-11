@@ -12,51 +12,14 @@
       <ControlPanel :drop-downs="dropDowns" :init-value="controls" />
     </template>
   </DashboardCard>
-  <DashboardCard width="two-thirds">
+  <DashboardCard width="full">
     <template #content>
-      <div>
-        <GroupBarChart />
-      </div>
-    </template>
-  </DashboardCard>
-  <DashboardCard width="one-third">
-    <template #content>
-      <div>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pretium
-        tempor mi eget pellentesque. Etiam pharetra neque quis elit aliquam
-        tristique. Donec at scelerisque nunc. Suspendisse malesuada erat non
-        neque iaculis porttitor. Vestibulum egestas gravida sem, nec fermentum
-        lacus sollicitudin non. Proin nunc mauris, porttitor ut ex vel, dapibus
-        rutrum lacus. Aenean imperdiet, odio non accumsan consequat, enim mi
-        vehicula arcu, ac porttitor urna dui vel tortor. Quisque ut nibh ut quam
-        faucibus accumsan. Aenean mi elit, egestas a sem in, feugiat aliquet
-        arcu.
-      </div>
+      <DataSpotlight />
     </template>
   </DashboardCard>
   <DashboardCard width="full">
-    <template #subtitle>Buttons here?</template>
-  </DashboardCard>
-  <DashboardCard width="two-thirds">
     <template #content>
-      <div>
-        <GroupBarChart />
-      </div>
-    </template>
-  </DashboardCard>
-  <DashboardCard width="one-third">
-    <template #content>
-      <div>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pretium
-        tempor mi eget pellentesque. Etiam pharetra neque quis elit aliquam
-        tristique. Donec at scelerisque nunc. Suspendisse malesuada erat non
-        neque iaculis porttitor. Vestibulum egestas gravida sem, nec fermentum
-        lacus sollicitudin non. Proin nunc mauris, porttitor ut ex vel, dapibus
-        rutrum lacus. Aenean imperdiet, odio non accumsan consequat, enim mi
-        vehicula arcu, ac porttitor urna dui vel tortor. Quisque ut nibh ut quam
-        faucibus accumsan. Aenean mi elit, egestas a sem in, feugiat aliquet
-        arcu.
-      </div>
+      <DataSpotlight />
     </template>
   </DashboardCard>
 </template>
@@ -65,7 +28,7 @@
 import { ref } from "vue";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
-import GroupBarChart from "@/components/dashboard/GroupBarChart.vue";
+import DataSpotlight from "@/components/dashboard/DataSpotlight.vue";
 import ControlPanel from "../../../components/dashboard/ControlPanel.vue";
 
 const dropDowns = {
@@ -84,3 +47,10 @@ const controls = ref({
   metric: dropDowns.metric.values[0],
 });
 </script>
+
+<style scoped lang="scss">
+.centered {
+  display: grid;
+  place-content: center;
+}
+</style>
