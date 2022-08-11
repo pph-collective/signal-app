@@ -19,7 +19,7 @@
   <DashboardCard width="full">
     <template #title> Spotlight: COVID {{ controls.focusStat.name }} </template>
     <template #content>
-      <DataSpotlight :metric="controls.focusStat" />
+      <DataSpotlight :metric="controls.focusStat.value" />
     </template>
   </DashboardCard>
   <DashboardCard width="full">
