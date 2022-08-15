@@ -40,7 +40,6 @@
 </template>
 
 <script setup lang="ts">
-// TODO: I think I need useQueryParams? Or updateControls
 import { ref } from "vue";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
@@ -65,12 +64,12 @@ const dropDowns = {
 const controls = ref({
   focusStat: dropDowns.focusStat.values[0],
 });
-// TODO useQueryParam???
 useQueryParam({
   param: "stat",
   ref: controls,
   refField: "focusStat",
   valid: (p) => p === p,
+  valToParam: (v) => v.value,
 });
 
 const updateControls = (newControls) => {
