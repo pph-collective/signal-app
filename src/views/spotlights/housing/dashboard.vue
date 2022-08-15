@@ -48,7 +48,6 @@ import ControlPanel from "../../../components/dashboard/ControlPanel.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
 
-// TODO: How do i make this default to the first?
 const dropDowns = {
   focusStat: {
     icon: "fas fa-poll",
@@ -68,8 +67,9 @@ useQueryParam({
   param: "stat",
   ref: controls,
   refField: "focusStat",
-  valid: (p) => p === p,
+  valid: (p) => dropDowns.focusStat.values.some((v) => p === v.value),
   valToParam: (v) => v.value,
+  paramToVal: (p) => dropDowns.focusStat.values.find((v) => p === v.value),
 });
 
 const updateControls = (newControls) => {
