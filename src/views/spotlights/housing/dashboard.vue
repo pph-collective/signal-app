@@ -35,7 +35,7 @@
   </DashboardCard>
   <DashboardCard width="full">
     <template #title>
-      Spotlight: {{ outcomeControls.focusStat.name }} By Affordability
+      Spotlight: {{ crowdingControls.focusStat.name }} By Affordability
     </template>
     <template #content>
       <DataSpotlight :metric="crowdingControls.focusStat.value" />
