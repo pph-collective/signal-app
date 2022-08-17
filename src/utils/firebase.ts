@@ -75,6 +75,21 @@ export const fetchColdSpotData = async (datasetName: string, date: string) => {
   return result;
 };
 
+export const fetchSpotlightData = async (datasetName: string, date: string) => {
+  const defaults = {
+    var1: [],
+    var2: [],
+  };
+
+  const result = await getDocWithDefaultPreferCache(
+    defaults,
+    datasetName,
+    date
+  );
+
+  return result;
+};
+
 export const fetchKeys = async (datasetName: string) => {
   const querySnapshot = await getDocs(collection(db, datasetName));
   return querySnapshot.docs
