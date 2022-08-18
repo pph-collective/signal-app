@@ -15,10 +15,10 @@ const spec = computed(() => {
     data: {
       name: "table",
       values: [
-        { category: "Private", value: 100 },
-        { category: "Subsidized", value: 700 },
-        { category: "Public", value: 600 },
-        { category: "Other", value: 100 },
+        { category: "Private", value: 0.1 },
+        { category: "Subsidized", value: 0.7 },
+        { category: "Public", value: 0.6 },
+        { category: "Other", value: 0.1 },
       ],
     },
     scales: [
@@ -32,7 +32,7 @@ const spec = computed(() => {
       {
         name: "xscale",
         type: "linear",
-        domain: { data: "table", field: "value" },
+        domain: [0, 1],
         range: "width",
         round: true,
         zero: true,
