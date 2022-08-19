@@ -15,10 +15,10 @@ const spec = computed(() => {
     data: {
       name: "table",
       values: [
-        { category: "A", value: 0.1 },
-        { category: "B", value: 0.7 },
-        { category: "C", value: 0.6 },
-        { category: "D", value: 0.5 },
+        { category: "Private", value: 100 },
+        { category: "Subsidized", value: 700 },
+        { category: "Public", value: 600 },
+        { category: "Other", value: 100 },
       ],
     },
     scales: [
@@ -32,7 +32,7 @@ const spec = computed(() => {
       {
         name: "xscale",
         type: "linear",
-        domain: [0, 1],
+        domain: { data: "table", field: "value" },
         range: "width",
         round: true,
         zero: true,
@@ -107,6 +107,6 @@ useVega({
   minHeight: ref(250),
   maxHeight: ref(250),
   maxWidth: ref(1280),
-  includeActions: ref(true),
+  includeActions: ref(false),
 });
 </script>

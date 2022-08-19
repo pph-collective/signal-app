@@ -10,31 +10,35 @@
   <DashboardCard width="full">
     <template #content>
       <ControlPanel
-        :drop-downs="dropDowns"
-        :init-value="controls"
-        @selected="updateControls"
+        :drop-downs="outcomeDropDown"
+        :init-value="outcomeControls"
+        @selected="updateOutcomeControls"
       />
     </template>
   </DashboardCard>
   <DashboardCard width="full">
-    <template #title> Spotlight: COVID {{ controls.focusStat.name }} </template>
+    <template #title>
+      Spotlight: COVID {{ outcomeControls.focusStat.name }}
+    </template>
     <template #content>
-      <DataSpotlight :metric="controls.focusStat.value" />
+      <DataSpotlight :metric="outcomeControls.focusStat.value" />
     </template>
   </DashboardCard>
   <DashboardCard width="full">
     <template #content>
-      <!-- TODO how do I make this not change the above value -->
       <ControlPanel
-        :drop-downs="dropDowns"
-        :init-value="controls"
-        @selected="updateControls"
+        :drop-downs="crowdingDropDown"
+        :init-value="crowdingControls"
+        @selected="updateCrowdingControls"
       />
     </template>
   </DashboardCard>
   <DashboardCard width="full">
+    <template #title>
+      Spotlight: {{ crowdingControls.focusStat.name }} By Affordability
+    </template>
     <template #content>
-      <DataSpotlight />
+      <DataSpotlight :metric="crowdingControls.focusStat.value" />
     </template>
   </DashboardCard>
 </template>
@@ -48,33 +52,67 @@ import ControlPanel from "../../../components/dashboard/ControlPanel.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
 
-const dropDowns = {
+const outcomeDropDown = {
   focusStat: {
     icon: "fas fa-poll",
     label: "What metric do you want to see?",
     values: [
       { name: "Cases", value: "cases" },
       { name: "Hospitalizations", value: "hospitalizations" },
+      { name: "Vaccination", value: "vaccination" },
       { name: "Deaths", value: "deaths" },
     ],
   },
 };
 
-const controls = ref({
-  focusStat: dropDowns.focusStat.values[0],
+const outcomeControls = ref({
+  focusStat: outcomeDropDown.focusStat.values[0],
+});
+useQueryParam({
+  param: "outcome",
+  ref: outcomeControls,
+  refField: "focusStat",
+  valid: (p) => outcomeDropDown.focusStat.values.some((v) => p === v.value),
+  valToParam: (v) => v.value,
+  paramToVal: (p) =>
+    outcomeDropDown.focusStat.values.find((v) => p === v.value),
+});
+
+const updateOutcomeControls = (newControls) => {
+  for (const [k, v] of Object.entries(newControls)) {
+    outcomeControls.value[k] = v;
+  }
+};
+
+const crowdingDropDown = {
+  focusStat: {
+    icon: "fas fa-poll",
+    label: "What metric do you want to see?",
+    values: [
+      { name: "Cases", value: "cases" },
+      { name: "Hospitalizations", value: "hospitalizations" },
+      { name: "Vaccination", value: "vaccination" },
+      { name: "Deaths", value: "deaths" },
+    ],
+  },
+};
+
+const crowdingControls = ref({
+  focusStat: crowdingDropDown.focusStat.values[0],
 });
 useQueryParam({
   param: "stat",
-  ref: controls,
+  ref: crowdingControls,
   refField: "focusStat",
-  valid: (p) => dropDowns.focusStat.values.some((v) => p === v.value),
+  valid: (p) => crowdingDropDown.focusStat.values.some((v) => p === v.value),
   valToParam: (v) => v.value,
-  paramToVal: (p) => dropDowns.focusStat.values.find((v) => p === v.value),
+  paramToVal: (p) =>
+    crowdingDropDown.focusStat.values.find((v) => p === v.value),
 });
 
-const updateControls = (newControls) => {
+const updateCrowdingControls = (newControls) => {
   for (const [k, v] of Object.entries(newControls)) {
-    controls.value[k] = v;
+    crowdingControls.value[k] = v;
   }
 };
 </script>
