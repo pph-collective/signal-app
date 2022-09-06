@@ -81,6 +81,11 @@ const tooltipSignal = computed(() => {
   } > 0 ? datum.properties.${
     focusFields.value.tooltip
   } : 'Not enough information'
+    , 'Gap% among ${focusFields.value.name.toLowerCase()}': datum.properties.${
+    focusFields.value.population
+  } > 0 ? format(datum.properties.${
+    focusFields.value.fill
+  }, '.1%') : 'Not enough information'
   }`;
 });
 
