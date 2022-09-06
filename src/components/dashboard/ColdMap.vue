@@ -75,17 +75,17 @@ const focusFields = computed(() => {
 
 const tooltipSignal = computed(() => {
   return `{
-    title: datum.properties.name,
-    'Gap among ${focusFields.value.name.toLowerCase()}': datum.properties.${
-    focusFields.value.population
-  } > 0 ? datum.properties.${
-    focusFields.value.tooltip
-  } : 'Not enough information'
-    , 'Gap% among ${focusFields.value.name.toLowerCase()}': datum.properties.${
+    title: datum.properties.name
+    , 'Percent gap among ${focusFields.value.name.toLowerCase()}': datum.properties.${
     focusFields.value.population
   } > 0 ? format(datum.properties.${
     focusFields.value.fill
   }, '.1%') : 'Not enough information'
+    , 'Dose gap among ${focusFields.value.name.toLowerCase()}': datum.properties.${
+    focusFields.value.population
+  } > 0 ? datum.properties.${
+    focusFields.value.tooltip
+  } : 'Not enough information'
   }`;
 });
 
