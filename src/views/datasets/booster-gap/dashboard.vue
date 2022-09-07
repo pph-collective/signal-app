@@ -242,11 +242,11 @@ const dropDowns = {
     label: "Which group do you want to focus on?",
     icon: "fas fa-fill-drip",
     values: [
-      { name: "All residents", value: "total" },
-      { name: "White residents", value: "white" },
-      { name: "Black residents", value: "black" },
-      { name: "Latino residents", value: "latino" },
-      { name: "Asian residents", value: "asian" },
+      { name: "All Residents", value: "total" },
+      { name: "White Residents", value: "white" },
+      { name: "Black Residents", value: "black" },
+      { name: "Latino Residents", value: "latino" },
+      { name: "Asian Residents", value: "asian" },
     ],
   },
 };
