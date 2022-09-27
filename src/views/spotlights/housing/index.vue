@@ -1,6 +1,6 @@
 <template>
   <a ref="scrollRef" class="scroll-anchor" />
-  <Dashboard>Something?</Dashboard>
+  <Dashboard :dataset-name="datasetName" />
 </template>
 
 <script setup lang="ts">
@@ -15,7 +15,7 @@ import Dashboard from "@/views/spotlights/housing/dashboard.vue";
 // import { fetchKeys } from "../../../utils/firebase";
 // import { prettyDate } from "../../../utils/utils";
 
-// const datasetName = "";
+const datasetName = "housing_spotlight";
 
 // const dates = await fetchKeys(datasetName);
 // const currentDate = ref(dates[0])

@@ -21,7 +21,8 @@
       Spotlight: COVID {{ outcomeControls.focusStat.name }}
     </template>
     <template #content>
-      <DataSpotlight :metric="outcomeControls.focusStat" />
+      <!-- add in outcomeData properly below -->
+      <DataSpotlight :metric="outcomeControls.focusStat" :stats="outcomeData" />
     </template>
   </DashboardCard>
   <DashboardCard width="full">
@@ -36,9 +37,14 @@
   <DashboardCard width="full">
     <template #title>
       Spotlight: {{ crowdingControls.focusStat.name }} By Affordability
+      {{ affordabilityData }}
     </template>
     <template #content>
-      <DataSpotlight :metric="crowdingControls.focusStat" />
+      <!-- add in affordabilityData below -->
+      <DataSpotlight
+        :metric="crowdingControls.focusStat"
+        :stats="affordabilityData"
+      />
     </template>
   </DashboardCard>
 </template>
@@ -51,6 +57,19 @@ import DataSpotlight from "@/components/dashboard/DataSpotlight.vue";
 import ControlPanel from "../../../components/dashboard/ControlPanel.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
+
+import { fetchSpotlightData } from "../../../utils/firebase";
+
+const props = defineProps<{
+  datasetName: string;
+}>();
+
+// TODO check and uncomment
+const outcomeData = await fetchSpotlightData(props.datasetName, "outcomes");
+const affordabilityData = await fetchSpotlightData(
+  props.datasetName,
+  "affordability"
+);
 
 const outcomeDropDown = {
   focusStat: {

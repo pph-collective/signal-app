@@ -1,7 +1,7 @@
 <template>
   <div class="signal-grid-container">
     <div>
-      <GroupBarChart />
+      <GroupBarChart :data="$data" />
     </div>
     <div class="centered">
       <p class="has-text-centered">
@@ -17,6 +17,7 @@
 import GroupBarChart from "@/components/dashboard/GroupBarChart.vue";
 const props = defineProps<{
   metric: FocusStat;
+  stats: Stat[];
 }>();
 </script>
 
