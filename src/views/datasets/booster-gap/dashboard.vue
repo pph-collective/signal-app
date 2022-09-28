@@ -140,7 +140,9 @@
           <div class="select">
             <select
               id="date"
-              @change="$emit('newDate', ($event.target as HTMLSelectElement).value)"
+              @change="
+                $emit('newDate', ($event.target as HTMLSelectElement).value)
+              "
             >
               <option
                 v-for="(option, index) in dropdownDates"

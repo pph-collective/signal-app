@@ -16,6 +16,8 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from "vue-router";
+
 defineProps({
   message: {
     type: String,
@@ -24,8 +26,6 @@ defineProps({
 });
 
 const emit = defineEmits(["clear"]);
-
-import { useRouter } from "vue-router";
 const router = useRouter();
 const goBack = () => {
   emit("clear");
