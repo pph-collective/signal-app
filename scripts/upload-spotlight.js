@@ -15,6 +15,7 @@ const path = require("path");
 const { ArgumentParser } = require("argparse");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
+const { stringify } = require("zipson");
 
 const warnAndExit = (warning) => {
   console.warn(warning);
@@ -37,13 +38,18 @@ argparse.add_argument("-i", "--id", {
 });
 
 argparse.add_argument("-s", "--ageadjusted", {
-  requires: false,
+  required: false, // TO_REVIEW should this be required?
   help: "New data for the outcome stats",
 });
 
 argparse.add_argument("-a", "--agespecific", {
-  required: false,
+  required: false, // TO_REVIEW should this be required?
   help: "New data for the affordability outcomes",
+});
+
+argparse.add_argument("-o", "--overwrite", {
+  action: "store_true",
+  help: "if files already exist, overwrite them",
 });
 
 argparse.add_argument("-n", "--newId", {
@@ -51,17 +57,21 @@ argparse.add_argument("-n", "--newId", {
   help: "if the collection id does not exist, creates a new collection",
 });
 
+argparse.add_argument("-z", "--localDir", {
+  help: "path to local folder to save download files to",
+});
+
 const main = async () => {
-  const { id, ageadjusted, agespecific, newId } = argparse.parse_args();
+  const { id, ageadjusted, agespecific, newId, localDir } =
+    argparse.parse_args();
 
   const files = [
     {
       filePath: ageadjusted,
       extension: "json",
-      field: "stats", // TO_REVIEW what is field?
+      field: "adjusted", // TO_REVIEW what is field? used for localdir, is this the field in the firestore db?
       isArray: true,
       schema: [
-        //TODO
         {
           name: "housing_type",
           type: "string",
@@ -79,7 +89,7 @@ const main = async () => {
     {
       filePath: agespecific,
       extension: "json",
-      field: "stats",
+      field: "specific",
       isArray: true,
       schema: [
         {
@@ -131,8 +141,37 @@ const main = async () => {
     }
   }
 
-  // TO_REVIEW Do I need the const docPath stuff?
-  // TO_REVIEW if local directory stuff?
+  const docRef = db.collection(id);
+
+  const dir = `${localDir}/${id}`;
+
+  if (localDir) {
+    if (fs.existsSync(dir)) {
+      if (overwrite) {
+        console.warn(
+          `WARNING! Directory exists locally. Overwriting... ${dir}`
+        );
+      } else {
+        warnAndExit(
+          `ERROR!: Directory exists locally. Use the overwrite flag if you wish to continue: ${dir}`
+        );
+      }
+    }
+  } else {
+    // Check if the document exists
+    const docSnapshot = await docRef.get();
+    if (docSnapshot.exists) {
+      if (overwrite) {
+        console.warn(
+          `WARNING! Document exists in Firestore. Overwriting... ${docPath}`
+        );
+      } else {
+        warnAndExit(
+          `ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: ${docPath}`
+        );
+      }
+    }
+  }
 
   // read in the files to the data property on each file object
   files.forEach((file) => {
@@ -143,7 +182,7 @@ const main = async () => {
       file.data = json;
     }
 
-    // TO_REVIEW This is probably always an array? Writing it as if not though
+    // check the file isArray
     if (file.isArray !== Array.isArray(file.data)) {
       warnAndExit(
         `ERROR!: The file for ${file.field} at ${
@@ -167,7 +206,37 @@ const main = async () => {
     }
   });
 
-  // local file stuff?
+  if (localDir) {
+    // Make directory, no harm done if already exists
+    fs.mkdir(dir, { recursive: true }, (err) => {
+      if (err) {
+        warnAndExit(err);
+      }
+
+      files.forEach(({ field, data }) => {
+        const path = `${dir}/${field}.json`;
+
+        fs.writeFile(path, JSON.stringify(data), (err) => {
+          if (err) {
+            warnAndExit(err);
+          }
+          console.log(`SUCCESS! Created file: ${path}`);
+        });
+      });
+    });
+  } else {
+    await docRef.select({
+      ...files.reduce(
+        (previous, { data, field }) => ({
+          [field]: stringify(data),
+          ...previous,
+        }),
+        {}
+      ),
+      last_updated: Date.now(),
+    });
+    console.log(`SUCCESS! Created document in firestore: ${docPath}`);
+  }
 };
 
 const checkSchema = (schema, row, filePath) => {
