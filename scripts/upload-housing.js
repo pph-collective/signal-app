@@ -6,7 +6,7 @@
  *  node ./scripts/upload-spotlight.js -h
  *
  * Example Run
- * node ./scripts/upload-data.js --id housing-spotlight --doc outcomes --statsfile ./data/vaccine_coldspot_statistics_03_15_2022.json --barriersfile ./data/vaccine_coldspot_side_panel_percentages_03_15_2022.json --statebarriersfile ./data/statebarriers.json --locationsfile ./data/vaccine_coldspot_locations_03_15_2022.json
+ * node ./scripts/upload-housing.js --age_adjusted ./data/age_adjusted.json --age_specific ./data/age_specific.json
  */
 
 /* eslint "@typescript-eslint/no-var-requires": "off" */
@@ -32,18 +32,13 @@ const argparse = new ArgumentParser({
   add_help: true,
 });
 
-argparse.add_argument("-i", "--id", {
+argparse.add_argument("-a", "--ageadjusted", {
   required: true,
-  help: "ID of dataset for collection",
-});
-
-argparse.add_argument("-s", "--ageadjusted", {
-  required: false, // TO_REVIEW should this be required?
   help: "New data for the outcome stats",
 });
 
-argparse.add_argument("-a", "--agespecific", {
-  required: false, // TO_REVIEW should this be required?
+argparse.add_argument("-s", "--agespecific", {
+  required: true,
   help: "New data for the affordability outcomes",
 });
 
@@ -52,28 +47,23 @@ argparse.add_argument("-o", "--overwrite", {
   help: "if files already exist, overwrite them",
 });
 
-argparse.add_argument("-n", "--newId", {
-  action: "store_true",
-  help: "if the collection id does not exist, creates a new collection",
-});
-
 argparse.add_argument("-z", "--localDir", {
   help: "path to local folder to save download files to",
 });
 
 const main = async () => {
-  const { id, ageadjusted, agespecific, newId, localDir } =
+  const { ageadjusted, agespecific, overwrite, localDir } =
     argparse.parse_args();
 
   const files = [
     {
       filePath: ageadjusted,
       extension: "json",
-      field: "adjusted", // TO_REVIEW what is field? used for localdir, is this the field in the firestore db?
+      field: "age_adjusted",
       isArray: true,
       schema: [
         {
-          name: "housing_type",
+          name: "final_housing_type",
           type: "string",
         },
         {
@@ -89,7 +79,7 @@ const main = async () => {
     {
       filePath: agespecific,
       extension: "json",
-      field: "specific",
+      field: "age_specific",
       isArray: true,
       schema: [
         {
@@ -128,22 +118,17 @@ const main = async () => {
 
   // Check if the collection exists
   const collections = (await db.listCollections()).map((c) => c.id);
-  if (!collections.includes(id)) {
-    if (newId) {
-      console.warn(
-        `WARNING! id does not exist in firestore. This script will create the following collection: ${id}`
-      );
-    } else {
-      warnAndExit(`ERROR! id must match an existing collection id: ${collections.join(
-        ", "
-      )}.
-      Use the --newId flag to create a new collection id for "${id}"`);
-    }
+  if (!collections.includes("spotlights")) {
+    // TO_REVIEW does this need to be spotlights or spotlights/housing or just housing?
+    warnAndExit(`ERROR! housing must match an existing collection id: ${collections.join(
+      ", "
+    )}.
+     `);
   }
 
-  const docRef = db.collection(id);
+  const docRef = db.collection("spotlights").doc("housing_test");
 
-  const dir = `${localDir}/${id}`;
+  const dir = `${localDir}/spotlights/housing`;
 
   if (localDir) {
     if (fs.existsSync(dir)) {
@@ -163,11 +148,11 @@ const main = async () => {
     if (docSnapshot.exists) {
       if (overwrite) {
         console.warn(
-          `WARNING! Document exists in Firestore. Overwriting... ${docPath}`
+          `WARNING! Document exists in Firestore. Overwriting... housing`
         );
       } else {
         warnAndExit(
-          `ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: ${docPath}`
+          `ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: housing`
         );
       }
     }
@@ -225,7 +210,8 @@ const main = async () => {
       });
     });
   } else {
-    await docRef.select({
+    await docRef.set({
+      // TO_RVIEW docRef.select is not a function
       ...files.reduce(
         (previous, { data, field }) => ({
           [field]: stringify(data),
@@ -235,7 +221,7 @@ const main = async () => {
       ),
       last_updated: Date.now(),
     });
-    console.log(`SUCCESS! Created document in firestore: ${docPath}`);
+    console.log(`SUCCESS! Created document in firestore: spotlights/housing`);
   }
 };
 
