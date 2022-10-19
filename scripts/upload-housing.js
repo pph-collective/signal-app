@@ -119,14 +119,13 @@ const main = async () => {
   // Check if the collection exists
   const collections = (await db.listCollections()).map((c) => c.id);
   if (!collections.includes("spotlights")) {
-    // TO_REVIEW does this need to be spotlights or spotlights/housing or just housing?
     warnAndExit(`ERROR! housing must match an existing collection id: ${collections.join(
       ", "
     )}.
      `);
   }
 
-  const docRef = db.collection("spotlights").doc("housing_test");
+  const docRef = db.collection("spotlights").doc("housing");
 
   const dir = `${localDir}/spotlights/housing`;
 
