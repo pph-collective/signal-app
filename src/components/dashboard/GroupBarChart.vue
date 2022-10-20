@@ -49,6 +49,6 @@ useVega({
   minHeight: ref(250),
   maxHeight: ref(250),
   maxWidth: ref(1280),
-  includeActions: ref(true),
+  includeActions: ref(false),
 });
 </script>
