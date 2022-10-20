@@ -22,24 +22,14 @@
           >.
         </li>
       </ul>
-      <h5>I can promote upcoming vaccine clinics in my neighborhood:</h5>
+      <h5>I can make sure people know where to go to get COVID-19 vaccines:</h5>
       <ul>
         <li>
-          First, check the
-          <ExternalLink
-            href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSv20xMlWQJON8jXvPtzdAo1KU-Rr6Eu6u02nUuVEu-Bz2t_M6JBzYLfFaL_jPZqLiAQZVigFcssKwx/pubhtml"
-            >list of upcoming vaccine clinics
+          Find COVID-19 vaccines near you by using the search bar tool at
+          <ExternalLink href="https://www.vaccines.gov/"
+            >vaccines.gov
           </ExternalLink>
-          to get information about the clinic(s) you want to promote.
-        </li>
-        <li>
-          Next, you can create
-          <ExternalLink
-            href="https://drive.google.com/drive/folders/1ZpYrchu-srZJJSmn-yMDRPw-LfgbWIzB"
-            >promotional materials and promote
-          </ExternalLink>
-          upcoming clinics. This will help you let people in your community know
-          what is happening.
+          . You can search by ZIP code and vaccine type.
         </li>
         <li>
           You can also let people know
@@ -52,12 +42,12 @@
       <h5>I can set up a new vaccine clinic in my neighborhood:</h5>
       <ul>
         <li>
-          Get started by
-          <ExternalLink
-            href="https://forms.office.com/Pages/ResponsePage.aspx?id=VGrKUmVENUa_82XQqEEiiDhbUGCR_dNCilNlrWlEGs1UN1A3UVY1QlhJQVZJNTFFTTM4WUkwREtEMS4u"
-            >filling out an interest form </ExternalLink
-          >. A member of the RIDOH team will reach out to you within 3-5
-          business days.
+          Community partners who are interested in hosting a COVID-19
+          vaccination clinic can contact RIDOH at
+          <ExternalLink href="mailto:RIDOH.C19VaxClinics@health.ri.gov">
+            RIDOH.C19VaxClinics@health.ri.gov</ExternalLink
+          >. RIDOH will provide a list of mass immunizers with whom you can work
+          to host a clinic.
         </li>
         <li>
           Next, you can create

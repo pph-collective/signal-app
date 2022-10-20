@@ -30,7 +30,7 @@
     <template #top-right>
       <button
         :disabled="!activeCluster.name"
-        class="zoom-button button is-secondary is-light"
+        class="zoom-button button is-link"
         @click="zoomed = !zoomed"
       >
         <span class="icon">
@@ -140,7 +140,9 @@
           <div class="select">
             <select
               id="date"
-              @change="$emit('newDate', ($event.target as HTMLSelectElement).value)"
+              @change="
+                $emit('newDate', ($event.target as HTMLSelectElement).value)
+              "
             >
               <option
                 v-for="(option, index) in dropdownDates"
@@ -242,11 +244,11 @@ const dropDowns = {
     label: "Which group do you want to focus on?",
     icon: "fas fa-fill-drip",
     values: [
-      { name: "All residents", value: "total" },
-      { name: "White residents", value: "white" },
-      { name: "Black residents", value: "black" },
-      { name: "Latino residents", value: "latino" },
-      { name: "Asian residents", value: "asian" },
+      { name: "All Residents", value: "total" },
+      { name: "White Residents", value: "white" },
+      { name: "Black Residents", value: "black" },
+      { name: "Latino Residents", value: "latino" },
+      { name: "Asian Residents", value: "asian" },
     ],
   },
 };

@@ -130,6 +130,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { useRoute } from "vue-router";
 
 import VisuallyHidden from "@/components/base/VisuallyHidden.vue";
 
@@ -161,7 +162,7 @@ const SPOTLIGHTS = [
   {
     name: "Cases by Housing Type",
     route: "housing",
-    available: true,
+    available: false,
   },
   {
     name: "Cases by School",
@@ -195,7 +196,6 @@ const toggle = () => {
   return emit("toggle", collapsed.value);
 };
 
-import { useRoute } from "vue-router";
 const route = useRoute();
 const activeRoute = computed(() => {
   const paths = route.path.split("/").filter((p) => p);

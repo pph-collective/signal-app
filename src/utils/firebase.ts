@@ -75,6 +75,29 @@ export const fetchColdSpotData = async (datasetName: string, date: string) => {
   return result;
 };
 
+export const fetchHousingData = async (datasetName: string, date: string) => {
+  const defaults = {
+    age_adjusted: [],
+    age_specific: [],
+  };
+
+  const result = await getDocWithDefaultPreferCache(
+    defaults,
+    datasetName,
+    date
+  );
+
+  Object.entries(result).forEach(([field, value]) => {
+    if (Object.keys(defaults).includes(field)) {
+      result[field] = parse(value as string);
+    } else {
+      result[field] = value;
+    }
+  });
+
+  return result;
+};
+
 export const fetchKeys = async (datasetName: string) => {
   const querySnapshot = await getDocs(collection(db, datasetName));
   return querySnapshot.docs

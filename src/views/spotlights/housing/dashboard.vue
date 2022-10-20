@@ -21,7 +21,8 @@
       Spotlight: COVID {{ outcomeControls.focusStat.name }}
     </template>
     <template #content>
-      <DataSpotlight :metric="outcomeControls.focusStat.value" />
+      <!-- add in outcomeData properly below -->
+      <DataSpotlight :metric="outcomeControls.focusStat" />
     </template>
   </DashboardCard>
   <DashboardCard width="full">
@@ -38,7 +39,8 @@
       Spotlight: {{ crowdingControls.focusStat.name }} By Affordability
     </template>
     <template #content>
-      <DataSpotlight :metric="crowdingControls.focusStat.value" />
+      <!-- add in affordabilityData below -->
+      <DataSpotlight :metric="crowdingControls.focusStat" />
     </template>
   </DashboardCard>
 </template>
