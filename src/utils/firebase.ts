@@ -75,10 +75,10 @@ export const fetchColdSpotData = async (datasetName: string, date: string) => {
   return result;
 };
 
-export const fetchSpotlightData = async (datasetName: string, date: string) => {
+export const fetchHousingData = async (datasetName: string, date: string) => {
   const defaults = {
-    var1: [],
-    var2: [],
+    age_adjusted: [],
+    age_specific: [],
   };
 
   const result = await getDocWithDefaultPreferCache(
@@ -86,6 +86,14 @@ export const fetchSpotlightData = async (datasetName: string, date: string) => {
     datasetName,
     date
   );
+
+  Object.entries(result).forEach(([field, value]) => {
+    if (Object.keys(defaults).includes(field)) {
+      result[field] = parse(value as string);
+    } else {
+      result[field] = value;
+    }
+  });
 
   return result;
 };
