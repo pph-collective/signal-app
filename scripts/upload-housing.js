@@ -210,7 +210,6 @@ const main = async () => {
     });
   } else {
     await docRef.set({
-      // TO_RVIEW docRef.select is not a function
       ...files.reduce(
         (previous, { data, field }) => ({
           [field]: stringify(data),
