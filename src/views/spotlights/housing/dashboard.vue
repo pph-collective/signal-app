@@ -22,7 +22,10 @@
     </template>
     <template #content>
       <!-- add in outcomeData properly below -->
-      <DataSpotlight :metric="outcomeControls.focusStat" />
+      <DataSpotlight
+        :metric="outcomeControls.focusStat"
+        :stats="data.age_adjusted"
+      />
     </template>
   </DashboardCard>
   <DashboardCard width="full">
@@ -39,8 +42,8 @@
       Spotlight: {{ crowdingControls.focusStat.name }} By Affordability
     </template>
     <template #content>
-      <!-- add in affordabilityData below -->
-      <DataSpotlight :metric="crowdingControls.focusStat" />
+      <!-- TODO update this data spotlight -->
+      <!-- <DataSpotlight :metric="crowdingControls.focusStat" /> -->
     </template>
   </DashboardCard>
 </template>
@@ -53,6 +56,9 @@ import DataSpotlight from "@/components/dashboard/DataSpotlight.vue";
 import ControlPanel from "../../../components/dashboard/ControlPanel.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
+import { fetchHousingData } from "../../../utils/firebase";
+
+const data = await fetchHousingData("housing_test"); // TODO change this to housing when uploaded
 
 const outcomeDropDown = {
   focusStat: {

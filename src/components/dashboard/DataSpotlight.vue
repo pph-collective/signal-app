@@ -1,7 +1,7 @@
 <template>
   <div class="signal-grid-container">
     <div>
-      <GroupBarChart :data="$data" />
+      <BarChart :active-stats="activeStats" :metric="props.metric.value" />
     </div>
     <div class="centered">
       <p class="has-text-centered">
@@ -14,11 +14,21 @@
 </template>
 
 <script setup lang="ts">
-import GroupBarChart from "@/components/dashboard/GroupBarChart.vue";
+import { computed } from "vue";
+
+import BarChart from "@/components/dashboard/BarChart.vue";
+
 const props = defineProps<{
   metric: FocusStat;
-  stats: Stat[];
+  stats: SpotlightStat[];
 }>();
+
+const activeStats = computed(() => {
+  const row = props.stats.filter(
+    (stat) => stat.outcome_type === props.metric.value
+  );
+  return row;
+});
 </script>
 
 <style scoped lang="scss">

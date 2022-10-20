@@ -75,16 +75,18 @@ export const fetchColdSpotData = async (datasetName: string, date: string) => {
   return result;
 };
 
-export const fetchHousingData = async (datasetName: string, date: string) => {
+export const fetchHousingData = async (datasetName: string) => {
   const defaults = {
     age_adjusted: [],
     age_specific: [],
   };
 
+  // TODO Need help with this. can't use the function because the db is set up differently?
+  // const docRef = doc(db, "spotlights", datasetName);
   const result = await getDocWithDefaultPreferCache(
     defaults,
-    datasetName,
-    date
+    "spotlights",
+    datasetName
   );
 
   Object.entries(result).forEach(([field, value]) => {
