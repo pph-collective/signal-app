@@ -76,7 +76,7 @@
             v-if="item.available"
             :class="{ 'is-active': activeRoute === item.route }"
             :aria-disabled="!item.available"
-            :to="'/dataset/' + item.route"
+            :to="'/spotlight/' + item.route"
           >
             <span v-if="!collapsed">{{ item.name }}</span>
             <span v-else

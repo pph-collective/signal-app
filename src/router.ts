@@ -3,6 +3,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomePage from "@/views/HomePage.vue";
 import AboutPage from "@/views/AboutPage.vue";
 import DatasetPage from "@/views/datasets/index.vue";
+import SpotlightPage from "@/views/spotlights/index.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -33,6 +34,22 @@ const routes: RouteRecordRaw[] = [
         path: "booster-gap",
         name: "Closing the Gap in COVID-19 Boosters",
         component: () => import("./views/datasets/booster-gap/index.vue"),
+      },
+    ],
+  },
+  {
+    path: "/spotlight",
+    name: "Spotlight",
+    component: SpotlightPage,
+    children: [
+      {
+        path: "",
+        redirect: "/spotlight/housing",
+      },
+      {
+        path: "housing",
+        name: "COVID-19 Cases by Housing Type",
+        component: () => import("./views/spotlights/housing/index.vue"),
       },
     ],
   },
