@@ -41,6 +41,19 @@ interface FocusStat {
   value: "total" | "white" | "black" | "latino" | "asian";
 }
 
+interface SpotlightStat {
+  final_housing_type: string;
+  age_adjusted_rate: number;
+  outcome_type: string;
+}
+
+interface AgeSpecificStat {
+  final_housing_type: string;
+  hud_age_group: string;
+  age_specific_rate: number;
+  outcome_type: string;
+}
+
 // TODO: what other fields go here?
 interface Location {
   name: string;

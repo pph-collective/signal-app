@@ -3,100 +3,42 @@
 </template>
 
 <script setup lang="ts">
-import { useVega } from "../../composables/useVega";
 import { computed, ref } from "vue";
+import { useVega } from "../../composables/useVega";
+// import { COLORS } from "../../utils/constants";
+
+// interface Props {
+//   activeStats: AgeSpecificStat[];
+// }
+
+// const props = defineProps<Props>();
 
 const spec = computed(() => {
   return {
-    $schema: "https://vega.github.io/schema/vega/v5.json",
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     width: 300,
     height: 240,
     padding: 5,
     data: {
-      name: "table",
       values: [
-        { category: "A", value: 0.1 },
-        { category: "B", value: 0.7 },
-        { category: "C", value: 0.6 },
-        { category: "D", value: 0.5 },
+        { category: "A", group: "x", value: 0.1 },
+        { category: "A", group: "y", value: 0.6 },
+        { category: "A", group: "z", value: 0.9 },
+        { category: "B", group: "x", value: 0.7 },
+        { category: "B", group: "y", value: 0.2 },
+        { category: "B", group: "z", value: 1.1 },
+        { category: "C", group: "x", value: 0.6 },
+        { category: "C", group: "y", value: 0.1 },
+        { category: "C", group: "z", value: 0.2 },
       ],
     },
-    scales: [
-      {
-        name: "yscale",
-        type: "band",
-        domain: { data: "table", field: "category" },
-        range: "height",
-        padding: 0.2,
-      },
-      {
-        name: "xscale",
-        type: "linear",
-        domain: [0, 1],
-        range: "width",
-        round: true,
-        zero: true,
-        nice: true,
-      },
-      {
-        name: "color",
-        type: "ordinal",
-        domain: { data: "table", field: "position" },
-        range: { scheme: "category20" },
-      },
-    ],
-    axes: [
-      {
-        orient: "left",
-        scale: "yscale",
-        tickSize: 0,
-        labelPadding: 4,
-        zindex: 1,
-      },
-      { orient: "bottom", scale: "xscale" },
-    ],
-    marks: [
-      {
-        type: "group",
-        from: {
-          facet: {
-            data: "table",
-            name: "facet",
-            groupby: "category",
-          },
-        },
-        encode: {
-          enter: {
-            y: { scale: "yscale", field: "category" },
-          },
-        },
-        signals: [{ name: "height", update: "bandwidth('yscale')" }],
-        scales: [
-          {
-            name: "pos",
-            type: "band",
-            range: "height",
-            domain: { data: "facet", field: "position" },
-          },
-        ],
-        marks: [
-          {
-            name: "bars",
-            from: { data: "facet" },
-            type: "rect",
-            encode: {
-              enter: {
-                y: { scale: "pos", field: "position" },
-                height: { scale: "pos", band: 1 },
-                x: { scale: "xscale", field: "value" },
-                x2: { scale: "xscale", value: 0 },
-                fill: { scale: "color", field: "position" },
-              },
-            },
-          },
-        ],
-      },
-    ],
+    mark: "bar",
+    encoding: {
+      x: { field: "value", type: "quantitative" },
+      y: { field: "category" },
+      yOffset: { field: "group" },
+      color: { field: "group" },
+    },
   };
 });
 
