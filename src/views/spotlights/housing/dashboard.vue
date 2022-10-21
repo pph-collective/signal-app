@@ -42,8 +42,10 @@
       Spotlight: {{ crowdingControls.focusStat.name }} By Affordability
     </template>
     <template #content>
-      <!-- TODO update this data spotlight -->
-      <!-- <DataSpotlight :metric="crowdingControls.focusStat" /> -->
+      <AgeSpecificSpotlight
+        :metric="crowdingControls.focusStat"
+        :stats="data.age_specific"
+      />
     </template>
   </DashboardCard>
 </template>
@@ -57,6 +59,7 @@ import ControlPanel from "../../../components/dashboard/ControlPanel.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
 import { fetchHousingData } from "../../../utils/firebase";
+import AgeSpecificSpotlight from "../../../components/dashboard/AgeSpecificSpotlight.vue";
 
 const data = await fetchHousingData("housing_test"); // TODO change this to housing when uploaded
 
@@ -67,7 +70,6 @@ const outcomeDropDown = {
     values: [
       { name: "Cases", value: "cases" },
       { name: "Hospitalizations", value: "hospitalizations" },
-      { name: "Vaccination", value: "vaccination" },
       { name: "Deaths", value: "deaths" },
     ],
   },
@@ -99,7 +101,6 @@ const crowdingDropDown = {
     values: [
       { name: "Cases", value: "cases" },
       { name: "Hospitalizations", value: "hospitalizations" },
-      { name: "Vaccination", value: "vaccination" },
       { name: "Deaths", value: "deaths" },
     ],
   },

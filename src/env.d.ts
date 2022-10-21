@@ -41,6 +41,11 @@ interface FocusStat {
   value: "total" | "white" | "black" | "latino" | "asian";
 }
 
+interface SpotlightFocus {
+  name: string;
+  value: string;
+}
+
 interface SpotlightStat {
   final_housing_type: string;
   age_adjusted_rate: number;

@@ -5,12 +5,14 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useVega } from "../../composables/useVega";
+import { COLORS } from "../../utils/constants";
 
-// interface Props {
-//   activeStats: AgeSpecificStat[];
-// }
+interface Props {
+  activeStats: AgeSpecificStat[];
+  metric: FocusStat;
+}
 
-// const props = defineProps<Props>();
+const props = defineProps<Props>();
 
 const spec = computed(() => {
   return {
@@ -19,24 +21,18 @@ const spec = computed(() => {
     height: 240,
     padding: 5,
     data: {
-      values: [
-        { category: "A", group: "x", value: 0.1 },
-        { category: "A", group: "y", value: 0.6 },
-        { category: "A", group: "z", value: 0.9 },
-        { category: "B", group: "x", value: 0.7 },
-        { category: "B", group: "y", value: 0.2 },
-        { category: "B", group: "z", value: 1.1 },
-        { category: "C", group: "x", value: 0.6 },
-        { category: "C", group: "y", value: 0.1 },
-        { category: "C", group: "z", value: 0.2 },
-      ],
+      values: props.activeStats,
     },
     mark: "bar",
     encoding: {
-      x: { field: "value", type: "quantitative" },
-      y: { field: "category" },
-      yOffset: { field: "group" },
-      color: { field: "group" },
+      x: {
+        field: "age_specific_rate",
+        type: "quantitative",
+        title: props.metric.name + " Per 1000",
+      },
+      y: { field: "hud_age_group", title: "Age Group" },
+      yOffset: { field: "final_housing_type" },
+      color: { field: "final_housing_type", scale: COLORS },
     },
   };
 });

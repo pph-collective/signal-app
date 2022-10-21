@@ -5,41 +5,31 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useVega } from "../../composables/useVega";
+import { COLORS } from "../../utils/constants";
 
 interface Props {
   activeStats: SpotlightStat[];
-  metric: string;
+  metric: FocusStat;
 }
 
 const props = defineProps<Props>();
 
-console.log(props.activeStats[0]);
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     width: 300,
     height: 240,
     padding: 5,
-    data: {
-      values: [
-        {
-          category: props.activeStats[0].final_housing_type,
-          value: props.activeStats[0].age_adjusted_rate,
-        },
-        {
-          category: props.activeStats[1].final_housing_type,
-          value: props.activeStats[1].age_adjusted_rate,
-        },
-        {
-          category: props.activeStats[2].final_housing_type,
-          value: props.activeStats[2].age_adjusted_rate,
-        },
-      ],
-    },
+    data: { values: props.activeStats },
     mark: "bar",
     encoding: {
-      x: { field: "value", type: "quantitative", title: props.metric }, // TODO make this capitalized
-      y: { field: "category", title: "Housing Type" },
+      x: {
+        field: "age_adjusted_rate",
+        type: "quantitative",
+        title: props.metric.name + " Per 1000",
+      },
+      y: { field: "final_housing_type", title: "Housing Type" },
+      color: { value: COLORS.dark },
     },
   };
 });
