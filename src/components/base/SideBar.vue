@@ -162,7 +162,7 @@ const SPOTLIGHTS = [
   {
     name: "Cases by Housing Type",
     route: "housing",
-    available: false,
+    available: true,
   },
   {
     name: "Cases by School",
