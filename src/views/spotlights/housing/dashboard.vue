@@ -10,41 +10,20 @@
   <DashboardCard width="full">
     <template #content>
       <ControlPanel
-        :drop-downs="outcomeDropDown"
-        :init-value="outcomeControls"
-        @selected="updateOutcomeControls"
+        :drop-downs="dropDowns"
+        :init-value="controls"
+        @selected="updateControls"
       />
     </template>
   </DashboardCard>
   <DashboardCard width="full">
-    <template #title>
-      Spotlight: COVID {{ outcomeControls.focusStat.name }}
-    </template>
+    <template #title> Spotlight: COVID {{ controls.focusStat.name }} </template>
     <template #content>
       <!-- add in outcomeData properly below -->
       <DataSpotlight
-        :metric="outcomeControls.focusStat"
-        :stats="data.age_adjusted"
-      />
-    </template>
-  </DashboardCard>
-  <DashboardCard width="full">
-    <template #content>
-      <ControlPanel
-        :drop-downs="crowdingDropDown"
-        :init-value="crowdingControls"
-        @selected="updateCrowdingControls"
-      />
-    </template>
-  </DashboardCard>
-  <DashboardCard width="full">
-    <template #title>
-      Spotlight: {{ crowdingControls.focusStat.name }} By Affordability
-    </template>
-    <template #content>
-      <AgeSpecificSpotlight
-        :metric="crowdingControls.focusStat"
-        :stats="data.age_specific"
+        :metric="controls.focusStat"
+        :name-this="controls.nameThis"
+        :data="data"
       />
     </template>
   </DashboardCard>
@@ -59,11 +38,10 @@ import ControlPanel from "../../../components/dashboard/ControlPanel.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
 import { fetchHousingData } from "../../../utils/firebase";
-import AgeSpecificSpotlight from "../../../components/dashboard/AgeSpecificSpotlight.vue";
 
 const data = await fetchHousingData("housing_test"); // TODO change this to housing when uploaded
 
-const outcomeDropDown = {
+const dropDowns = {
   focusStat: {
     icon: "fas fa-poll",
     label: "What metric do you want to see?",
@@ -73,55 +51,32 @@ const outcomeDropDown = {
       { name: "Deaths", value: "deaths" },
     ],
   },
-};
-
-const outcomeControls = ref({
-  focusStat: outcomeDropDown.focusStat.values[0],
-});
-useQueryParam({
-  param: "outcome",
-  ref: outcomeControls,
-  refField: "focusStat",
-  valid: (p) => outcomeDropDown.focusStat.values.some((v) => p === v.value),
-  valToParam: (v) => v.value,
-  paramToVal: (p) =>
-    outcomeDropDown.focusStat.values.find((v) => p === v.value),
-});
-
-const updateOutcomeControls = (newControls) => {
-  for (const [k, v] of Object.entries(newControls)) {
-    outcomeControls.value[k] = v;
-  }
-};
-
-const crowdingDropDown = {
-  focusStat: {
+  nameThis: {
     icon: "fas fa-poll",
-    label: "What metric do you want to see?",
+    label: "Lorem Ipsum",
     values: [
-      { name: "Cases", value: "cases" },
-      { name: "Hospitalizations", value: "hospitalizations" },
-      { name: "Deaths", value: "deaths" },
+      { name: "Age Adjusted", value: "adjusted" },
+      { name: "Age Specific", value: "specific" },
     ],
   },
 };
 
-const crowdingControls = ref({
-  focusStat: crowdingDropDown.focusStat.values[0],
+const controls = ref({
+  focusStat: dropDowns.focusStat.values[0],
+  nameThis: dropDowns.nameThis.values[0],
 });
 useQueryParam({
   param: "stat",
-  ref: crowdingControls,
+  ref: controls,
   refField: "focusStat",
-  valid: (p) => crowdingDropDown.focusStat.values.some((v) => p === v.value),
+  valid: (p) => dropDowns.focusStat.values.some((v) => p === v.value),
   valToParam: (v) => v.value,
-  paramToVal: (p) =>
-    crowdingDropDown.focusStat.values.find((v) => p === v.value),
+  paramToVal: (p) => dropDowns.focusStat.values.find((v) => p === v.value),
 });
 
-const updateCrowdingControls = (newControls) => {
+const updateControls = (newControls) => {
   for (const [k, v] of Object.entries(newControls)) {
-    crowdingControls.value[k] = v;
+    controls.value[k] = v;
   }
 };
 </script>

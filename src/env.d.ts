@@ -59,6 +59,11 @@ interface AgeSpecificStat {
   outcome_type: string;
 }
 
+interface SpotlightStats {
+  age_adjusted: SpotlightStat[];
+  age_specific: AgeSpecificStat[];
+}
+
 // TODO: what other fields go here?
 interface Location {
   name: string;
