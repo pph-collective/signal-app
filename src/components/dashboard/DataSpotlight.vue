@@ -28,6 +28,7 @@ import { computed } from "vue";
 
 import BarChart from "@/components/dashboard/BarChart.vue";
 import GroupBarChart from "@/components/dashboard/GroupBarChart.vue";
+import { sortByProperty } from "../../utils/utils";
 
 const props = defineProps<{
   metric: FocusStat;
@@ -43,9 +44,9 @@ const activeStats = computed(() => {
 });
 
 const specificStats = computed(() => {
-  const row = props.data.age_specific.filter(
-    (stat) => stat.outcome_type === props.metric.value
-  );
+  const row = props.data.age_specific
+    .filter((stat) => stat.outcome_type === props.metric.value)
+    .sort(sortByProperty("hud_age_group"));
   return row;
 });
 console.log(specificStats);

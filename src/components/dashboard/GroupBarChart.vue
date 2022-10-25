@@ -13,7 +13,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-console.log(props.activeStats);
+
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
