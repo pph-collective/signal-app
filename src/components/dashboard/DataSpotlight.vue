@@ -9,14 +9,14 @@
       <GroupBarChart
         v-if="props.nameThis.value == 'specific'"
         :active-stats="specificStats"
-        :metric="props.nameThis"
+        :metric="props.metric"
       />
     </div>
     <div class="centered">
       <p class="has-text-centered">
         Lorem Ipsum
         <strong>{{ props.metric.name.toLowerCase() }}</strong> dolor sit amet,
-        consectetur adipiscing elit. Nulla pretium tempor mi eget pellentesque.
+        consectetur adipiscing <strong>{{ props.nameThis.name.toLowerCase() }}</strong> elit. Nulla pretium tempor mi eget pellentesque.
         Etiam pharetra neque quis elit aliquam tristique.
       </p>
     </div>

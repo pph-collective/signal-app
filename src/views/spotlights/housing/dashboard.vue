@@ -42,6 +42,14 @@ import { fetchHousingData } from "../../../utils/firebase";
 const data = await fetchHousingData("housing");
 
 const dropDowns = {
+  nameThis: {
+    icon: "fas fa-poll",
+    label: "Lorem Ipsum",
+    values: [
+      { name: "Age Adjusted", value: "adjusted" },
+      { name: "Age Specific", value: "specific" },
+    ],
+  },
   focusStat: {
     icon: "fas fa-poll",
     label: "What metric do you want to see?",
@@ -51,20 +59,22 @@ const dropDowns = {
       { name: "Deaths", value: "deaths" },
     ],
   },
-  nameThis: {
-    icon: "fas fa-poll",
-    label: "Lorem Ipsum",
-    values: [
-      { name: "Age Adjusted", value: "adjusted" },
-      { name: "Age Specific", value: "specific" },
-    ],
-  },
 };
 
 const controls = ref({
   focusStat: dropDowns.focusStat.values[0],
   nameThis: dropDowns.nameThis.values[0],
 });
+
+useQueryParam({
+  param: "to_replace",
+  ref: controls,
+  refField: "nameThis",
+  valid: (p) => dropDowns.nameThis.values.some((v) => p === v.value),
+  valToParam: (v) => v.value,
+  paramToVal: (p) => dropDowns.nameThis.values.find((v) => p === v.value),
+});
+
 useQueryParam({
   param: "stat",
   ref: controls,
