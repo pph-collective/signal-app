@@ -87,7 +87,6 @@ export const fetchHousingData = async (datasetName: string) => {
     datasetName
   );
 
-  // TODO error in this code when running with 'housing' but not 'housing_test'
   Object.entries(result).forEach(([field, value]) => {
     if (Object.keys(defaults).includes(field)) {
       result[field] = parse(value as string);
