@@ -81,14 +81,13 @@ export const fetchHousingData = async (datasetName: string) => {
     age_specific: [],
   };
 
-  // TODO Need help with this. can't use the function because the db is set up differently?
-  // const docRef = doc(db, "spotlights", datasetName);
   const result = await getDocWithDefaultPreferCache(
     defaults,
     "spotlights",
     datasetName
   );
 
+  // TODO error in this code when running with 'housing' but not 'housing_test'
   Object.entries(result).forEach(([field, value]) => {
     if (Object.keys(defaults).includes(field)) {
       result[field] = parse(value as string);

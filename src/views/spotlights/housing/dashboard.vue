@@ -39,7 +39,7 @@ import ControlPanel from "../../../components/dashboard/ControlPanel.vue";
 import { useQueryParam } from "../../../composables/useQueryParam";
 import { fetchHousingData } from "../../../utils/firebase";
 
-const data = await fetchHousingData("housing_test"); // TODO change this to housing when uploaded
+const data = await fetchHousingData("housing");
 
 const dropDowns = {
   focusStat: {

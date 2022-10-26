@@ -28,7 +28,7 @@ const spec = computed(() => {
         type: "quantitative",
         title: props.metric.name + " Per 1000",
       },
-      y: { field: "final_housing_type", title: "Housing Type" },
+      y: { field: "category", title: "Housing Type" },
       color: { value: COLORS.dark },
     },
   };

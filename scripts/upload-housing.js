@@ -63,7 +63,7 @@ const main = async () => {
       isArray: true,
       schema: [
         {
-          name: "final_housing_type",
+          name: "category",
           type: "string",
         },
         {
@@ -87,7 +87,7 @@ const main = async () => {
           type: "string",
         },
         {
-          name: "final_housing_type",
+          name: "category",
           type: "string",
         },
         {
@@ -97,6 +97,10 @@ const main = async () => {
         {
           name: "outcome_type",
           type: "string",
+        },
+        {
+          name: "age_lower_bound",
+          type: "number",
         },
       ],
     },

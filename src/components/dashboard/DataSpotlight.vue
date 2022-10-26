@@ -7,7 +7,7 @@
         :metric="props.metric"
       />
       <GroupBarChart
-        v-else
+        v-if="props.nameThis.value == 'specific'"
         :active-stats="specificStats"
         :metric="props.nameThis"
       />
@@ -28,7 +28,6 @@ import { computed } from "vue";
 
 import BarChart from "@/components/dashboard/BarChart.vue";
 import GroupBarChart from "@/components/dashboard/GroupBarChart.vue";
-import { sortByProperty } from "../../utils/utils";
 
 const props = defineProps<{
   metric: FocusStat;
@@ -46,10 +45,15 @@ const activeStats = computed(() => {
 const specificStats = computed(() => {
   const row = props.data.age_specific
     .filter((stat) => stat.outcome_type === props.metric.value)
-    .sort(sortByProperty("hud_age_group"));
+    .map((item) => ({
+      ...item,
+      label: item.hud_age_group
+        .substring(3)
+        .replace("_", " to ")
+        .replace("plus", " and older"),
+    }));
   return row;
 });
-console.log(specificStats);
 </script>
 
 <style scoped lang="scss">

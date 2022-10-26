@@ -14,6 +14,8 @@ interface Props {
 
 const props = defineProps<Props>();
 
+// TODO can i use a different field for data labels??
+
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
@@ -30,7 +32,11 @@ const spec = computed(() => {
         type: "quantitative",
         title: props.metric.name + " Per 1000",
       },
-      y: { field: "hud_age_group", title: "Age Group" },
+      y: {
+        field: "label",
+        title: "Age Group",
+        sort: { field: "age_category" },
+      },
       yOffset: { field: "final_housing_type" },
       color: { field: "final_housing_type", scale: COLORS },
     },

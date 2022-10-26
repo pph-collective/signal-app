@@ -47,16 +47,17 @@ interface SpotlightFocus {
 }
 
 interface SpotlightStat {
-  final_housing_type: string;
+  category: string;
   age_adjusted_rate: number;
   outcome_type: string;
 }
 
 interface AgeSpecificStat {
-  final_housing_type: string;
+  category: string;
   hud_age_group: string;
   age_specific_rate: number;
   outcome_type: string;
+  age_lower_bound: number;
 }
 
 interface SpotlightStats {
