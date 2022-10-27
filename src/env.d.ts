@@ -43,7 +43,7 @@ interface FocusStat {
 
 interface SpotlightFocus {
   name: string;
-  value: string;
+  value: "adjusted" | "specific";
 }
 
 interface SpotlightStat {
