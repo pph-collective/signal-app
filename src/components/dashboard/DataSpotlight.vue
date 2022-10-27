@@ -16,8 +16,10 @@
       <p class="has-text-centered">
         Lorem Ipsum
         <strong>{{ props.metric.name.toLowerCase() }}</strong> dolor sit amet,
-        consectetur adipiscing <strong>{{ props.nameThis.name.toLowerCase() }}</strong> elit. Nulla pretium tempor mi eget pellentesque.
-        Etiam pharetra neque quis elit aliquam tristique.
+        consectetur adipiscing
+        <strong>{{ props.nameThis.name.toLowerCase() }}</strong> elit. Nulla
+        pretium tempor mi eget pellentesque. Etiam pharetra neque quis elit
+        aliquam tristique.
       </p>
     </div>
   </div>
@@ -49,8 +51,8 @@ const specificStats = computed(() => {
       ...item,
       label: item.hud_age_group
         .substring(3)
-        .replace("_", " to ")
-        .replace("plus", " and older"),
+        .replace("_", "-")
+        .replace("plus", "+"),
     }));
   return row;
 });

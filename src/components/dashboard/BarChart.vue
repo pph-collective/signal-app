@@ -26,9 +26,16 @@ const spec = computed(() => {
       x: {
         field: "age_adjusted_rate",
         type: "quantitative",
-        title: props.metric.name + " Per 1000",
+        axis: {
+          labelFontSize: 12,
+          titleFontSize: 15,
+          title: props.metric.name + " Per 1,000",
+        },
       },
-      y: { field: "category", title: "Housing Type" },
+      y: {
+        field: "category",
+        axis: { labelFontSize: 12, titleFontSize: 15, title: "Housing Type" },
+      },
       color: { value: COLORS.dark },
     },
   };

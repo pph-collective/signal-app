@@ -17,7 +17,7 @@ const props = defineProps<Props>();
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    width: 300,
+    width: 400,
     height: 240,
     padding: 5,
     data: {
@@ -25,17 +25,22 @@ const spec = computed(() => {
     },
     mark: "bar",
     encoding: {
-      x: {
+      y: {
         field: "age_specific_rate",
         type: "quantitative",
-        title: props.metric.name + " Per 1000",
+        axis: {
+          labelFontSize: 12,
+          titleFontSize: 15,
+          title: props.metric.name + " Per 1,000",
+        },
       },
-      y: {
+      x: {
         field: "label",
         title: "Age Group",
         sort: { field: "age_lower_bound" },
+        axis: { labelAngle: 0, labelFontSize: 12, titleFontSize: 15 },
       },
-      yOffset: { field: "category" },
+      xOffset: { field: "category" },
       color: { field: "category", scale: COLORS },
     },
   };
