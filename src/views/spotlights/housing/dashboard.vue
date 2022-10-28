@@ -37,9 +37,13 @@ import DataSpotlight from "@/components/dashboard/DataSpotlight.vue";
 import ControlPanel from "../../../components/dashboard/ControlPanel.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
-import { fetchHousingData } from "../../../utils/firebase";
+import { fetchSpotlightData } from "../../../utils/firebase";
 
-const data = await fetchHousingData("housing");
+const props = defineProps<{
+  datasetName: string;
+}>();
+
+const data = await fetchSpotlightData(props.datasetName);
 
 const dropDowns = {
   nameThis: {

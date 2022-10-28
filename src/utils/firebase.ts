@@ -75,7 +75,7 @@ export const fetchColdSpotData = async (datasetName: string, date: string) => {
   return result;
 };
 
-export const fetchHousingData = async (datasetName: string) => {
+export const fetchSpotlightData = async (datasetName: string) => {
   const defaults = {
     age_adjusted: [],
     age_specific: [],

@@ -36,7 +36,7 @@ const spec = computed(() => {
       },
       x: {
         field: "label",
-        title: "Age Group",
+        title: "Age",
         sort: { field: "age_lower_bound" },
         axis: { labelAngle: 0, labelFontSize: 12, titleFontSize: 15 },
       },
