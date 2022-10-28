@@ -18,12 +18,12 @@ const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     width: 300,
-    height: 240,
+    height: 400,
     padding: 5,
     data: { values: props.activeStats },
     mark: "bar",
     encoding: {
-      x: {
+      y: {
         field: "age_adjusted_rate",
         type: "quantitative",
         axis: {
@@ -32,9 +32,9 @@ const spec = computed(() => {
           title: props.metric.name + " Per 1,000",
         },
       },
-      y: {
+      x: {
         field: "category",
-        axis: { labelFontSize: 12, titleFontSize: 15, title: "Housing Type" },
+        axis: { labelFontSize: 12, titleFontSize: 15, title: "Housing Type", labelAngle: 0 },
       },
       color: { value: COLORS.dark },
     },
