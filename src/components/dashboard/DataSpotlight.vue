@@ -2,12 +2,12 @@
   <div class="signal-grid-container">
     <div>
       <BarChart
-        v-if="props.nameThis.value == 'adjusted'"
+        v-if="props.age.value == 'adjusted'"
         :active-stats="activeStats"
         :metric="props.metric"
       />
       <GroupBarChart
-        v-if="props.nameThis.value == 'specific'"
+        v-if="props.age.value == 'specific'"
         :active-stats="specificStats"
         :metric="props.metric"
       />
@@ -17,9 +17,9 @@
         Lorem Ipsum
         <strong>{{ props.metric.name.toLowerCase() }}</strong> dolor sit amet,
         consectetur adipiscing
-        <strong>{{ props.nameThis.name.toLowerCase() }}</strong> elit. Nulla
-        pretium tempor mi eget pellentesque. Etiam pharetra neque quis elit
-        aliquam tristique.
+        <strong>{{ props.age.name.toLowerCase() }}</strong> elit. Nulla pretium
+        tempor mi eget pellentesque. Etiam pharetra neque quis elit aliquam
+        tristique.
       </p>
     </div>
   </div>
@@ -33,7 +33,7 @@ import GroupBarChart from "@/components/dashboard/GroupBarChart.vue";
 
 const props = defineProps<{
   metric: FocusStat;
-  nameThis: SpotlightFocus;
+  age: SpotlightFocus;
   data: SpotlightStats;
 }>();
 

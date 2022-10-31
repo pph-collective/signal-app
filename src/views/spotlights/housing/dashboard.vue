@@ -1,10 +1,12 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This section will conceptualize what's on the page
-    </template>
-    <template #content>
-      What will users find? What information are they gathering?
+      Where someone lives impacts their chances of getting sick with COVID-19.
+      When a person gets sick with COVID-19, it can be hard to keep the other
+      people they live with from getting sick if they don't have enough space to
+      isolate. A lack of affordable housing means that many people don't have
+      enough space at home. You can use this page to explore how housing
+      impacted COVID-19 outcomes in Rhode Island.
     </template>
   </DashboardCard>
   <DashboardCard width="full">
@@ -22,7 +24,7 @@
       <!-- add in outcomeData properly below -->
       <DataSpotlight
         :metric="controls.focusStat"
-        :name-this="controls.nameThis"
+        :age="controls.age"
         :data="data"
       />
     </template>
@@ -46,12 +48,12 @@ const props = defineProps<{
 const data = await fetchSpotlightData(props.datasetName);
 
 const dropDowns = {
-  nameThis: {
+  age: {
     icon: "fas fa-poll",
-    label: "Lorem Ipsum",
+    label: "What measure do you want to look at?",
     values: [
-      { name: "Age Adjusted", value: "adjusted" },
-      { name: "Age Specific", value: "specific" },
+      { name: "Age Adjusted Rates", value: "adjusted" },
+      { name: "By Age", value: "specific" },
     ],
   },
   focusStat: {
@@ -67,16 +69,16 @@ const dropDowns = {
 
 const controls = ref({
   focusStat: dropDowns.focusStat.values[0],
-  nameThis: dropDowns.nameThis.values[0],
+  age: dropDowns.age.values[0],
 });
 
 useQueryParam({
-  param: "to_replace",
+  param: "age",
   ref: controls,
-  refField: "nameThis",
-  valid: (p) => dropDowns.nameThis.values.some((v) => p === v.value),
+  refField: "age",
+  valid: (p) => dropDowns.age.values.some((v) => p === v.value),
   valToParam: (v) => v.value,
-  paramToVal: (p) => dropDowns.nameThis.values.find((v) => p === v.value),
+  paramToVal: (p) => dropDowns.age.values.find((v) => p === v.value),
 });
 
 useQueryParam({
