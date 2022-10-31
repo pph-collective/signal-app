@@ -250,10 +250,8 @@ const emit = defineEmits(["new-active-cluster-id"]);
 watch(view, () => {
   if (view.value) {
     view.value.addSignalListener("activeGeography", (name, value) => {
-      if (value !== currentClusterId) {
-        currentClusterId = value;
-        emit("new-active-cluster-id", currentClusterId);
-      }
+      currentClusterId = value;
+      emit("new-active-cluster-id", currentClusterId);
     });
   }
 });
