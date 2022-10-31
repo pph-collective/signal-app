@@ -90,7 +90,13 @@
         <GapByRace
           :stats="data.stats"
           :active-cluster="activeCluster"
-          :field-names="['asian', 'black', 'latino', 'white']"
+          :field-names="[
+            { field: 'asian', name: 'Asian' },
+            { field: 'black', name: 'Black' },
+            { field: 'latino', name: 'Latino' },
+            { field: 'white', name: 'White' },
+            { field: 'total', name: 'All Residents' },
+          ]"
           :focus-stat="controls.focusStat"
         />
       </HiddenContent>

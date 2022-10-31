@@ -122,7 +122,7 @@ import { formatPct, sortByProperty } from "../../utils/utils";
 const props = defineProps<{
   stats: Stat[];
   activeCluster: Cluster;
-  fieldNames: string[];
+  fieldNames: Array<{ field: string; name: string }>;
   focusStat: FocusStat;
 }>();
 
@@ -131,13 +131,11 @@ const expected = computed(
 );
 
 const fieldData = computed(() => {
-  const upperFirst = (val) =>
-    val.substring(0, 1).toUpperCase() + val.substring(1).toLowerCase();
   return props.fieldNames.map((f) => ({
-    name: upperFirst(f),
-    observedField: `observed_${f}`,
-    expectedField: `expected_${f}`,
-    populationField: `population_${f}`,
+    name: f.name,
+    observedField: `observed_${f.field}`,
+    expectedField: `expected_${f.field}`,
+    populationField: `population_${f.field}`,
   }));
 });
 
