@@ -279,9 +279,6 @@ useQueryParam({
 });
 
 const updateControls = (newControls) => {
-  // only update when the controls change to avoid a render loop
-  dashboardActiveCluster.value = activeCluster.value;
-
   // zoom back out, selections don't make sense with zoom in
   if (zoomed.value) {
     zoomed.value = false;
@@ -289,7 +286,7 @@ const updateControls = (newControls) => {
 
   // new town selected, unselect active cluster
   if (newControls.town !== controls.value.town) {
-    activeCluster.value = NULL_CLUSTER;
+    // activeCluster gets reset through useQueryParam, therefore we just need to update dashboardActiveCluster
     dashboardActiveCluster.value = NULL_CLUSTER;
   }
 
@@ -301,6 +298,7 @@ const updateControls = (newControls) => {
 
 const updateCluster = (newClusterId) => {
   activeCluster.value = clusterIdToCluster(newClusterId);
+  dashboardActiveCluster.value = activeCluster.value;
 };
 </script>
 
