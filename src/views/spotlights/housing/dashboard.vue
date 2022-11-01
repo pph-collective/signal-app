@@ -25,7 +25,7 @@
     </template>
   </DashboardCard>
   <DashboardCard width="full">
-    <template #title>TITLE HERE</template>
+    <template #title>COVID-19 Cases May Be Influence By Housing</template>
     <template #content>
       <DataSpotlight :metric="caseFocus" :age="caseControls.age" :data="data" />
     </template>
@@ -47,7 +47,9 @@
     </template>
   </DashboardCard>
   <DashboardCard width="full">
-    <template #title> Spotlight: COVID {{ controls.focusStat.name }} </template>
+    <template #title>
+      COVID-19 {{ controls.focusStat.name }} May Depend on Housing</template
+    >
     <template #content>
       <!-- add in outcomeData properly below -->
       <DataSpotlight
