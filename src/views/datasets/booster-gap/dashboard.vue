@@ -78,6 +78,9 @@
           </p>
         </div>
       </div>
+      <div class="centered">
+        <i class="fa fa-arrow-circle-down fa-5x" aria-hidden="true"></i>
+      </div>
     </template>
   </DashboardCard>
 
@@ -93,6 +96,9 @@
           :field-names="['asian', 'black', 'latino', 'white']"
           :focus-stat="controls.focusStat"
         />
+        <div class="centered">
+          <i class="fa fa-arrow-circle-down fa-5x" aria-hidden="true"></i>
+        </div>
       </HiddenContent>
     </template>
   </DashboardCard>
@@ -343,5 +349,10 @@ const updateCluster = (newClusterId) => {
 
 .red-dot {
   margin-bottom: -5px;
+}
+
+.centered {
+  display: grid;
+  place-content: center;
 }
 </style>
