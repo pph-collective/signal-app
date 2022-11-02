@@ -78,8 +78,12 @@
           </p>
         </div>
       </div>
-      <div class="centered">
-        <i class="fa fa-arrow-circle-down fa-5x" aria-hidden="true"></i>
+      <!-- TODO change to make this keep the space like done with 'what is age-adjusted rate' in other PR -->
+      <div :class="{ invisible: activeCluster.name === '' }">
+        <i
+          class="fa fa-arrow-circle-down fa-5x centered"
+          aria-hidden="true"
+        ></i>
       </div>
     </template>
   </DashboardCard>
@@ -96,8 +100,11 @@
           :field-names="['asian', 'black', 'latino', 'white']"
           :focus-stat="controls.focusStat"
         />
-        <div class="centered">
-          <i class="fa fa-arrow-circle-down fa-5x" aria-hidden="true"></i>
+        <div :class="{ invisible: activeCluster.name === '' }">
+          <i
+            class="fa fa-arrow-circle-down fa-5x centered"
+            aria-hidden="true"
+          ></i>
         </div>
       </HiddenContent>
     </template>
@@ -354,5 +361,9 @@ const updateCluster = (newClusterId) => {
 .centered {
   display: grid;
   place-content: center;
+}
+
+.invisible {
+  visibility: hidden;
 }
 </style>
