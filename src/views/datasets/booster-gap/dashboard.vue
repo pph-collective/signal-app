@@ -78,10 +78,17 @@
           </p>
         </div>
       </div>
+      <!-- TODO change to make this keep the space like done with 'what is age-adjusted rate' in other PR -->
+      <div :class="{ invisible: activeCluster.name === '' }">
+        <router-link
+          :to="`/dataset/booster-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
+        >
+          <i class="fa fa-arrow-circle-down fa-2x centered" />
+        </router-link>
+      </div>
     </template>
   </DashboardCard>
-
-  <DashboardCard width="full" :height="2">
+  <DashboardCard id="chart" width="full" :height="2">
     <template #title
       >How many booster doses do we need to close the gap?</template
     >
@@ -99,11 +106,18 @@
           ]"
           :focus-stat="controls.focusStat"
         />
+        <div :class="{ invisible: activeCluster.name === '' }">
+          <router-link
+            :to="`/dataset/booster-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
+          >
+            <i class="fa fa-arrow-circle-down fa-2x centered" />
+          </router-link>
+        </div>
       </HiddenContent>
     </template>
   </DashboardCard>
 
-  <DashboardCard width="full" :height="2">
+  <DashboardCard id="barriers" width="full" :height="2">
     <template #title>How do we reach people who need boosters?</template>
     <template #subtitle
       >People with fewer resources have a harder time getting
@@ -347,5 +361,14 @@ const updateCluster = (newClusterId) => {
 
 .red-dot {
   margin-bottom: -5px;
+}
+
+.centered {
+  display: grid;
+  place-content: center;
+}
+
+.invisible {
+  visibility: hidden;
 }
 </style>

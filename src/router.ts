@@ -63,7 +63,12 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from) {
     // scroll to the top of the window on page change
-    if (to.path !== from.path) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: "smooth",
+      };
+    } else if (to.path !== from.path) {
       return { top: 0, behavior: "smooth" };
     }
   },
