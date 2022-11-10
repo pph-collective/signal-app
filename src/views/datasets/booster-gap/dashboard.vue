@@ -78,10 +78,17 @@
           </p>
         </div>
       </div>
+      <!-- TODO change to make this keep the space like done with 'what is age-adjusted rate' in other PR -->
+      <div :class="{ invisible: activeCluster.name === '' }">
+        <router-link
+          :to="`/dataset/booster-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
+        >
+          <i class="fa fa-arrow-circle-down fa-2x centered" />
+        </router-link>
+      </div>
     </template>
   </DashboardCard>
-
-  <DashboardCard width="full" :height="2">
+  <DashboardCard id="chart" width="full" :height="2">
     <template #title
       >How many booster doses do we need to close the gap?</template
     >
@@ -90,14 +97,27 @@
         <GapByRace
           :stats="data.stats"
           :active-cluster="activeCluster"
-          :field-names="['asian', 'black', 'latino', 'white']"
+          :field-names="[
+            { field: 'asian', name: 'Asian' },
+            { field: 'black', name: 'Black' },
+            { field: 'latino', name: 'Latino' },
+            { field: 'white', name: 'White' },
+            { field: 'total', name: 'All Residents' },
+          ]"
           :focus-stat="controls.focusStat"
         />
+        <div :class="{ invisible: activeCluster.name === '' }">
+          <router-link
+            :to="`/dataset/booster-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
+          >
+            <i class="fa fa-arrow-circle-down fa-2x centered" />
+          </router-link>
+        </div>
       </HiddenContent>
     </template>
   </DashboardCard>
 
-  <DashboardCard width="full" :height="2">
+  <DashboardCard id="barriers" width="full" :height="2">
     <template #title>How do we reach people who need boosters?</template>
     <template #subtitle
       >People with fewer resources have a harder time getting
@@ -274,9 +294,6 @@ useQueryParam({
 });
 
 const updateControls = (newControls) => {
-  // only update when the controls change to avoid a render loop
-  dashboardActiveCluster.value = activeCluster.value;
-
   // zoom back out, selections don't make sense with zoom in
   if (zoomed.value) {
     zoomed.value = false;
@@ -284,7 +301,7 @@ const updateControls = (newControls) => {
 
   // new town selected, unselect active cluster
   if (newControls.town !== controls.value.town) {
-    activeCluster.value = NULL_CLUSTER;
+    // activeCluster gets reset through useQueryParam, therefore we just need to update dashboardActiveCluster
     dashboardActiveCluster.value = NULL_CLUSTER;
   }
 
@@ -296,6 +313,7 @@ const updateControls = (newControls) => {
 
 const updateCluster = (newClusterId) => {
   activeCluster.value = clusterIdToCluster(newClusterId);
+  dashboardActiveCluster.value = activeCluster.value;
 };
 </script>
 
@@ -343,5 +361,14 @@ const updateCluster = (newClusterId) => {
 
 .red-dot {
   margin-bottom: -5px;
+}
+
+.centered {
+  display: grid;
+  place-content: center;
+}
+
+.invisible {
+  visibility: hidden;
 }
 </style>
