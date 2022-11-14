@@ -59,6 +59,18 @@
       />
     </template>
   </DashboardCard>
+  <DashboardCard>
+    <template #content>
+      <div class="content">
+        <h5>I can do something with housing:</h5>
+        <ul>
+          <li>
+            Go to <ExternalLink href="https://google.com">Google</ExternalLink>
+          </li>
+        </ul>
+      </div>
+    </template>
+  </DashboardCard>
 </template>
 
 <script setup lang="ts">
@@ -70,6 +82,7 @@ import ControlPanel from "../../../components/dashboard/ControlPanel.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
 import { fetchSpotlightData } from "../../../utils/firebase";
+import ExternalLink from "../../../components/base/ExternalLink.vue";
 
 const props = defineProps<{
   datasetName: string;
