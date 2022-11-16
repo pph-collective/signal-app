@@ -1,62 +1,64 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      <p>
-        Where someone lives impacts their chances of getting sick with COVID-19.
-        When a person gets sick with COVID-19, it can be hard to keep the other
-        people they live with from getting sick. A lack of affordable housing
-        means that many people don't have enough space at home. You can use this
-        page to explore historical data on how housing affects COVID-19 outcomes
-        in Rhode Island.
-      </p>
-      <div class="table-container m-auto">
-        <table class="table is-narrow is-bordered">
-          <tbody>
-            <tr>
-              <!-- <tr bgcolor="#C7B3F9"> -->
-              <th>Housing type</th>
-              <th>What that means</th>
-              <th>Examples</th>
-            </tr>
-            <tr>
-              <td>Public</td>
-              <td>
-                Managed by government agencies to provide housing for low income
-                individuals and families
-              </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Section VIII</td>
-              <td>
-                Similar purpose to public housing, but housing is privately
-                owned/operated and subsidized through government spending
-              </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>
-                Congregate
-                <p style="font-size: 1rem">
-                  <em>*not included in this analysis</em>
-                </p>
-              </td>
-              <td>
-                Individuals typically not related to each other living in close
-                proximity and/or sharing living facilities
-              </td>
-              <td>
-                Assisted living, nursing home, group home, college/university
-                campus, or correctional facility
-              </td>
-            </tr>
-            <tr>
-              <td style="white-space: pre">Non-Congregate</td>
-              <td>Privately owned or rented residence</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="content">
+        <p>
+          Where someone lives impacts their chances of getting sick with
+          COVID-19. When a person gets sick with COVID-19, it can be hard to
+          keep the other people they live with from getting sick. A lack of
+          affordable housing means that many people don't have enough space at
+          home. You can use this page to explore historical data on how housing
+          affects COVID-19 outcomes in Rhode Island.
+        </p>
+        <div class="table-container m-auto">
+          <table class="table is-narrow is-bordered">
+            <tbody>
+              <tr>
+                <!-- <tr bgcolor="#C7B3F9"> -->
+                <th>Housing type</th>
+                <th>What that means</th>
+                <th>Examples</th>
+              </tr>
+              <tr>
+                <td>Public</td>
+                <td>
+                  Managed by government agencies to provide housing for low
+                  income individuals and families
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Section VIII</td>
+                <td>
+                  Similar purpose to public housing, but housing is privately
+                  owned/operated and subsidized through government spending
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  Congregate
+                  <p style="font-size: 1rem">
+                    <em>*not included in this analysis</em>
+                  </p>
+                </td>
+                <td>
+                  Individuals typically not related to each other living in
+                  close proximity and/or sharing living facilities
+                </td>
+                <td>
+                  Assisted living, nursing home, group home, college/university
+                  campus, or correctional facility
+                </td>
+              </tr>
+              <tr>
+                <td style="white-space: pre">Non-Congregate</td>
+                <td>Privately owned or rented residence</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </template>
   </DashboardCard>
