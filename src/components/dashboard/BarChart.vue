@@ -16,12 +16,14 @@ const props = defineProps<Props>();
 
 const spec = computed(() => {
   return {
+    // TODO: include numbers on chart
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     width: 300,
     height: 400,
     padding: 5,
     data: { values: props.activeStats },
     mark: "bar",
+    title: `Age-Adjusted Rate of ${props.metric.name} Per 1,000`,
     encoding: {
       y: {
         field: "age_adjusted_rate",
@@ -29,7 +31,7 @@ const spec = computed(() => {
         axis: {
           labelFontSize: 12,
           titleFontSize: 15,
-          title: props.metric.name + " Per 1,000",
+          title: "Rate Per 1,000", // TODO make "case" instead of "cases"
         },
       },
       x: {

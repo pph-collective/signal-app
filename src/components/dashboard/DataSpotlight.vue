@@ -2,25 +2,29 @@
   <div class="signal-grid-container">
     <div>
       <BarChart
-        v-if="props.age.value == 'adjusted'"
+        v-if="props.age.value === 'adjusted'"
         :active-stats="activeStats"
         :metric="props.metric"
+        :age="props.age"
       />
       <GroupBarChart
         v-if="props.age.value == 'specific'"
         :active-stats="specificStats"
         :metric="props.metric"
+        :age="props.age"
       />
     </div>
-    <div class="centered">
+    <div v-if="props.age.value === 'adjusted'" class="centered">
       <p class="has-text-centered">
-        Lorem Ipsum
-        <strong>{{ props.metric.name.toLowerCase() }}</strong> dolor sit amet,
-        consectetur adipiscing
-        <strong>{{ props.age.name.toLowerCase() }}</strong> elit. Nulla pretium
-        tempor mi eget pellentesque. Etiam pharetra neque quis elit aliquam
-        tristique.
+        <!-- TODO THis is just for the top chart! -->
+        When looking at COVID-19
+        <strong>{{ props.age.name.toLowerCase() }}</strong> of
+        <strong>{{ props.metric.name.toLowerCase() }}</strong
+        >, this will be specific to adjusted
       </p>
+    </div>
+    <div v-if="props.age.value === 'specific'" class="centered">
+      <p class="has-text-centered">This will be specific to specific</p>
     </div>
   </div>
 </template>

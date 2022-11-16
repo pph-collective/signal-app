@@ -1,11 +1,63 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      Where someone lives impacts their chances of getting sick with COVID-19.
-      When a person gets sick with COVID-19, it can be hard to keep the other
-      people they live with from getting sick. A lack of affordable housing
-      means that many people don't have enough space at home. You can use this
-      page to explore how housing affects COVID-19 outcomes in Rhode Island.
+      <p>
+        Where someone lives impacts their chances of getting sick with COVID-19.
+        When a person gets sick with COVID-19, it can be hard to keep the other
+        people they live with from getting sick. A lack of affordable housing
+        means that many people don't have enough space at home. You can use this
+        page to explore historical data on how housing affects COVID-19 outcomes
+        in Rhode Island.
+      </p>
+      <div class="table-container m-auto">
+        <table class="table is-narrow is-bordered">
+          <tbody>
+            <tr>
+              <!-- <tr bgcolor="#C7B3F9"> -->
+              <th>Housing type</th>
+              <th>What that means</th>
+              <th>Examples</th>
+            </tr>
+            <tr>
+              <td>Public</td>
+              <td>
+                Managed by government agencies to provide housing for low income
+                individuals and families
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Section VIII</td>
+              <td>
+                Similar purpose to public housing, but housing is privately
+                owned/operated and subsidized through government spending
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                Congregate
+                <p style="font-size: 1rem">
+                  <em>*not included in this analysis</em>
+                </p>
+              </td>
+              <td>
+                Individuals typically not related to each other living in close
+                proximity and/or sharing living facilities
+              </td>
+              <td>
+                Assisted living, nursing home, group home, college/university
+                campus, or correctional facility
+              </td>
+            </tr>
+            <tr>
+              <td style="white-space: pre">Non-Congregate</td>
+              <td>Privately owned or rented residence</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </template>
   </DashboardCard>
   <DashboardCard width="full">
@@ -16,16 +68,16 @@
         @selected="updateCaseControls"
       />
       <div :class="{ invisible: caseControls.age.value === 'specific' }">
-        What is an age-adjusted rate? Age plays a big role in your risk for the
-        virus. Different groups of people have different age distributions -
-        meaning one group may have more old people, or one group may have more
-        young people. Age adjusting makes it so we can compare between groups
-        that have different age distributions.
+        What is an age-adjusted rate? Age plays a big role in a person's risk
+        for COVID-19. Different groups of people have different age
+        distributions - meaning one group may have more old people, or one group
+        may have more young people. Age adjusting makes it so we can compare
+        between groups that have different age distributions.
       </div>
     </template>
   </DashboardCard>
   <DashboardCard width="full">
-    <template #title>COVID-19 Cases May Be Influence By Housing</template>
+    <template #title>COVID-19 Cases May Be Influenced By Housing</template>
     <template #content>
       <DataSpotlight :metric="caseFocus" :age="caseControls.age" :data="data" />
     </template>

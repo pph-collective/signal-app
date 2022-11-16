@@ -20,6 +20,7 @@ const spec = computed(() => {
     width: 400,
     height: 240,
     padding: 5,
+    title: `Age-Specific Rate of ${props.metric.name} Per 1,000`,
     data: {
       values: props.activeStats,
     },
@@ -31,7 +32,7 @@ const spec = computed(() => {
         axis: {
           labelFontSize: 12,
           titleFontSize: 15,
-          title: props.metric.name + " Per 1,000",
+          title: "Rate Per 1,000",
         },
       },
       x: {
