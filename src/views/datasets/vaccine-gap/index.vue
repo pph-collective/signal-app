@@ -6,9 +6,7 @@
     </p>
     <p v-else class="update-date">
       Archived data from {{ prettyDate(currentDate) }} -
-      <router-link :to="{ path, query: { ...route.query, date: dates[0] } }"
-        >View latest data</router-link
-      >
+      <router-link :to="path">View latest data</router-link>
     </p>
     <div class="vertical-spacing" />
     <Dashboard
