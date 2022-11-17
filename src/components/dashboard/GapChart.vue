@@ -179,8 +179,7 @@ const spec = computed(() => {
             align: { value: "right" },
             baseline: { value: "middle" },
             text: {
-              signal:
-                "datum.datum.gap > 0 ? format(datum.datum.pct, '.0%') + ' vaccinated' : ''",
+              signal: "format(datum.datum.pct, '.0%') + ' vaccinated'",
             },
           },
         },
