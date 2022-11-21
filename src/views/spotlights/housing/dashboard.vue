@@ -106,12 +106,12 @@
   </DashboardCard>
   <DashboardCard width="full">
     <template #title>
-      COVID-19 {{ controls.focusStat.name }} May Depend on Housing</template
+      COVID-19 {{ hospFocus.name }} May Depend on Housing</template
     >
     <template #content>
       <!-- add in outcomeData properly below -->
       <DataSpotlight
-        :metric="controls.focusStat"
+        :metric="hospFocus"
         :age="controls.age"
         :data="data"
         :text="text"
@@ -210,18 +210,11 @@ const dropDowns = {
       { name: "Rate By Age", value: "specific" },
     ],
   },
-  focusStat: {
-    icon: "fas fa-poll",
-    label: "What metric do you want to see?",
-    values: [
-      { name: "Hospitalizations", value: "hospitalizations" },
-      { name: "Deaths", value: "deaths" },
-    ],
-  },
 };
 
+const hospFocus = { name: "Hospitalizations", value: "hospitalizations" };
+
 const controls = ref({
-  focusStat: dropDowns.focusStat.values[0],
   age: dropDowns.age.values[0],
 });
 
@@ -232,15 +225,6 @@ useQueryParam({
   valid: (p) => dropDowns.age.values.some((v) => p === v.value),
   valToParam: (v) => v.value,
   paramToVal: (p) => dropDowns.age.values.find((v) => p === v.value),
-});
-
-useQueryParam({
-  param: "stat",
-  ref: controls,
-  refField: "focusStat",
-  valid: (p) => dropDowns.focusStat.values.some((v) => p === v.value),
-  valToParam: (v) => v.value,
-  paramToVal: (p) => dropDowns.focusStat.values.find((v) => p === v.value),
 });
 
 const updateControls = (newControls) => {
