@@ -3,12 +3,11 @@
     <template #subtitle>
       <div class="content">
         <p>
-          Where someone lives impacts their chances of getting sick with
-          COVID-19. When a person gets sick with COVID-19, it can be hard to
-          keep the other people they live with from getting sick. A lack of
-          affordable housing means that many people don't have enough space at
-          home. You can use this page to explore historical data on how housing
-          affects COVID-19 outcomes in Rhode Island.
+          You can use this page to explore how housing affects COVID-19 outcomes
+          in Rhode Island. Where someone lives impacts their chances of getting
+          very sick with COVID-19. We found that people who lived in low-income
+          housing had a high chance of going to the hospital with COVID-19. We
+          also saw that these rates were especially high for older adults.
         </p>
         <div class="table-container m-auto">
           <table class="table is-narrow is-bordered">
@@ -81,7 +80,12 @@
   <DashboardCard width="full">
     <template #title>COVID-19 Cases May Be Influenced By Housing</template>
     <template #content>
-      <DataSpotlight :metric="caseFocus" :age="caseControls.age" :data="data" />
+      <DataSpotlight
+        :metric="caseFocus"
+        :age="caseControls.age"
+        :data="data"
+        :text="text"
+      />
     </template>
   </DashboardCard>
   <DashboardCard width="full">
@@ -110,6 +114,7 @@
         :metric="controls.focusStat"
         :age="controls.age"
         :data="data"
+        :text="text"
       />
     </template>
   </DashboardCard>
@@ -141,6 +146,26 @@ import ExternalLink from "../../../components/base/ExternalLink.vue";
 const props = defineProps<{
   datasetName: string;
 }>();
+
+const text = {
+  hospitalizations: {
+    adjusted: {
+      p1: "For hospitalizations, rates were higher among residents of public and Section VIII housing. Residents of these types of housing were more likely to go to the hospital with COVID-19.",
+    },
+    specific: {
+      p1: "People of all ages have gone to the hospital with COVID-19. Older adults were more likely to go to the hospital with COVID-19. Older adults in public and Section VIII housing were the most likely to go to the hospital.",
+    },
+  },
+  cases: {
+    adjusted: {
+      p1: "For cases, rates were similar across all housing types in Rhode Island. This means that people were getting sick with COVID-19 regardless of where they were living.",
+    },
+    specific: {
+      p1: "COVID-19  rates were higher in younger adults. Younger adults in non-congregate housing had higher rates of COVID-19 than those who lived in other types of housing.",
+      p2: "COVID-19 rates were lower in older adults. Older adults in low-income housing had higher rates of COVID-19 than those who lived in other types of housing.",
+    },
+  },
+};
 
 const data = await fetchSpotlightData(props.datasetName);
 

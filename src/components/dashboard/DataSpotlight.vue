@@ -14,17 +14,13 @@
         :age="props.age"
       />
     </div>
-    <div v-if="props.age.value === 'adjusted'" class="centered">
-      <p class="has-text-centered">
-        <!-- TODO THis is just for the top chart! -->
-        When looking at COVID-19
-        <strong>{{ props.age.name.toLowerCase() }}</strong> of
-        <strong>{{ props.metric.name.toLowerCase() }}</strong
-        >, this will be specific to adjusted
+    <div class="centered">
+      <p class="has-text-centered spaced" margin-bottom:25em>
+        {{ props.text[props.metric.value][props.age.value].p1 }}
       </p>
-    </div>
-    <div v-if="props.age.value === 'specific'" class="centered">
-      <p class="has-text-centered">This will be specific to specific</p>
+      <p class="has-text-centered spaced">
+        {{ props.text[props.metric.value][props.age.value].p2 }}
+      </p>
     </div>
   </div>
 </template>
@@ -39,6 +35,7 @@ const props = defineProps<{
   metric: FocusStat;
   age: SpotlightFocus;
   data: SpotlightStats;
+  text: SpotlightText;
 }>();
 
 const activeStats = computed(() => {
@@ -66,5 +63,8 @@ const specificStats = computed(() => {
 .centered {
   display: grid;
   place-content: center;
+}
+.spaced {
+  margin-bottom: 1.1em;
 }
 </style>

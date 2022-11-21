@@ -75,3 +75,19 @@ interface Location {
   longitude: number;
   latitude: number;
 }
+
+interface SpotlightText {
+  cases: AgeText;
+  hospitalizations: AgeText;
+}
+
+interface AgeText {
+  adjusted: Paragraphs;
+  specific: Paragraphs;
+}
+
+interface Paragraphs {
+  p1?: string;
+  p2?: string;
+  [propName: string]: string;
+}
