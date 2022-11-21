@@ -16,7 +16,6 @@
                 <!-- <tr bgcolor="#C7B3F9"> -->
                 <th>Housing type</th>
                 <th>What that means</th>
-                <th>Examples</th>
               </tr>
               <tr>
                 <td>Public</td>
@@ -24,7 +23,6 @@
                   Managed by government agencies to provide housing for low
                   income individuals and families
                 </td>
-                <td></td>
               </tr>
               <tr>
                 <td>Section VIII</td>
@@ -32,7 +30,11 @@
                   Similar purpose to public housing, but housing is privately
                   owned/operated and subsidized through government spending
                 </td>
-                <td></td>
+              </tr>
+
+              <tr>
+                <td style="white-space: pre">Non-Congregate</td>
+                <td>Privately owned or rented residence</td>
               </tr>
               <tr>
                 <td>
@@ -43,17 +45,10 @@
                 </td>
                 <td>
                   Individuals typically not related to each other living in
-                  close proximity and/or sharing living facilities
+                  close proximity and/or sharing living facilities (e.g.,
+                  Assisted living, nursing home, group home, college
+                  dormitories, correctional facilities)
                 </td>
-                <td>
-                  Assisted living, nursing home, group home, college/university
-                  campus, or correctional facility
-                </td>
-              </tr>
-              <tr>
-                <td style="white-space: pre">Non-Congregate</td>
-                <td>Privately owned or rented residence</td>
-                <td></td>
               </tr>
             </tbody>
           </table>
