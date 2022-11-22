@@ -16,17 +16,18 @@
     </div>
     <div class="centered">
       <p class="has-text-centered spaced" margin-bottom:25em>
-        {{ props.text[props.metric.value][props.age.value].p1 }}
+        {{ marked(props.text[props.metric.value][props.age.value].p1) }}
       </p>
-      <p class="has-text-centered spaced">
-        {{ props.text[props.metric.value][props.age.value].p2 }}
-      </p>
+    </div>
+    <div>
+      {{ props.text[props.metric.value][props.age.value].p1.innerHTML }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { marked } from "../../../node_modules/marked";
 
 import BarChart from "@/components/dashboard/BarChart.vue";
 import GroupBarChart from "@/components/dashboard/GroupBarChart.vue";
@@ -57,6 +58,11 @@ const specificStats = computed(() => {
     }));
   return row;
 });
+
+var el = document.createElement("html");
+el.innerHTML =
+  "<html><head><title>titleTest</title></head><body><a href='test0'>test01</a><a href='test1'>test02</a><a href='test2'>test03</a></body></html>";
+const parser = new DOMParser();
 </script>
 
 <style scoped lang="scss">

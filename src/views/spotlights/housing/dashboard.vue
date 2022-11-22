@@ -129,6 +129,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { marked } from "../../../../node_modules/marked";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import DataSpotlight from "@/components/dashboard/DataSpotlight.vue";
@@ -145,7 +146,9 @@ const props = defineProps<{
 const text = {
   hospitalizations: {
     adjusted: {
-      p1: "For hospitalizations, rates were higher among residents of public and Section VIII housing. Residents of these types of housing were more likely to go to the hospital with COVID-19.",
+      p1: marked.parse(
+        "For *hospitalizations*, rates were higher among residents of public and Section VIII housing. Residents of these types of housing were more likely to go to the hospital with COVID-19."
+      ),
     },
     specific: {
       p1: "People of all ages have gone to the hospital with COVID-19. Older adults were more likely to go to the hospital with COVID-19. Older adults in public and Section VIII housing were the most likely to go to the hospital.",
