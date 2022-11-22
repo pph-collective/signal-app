@@ -8,20 +8,24 @@
         :age="props.age"
       />
       <GroupBarChart
-        v-if="props.age.value == 'specific'"
+        v-if="props.age.value === 'specific'"
         :active-stats="specificStats"
         :metric="props.metric"
         :age="props.age"
       />
     </div>
     <div class="centered">
-      <p class="has-text-centered spaced" margin-bottom:25em>
-        {{ marked(props.text[props.metric.value][props.age.value].p1) }}
-      </p>
+      <!-- eslint-disable vue/no-v-html -->
+      <div
+        v-html="marked(props.text[props.metric.value][props.age.value].p1)"
+      />
+      <!-- eslint-enable -->
     </div>
-    <div>
-      {{ props.text[props.metric.value][props.age.value].p1.innerHTML }}
-    </div>
+    <!-- eslint-disable vue/no-v-html -->
+    <div
+      v-html="props.text[props.metric.value][props.age.value].p1.innerHTML"
+    />
+    <!-- eslint-enable -->
   </div>
 </template>
 
@@ -59,10 +63,9 @@ const specificStats = computed(() => {
   return row;
 });
 
-var el = document.createElement("html");
+const el = document.createElement("html");
 el.innerHTML =
   "<html><head><title>titleTest</title></head><body><a href='test0'>test01</a><a href='test1'>test02</a><a href='test2'>test03</a></body></html>";
-const parser = new DOMParser();
 </script>
 
 <style scoped lang="scss">
