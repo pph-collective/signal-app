@@ -8,25 +8,26 @@
         :age="props.age"
       />
       <GroupBarChart
-        v-if="props.age.value == 'specific'"
+        v-if="props.age.value === 'specific'"
         :active-stats="specificStats"
         :metric="props.metric"
         :age="props.age"
       />
     </div>
     <div class="centered">
-      <p class="has-text-centered spaced" margin-bottom:25em>
-        {{ props.text[props.metric.value][props.age.value].p1 }}
-      </p>
-      <p class="has-text-centered spaced">
-        {{ props.text[props.metric.value][props.age.value].p2 }}
-      </p>
+      <!-- eslint-disable vue/no-v-html -->
+      <div
+        class="has-text-centered"
+        v-html="sanitizeHtml(props.text[props.metric.value][props.age.value])"
+      />
+      <!-- eslint-enable -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+import sanitizeHtml from "sanitize-html";
 
 import BarChart from "@/components/dashboard/BarChart.vue";
 import GroupBarChart from "@/components/dashboard/GroupBarChart.vue";
