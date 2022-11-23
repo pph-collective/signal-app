@@ -125,11 +125,33 @@
       </div>
     </template>
   </DashboardCard>
+  <DashboardCard>
+    <template #content>
+      <p class="is-size-7">
+        This web tool includes information about COVID-19 cases (reported from
+        March 2020 to December 2021) and hospitalizations (reported from March
+        2020 to August 2022) as reported to the Rhode Island Department of
+        Health. Rhode Islande residents with invalid or incomplete residential
+        address information are excluded. Housing type was classified based on
+        property owner information obtained from tax assessors' offices in Rhode
+        Island's 39 cities and towns. Estimates of population size are sourced
+        from the United States Census Bureau's
+        <ExternalLink href="https://www.census.gov/programs-surveys/acs"
+          >American Community Survey</ExternalLink
+        >
+        (2016-2020, 5-year estimates) and the United States Department of
+        Housing and Urban Development's
+        <ExternalLink
+          href="https://www.hud.gov/program_offices/public_indian_housing/systems/pic/50058/rcr"
+          >Resident Characteristics Report</ExternalLink
+        >.
+      </p>
+    </template>
+  </DashboardCard>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { marked } from "../../../../node_modules/marked";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import DataSpotlight from "@/components/dashboard/DataSpotlight.vue";
@@ -145,23 +167,16 @@ const props = defineProps<{
 
 const text = {
   hospitalizations: {
-    adjusted: {
-      p1: marked.parse(
-        "For *hospitalizations*, rates were higher among residents of public and Section VIII housing. Residents of these types of housing were more likely to go to the hospital with COVID-19."
-      ),
-    },
-    specific: {
-      p1: "People of all ages have gone to the hospital with COVID-19. Older adults were more likely to go to the hospital with COVID-19. Older adults in public and Section VIII housing were the most likely to go to the hospital.",
-    },
+    adjusted:
+      "<p class='has-text-centered'>For <strong>hospitalizations</strong>, rates were higher among residents of public and Section VIII housing. Residents of these types of housing were more likely to go to the hospital with COVID-19.</p>",
+    specific:
+      "<p class='has-text-centered'>People of all ages have <strong>gone to the hospital</strong> with COVID-19. Older adults were more likely to go to the hospital with COVID-19. Older adults in public and Section VIII housing were the most likely to go to the hospital.</p>",
   },
   cases: {
-    adjusted: {
-      p1: "For cases, rates were similar across all housing types in Rhode Island. This means that people were getting sick with COVID-19 regardless of where they were living.",
-    },
-    specific: {
-      p1: "COVID-19  rates were higher in younger adults. Younger adults in non-congregate housing had higher rates of COVID-19 than those who lived in other types of housing.",
-      p2: "COVID-19 rates were lower in older adults. Older adults in low-income housing had higher rates of COVID-19 than those who lived in other types of housing.",
-    },
+    adjusted:
+      "<p class='has-text-centered'>For <strong>cases</strong>, rates were similar across all housing types in Rhode Island. This means that people were getting sick with COVID-19 regardless of where they were living.",
+    specific:
+      "<p class='has-text-centered'>COVID-19 <strong>case</strong> rates were higher in younger adults. Younger adults in non-congregate housing had higher rates of COVID-19 than those who lived in other types of housing.</p><p class='has-text-centered'>COVID-19 <strong>case</strong> rates were lower in older adults. Older adults in low-income housing had higher rates of COVID-19 than those who lived in other types of housing.</p>",
   },
 };
 

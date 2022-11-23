@@ -16,22 +16,14 @@
     </div>
     <div class="centered">
       <!-- eslint-disable vue/no-v-html -->
-      <div
-        v-html="marked(props.text[props.metric.value][props.age.value].p1)"
-      />
+      <div v-html="props.text[props.metric.value][props.age.value]" />
       <!-- eslint-enable -->
     </div>
-    <!-- eslint-disable vue/no-v-html -->
-    <div
-      v-html="props.text[props.metric.value][props.age.value].p1.innerHTML"
-    />
-    <!-- eslint-enable -->
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { marked } from "../../../node_modules/marked";
 
 import BarChart from "@/components/dashboard/BarChart.vue";
 import GroupBarChart from "@/components/dashboard/GroupBarChart.vue";
@@ -62,10 +54,6 @@ const specificStats = computed(() => {
     }));
   return row;
 });
-
-const el = document.createElement("html");
-el.innerHTML =
-  "<html><head><title>titleTest</title></head><body><a href='test0'>test01</a><a href='test1'>test02</a><a href='test2'>test03</a></body></html>";
 </script>
 
 <style scoped lang="scss">
