@@ -152,6 +152,39 @@ const spec = computed(() => {
         },
       },
       {
+        type: "text",
+        from: { data: "bars" },
+        encode: {
+          enter: {
+            x: { field: "x2", offset: 5 },
+            y: { field: "y", offset: { field: "height", mult: 0.5 } },
+            fill: { value: COLORS.dark },
+            align: { value: "left" },
+            baseline: { value: "middle" },
+            text: {
+              signal:
+                "datum.datum.gap > 0 ? datum.datum.gap + ' dose gap' : ''",
+            },
+          },
+        },
+      },
+      {
+        type: "text",
+        from: { data: "bars" },
+        encode: {
+          enter: {
+            x: { field: "x2", offset: -5 },
+            y: { field: "y", offset: { field: "height", mult: 0.5 } },
+            fill: { value: "#FFFFFF" },
+            align: { value: "right" },
+            baseline: { value: "middle" },
+            text: {
+              signal: "format(datum.datum.pct, '.0%') + ' vaccinated'",
+            },
+          },
+        },
+      },
+      {
         type: "rule",
         encode: {
           enter: {
