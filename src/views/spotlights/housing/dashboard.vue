@@ -131,7 +131,7 @@
         This web tool includes information about COVID-19 cases (reported from
         March 2020 to December 2021) and hospitalizations (reported from March
         2020 to August 2022) as reported to the Rhode Island Department of
-        Health. Rhode Islande residents with invalid or incomplete residential
+        Health. Rhode Island residents with invalid or incomplete residential
         address information are excluded. Housing type was classified based on
         property owner information obtained from tax assessors' offices in Rhode
         Island's 39 cities and towns. Estimates of population size are sourced
