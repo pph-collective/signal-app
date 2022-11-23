@@ -16,7 +16,10 @@
     </div>
     <div class="centered">
       <!-- eslint-disable vue/no-v-html -->
-      <div v-html="props.text[props.metric.value][props.age.value]" />
+      <div
+        class="has-text-centered"
+        v-html="sanitizeHtml(props.text[props.metric.value][props.age.value])"
+      />
       <!-- eslint-enable -->
     </div>
   </div>
@@ -24,6 +27,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import sanitizeHtml from "sanitize-html";
 
 import BarChart from "@/components/dashboard/BarChart.vue";
 import GroupBarChart from "@/components/dashboard/GroupBarChart.vue";

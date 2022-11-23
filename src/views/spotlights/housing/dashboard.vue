@@ -168,15 +168,15 @@ const props = defineProps<{
 const text = {
   hospitalizations: {
     adjusted:
-      "<p class='has-text-centered'>For <strong>hospitalizations</strong>, rates were higher among residents of public and Section VIII housing. Residents of these types of housing were more likely to go to the hospital with COVID-19.</p>",
+      "<p>For <strong>hospitalizations</strong>, rates were higher among residents of public and Section VIII housing. Residents of these types of housing were more likely to go to the hospital with COVID-19.</p>",
     specific:
-      "<p class='has-text-centered'>People of all ages have <strong>gone to the hospital</strong> with COVID-19. Older adults were more likely to go to the hospital with COVID-19. Older adults in public and Section VIII housing were the most likely to go to the hospital.</p>",
+      "<p>People of all ages have <strong>gone to the hospital</strong> with COVID-19. Older adults were more likely to go to the hospital with COVID-19. Older adults in public and Section VIII housing were the most likely to go to the hospital.</p>",
   },
   cases: {
     adjusted:
-      "<p class='has-text-centered'>For <strong>cases</strong>, rates were similar across all housing types in Rhode Island. This means that people were getting sick with COVID-19 regardless of where they were living.",
+      "<p>For <strong>cases</strong>, rates were similar across all housing types in Rhode Island. This means that people were getting sick with COVID-19 regardless of where they were living.",
     specific:
-      "<p class='has-text-centered'>COVID-19 <strong>case</strong> rates were higher in younger adults. Younger adults in non-congregate housing had higher rates of COVID-19 than those who lived in other types of housing.</p><p class='has-text-centered'>COVID-19 <strong>case</strong> rates were lower in older adults. Older adults in low-income housing had higher rates of COVID-19 than those who lived in other types of housing.</p>",
+      "<p>COVID-19 <strong>case</strong> rates were higher in younger adults. Younger adults in non-congregate housing had higher rates of COVID-19 than those who lived in other types of housing.</p><br><p>COVID-19 <strong>case</strong> rates were lower in older adults. Older adults in low-income housing had higher rates of COVID-19 than those who lived in other types of housing.</p>",
   },
 };
 
