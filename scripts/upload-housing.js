@@ -6,13 +6,12 @@
  *  node ./scripts/upload-spotlight.js -h
  *
  * Example Run
- * node ./scripts/upload-housing.js --ageadjusted ./data/age_adjusted.json --agespecific ./data/age_specific.json
+ * node ./scripts/upload-housing.js --ageadjusted ./data/age_adjusted.csv --agespecific ./data/age_specific.csv
  */
 
 /* eslint "@typescript-eslint/no-var-requires": "off" */
 const fs = require("fs");
-const aq = require("arquero");
-const { parse } = require("csv-parse");
+const { parse } = require("csv-parse/sync");
 const path = require("path");
 const { ArgumentParser } = require("argparse");
 const { initializeApp } = require("firebase-admin/app");
@@ -25,19 +24,8 @@ const warnAndExit = (warning) => {
 };
 
 const getCsv = (csvFile) => {
-  console.log("HERE");
   const rawdata = fs.readFileSync(csvFile, "utf-8");
-  parse(rawdata, { columns: true, skip_empty_lines: true }, (err, records) => {
-    console.log(err);
-    try {
-      console.log("HERE");
-      console.log(records);
-      return records;
-    } catch (e) {
-      console.error(e);
-      process.exit(1);
-    }
-  });
+  return parse(rawdata, { columns: true, skip_empty_lines: true });
 };
 
 const argparse = new ArgumentParser({
@@ -73,7 +61,7 @@ const main = async () => {
       filePath: ageadjusted,
       extension: "csv",
       field: "age_adjusted",
-      isArray: false,
+      isArray: true,
       schema: [
         {
           name: "category",
@@ -93,7 +81,7 @@ const main = async () => {
       filePath: agespecific,
       extension: "csv",
       field: "age_specific",
-      isArray: false,
+      isArray: true,
       schema: [
         {
           name: "hud_age_group",
