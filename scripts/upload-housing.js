@@ -22,9 +22,17 @@ const warnAndExit = (warning) => {
   process.exit(1);
 };
 
-const getJson = (jsonFile) => {
-  const rawdata = fs.readFileSync(jsonFile);
-  return JSON.parse(rawdata);
+const getCsv = (csvFile) => {
+  const rawdata = fs.readFileSync(csvFile, "utf-8");
+  parse(rawdata, { columns: true }, async (err, records) => {
+    try {
+      let dt = aq.from(records);
+      return JSON.stringify(dt);
+    } catch (e) {
+      console.error(e);
+      process.exit(1);
+    }
+  });
 };
 
 const argparse = new ArgumentParser({
@@ -58,12 +66,12 @@ const main = async () => {
   const files = [
     {
       filePath: ageadjusted,
-      extension: "json",
+      extension: "csv",
       field: "age_adjusted",
       isArray: true,
       schema: [
         {
-          name: "final_housing_type",
+          name: "category",
           type: "string",
         },
         {
@@ -78,7 +86,7 @@ const main = async () => {
     },
     {
       filePath: agespecific,
-      extension: "json",
+      extension: "csv",
       field: "age_specific",
       isArray: true,
       schema: [
@@ -87,7 +95,7 @@ const main = async () => {
           type: "string",
         },
         {
-          name: "final_housing_type",
+          name: "category",
           type: "string",
         },
         {
@@ -125,7 +133,7 @@ const main = async () => {
      `);
   }
 
-  const docRef = db.collection("spotlights").doc("housing");
+  const docRef = db.collection("spotlights").doc("housing_test");
 
   const dir = `${localDir}/spotlights/housing`;
 
@@ -159,12 +167,8 @@ const main = async () => {
 
   // read in the files to the data property on each file object
   files.forEach((file) => {
-    const json = getJson(file.filePath);
-    if (file.property) {
-      file.data = json(file.property);
-    } else {
-      file.data = json;
-    }
+    const csv = getCsv(file.filePath); // TODO get CSV here
+    file.data = csv;
 
     // check the file isArray
     if (file.isArray !== Array.isArray(file.data)) {
