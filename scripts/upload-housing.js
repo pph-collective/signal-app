@@ -6,11 +6,13 @@
  *  node ./scripts/upload-spotlight.js -h
  *
  * Example Run
- * node ./scripts/upload-housing.js --age_adjusted ./data/age_adjusted.json --age_specific ./data/age_specific.json
+ * node ./scripts/upload-housing.js --ageadjusted ./data/age_adjusted.json --agespecific ./data/age_specific.json
  */
 
 /* eslint "@typescript-eslint/no-var-requires": "off" */
 const fs = require("fs");
+const aq = require("arquero");
+const { parse } = require("csv-parse");
 const path = require("path");
 const { ArgumentParser } = require("argparse");
 const { initializeApp } = require("firebase-admin/app");
@@ -22,12 +24,20 @@ const warnAndExit = (warning) => {
   process.exit(1);
 };
 
-const getCsv = (csvFile) => {
+const getCsv = (csvFile, field, docRef, db) => {
   const rawdata = fs.readFileSync(csvFile, "utf-8");
   parse(rawdata, { columns: true }, async (err, records) => {
     try {
       let dt = aq.from(records);
-      return JSON.stringify(dt);
+      const batchCommits = [];
+      // var docRef = db.collection("housing_test").doc(csvFile);
+      let batch = db.batch();
+      let obj = {};
+      obj[field] = dt.objects();
+      batch.set(docRef, obj);
+      batchCommits.push(batch.commit());
+      return batchCommits;
+      // return Promise.all(batchCommits);
     } catch (e) {
       console.error(e);
       process.exit(1);
@@ -68,7 +78,7 @@ const main = async () => {
       filePath: ageadjusted,
       extension: "csv",
       field: "age_adjusted",
-      isArray: true,
+      isArray: false,
       schema: [
         {
           name: "category",
@@ -88,7 +98,7 @@ const main = async () => {
       filePath: agespecific,
       extension: "csv",
       field: "age_specific",
-      isArray: true,
+      isArray: false,
       schema: [
         {
           name: "hud_age_group",
@@ -135,7 +145,7 @@ const main = async () => {
 
   const docRef = db.collection("spotlights").doc("housing_test");
 
-  const dir = `${localDir}/spotlights/housing`;
+  const dir = `${localDir}/spotlights/housing_test`;
 
   if (localDir) {
     if (fs.existsSync(dir)) {
@@ -165,11 +175,13 @@ const main = async () => {
     }
   }
 
+  const l = [];
   // read in the files to the data property on each file object
   files.forEach((file) => {
-    const csv = getCsv(file.filePath); // TODO get CSV here
+    console.log(file.field);
+    const csv = getCsv(file.filePath, file.field, docRef, db);
     file.data = csv;
-
+    l.push(csv);
     // check the file isArray
     if (file.isArray !== Array.isArray(file.data)) {
       warnAndExit(
@@ -184,14 +196,14 @@ const main = async () => {
     }
 
     // check the schema
-    if (file.schema) {
-      // Check data as an array of objects
-      const data = file.isArray ? file.data : [file.data];
+    // if (file.schema) {
+    //   // Check data as an array of objects
+    //   const data = file.isArray ? file.data : [file.data];
 
-      data.forEach((row) => {
-        checkSchema(file.schema, row, file.filepath);
-      });
-    }
+    //   // data.forEach((row) => {
+    //   //   checkSchema(file.schema, row, file.filepath);
+    //   // });
+    // }
   });
 
   if (localDir) {
@@ -227,29 +239,29 @@ const main = async () => {
   }
 };
 
-const checkSchema = (schema, row, filePath) => {
-  schema.forEach((col) => {
-    const value = row[col.name];
-    if (value === undefined) {
-      warnAndExit(
-        `ERROR!: object ${JSON.stringify(
-          row
-        )} in ${filePath} is missing field ${col.name}`
-      );
-    }
-    if (typeof value !== col.type) {
-      warnAndExit(
-        `ERROR!: field ${col.name} in object ${JSON.stringify(
-          row
-        )} in ${filePath} has type ${typeof value}, but expected ${col.type}`
-      );
-    }
+// const checkSchema = (schema, row, filePath) => {
+//   schema.forEach((col) => {
+//     const value = row[col.name];
+//     if (value === undefined) {
+//       warnAndExit(
+//         `ERROR!: object ${JSON.stringify(
+//           row
+//         )} in ${filePath} is missing field ${col.name}`
+//       );
+//     }
+//     if (typeof value !== col.type) {
+//       warnAndExit(
+//         `ERROR!: field ${col.name} in object ${JSON.stringify(
+//           row
+//         )} in ${filePath} has type ${typeof value}, but expected ${col.type}`
+//       );
+//     }
 
-    // recurse on an object with a nested schema
-    if (col.schema) {
-      checkSchema(col.schema, value, filePath);
-    }
-  });
-};
+//     // recurse on an object with a nested schema
+//     // if (col.schema) {
+//     //   checkSchema(col.schema, value, filePath);
+//     // }
+//   });
+// };
 
 main();
