@@ -17,27 +17,22 @@ const path = require("path");
 const { ArgumentParser } = require("argparse");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
-const { stringify } = require("zipson");
+// const { stringify } = require("zipson");
 
 const warnAndExit = (warning) => {
   console.warn(warning);
   process.exit(1);
 };
 
-const getCsv = (csvFile, field, docRef, db) => {
+const getCsv = (csvFile) => {
+  console.log("HERE");
   const rawdata = fs.readFileSync(csvFile, "utf-8");
-  parse(rawdata, { columns: true }, async (err, records) => {
+  parse(rawdata, { columns: true, skip_empty_lines: true }, (err, records) => {
+    console.log(err);
     try {
-      let dt = aq.from(records);
-      const batchCommits = [];
-      // var docRef = db.collection("housing_test").doc(csvFile);
-      let batch = db.batch();
-      let obj = {};
-      obj[field] = dt.objects();
-      batch.set(docRef, obj);
-      batchCommits.push(batch.commit());
-      return batchCommits;
-      // return Promise.all(batchCommits);
+      console.log("HERE");
+      console.log(records);
+      return records;
     } catch (e) {
       console.error(e);
       process.exit(1);
@@ -178,8 +173,8 @@ const main = async () => {
   const l = [];
   // read in the files to the data property on each file object
   files.forEach((file) => {
-    console.log(file.field);
     const csv = getCsv(file.filePath, file.field, docRef, db);
+    console.log(csv);
     file.data = csv;
     l.push(csv);
     // check the file isArray
@@ -216,7 +211,7 @@ const main = async () => {
       files.forEach(({ field, data }) => {
         const path = `${dir}/${field}.json`;
 
-        fs.writeFile(path, JSON.stringify(data), (err) => {
+        fs.writeFile(path, data, (err) => {
           if (err) {
             warnAndExit(err);
           }
@@ -228,7 +223,7 @@ const main = async () => {
     await docRef.set({
       ...files.reduce(
         (previous, { data, field }) => ({
-          [field]: stringify(data),
+          [field]: data,
           ...previous,
         }),
         {}
