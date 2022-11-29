@@ -124,8 +124,7 @@ const main = async () => {
   const app = initializeApp();
   const db = getFirestore(app);
 
-  // Check if the collection exists
-  // TODO how do i make this check for housing instead of spotlight
+  // Check if the spotlight collection exists
   const collections = (await db.listCollections()).map((c) => c.id);
   if (!collections.includes("spotlights")) {
     warnAndExit(`ERROR! spotlights must match an existing collection id: ${collections.join(
