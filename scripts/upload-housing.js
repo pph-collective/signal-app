@@ -52,8 +52,12 @@ argparse.add_argument("-z", "--localDir", {
   help: "path to local folder to save download files to",
 });
 
+argparse.add_argument("-i", "--id", {
+  help: "the spotlight to upload",
+});
+
 const main = async () => {
-  const { ageadjusted, agespecific, overwrite, localDir } =
+  const { ageadjusted, agespecific, overwrite, localDir, id } =
     argparse.parse_args();
 
   const files = [
@@ -118,17 +122,18 @@ const main = async () => {
   const db = getFirestore(app);
 
   // Check if the collection exists
+  // TODO how do i make this check for housing instead of spotlight
   const collections = (await db.listCollections()).map((c) => c.id);
   if (!collections.includes("spotlights")) {
-    warnAndExit(`ERROR! housing must match an existing collection id: ${collections.join(
+    warnAndExit(`ERROR! spotlights must match an existing collection id: ${collections.join(
       ", "
     )}.
      `);
   }
 
-  const docRef = db.collection("spotlights").doc("housing_test");
+  const docRef = db.collection("spotlights").doc(id);
 
-  const dir = `${localDir}/spotlights/housing_test`;
+  const dir = `${localDir}/spotlights/${id}`;
 
   if (localDir) {
     if (fs.existsSync(dir)) {
@@ -148,11 +153,11 @@ const main = async () => {
     if (docSnapshot.exists) {
       if (overwrite) {
         console.warn(
-          `WARNING! Document exists in Firestore. Overwriting... housing`
+          `WARNING! Document exists in Firestore. Overwriting... ${id}`
         );
       } else {
         warnAndExit(
-          `ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: housing`
+          `ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: ${id}`
         );
       }
     }
@@ -162,7 +167,6 @@ const main = async () => {
   // read in the files to the data property on each file object
   files.forEach((file) => {
     const csv = getCsv(file.filePath, file.field, docRef, db);
-    console.log(csv);
     file.data = csv;
     l.push(csv);
     // check the file isArray
@@ -218,7 +222,7 @@ const main = async () => {
       ),
       last_updated: Date.now(),
     });
-    console.log(`SUCCESS! Created document in firestore: spotlights/housing`);
+    console.log(`SUCCESS! Created document in firestore: spotlights/${id}`);
   }
 };
 
