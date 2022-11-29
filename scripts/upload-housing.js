@@ -6,7 +6,7 @@
  *  node ./scripts/upload-spotlight.js -h
  *
  * Example Run
- * node ./scripts/upload-housing.js --ageadjusted ./data/age_adjusted.csv --agespecific ./data/age_specific.csv
+ * node ./scripts/upload-housing.js --ageadjusted ./data/age_adjusted.csv --agespecific ./data/age_specific.csv --id housing
  */
 
 /* eslint "@typescript-eslint/no-var-requires": "off" */
@@ -16,7 +16,6 @@ const path = require("path");
 const { ArgumentParser } = require("argparse");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
-// const { stringify } = require("zipson");
 
 const warnAndExit = (warning) => {
   console.warn(warning);
@@ -103,6 +102,10 @@ const main = async () => {
           name: "outcome_type",
           type: "string",
         },
+        {
+          name: "age_lower_bound",
+          type: "number",
+        },
       ],
     },
   ];
@@ -183,14 +186,14 @@ const main = async () => {
     }
 
     // check the schema
-    // if (file.schema) {
-    //   // Check data as an array of objects
-    //   const data = file.isArray ? file.data : [file.data];
+    if (file.schema) {
+      // Check data as an array of objects
+      const data = file.isArray ? file.data : [file.data];
 
-    //   // data.forEach((row) => {
-    //   //   checkSchema(file.schema, row, file.filepath);
-    //   // });
-    // }
+      data.forEach((row) => {
+        checkSchema(file.schema, row, file.filepath);
+      });
+    }
   });
 
   if (localDir) {
@@ -226,29 +229,33 @@ const main = async () => {
   }
 };
 
-// const checkSchema = (schema, row, filePath) => {
-//   schema.forEach((col) => {
-//     const value = row[col.name];
-//     if (value === undefined) {
-//       warnAndExit(
-//         `ERROR!: object ${JSON.stringify(
-//           row
-//         )} in ${filePath} is missing field ${col.name}`
-//       );
-//     }
-//     if (typeof value !== col.type) {
-//       warnAndExit(
-//         `ERROR!: field ${col.name} in object ${JSON.stringify(
-//           row
-//         )} in ${filePath} has type ${typeof value}, but expected ${col.type}`
-//       );
-//     }
-
-//     // recurse on an object with a nested schema
-//     // if (col.schema) {
-//     //   checkSchema(col.schema, value, filePath);
-//     // }
-//   });
-// };
+const checkSchema = (schema, row, filePath) => {
+  schema.forEach((col) => {
+    const value = row[col.name];
+    if (value === undefined) {
+      warnAndExit(
+        `ERROR!: object ${JSON.stringify(
+          row
+        )} in ${filePath} is missing field ${col.name}`
+      );
+    }
+    if (typeof value !== col.type) {
+      if (col.type === "number") {
+        try {
+          row[col.name] = Number(value);
+        } catch (e) {
+          warnAndExit(`Could not convert field ${col.name} to number!`);
+        }
+      } else {
+        warnAndExit(
+          `ERROR!: field ${col.name} in object ${JSON.stringify(
+            row
+          )} in ${filePath} has type ${typeof value}, but expected ${col.type}`
+        );
+      }
+    }
+  });
+  return row;
+};
 
 main();
