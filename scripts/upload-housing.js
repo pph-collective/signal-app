@@ -52,6 +52,7 @@ argparse.add_argument("-z", "--localDir", {
 });
 
 argparse.add_argument("-i", "--id", {
+  required: true,
   help: "the spotlight to upload",
 });
 
