@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import Dashboard from "@/views/spotlights/housing/dashboard.vue";
 
-const datasetName = "housing";
+const datasetName = "housing_test";
 </script>
 
 <style scoped>

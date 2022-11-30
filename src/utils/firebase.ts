@@ -87,14 +87,6 @@ export const fetchSpotlightData = async (datasetName: string) => {
     datasetName
   );
 
-  Object.entries(result).forEach(([field, value]) => {
-    if (Object.keys(defaults).includes(field)) {
-      result[field] = parse(value as string);
-    } else {
-      result[field] = value;
-    }
-  });
-
   return result;
 };
 
