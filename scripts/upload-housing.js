@@ -55,8 +55,13 @@ argparse.add_argument("-i", "--id", {
   help: "the spotlight to upload",
 });
 
+argparse.add_argument("-n", "--newId", {
+  action: "store_true",
+  help: "if the collection id does not exist, creates a new collection",
+});
+
 const main = async () => {
-  const { ageadjusted, agespecific, overwrite, localDir, id } =
+  const { ageadjusted, agespecific, overwrite, localDir, id, newId } =
     argparse.parse_args();
 
   const files = [
@@ -125,15 +130,19 @@ const main = async () => {
   const db = getFirestore(app);
 
   // Check if the spotlight collection exists
-  const collections = (await db.listCollections()).map((c) => c.id);
-  if (!collections.includes("spotlights")) {
-    warnAndExit(`ERROR! spotlights must match an existing collection id: ${collections.join(
-      ", "
-    )}.
-     `);
-  }
-
   const docRef = db.collection("spotlights").doc(id);
+  const doc = await docRef.get();
+  if (!doc.exists) {
+    // check if document exists. If not, require --newId flag
+    if (newId) {
+      console.warn(
+        `WARNING! id does not exist in firestore. This script will create the following collection: ${id}`
+      );
+    } else {
+      warnAndExit(`ERROR! id must match an existing collection id.
+      Use the --newId flag to create a new collection id for "${id}"`);
+    }
+  }
 
   const dir = `${localDir}/spotlights/${id}`;
 
