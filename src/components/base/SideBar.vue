@@ -160,7 +160,7 @@ const DATASETS = [
 
 const SPOTLIGHTS = [
   {
-    name: "Cases by Housing Type",
+    name: "Outcomes by Housing Type",
     route: "housing",
     available: true,
   },

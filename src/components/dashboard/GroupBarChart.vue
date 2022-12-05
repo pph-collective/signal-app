@@ -11,7 +11,7 @@ interface Props {
   activeStats: AgeSpecificStat[];
   metric: FocusStat;
 }
-
+// make category show "Housing Type" instead of "category"
 const props = defineProps<Props>();
 
 const spec = computed(() => {
@@ -20,7 +20,7 @@ const spec = computed(() => {
     width: 400,
     height: 240,
     padding: 5,
-    title: `Age-Specific Rate of ${props.metric.name} Per 1,000`,
+    title: `Age-Specific Rate of ${props.metric.name} Per 1,000 People`,
     data: {
       values: props.activeStats,
     },

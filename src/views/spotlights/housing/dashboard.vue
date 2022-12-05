@@ -7,15 +7,16 @@
           in Rhode Island. Where someone lives impacts their chances of getting
           very sick with COVID-19. We found that people who lived in low-income
           housing had a high chance of going to the hospital with COVID-19. We
-          also saw that these rates were especially high for older adults.
+          also saw that these chances were especially high for older adults.
         </p>
+        <h5>What kinds of housing exist in Rhode Island?</h5>
         <div class="table-container m-auto">
           <table class="table is-narrow is-bordered">
             <tbody>
               <tr>
                 <!-- <tr bgcolor="#C7B3F9"> -->
                 <th>Housing type</th>
-                <th>What that means</th>
+                <th>What it is</th>
               </tr>
               <tr>
                 <td>Public</td>
@@ -27,14 +28,17 @@
               <tr>
                 <td>Section VIII</td>
                 <td>
-                  Similar purpose to public housing, but housing is privately
-                  owned/operated and subsidized through government spending
+                  Similar purpose as public housing, but housing is privately
+                  owned and subsidized through government spending
                 </td>
               </tr>
 
               <tr>
                 <td style="white-space: pre">Non-Congregate</td>
-                <td>Privately owned or rented residence</td>
+                <td>
+                  Privately owned or rented residence that is not subsidized
+                  through government spending
+                </td>
               </tr>
               <tr>
                 <td>
@@ -46,8 +50,8 @@
                 <td>
                   Individuals typically not related to each other living in
                   close proximity and/or sharing living facilities (e.g.,
-                  Assisted living, nursing home, group home, college
-                  dormitories, correctional facilities)
+                  assisted living residences, nursing homes, group homes,
+                  college dormitories, correctional facilities)
                 </td>
               </tr>
             </tbody>
@@ -63,17 +67,22 @@
         :init-value="caseControls"
         @selected="updateCaseControls"
       />
-      <div :class="{ invisible: caseControls.age.value === 'specific' }">
+      <div v-if="caseControls.age.value === 'adjusted'">
         What is an age-adjusted rate? Age plays a big role in a person's risk
         for COVID-19. Different groups of people have different age
         distributions - meaning one group may have more old people, or one group
         may have more young people. Age adjusting makes it so we can compare
         between groups that have different age distributions.
       </div>
+      <!-- TODO make these be the same size -->
+      <div v-else-if="caseControls.age.value === 'specific'">
+        Rates tell us how many people have tested positive for COVID-19 compared
+        to a larger group taking into account the population size of that group.
+      </div>
     </template>
   </DashboardCard>
   <DashboardCard width="full">
-    <template #title>COVID-19 Cases May Be Influenced By Housing</template>
+    <template #title>COVID-19 cases may be influenced by housing type</template>
     <template #content>
       <DataSpotlight
         :metric="caseFocus"
@@ -90,19 +99,21 @@
         :init-value="controls"
         @selected="updateControls"
       />
-      <div :class="{ invisible: controls.age.value === 'specific' }">
+      <div v-if="controls.age.value === 'adjusted'">
         What is an age-adjusted rate? Age plays a big role in your risk for the
         virus. Different groups of people have different age distributions -
         meaning one group may have more old people, or one group may have more
         young people. Age adjusting makes it so we can compare between groups
         that have different age distributions.
       </div>
+      <div v-else-if="caseControls.age.value === 'specific'">
+        Rates tell us how many people have tested positive for COVID-19 compared
+        to a larger group taking into account the population size of that group.
+      </div>
     </template>
   </DashboardCard>
   <DashboardCard width="full">
-    <template #title>
-      COVID-19 {{ hospFocus.name }} May Depend on Housing</template
-    >
+    <template #title> COVID-19 hospitalizations may depend on housing</template>
     <template #content>
       <!-- add in outcomeData properly below -->
       <DataSpotlight
@@ -168,15 +179,15 @@ const props = defineProps<{
 const text = {
   hospitalizations: {
     adjusted:
-      "<p>For <strong>hospitalizations</strong>, rates were higher among residents of public and Section VIII housing. Residents of these types of housing were more likely to go to the hospital with COVID-19.</p>",
+      "<p>For hospitalizations, rates were <strong>higher among residents of public and Section VIII housing</strong>. Residents of these types of housing were more likely to go to the hospital with COVID-19.</p>",
     specific:
-      "<p>People of all ages have <strong>gone to the hospital</strong> with COVID-19. Older adults were more likely to go to the hospital with COVID-19. Older adults in public and Section VIII housing were the most likely to go to the hospital.</p>",
+      "<p>People of all ages have gone to the hospital with COVID-19. <strong>Older adults were more likely</strong> to go to the hospital with COVID-19. Older adults in public and Section VIII housing were the most likely to go to the hospital.</p>",
   },
   cases: {
     adjusted:
-      "<p>For <strong>cases</strong>, rates were similar across all housing types in Rhode Island. This means that people were getting sick with COVID-19 regardless of where they were living.",
+      "<p>For cases, rates were <strong>similar across all housing types</strong> in Rhode Island. This means that people were getting sick with COVID-19 regardless of where they were living.",
     specific:
-      "<p>COVID-19 <strong>case</strong> rates were higher in younger adults. Younger adults in non-congregate housing had higher rates of COVID-19 than those who lived in other types of housing.</p><br><p>COVID-19 <strong>case</strong> rates were lower in older adults. Older adults in low-income housing had higher rates of COVID-19 than those who lived in other types of housing.</p>",
+      "<p>COVID-19 case rates were <strong>higher in younger adults</strong>. Younger adults in non-congregate housing had higher rates of COVID-19 than those who lived in other types of housing.</p><br><p>COVID-19 case rates were <strong>lower in older adults</strong>. Older adults in low-income housing had higher rates of COVID-19 than those who lived in other types of housing.</p>",
   },
 };
 
