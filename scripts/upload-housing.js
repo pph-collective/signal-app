@@ -6,25 +6,25 @@
  *  node ./scripts/upload-spotlight.js -h
  *
  * Example Run
- * node ./scripts/upload-housing.js --age_adjusted ./data/age_adjusted.json --age_specific ./data/age_specific.json
+ * node ./scripts/upload-housing.js --ageadjusted ./data/age_adjusted.csv --agespecific ./data/age_specific.csv --id housing
  */
 
 /* eslint "@typescript-eslint/no-var-requires": "off" */
 const fs = require("fs");
+const { parse } = require("csv-parse/sync");
 const path = require("path");
 const { ArgumentParser } = require("argparse");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
-const { stringify } = require("zipson");
 
 const warnAndExit = (warning) => {
   console.warn(warning);
   process.exit(1);
 };
 
-const getJson = (jsonFile) => {
-  const rawdata = fs.readFileSync(jsonFile);
-  return JSON.parse(rawdata);
+const getCsv = (csvFile) => {
+  const rawdata = fs.readFileSync(csvFile, "utf-8");
+  return parse(rawdata, { columns: true, skip_empty_lines: true });
 };
 
 const argparse = new ArgumentParser({
@@ -51,14 +51,24 @@ argparse.add_argument("-z", "--localDir", {
   help: "path to local folder to save download files to",
 });
 
+argparse.add_argument("-i", "--id", {
+  required: true,
+  help: "the spotlight to upload",
+});
+
+argparse.add_argument("-n", "--newId", {
+  action: "store_true",
+  help: "if the collection id does not exist, creates a new collection",
+});
+
 const main = async () => {
-  const { ageadjusted, agespecific, overwrite, localDir } =
+  const { ageadjusted, agespecific, overwrite, localDir, id, newId } =
     argparse.parse_args();
 
   const files = [
     {
       filePath: ageadjusted,
-      extension: "json",
+      extension: "csv",
       field: "age_adjusted",
       isArray: true,
       schema: [
@@ -78,7 +88,7 @@ const main = async () => {
     },
     {
       filePath: agespecific,
-      extension: "json",
+      extension: "csv",
       field: "age_specific",
       isArray: true,
       schema: [
@@ -120,18 +130,22 @@ const main = async () => {
   const app = initializeApp();
   const db = getFirestore(app);
 
-  // Check if the collection exists
-  const collections = (await db.listCollections()).map((c) => c.id);
-  if (!collections.includes("spotlights")) {
-    warnAndExit(`ERROR! housing must match an existing collection id: ${collections.join(
-      ", "
-    )}.
-     `);
+  // Check if the spotlight collection exists
+  const docRef = db.collection("spotlights").doc(id);
+  const doc = await docRef.get();
+  if (!doc.exists) {
+    // check if document exists. If not, require --newId flag
+    if (newId) {
+      console.warn(
+        `WARNING! id does not exist in firestore. This script will create the following collection: ${id}`
+      );
+    } else {
+      warnAndExit(`ERROR! id must match an existing collection id.
+      Use the --newId flag to create a new collection id for "${id}"`);
+    }
   }
 
-  const docRef = db.collection("spotlights").doc("housing");
-
-  const dir = `${localDir}/spotlights/housing`;
+  const dir = `${localDir}/spotlights/${id}`;
 
   if (localDir) {
     if (fs.existsSync(dir)) {
@@ -151,25 +165,22 @@ const main = async () => {
     if (docSnapshot.exists) {
       if (overwrite) {
         console.warn(
-          `WARNING! Document exists in Firestore. Overwriting... housing`
+          `WARNING! Document exists in Firestore. Overwriting... ${id}`
         );
       } else {
         warnAndExit(
-          `ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: housing`
+          `ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: ${id}`
         );
       }
     }
   }
 
+  const l = [];
   // read in the files to the data property on each file object
   files.forEach((file) => {
-    const json = getJson(file.filePath);
-    if (file.property) {
-      file.data = json(file.property);
-    } else {
-      file.data = json;
-    }
-
+    const csv = getCsv(file.filePath, file.field, docRef, db);
+    file.data = csv;
+    l.push(csv);
     // check the file isArray
     if (file.isArray !== Array.isArray(file.data)) {
       warnAndExit(
@@ -204,7 +215,7 @@ const main = async () => {
       files.forEach(({ field, data }) => {
         const path = `${dir}/${field}.json`;
 
-        fs.writeFile(path, JSON.stringify(data), (err) => {
+        fs.writeFile(path, data, (err) => {
           if (err) {
             warnAndExit(err);
           }
@@ -216,14 +227,14 @@ const main = async () => {
     await docRef.set({
       ...files.reduce(
         (previous, { data, field }) => ({
-          [field]: stringify(data),
+          [field]: data,
           ...previous,
         }),
         {}
       ),
       last_updated: Date.now(),
     });
-    console.log(`SUCCESS! Created document in firestore: spotlights/housing`);
+    console.log(`SUCCESS! Created document in firestore: spotlights/${id}`);
   }
 };
 
@@ -238,18 +249,22 @@ const checkSchema = (schema, row, filePath) => {
       );
     }
     if (typeof value !== col.type) {
-      warnAndExit(
-        `ERROR!: field ${col.name} in object ${JSON.stringify(
-          row
-        )} in ${filePath} has type ${typeof value}, but expected ${col.type}`
-      );
-    }
-
-    // recurse on an object with a nested schema
-    if (col.schema) {
-      checkSchema(col.schema, value, filePath);
+      if (col.type === "number") {
+        try {
+          row[col.name] = Number(value);
+        } catch (e) {
+          warnAndExit(`Could not convert field ${col.name} to number!`);
+        }
+      } else {
+        warnAndExit(
+          `ERROR!: field ${col.name} in object ${JSON.stringify(
+            row
+          )} in ${filePath} has type ${typeof value}, but expected ${col.type}`
+        );
+      }
     }
   });
+  return row;
 };
 
 main();
