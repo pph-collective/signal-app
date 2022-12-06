@@ -23,7 +23,7 @@ const spec = computed(() => {
     padding: 5,
     data: { values: props.activeStats },
     mark: "bar",
-    title: `Age-Adjusted Rate of ${props.metric.name} Per 1,000`,
+    title: `Age-Adjusted Rate of ${props.metric.name} Per 1,000 People`,
     encoding: {
       y: {
         field: "age_adjusted_rate",

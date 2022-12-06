@@ -18,6 +18,7 @@
       <!-- eslint-disable vue/no-v-html -->
       <div
         class="has-text-centered"
+        style="font-size: 1.2rem"
         v-html="sanitizeHtml(props.text[props.metric.value][props.age.value])"
       />
       <!-- eslint-enable -->
