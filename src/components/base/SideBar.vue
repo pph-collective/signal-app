@@ -165,12 +165,12 @@ const SPOTLIGHTS = [
     available: true,
   },
   {
-    name: "Cases by School",
+    name: "Outcomes by School",
     route: "school",
     available: false,
   },
   {
-    name: "Cases by Workplace Type",
+    name: "Outcomes by Workplace Type",
     route: "workplace",
     available: false,
   },

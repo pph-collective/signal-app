@@ -42,7 +42,11 @@ const spec = computed(() => {
         axis: { labelAngle: 0, labelFontSize: 12, titleFontSize: 15 },
       },
       xOffset: { field: "category" },
-      color: { field: "category", scale: COLORS },
+      color: {
+        field: "category",
+        scale: COLORS,
+        legend: { title: "Housing Type" },
+      },
     },
   };
 });
