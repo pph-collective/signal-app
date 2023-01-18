@@ -261,7 +261,7 @@ const dropDowns = {
   town: {
     icon: "fas fa-globe",
     label: "Where do you want to look?",
-    values: [townDefault, "--HEZ", ...hez, "--Towns", ...towns],
+    values: [townDefault, "--Health Equity Zone", ...hez, "--Towns", ...towns],
   },
   focusStat: {
     label: "Which group do you want to focus on?",
