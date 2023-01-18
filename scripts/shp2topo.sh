@@ -13,6 +13,7 @@ ogr2ogr -f GeoJSON build/build.json \
     -t_srs urn:ogc:def:crs:EPSG::4269 \
     $filename
 
-jq '.features' build/build.json > src/assets/geography/$outname
+jq '.features' build/build.json > build/jq.json
+jq '(.. | .HEZ?) |= . + " HEZ"' build/jq.json > src/assets/geography/$outname
 
 rm -rf build
