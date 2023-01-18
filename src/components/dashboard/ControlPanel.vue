@@ -1,5 +1,6 @@
 <template>
   <div class="control-panel is-family-secondary">
+    <!-- figure out separator vs select? if it has -- in front -->
     <div
       v-for="(options, type) in dropDowns"
       :key="'control-panel-dropdown-' + type"
@@ -10,13 +11,17 @@
       >
       <span class="select">
         <select :id="type" v-model="selected[type]">
-          <option
+          <template
             v-for="(option, index) in options.values"
             :key="'option-' + index"
-            :value="option"
           >
-            {{ option.name || option }}
-          </option>
+            <option v-if="option[0] === '-'" :disabled="true" :value="option">
+              {{ option.substring(2) }}
+            </option>
+            <option v-else :value="option.name || option">
+              {{ "&nbsp; &nbsp; &nbsp;" + (option.name || option) }}
+            </option>
+          </template>
         </select>
         <span class="icon is-small is-left pl-1">
           <i :class="options.icon"></i>
