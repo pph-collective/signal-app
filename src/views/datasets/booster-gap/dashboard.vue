@@ -187,6 +187,7 @@
 import { ref } from "vue";
 
 import RI_GEOJSON from "@/assets/geography/ri.json";
+import HEZ_GEOJSON from "@/assets/geography/hez.json";
 import ControlPanel from "@/components/dashboard/ControlPanel.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import ColdMap from "@/components/dashboard/ColdMap.vue";
@@ -254,11 +255,13 @@ const dropdownDates = props.dates.map((date) => {
 
 const townDefault = "All of Rhode Island";
 const towns = RI_GEOJSON.map((geo) => geo.properties.name).sort();
+const hez = HEZ_GEOJSON.map((geo) => geo.properties.HEZ).sort();
+
 const dropDowns = {
   town: {
     icon: "fas fa-globe",
     label: "Where do you want to look?",
-    values: [townDefault, ...towns],
+    values: [townDefault, "--Health Equity Zone", ...hez, "--Towns", ...towns],
   },
   focusStat: {
     label: "Which group do you want to focus on?",

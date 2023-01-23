@@ -7,6 +7,7 @@ import { computed, ref, watch } from "vue";
 import { useVega } from "../../composables/useVega";
 
 import RI_GEOJSON from "@/assets/geography/ri.json";
+import HEZ_GEOJSON from "@/assets/geography/hez.json";
 import { COLORS, COLOR_SCALES, NULL_CLUSTER } from "../../utils/constants";
 
 import { cloneDeep } from "lodash/lang";
@@ -22,10 +23,13 @@ const props = defineProps<{
 }>();
 
 const filteredTown = computed(() => {
-  let filtered = cloneDeep(RI_GEOJSON);
-
+  let filtered = [...cloneDeep(RI_GEOJSON), ...cloneDeep(HEZ_GEOJSON)];
   if (props.filterTown !== "All of Rhode Island") {
-    filtered = filtered.filter((g) => props.filterTown === g.properties.name);
+    filtered = filtered.filter(
+      (g) =>
+        props.filterTown === g.properties.name ||
+        props.filterTown === g.properties.HEZ
+    );
   }
 
   return filtered;
