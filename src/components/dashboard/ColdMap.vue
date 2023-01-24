@@ -20,6 +20,7 @@ const props = defineProps<{
   filterTown: string;
   focusStat: FocusStat;
   initialActiveCluster: Cluster;
+  mapType: string;
 }>();
 
 const filteredTown = computed(() => {
@@ -151,7 +152,7 @@ const spec = computed(() => {
           data: "cluster_outlines",
           field: `properties.${focusFields.value.fill}`,
         },
-        range: COLOR_SCALES.primary,
+        range: COLOR_SCALES[props.mapType],
       },
     ],
     projections: [

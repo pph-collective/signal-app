@@ -61,6 +61,7 @@
           :filter-town="controls.town"
           :focus-stat="controls.focusStat"
           :initial-active-cluster="dashboardActiveCluster"
+          :map-type="'cold'"
           class="is-absolute"
           @new-active-cluster-id="updateCluster"
         />
@@ -154,29 +155,7 @@
       <div
         class="field is-horizontal is-justify-content-center is-align-items-center has-flex-gap"
       >
-        <label for="date">Looking for data from another time period?</label>
-        <div class="control has-icons-left is-flex is-justify-content-center">
-          <div class="select">
-            <select
-              id="date"
-              @change="
-                $emit('newDate', ($event.target as HTMLSelectElement).value)
-              "
-            >
-              <option
-                v-for="(option, index) in dropdownDates"
-                :key="'option-' + index"
-                :value="option.value"
-                :selected="option.value === currentDate"
-              >
-                {{ option.name }}
-              </option>
-            </select>
-            <span class="icon is-small is-left pl-1">
-              <i class="fas fa-calendar-alt"></i>
-            </span>
-          </div>
-        </div>
+        <ChooseDate :dates="props.dates" :current_date="props.currentDate" />
       </div>
     </template>
   </DashboardCard>
@@ -196,12 +175,12 @@ import GapByRace from "@/components/dashboard/GapByRace.vue";
 import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
 import RedDot from "@/components/dashboard/RedDot.vue";
 import DataNotes from "@/components/dashboard/DataNotes.vue";
+import ChooseDate from "@/components/dashboard/ChooseDate.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
 
 import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
-import { prettyDate } from "../../../utils/utils";
 import VaccineResources from "../../../components/dashboard/VaccineResources.vue";
 
 const zoomed = ref(false);
@@ -246,11 +225,6 @@ useQueryParam({
   valToParam: (cluster) => cluster.cluster_id,
 });
 const dashboardActiveCluster = ref(activeCluster.value);
-
-const dropdownDates = props.dates.map((date) => {
-  const dateString = prettyDate(date);
-  return { name: dateString, value: date };
-});
 
 const townDefault = "All of Rhode Island";
 const towns = RI_GEOJSON.map((geo) => geo.properties.name).sort();
