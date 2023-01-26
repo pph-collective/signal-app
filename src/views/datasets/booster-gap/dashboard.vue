@@ -152,33 +152,11 @@
 
   <DashboardCard width="full" :height="1">
     <template #content>
-      <div
-        class="field is-horizontal is-justify-content-center is-align-items-center has-flex-gap"
-      >
-        <label for="date">Looking for data from another time period?</label>
-        <div class="control has-icons-left is-flex is-justify-content-center">
-          <div class="select">
-            <select
-              id="date"
-              @change="
-                $emit('newDate', ($event.target as HTMLSelectElement).value)
-              "
-            >
-              <option
-                v-for="(option, index) in dropdownDates"
-                :key="'option-' + index"
-                :value="option.value"
-                :selected="option.value === currentDate"
-              >
-                {{ option.name }}
-              </option>
-            </select>
-            <span class="icon is-small is-left pl-1">
-              <i class="fas fa-calendar-alt"></i>
-            </span>
-          </div>
-        </div>
-      </div>
+      <ChooseDate
+        :drop-down="dropdownDates"
+        :init-value="currentDate"
+        @selected="updateDate"
+      />
     </template>
   </DashboardCard>
 </template>
@@ -204,6 +182,7 @@ import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
 import { prettyDate } from "../../../utils/utils";
 import VaccineResources from "../../../components/dashboard/VaccineResources.vue";
+import ChooseDate from "../../../components/dashboard/ChooseDate.vue";
 
 const zoomed = ref(false);
 useQueryParam({
@@ -253,6 +232,12 @@ const dropdownDates = props.dates.map((date) => {
   return { name: dateString, value: date };
 });
 
+const updateDate = (newDate) => {
+  for (const [k, v] of Object.entries(newDate)) {
+    controls.value[k] = v;
+  }
+};
+
 const townDefault = "All of Rhode Island";
 const towns = RI_GEOJSON.map((geo) => geo.properties.name).sort();
 const hez = HEZ_GEOJSON.map((geo) => geo.properties.HEZ).sort();
@@ -279,6 +264,7 @@ const dropDowns = {
 const controls = ref({
   focusStat: dropDowns.focusStat.values[0],
   town: townDefault,
+  date: dropdownDates[0],
 });
 useQueryParam({
   param: "stat",
