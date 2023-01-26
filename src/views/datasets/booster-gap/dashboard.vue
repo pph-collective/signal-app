@@ -62,6 +62,7 @@
           :filter-town="controls.town"
           :focus-stat="controls.focusStat"
           :initial-active-cluster="dashboardActiveCluster"
+          :map-type="'cold'"
           class="is-absolute"
           @new-active-cluster-id="updateCluster"
         />
