@@ -61,6 +61,7 @@
           :filter-town="controls.town"
           :focus-stat="controls.focusStat"
           :initial-active-cluster="dashboardActiveCluster"
+          :map-type="'cold'"
           class="is-absolute"
           @new-active-cluster-id="updateCluster"
         />
@@ -201,8 +202,8 @@ import { useQueryParam } from "../../../composables/useQueryParam";
 
 import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
-import { prettyDate } from "../../../utils/utils";
 import VaccineResources from "../../../components/dashboard/VaccineResources.vue";
+import { prettyDate } from "../../../utils/utils";
 
 const zoomed = ref(false);
 useQueryParam({
