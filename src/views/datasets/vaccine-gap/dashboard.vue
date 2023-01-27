@@ -226,7 +226,6 @@ const emit = defineEmits(["newDate"]);
 watch(
   () => dateControls,
   (item) => {
-    console.log("Date controls: " + item.value);
     emit("newDate", item.value);
   },
   { deep: true }

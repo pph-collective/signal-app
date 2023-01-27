@@ -41,7 +41,6 @@ const selected = ref(props.dropDown[0]);
 watch(
   () => selected,
   (item) => {
-    console.log("item!" + item.value);
     emit("newDate", item.value);
   },
   { deep: true }
