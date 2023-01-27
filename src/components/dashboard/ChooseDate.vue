@@ -5,14 +5,14 @@
     <label for="date">Looking for data from another time period?</label>
     <div class="control has-icons-left is-flex is-justify-content-center">
       <div class="select">
-        <select id="date" v-model="selected['date']">
+        <select id="date" v-model="selected">
           <option
-            v-for="(option, index) in dropDown.date.values"
+            v-for="(option, index) in dropDown"
             :key="'option-' + index"
-            :value="option.date"
-            :selected="option.date === initValue.date"
+            :value="option"
+            :selected="option === selected"
           >
-            {{ option.name }}
+            {{ option }}
           </option>
         </select>
         <span class="icon is-small is-left pl-1">
@@ -24,32 +24,24 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, watch } from "vue";
+import { ref, watch } from "vue";
 
 const props = defineProps({
   dropDown: {
-    type: Object,
-    required: true,
-  },
-  initValue: {
-    type: Object,
+    type: Array,
     required: true,
   },
 });
 
-const emit = defineEmits(["selected"]);
+const emit = defineEmits(["newDate"]);
 
-const res = {};
-Object.keys(props.dropDown).forEach((k) => {
-  res[k] = props.initValue[k];
-});
-
-const selected = reactive(res);
+const selected = ref(props.dropDown[0]);
 
 watch(
   () => selected,
-  () => {
-    emit("selected", selected);
+  (item) => {
+    console.log("item!" + item.value);
+    emit("newDate", item.value);
   },
   { deep: true }
 );
