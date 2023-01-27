@@ -5,7 +5,7 @@
       Data last updated {{ prettyDate(currentDate) }}
     </p>
     <p v-else class="update-date">
-      <!-- Archived data from {{ prettyDate(currentDate) }} - -->
+      Archived data from {{ prettyDate(currentDate) }} -
       <router-link :to="path">View latest data</router-link>
     </p>
     <div class="vertical-spacing" />

@@ -153,17 +153,13 @@
 
   <DashboardCard width="full" :height="1">
     <template #content>
-      <ChooseDate
-        :drop-down="dateDropDowns"
-        :init-value="initDate"
-        @selected="updateDate"
-      />
+      <ChooseDate :drop-down="dates" @new-date="updateDate" />
     </template>
   </DashboardCard>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 import RI_GEOJSON from "@/assets/geography/ri.json";
 import HEZ_GEOJSON from "@/assets/geography/hez.json";
@@ -181,7 +177,6 @@ import { useQueryParam } from "../../../composables/useQueryParam";
 
 import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
-import { prettyDate } from "../../../utils/utils";
 import VaccineResources from "../../../components/dashboard/VaccineResources.vue";
 import ChooseDate from "../../../components/dashboard/ChooseDate.vue";
 
@@ -193,8 +188,6 @@ useQueryParam({
   valToParam: (v) => v.toString(),
   paramToVal: (p) => p === "true",
 });
-
-defineEmits(["selected"]);
 
 const props = defineProps<{
   dates: string[];
@@ -228,23 +221,20 @@ useQueryParam({
 });
 const dashboardActiveCluster = ref(activeCluster.value);
 
-const dropdownDates = props.dates.map((date) => {
-  const dateString = prettyDate(date);
-  return { name: dateString, value: date };
-});
+const dateControls = ref(props.dates[0]);
 
-const initDate = dropdownDates[0];
-
-const dateDropDowns = {
-  date: {
-    values: dropdownDates,
+const emit = defineEmits(["newDate"]);
+watch(
+  () => dateControls,
+  (item) => {
+    console.log("Date controls: " + item.value);
+    emit("newDate", item.value);
   },
-};
+  { deep: true }
+);
 
 const updateDate = (newDate) => {
-  for (const [k, v] of Object.entries(newDate)) {
-    controls.value[k] = v;
-  }
+  dateControls.value = newDate;
 };
 
 const townDefault = "All of Rhode Island";
@@ -273,7 +263,6 @@ const dropDowns = {
 const controls = ref({
   focusStat: dropDowns.focusStat.values[0],
   town: townDefault,
-  date: dropdownDates[0],
 });
 useQueryParam({
   param: "stat",
