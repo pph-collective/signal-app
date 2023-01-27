@@ -154,8 +154,8 @@
   <DashboardCard width="full" :height="1">
     <template #content>
       <ChooseDate
-        :drop-down="dropdownDates"
-        :init-value="currentDate"
+        :drop-down="dateDropDowns"
+        :init-value="initDate"
         @selected="updateDate"
       />
     </template>
@@ -194,7 +194,7 @@ useQueryParam({
   paramToVal: (p) => p === "true",
 });
 
-defineEmits(["newDate"]);
+defineEmits(["selected"]);
 
 const props = defineProps<{
   dates: string[];
@@ -232,6 +232,14 @@ const dropdownDates = props.dates.map((date) => {
   const dateString = prettyDate(date);
   return { name: dateString, value: date };
 });
+
+const initDate = dropdownDates[0];
+
+const dateDropDowns = {
+  date: {
+    values: dropdownDates,
+  },
+};
 
 const updateDate = (newDate) => {
   for (const [k, v] of Object.entries(newDate)) {

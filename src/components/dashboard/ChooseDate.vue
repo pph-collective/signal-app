@@ -5,17 +5,12 @@
     <label for="date">Looking for data from another time period?</label>
     <div class="control has-icons-left is-flex is-justify-content-center">
       <div class="select">
-        <select
-          id="date"
-          @change="
-            $emit('selected', ($event.target as HTMLSelectElement).value)
-          "
-        >
+        <select id="date" v-model="selected['date']">
           <option
-            v-for="(option, index) in props.dropDown"
+            v-for="(option, index) in dropDown.date.values"
             :key="'option-' + index"
             :value="option.date"
-            :selected="option.date === props.dropDown[0].date"
+            :selected="option.date === initValue.date"
           >
             {{ option.name }}
           </option>
@@ -36,14 +31,17 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  initValue: {
+    type: Object,
+    required: true,
+  },
 });
-console.log(props.dropDown);
+
 const emit = defineEmits(["selected"]);
 
 const res = {};
-Object.keys(props.dropDown[0]).forEach((k) => {
-  console.log(k);
-  res[k] = props.dropDown[0][k];
+Object.keys(props.dropDown).forEach((k) => {
+  res[k] = props.initValue[k];
 });
 
 const selected = reactive(res);

@@ -153,8 +153,8 @@
   <DashboardCard width="full" :height="1">
     <template #content>
       <ChooseDate
-        :drop-down="dropdownDates"
-        :init-value="currentDate"
+        :drop-down="dateDropDowns"
+        :init-value="initDate"
         @selected="updateDate"
       />
     </template>
@@ -230,7 +230,16 @@ const dropdownDates = props.dates.map((date) => {
   return { name: dateString, value: date };
 });
 
+const initDate = dropdownDates[0];
+
+const dateDropDowns = {
+  date: {
+    values: dropdownDates,
+  },
+};
+
 const updateDate = (newDate) => {
+  console.log("update dates");
   for (const [k, v] of Object.entries(newDate)) {
     controls.value[k] = v;
   }
