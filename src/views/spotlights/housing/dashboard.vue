@@ -125,12 +125,102 @@
     </template>
   </DashboardCard>
   <DashboardCard>
+    <template #title
+      >What can I do to reduce the spread of COVID-19 in homes?</template
+    >
     <template #content>
       <div class="content">
-        <h5>I can do something with housing:</h5>
         <ul>
           <li>
-            Go to <ExternalLink href="https://google.com">Google</ExternalLink>
+            Learn more about
+            <ExternalLink
+              href="https://nlihc.org/housing-needs-by-state/rhode-island"
+              >needs for affordable housing</ExternalLink
+            >
+            in our state.
+          </li>
+          <li>
+            Connect with
+            <ExternalLink href="https://www.rihousing.com/"
+              >Rhode Island Housing</ExternalLink
+            >
+            to help renters find affordable housing.
+          </li>
+          <li>
+            Help tenants learn more about their
+            <ExternalLink
+              href="https://www.hud.gov/states/rhode_island/renting/tenantrights"
+            >
+              rights and responsibilities as renters</ExternalLink
+            >.
+          </li>
+          <li>
+            Help property owners learn more about
+            <ExternalLink
+              href="https://covid.ri.gov/covid-19-prevention/indoor-air-circulation"
+              >learn more about ways to improve ventilation in their
+              buildings</ExternalLink
+            >.
+          </li>
+          <li>
+            Encourage
+            <ExternalLink href="https://covid.ri.gov/prevent/wearing-masks"
+              >mask wearing</ExternalLink
+            >.
+          </li>
+        </ul>
+        <h5>
+          I can make sure people know where to get help when isolating with
+          COVID-19
+        </h5>
+        <ul>
+          <li>
+            Share
+            <ExternalLink
+              href="https://www.cdc.gov/coronavirus/2019-ncov/your-health/isolation.html?CDC_AA_refVal=https%3A%2F%2Fwww.cdc.gov%2Fcoronavirus%2F2019-ncov%2Fyour-health%2Fquarantine-isolation.html"
+              >this calculator</ExternalLink
+            >
+            to figure out when to start and stop isolating with COVID-19.
+          </li>
+          <li>
+            Get help with food delivery when isolating with COVID-19 from
+            <ExternalLink href="https://ridelivers.ri.gov/"
+              >RI Delivers</ExternalLink
+            >.
+          </li>
+          <li>
+            Call the RIDOH COVID-19 Hotline at
+            <a href="tel:4012228022">(401) 222-8022</a> for help with housing,
+            food, and more.
+          </li>
+        </ul>
+        <h5>
+          I can make sure people know where to get COVID-19 vaccines, tests, and
+          treatments
+        </h5>
+        <ul>
+          <li>
+            Find out where people can
+            <ExternalLink href="https://www.vaccines.gov/"
+              >get a COVID-19 vaccine</ExternalLink
+            >
+            near them.
+          </li>
+          <li>
+            Find out where people can
+            <ExternalLink
+              href="https://www.covid.gov/tests?fbclid=IwAR0eg7UQc7sc1fGjLZzTT2nSBODCyydqHh-tdK7QJEWXMTcy0q8Bp3SOuC8"
+              >get tested for COVID-19</ExternalLink
+            >
+            near them.
+          </li>
+          <li>
+            Find out where people can
+            <ExternalLink
+              href="https://covid-19-test-to-treat-locator-dhhs.hub.arcgis.com/"
+              >get COVID-19 treatment</ExternalLink
+            >
+            near them.
           </li>
         </ul>
       </div>
