@@ -130,6 +130,7 @@
     >
     <template #content>
       <div class="content">
+        <h5>I can learn more about creating healthy and affordable housing</h5>
         <ul>
           <li>
             Learn more about
