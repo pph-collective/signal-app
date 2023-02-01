@@ -12,7 +12,7 @@
             :value="option"
             :selected="option === selected"
           >
-            {{ prettyDate(String(option)) }}
+            {{ prettyDate(option) }}
           </option>
         </select>
         <span class="icon is-small is-left pl-1">
@@ -24,12 +24,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { PropType, ref, watch } from "vue";
 import { prettyDate } from "../../utils/utils";
 
 const props = defineProps({
   dropDown: {
-    type: Array,
+    type: Array as PropType<string[]>,
     required: true,
   },
 });
