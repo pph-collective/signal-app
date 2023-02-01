@@ -153,7 +153,11 @@
 
   <DashboardCard width="full" :height="1">
     <template #content>
-      <ChooseDate :drop-down="dates" @new-date="updateDate" />
+      <ChooseDate
+        :drop-down="dates"
+        :init-value="dateControls"
+        @new-date="updateDate"
+      />
     </template>
   </DashboardCard>
 </template>
@@ -221,7 +225,7 @@ useQueryParam({
 });
 const dashboardActiveCluster = ref(activeCluster.value);
 
-const dateControls = ref(props.dates[0]);
+const dateControls = ref(props.currentDate ?? props.dates[0]);
 
 const emit = defineEmits(["newDate"]);
 watch(

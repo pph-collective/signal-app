@@ -32,11 +32,15 @@ const props = defineProps({
     type: Array as PropType<string[]>,
     required: true,
   },
+  initValue: {
+    type: String,
+    required: true,
+  },
 });
 
 const emit = defineEmits(["newDate"]);
 
-const selected = ref(props.dropDown[0]);
+const selected = ref(props.initValue);
 
 watch(
   () => selected,
