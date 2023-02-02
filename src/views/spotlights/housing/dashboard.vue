@@ -191,8 +191,10 @@
           </li>
           <li>
             Call the RIDOH COVID-19 Hotline at
-            <a href="tel:4012228022">(401) 222-8022</a> for help with housing,
-            food, and more.
+            <a href="tel:4012228022"
+              >(401) 222-8022 <i class="fas fa-solid fa-phone"></i
+            ></a>
+            for help with housing, food, and more.
           </li>
         </ul>
         <h5>
