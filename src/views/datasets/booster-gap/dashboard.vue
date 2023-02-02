@@ -153,39 +153,17 @@
 
   <DashboardCard width="full" :height="1">
     <template #content>
-      <div
-        class="field is-horizontal is-justify-content-center is-align-items-center has-flex-gap"
-      >
-        <label for="date">Looking for data from another time period?</label>
-        <div class="control has-icons-left is-flex is-justify-content-center">
-          <div class="select">
-            <select
-              id="date"
-              @change="
-                $emit('newDate', ($event.target as HTMLSelectElement).value)
-              "
-            >
-              <option
-                v-for="(option, index) in dropdownDates"
-                :key="'option-' + index"
-                :value="option.value"
-                :selected="option.value === currentDate"
-              >
-                {{ option.name }}
-              </option>
-            </select>
-            <span class="icon is-small is-left pl-1">
-              <i class="fas fa-calendar-alt"></i>
-            </span>
-          </div>
-        </div>
-      </div>
+      <ChooseDate
+        :drop-down="dates"
+        :init-value="dateControls"
+        @new-date="updateDate"
+      />
     </template>
   </DashboardCard>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 import RI_GEOJSON from "@/assets/geography/ri.json";
 import HEZ_GEOJSON from "@/assets/geography/hez.json";
@@ -203,8 +181,8 @@ import { useQueryParam } from "../../../composables/useQueryParam";
 
 import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
-import { prettyDate } from "../../../utils/utils";
 import VaccineResources from "../../../components/dashboard/VaccineResources.vue";
+import ChooseDate from "../../../components/dashboard/ChooseDate.vue";
 
 const zoomed = ref(false);
 useQueryParam({
@@ -214,8 +192,6 @@ useQueryParam({
   valToParam: (v) => v.toString(),
   paramToVal: (p) => p === "true",
 });
-
-defineEmits(["newDate"]);
 
 const props = defineProps<{
   dates: string[];
@@ -249,10 +225,20 @@ useQueryParam({
 });
 const dashboardActiveCluster = ref(activeCluster.value);
 
-const dropdownDates = props.dates.map((date) => {
-  const dateString = prettyDate(date);
-  return { name: dateString, value: date };
-});
+const dateControls = ref(props.currentDate ?? props.dates[0]);
+
+const emit = defineEmits(["newDate"]);
+watch(
+  () => dateControls,
+  (item) => {
+    emit("newDate", item.value);
+  },
+  { deep: true }
+);
+
+const updateDate = (newDate) => {
+  dateControls.value = newDate;
+};
 
 const townDefault = "All of Rhode Island";
 const towns = RI_GEOJSON.map((geo) => geo.properties.name).sort();
