@@ -35,6 +35,12 @@ const routes: RouteRecordRaw[] = [
         name: "Closing the Gap in COVID-19 Boosters",
         component: () => import("./views/datasets/booster-gap/index.vue"),
       },
+      {
+        path: "hospitalization-hotspot",
+        name: "Lorem Ipsum",
+        component: () =>
+          import("./views/datasets/hospitalization-hotspot/index.vue"),
+      },
     ],
   },
   {

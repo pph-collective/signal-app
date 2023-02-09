@@ -156,6 +156,11 @@ const DATASETS = [
     route: "booster-gap",
     available: true,
   },
+  {
+    name: "Hospitalization Hotspots",
+    route: "hospitalization-hotspot",
+    available: true,
+  },
 ];
 
 const SPOTLIGHTS = [
