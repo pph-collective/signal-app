@@ -11,7 +11,6 @@ interface Props {
   activeStats: AgeSpecificStat[];
   metric: FocusStat;
 }
-// make category show "Housing Type" instead of "category"
 const props = defineProps<Props>();
 
 const spec = computed(() => {
@@ -44,7 +43,7 @@ const spec = computed(() => {
       xOffset: { field: "category" },
       color: {
         field: "category",
-        scale: COLORS,
+        scale: { range: Object.values(COLORS) },
         legend: { title: "Housing Type" },
       },
     },

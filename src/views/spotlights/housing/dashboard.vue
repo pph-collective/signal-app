@@ -3,18 +3,17 @@
     <template #subtitle>
       <div class="content">
         <p>
-          You can use this page to explore how housing affects COVID-19 outcomes
-          in Rhode Island. Where someone lives impacts their chances of getting
-          very sick with COVID-19. We found that people who lived in low-income
-          housing had a high chance of going to the hospital with COVID-19. We
-          also saw that these chances were especially high for older adults.
+          Where someone lives impacts their chances of getting very sick with
+          COVID-19. We found that Rhode Islanders who lived in low-income
+          housing had a high chance of going to the hospital with COVID-19.
+          These chances were especially high for older adults. You can use this
+          page to explore how housing affects COVID-19 outcomes in Rhode Island.
         </p>
         <h5>What kinds of housing exist in Rhode Island?</h5>
         <div class="table-container m-auto">
           <table class="table is-narrow is-bordered">
             <tbody>
               <tr>
-                <!-- <tr bgcolor="#C7B3F9"> -->
                 <th>Housing type</th>
                 <th>What it is</th>
               </tr>
@@ -28,7 +27,7 @@
               <tr>
                 <td>Section VIII</td>
                 <td>
-                  Similar purpose as public housing, but housing is privately
+                  Similar purpose to public housing, but housing is privately
                   owned and subsidized through government spending
                 </td>
               </tr>
@@ -51,7 +50,7 @@
                   Individuals typically not related to each other living in
                   close proximity and/or sharing living facilities (e.g.,
                   assisted living residences, nursing homes, group homes,
-                  college dormitories, correctional facilities)
+                  college dormitories, correctional facilities, etc.)
                 </td>
               </tr>
             </tbody>
@@ -74,7 +73,6 @@
         may have more young people. Age adjusting makes it so we can compare
         between groups that have different age distributions.
       </div>
-      <!-- TODO make these be the same size -->
       <div v-else-if="caseControls.age.value === 'specific'">
         Rates tell us how many people have tested positive for COVID-19 compared
         to a larger group taking into account the population size of that group.
@@ -159,8 +157,7 @@
             Help property owners learn more about
             <ExternalLink
               href="https://covid.ri.gov/covid-19-prevention/indoor-air-circulation"
-              >learn more about ways to improve ventilation in their
-              buildings</ExternalLink
+              >ways to improve ventilation in their buildings</ExternalLink
             >.
           </li>
           <li>

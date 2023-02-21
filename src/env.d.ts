@@ -65,7 +65,6 @@ interface SpotlightStats {
   age_specific: AgeSpecificStat[];
 }
 
-// TODO: what other fields go here?
 interface Location {
   name: string;
   street_address: string;
