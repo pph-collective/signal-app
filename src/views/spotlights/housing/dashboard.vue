@@ -272,15 +272,15 @@ const props = defineProps<{
 const text = {
   hospitalizations: {
     adjusted:
-      "<p>For hospitalizations, rates were <strong>higher among residents of public and Section VIII housing</strong>. Residents of these types of housing were more likely to go to the hospital with COVID-19.</p>",
+      "<p>For hospitalizations, rates were <strong>higher among residents of Section VIII housing</strong>. Residents of this type of housing were more likely to go to the hospital with COVID-19.</p>",
     specific:
-      "<p>People of all ages have gone to the hospital with COVID-19. <strong>Older adults were more likely</strong> to go to the hospital with COVID-19. Older adults in public and Section VIII housing were the most likely to go to the hospital.</p>",
+      "<p>People of all ages have gone to the hospital with COVID-19. <strong>Older adults were more likely</strong> to go to the hospital with COVID-19. Older adults in Section VIII housing were the most likely to go to the hospital.</p>",
   },
   cases: {
     adjusted:
       "<p>For cases, rates were <strong>similar across all housing types</strong> in Rhode Island. This means that people were getting sick with COVID-19 regardless of where they were living.",
     specific:
-      "<p>COVID-19 case rates were <strong>higher in younger adults</strong>. Younger adults in non-congregate housing had higher rates of COVID-19 than those who lived in other types of housing.</p><br><p>COVID-19 case rates were <strong>lower in older adults</strong>. Older adults in low-income housing had higher rates of COVID-19 than those who lived in other types of housing.</p>",
+      "<p>COVID-19 case rates were <strong>higher in younger adults</strong>. Younger adults in non-congregate and public housing had higher rates of COVID-19 than those who lived in Section VIII housing.</p><br><p>COVID-19 case rates were <strong>lower in older adults</strong>. Older adults in Section VIII housing had higher rates of COVID-19 than those who lived in other types of housing.</p>",
   },
 };
 
