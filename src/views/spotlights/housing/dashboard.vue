@@ -106,7 +106,7 @@
         young people. Age adjusting makes it so we can compare between groups
         that have different age distributions.
       </div>
-      <div v-else-if="caseControls.age.value === 'specific'">
+      <div v-else-if="controls.age.value === 'specific'">
         Rates tell us how many people have tested positive for COVID-19 compared
         to a larger group taking into account the population size of that group.
       </div>
