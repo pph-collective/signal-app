@@ -2,8 +2,7 @@
   <div>
     <div class="px-4 content">
       <h5>
-        I can raise awareness and address my community's concerns about
-        vaccines:
+        Raise awareness and address my community's concerns about vaccines:
       </h5>
       <ul>
         <li>
@@ -22,7 +21,7 @@
           >.
         </li>
       </ul>
-      <h5>I can make sure people know where to go to get COVID-19 vaccines:</h5>
+      <h5>Make sure people know where to go to get COVID-19 vaccines:</h5>
       <ul>
         <li>
           Find COVID-19 vaccines near you by using the search bar tool at
@@ -39,7 +38,7 @@
           accessing a clinic.
         </li>
       </ul>
-      <h5>I can set up a new vaccine clinic in my neighborhood:</h5>
+      <h5>Set up a new vaccine clinic in my neighborhood:</h5>
       <ul>
         <li>
           Community partners who are interested in hosting a COVID-19
@@ -59,9 +58,7 @@
           people in your neighborhood.
         </li>
       </ul>
-      <h5>
-        I can make sure people know where to go to get treatment for COVID-19:
-      </h5>
+      <h5>Make sure people know where to go to get treatment for COVID-19:</h5>
       <ul>
         <li>
           Find out
@@ -72,7 +69,7 @@
         </li>
       </ul>
       <h5>
-        I can find more resources at the
+        Find more resources at the
         <ExternalLink
           href="https://covid.ri.gov/public/covid-19-community-partner-toolkit"
           >Community Partner Toolkit website </ExternalLink

@@ -3,11 +3,11 @@
     <template #subtitle>
       <div class="content">
         <p>
-          Where someone lives impacts their chances of getting very sick with
-          COVID-19. We found that Rhode Islanders who lived in low-income
-          housing had a high chance of going to the hospital with COVID-19.
-          These chances were especially high for older adults. You can use this
-          page to explore how housing affects COVID-19 outcomes in Rhode Island.
+          Did you know where a person lives can impact their chance of getting
+          very sick from COVID-19? Rhode Islanders who live in low-income
+          housing have a higher chance of going to the hospital with COVID-19.
+          These chances are especially high for older adults. Use this page to
+          explore how housing affects COVID-19 outcomes in Rhode Island.
         </p>
         <h5>What kinds of housing exist in Rhode Island?</h5>
         <div class="table-container m-auto">
@@ -130,7 +130,7 @@
     >
     <template #content>
       <div class="content px-4">
-        <h5>I can learn more about creating healthy and affordable housing</h5>
+        <h5>Learn more about creating healthy and affordable housing</h5>
         <ul>
           <li>
             Learn more about
@@ -170,8 +170,7 @@
           </li>
         </ul>
         <h5>
-          I can make sure people know where to get help when isolating with
-          COVID-19
+          Make sure people know where to get help when isolating with COVID-19
         </h5>
         <ul>
           <li>
@@ -197,7 +196,7 @@
           </li>
         </ul>
         <h5>
-          I can make sure people know where to get COVID-19 vaccines, tests, and
+          Make sure people know where to get COVID-19 vaccines, tests, and
           treatments
         </h5>
         <ul>
@@ -292,7 +291,7 @@ const caseDropDown = {
     label: "What measure do you want to look at?",
     values: [
       { name: "Age Adjusted Rates", value: "adjusted" },
-      { name: "Rate By Age", value: "specific" },
+      { name: "Rate by Age", value: "specific" },
     ],
   },
 };
@@ -324,7 +323,7 @@ const dropDowns = {
     label: "What measure do you want to look at?",
     values: [
       { name: "Age Adjusted Rates", value: "adjusted" },
-      { name: "Rate By Age", value: "specific" },
+      { name: "Rate by Age", value: "specific" },
     ],
   },
 };
