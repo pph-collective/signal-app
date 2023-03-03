@@ -6,12 +6,14 @@
         :active-stats="activeStats"
         :metric="props.metric"
         :age="props.age"
+        :legend-title="props.legendTitle"
       />
       <GroupBarChart
         v-if="props.age.value === 'specific'"
         :active-stats="specificStats"
         :metric="props.metric"
         :age="props.age"
+        :legend-title="props.legendTitle"
       />
     </div>
     <div class="centered">
@@ -38,6 +40,7 @@ const props = defineProps<{
   age: SpotlightFocus;
   data: SpotlightStats;
   text: SpotlightText;
+  legendTitle: string;
 }>();
 
 const activeStats = computed(() => {

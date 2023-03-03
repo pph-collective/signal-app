@@ -87,6 +87,7 @@
         :age="caseControls.age"
         :data="data"
         :text="text"
+        :legend-title="'Housing Type'"
       />
     </template>
   </DashboardCard>
@@ -119,6 +120,7 @@
         :age="controls.age"
         :data="data"
         :text="text"
+        :legend-title="'Housing Type'"
       />
     </template>
   </DashboardCard>
@@ -127,7 +129,7 @@
       >What can I do to reduce the spread of COVID-19 in homes?</template
     >
     <template #content>
-      <div class="content">
+      <div class="content px-4">
         <h5>I can learn more about creating healthy and affordable housing</h5>
         <ul>
           <li>
@@ -283,6 +285,7 @@ const text = {
 
 const data = await fetchSpotlightData(props.datasetName);
 
+// TODO save values in separate variable and include description
 const caseDropDown = {
   age: {
     icon: "fas fa-poll",

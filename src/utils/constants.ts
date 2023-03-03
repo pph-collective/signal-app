@@ -9,6 +9,14 @@ export const COLORS = {
   grey: "#999999",
 };
 
+export const BARCOLORS = [
+  "#2D3045",
+  "#ACE4AA",
+  "#AF7595",
+  "#297373",
+  "#D7F9F1",
+];
+
 // light to dark
 export const COLOR_SCALES = {
   primary: ["#FFFFFF", COLORS.primary],

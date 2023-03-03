@@ -5,11 +5,12 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useVega } from "../../composables/useVega";
-import { COLORS } from "../../utils/constants";
+import { BARCOLORS } from "../../utils/constants";
 
 interface Props {
   activeStats: AgeSpecificStat[];
   metric: FocusStat;
+  legendTitle: string;
 }
 const props = defineProps<Props>();
 
@@ -43,8 +44,8 @@ const spec = computed(() => {
       xOffset: { field: "category" },
       color: {
         field: "category",
-        scale: { range: Object.values(COLORS) },
-        legend: { title: "Housing Type" },
+        scale: { range: Object.values(BARCOLORS) },
+        legend: { title: props.legendTitle },
       },
     },
   };

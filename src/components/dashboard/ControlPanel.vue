@@ -5,7 +5,7 @@
       :key="'control-panel-dropdown-' + type"
       class="control-panel-dropdown control has-icons-left"
     >
-      <label :for="type" class="is-family-primary"
+      <label :for="type" class="label is-family-primary"
         ><strong>{{ options.label }}</strong></label
       >
       <span class="select">

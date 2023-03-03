@@ -5,11 +5,12 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useVega } from "../../composables/useVega";
-import { COLORS } from "../../utils/constants";
+import { BARCOLORS } from "../../utils/constants";
 
 interface Props {
   activeStats: SpotlightStat[];
   metric: FocusStat;
+  legendTitle: string;
 }
 
 const props = defineProps<Props>();
@@ -42,7 +43,12 @@ const spec = computed(() => {
           labelAngle: 0,
         },
       },
-      color: { value: COLORS.dark },
+      color: {
+        field: "category",
+        type: "ordinal",
+        scale: { range: Object.values(BARCOLORS) },
+        title: props.legendTitle,
+      },
     },
   };
 });
