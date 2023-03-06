@@ -99,11 +99,11 @@
         @selected="updateControls"
       />
       <div v-if="controls.age.value === 'adjusted'">
-        What is an age-adjusted rate? Age plays a big role in your risk for the
-        virus. Different groups of people have different age distributions -
-        meaning one group may have more old people, or one group may have more
-        young people. Age adjusting makes it so we can compare between groups
-        that have different age distributions.
+        What is an age-adjusted rate? Age plays a big role in a person's risk
+        for COVID-19. Different groups of people have different age
+        distributions - meaning one group may have more old people, or one group
+        may have more young people. Age adjusting makes it so we can compare
+        between groups that have different age distributions.
       </div>
       <div v-else-if="controls.age.value === 'specific'">
         Rates tell us how many people have tested positive for COVID-19 compared
@@ -112,7 +112,9 @@
     </template>
   </DashboardCard>
   <DashboardCard width="full">
-    <template #title> COVID-19 hospitalizations may depend on housing</template>
+    <template #title>
+      COVID-19 hospitalizations may be influenced by housing type
+    </template>
     <template #content>
       <!-- add in outcomeData properly below -->
       <DataSpotlight
@@ -272,13 +274,13 @@ const text = {
     adjusted:
       "<p>For hospitalizations, rates were <strong>higher among residents of Section VIII housing</strong>. Residents of this type of housing were more likely to go to the hospital with COVID-19.</p>",
     specific:
-      "<p>People of all ages have gone to the hospital with COVID-19. <strong>Older adults were more likely</strong> to go to the hospital with COVID-19. Older adults in Section VIII housing were the most likely to go to the hospital.</p>",
+      "<p>People of all ages have gone to the hospital with COVID-19. <strong>Older adults were more likely</strong> to go to the hospital with COVID-19. Older adults in <strong>Section VIII</strong> housing were the most likely to go to the hospital.</p>",
   },
   cases: {
     adjusted:
       "<p>For cases, rates were <strong>similar across all housing types</strong> in Rhode Island. This means that people were getting sick with COVID-19 regardless of where they were living.",
     specific:
-      "<p>COVID-19 case rates were <strong>higher in younger adults</strong>. Younger adults in non-congregate and public housing had higher rates of COVID-19 than those who lived in Section VIII housing.</p><br><p>COVID-19 case rates were <strong>lower in older adults</strong>. Older adults in Section VIII housing had higher rates of COVID-19 than those who lived in other types of housing.</p>",
+      "<p>COVID-19 case rates were <strong>higher in younger adults</strong>. Younger adults in <strong>non-congregate</strong> and <strong>public</strong> housing had higher rates of COVID-19 than those who lived in Section VIII housing.</p><br><p>COVID-19 case rates were <strong>lower in older adults</strong>. Older adults in <strong>Section VIII housing</strong> had higher rates of COVID-19 than those who lived in other types of housing.</p>",
   },
 };
 
