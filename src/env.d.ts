@@ -41,7 +41,30 @@ interface FocusStat {
   value: "total" | "white" | "black" | "latino" | "asian";
 }
 
-// TODO: what other fields go here?
+interface SpotlightFocus {
+  name: string;
+  value: "adjusted" | "specific";
+}
+
+interface SpotlightStat {
+  category: string;
+  age_adjusted_rate: number;
+  outcome_type: string;
+}
+
+interface AgeSpecificStat {
+  category: string;
+  hud_age_group: string;
+  age_specific_rate: number;
+  outcome_type: string;
+  age_lower_bound: number;
+}
+
+interface SpotlightStats {
+  age_adjusted: SpotlightStat[];
+  age_specific: AgeSpecificStat[];
+}
+
 interface Location {
   name: string;
   street_address: string;
@@ -50,4 +73,20 @@ interface Location {
   zip_code: string;
   longitude: number;
   latitude: number;
+}
+
+interface SpotlightText {
+  cases: AgeText;
+  hospitalizations: AgeText;
+}
+
+interface AgeText {
+  adjusted: Paragraphs;
+  specific: Paragraphs;
+}
+
+interface Paragraphs {
+  p1?: string;
+  p2?: string;
+  [propName: string]: string;
 }

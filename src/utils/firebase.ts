@@ -75,7 +75,7 @@ export const fetchColdSpotData = async (datasetName: string, date: string) => {
   return result;
 };
 
-export const fetchHousingData = async (datasetName: string, date: string) => {
+export const fetchSpotlightData = async (datasetName: string) => {
   const defaults = {
     age_adjusted: [],
     age_specific: [],
@@ -83,17 +83,9 @@ export const fetchHousingData = async (datasetName: string, date: string) => {
 
   const result = await getDocWithDefaultPreferCache(
     defaults,
-    datasetName,
-    date
+    "spotlights",
+    datasetName
   );
-
-  Object.entries(result).forEach(([field, value]) => {
-    if (Object.keys(defaults).includes(field)) {
-      result[field] = parse(value as string);
-    } else {
-      result[field] = value;
-    }
-  });
 
   return result;
 };

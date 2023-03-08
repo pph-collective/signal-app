@@ -1,5 +1,5 @@
 <template>
-  <div ref="el"></div>
+  <div ref="el" />
 </template>
 
 <script setup lang="ts">
@@ -8,26 +8,25 @@ import { useVega } from "../../composables/useVega";
 import { BARCOLORS } from "../../utils/constants";
 
 interface Props {
-  activeStats: AgeSpecificStat[];
+  activeStats: SpotlightStat[];
   metric: FocusStat;
   legendTitle: string;
 }
+
 const props = defineProps<Props>();
 
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    width: 400,
-    height: 240,
+    width: 300,
+    height: 400,
     padding: 5,
-    title: `Age-Specific Rate of ${props.metric.name} Per 1,000 People`,
-    data: {
-      values: props.activeStats,
-    },
+    data: { values: props.activeStats },
     mark: "bar",
+    title: `Age-Adjusted Rate of ${props.metric.name} Per 1,000 People`,
     encoding: {
       y: {
-        field: "age_specific_rate",
+        field: "age_adjusted_rate",
         type: "quantitative",
         axis: {
           labelFontSize: 12,
@@ -36,16 +35,19 @@ const spec = computed(() => {
         },
       },
       x: {
-        field: "label",
-        title: "Age",
-        sort: { field: "age_lower_bound" },
-        axis: { labelAngle: 0, labelFontSize: 12, titleFontSize: 15 },
+        field: "category",
+        axis: {
+          labelFontSize: 12,
+          titleFontSize: 15,
+          title: "Housing Type",
+          labelAngle: 0,
+        },
       },
-      xOffset: { field: "category" },
       color: {
         field: "category",
+        type: "ordinal",
         scale: { range: Object.values(BARCOLORS) },
-        legend: { title: props.legendTitle },
+        title: props.legendTitle,
       },
     },
   };
@@ -57,7 +59,5 @@ useVega({
   el,
   minHeight: ref(250),
   maxHeight: ref(250),
-  maxWidth: ref(1280),
-  includeActions: ref(false),
 });
 </script>

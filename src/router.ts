@@ -48,7 +48,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "housing",
-        name: "COVID-19 Cases by Housing Type",
+        name: "COVID-19 Outcomes by Housing Type",
         component: () => import("./views/spotlights/housing/index.vue"),
       },
     ],
