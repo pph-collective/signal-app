@@ -1,8 +1,9 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where fewer people have received a booster dose
-      compared to state levels. We call this difference in booster doses a
+      This tool shows us places where fewer people have received a new bivalent
+      booster dose compared to state levels. We call this difference in booster
+      doses a
       <em>gap</em>. Vaccines can keep us from getting very sick with COVID-19,
       but protection decreases over time. A booster is another dose of the
       vaccine that keeps your community protected. You can use this information

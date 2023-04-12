@@ -10,7 +10,8 @@
     Rhode Island residents who were vaccinated at federal facilities or in most
     other states are not included unless they have submitted a copy of their
     vaccination record to the Rhode Island Department of Health. Data are
-    included for residents vaccinated in MA and CT.
+    included for residents vaccinated in Connecticut, Massachusetts, New York
+    City, and New Jersey.
   </p>
 
   <p class="is-size-7">
@@ -19,7 +20,7 @@
     <ExternalLink href="https://www.census.gov/programs-surveys/acs"
       >American Community Survey</ExternalLink
     >
-    (2015-2019, 5-year estimates). There is statistical uncertainty associated
+    (2016-2020, 5-year estimates). There is statistical uncertainty associated
     with these estimates, particularly for small populations in small geographic
     areas, resulting in estimates of vaccine coverage that are unreliable. Some
     estimates may be suppressed in line with the Rhode Island Department of
