@@ -30,7 +30,8 @@ import { useQueryParam } from "../../../composables/useQueryParam";
 import { fetchKeys } from "../../../utils/firebase";
 import { prettyDate } from "../../../utils/utils";
 
-const datasetName = "hospitalization_hotspots";
+const datasetName = "booster_coldspots";
+// const datasetName = "hospitalization_hotspots";
 
 const dates = await fetchKeys(datasetName);
 const currentDate = ref(dates[0]);

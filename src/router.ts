@@ -37,7 +37,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "hospitalization-hotspot",
-        name: "Lorem Ipsum",
+        name: "Hospitalization hotspot?? TODO",
         component: () =>
           import("./views/datasets/hospitalization-hotspot/index.vue"),
       },

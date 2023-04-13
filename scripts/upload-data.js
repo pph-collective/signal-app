@@ -65,7 +65,7 @@ argparse.add_argument("-r", "--statebarriersfile", {
 });
 
 argparse.add_argument("-l", "--locationsfile", {
-  required: true,
+  required: false,
   help: "Path to locations json file",
 });
 
@@ -300,6 +300,10 @@ const main = async () => {
   ];
 
   files.forEach(({ filePath, extension }) => {
+    if (!filePath) {
+      return;
+    }
+
     if (!fs.existsSync(filePath)) {
       warnAndExit(`ERROR! File does not exist: ${filePath}`);
     }

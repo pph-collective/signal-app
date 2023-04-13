@@ -1,12 +1,12 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      This tool shows us places where fewer people have received a booster dose
+      compared to state levels. We call this difference in booster doses a
+      <em>gap</em>. Vaccines can keep us from getting very sick with COVID-19,
+      but protection decreases over time. A booster is another dose of the
+      vaccine that keeps your community protected. You can use this information
+      to find where the gaps are in our state and take steps to help close them.
     </template>
   </DashboardCard>
 
@@ -46,12 +46,12 @@
     </template>
 
     <template #subtitle>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      This map shows where there are gaps in booster doses. Darker areas show
+      bigger gaps in booster doses among
+      <strong>{{ controls.focusStat.name }}</strong
+      >. Areas with dashes mean there is not enough information. Select a
+      community, click the <em>Zoom to Community</em> button, and scroll down to
+      learn more.
     </template>
 
     <template #content>
@@ -74,13 +74,15 @@
           class="is-absolute"
         />
         <div v-if="activeCluster && zoomed" class="instructions">
-          <p>Lorem ipsum <RedDot class="red-dot" /></p>
+          <p>
+            A <RedDot class="red-dot" /> indicates a previous vaccination clinic
+          </p>
         </div>
       </div>
       <!-- TODO change to make this keep the space like done with 'what is age-adjusted rate' in other PR -->
       <div :class="{ invisible: activeCluster.name === '' }">
         <router-link
-          :to="`/dataset/hospitalization-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
+          :to="`/dataset/booster-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
         >
           <i class="fa fa-arrow-circle-down fa-2x centered" />
         </router-link>
@@ -88,10 +90,12 @@
     </template>
   </DashboardCard>
   <DashboardCard id="chart" width="full" :height="2">
-    <template #title>Lorem ipsum</template>
+    <template #title
+      >How many booster doses do we need to close the gap?</template
+    >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
-        <GapByRace
+        <HotspotCard
           :stats="data.stats"
           :active-cluster="activeCluster"
           :field-names="[
@@ -105,7 +109,7 @@
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link
-            :to="`/dataset/hospitalization-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
+            :to="`/dataset/booster-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
           >
             <i class="fa fa-arrow-circle-down fa-2x centered" />
           </router-link>
@@ -115,8 +119,11 @@
   </DashboardCard>
 
   <DashboardCard id="barriers" width="full" :height="2">
-    <template #title>Lorem ipsum</template>
-    <template #subtitle>Lorem ipsum</template>
+    <template #title>How do we reach people who need boosters?</template>
+    <template #subtitle
+      >People with fewer resources have a harder time getting
+      vaccinated.</template
+    >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <PotentialBarriers
@@ -163,11 +170,9 @@ import HEZ_GEOJSON from "@/assets/geography/hez.json";
 import ControlPanel from "@/components/dashboard/ControlPanel.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import ColdMap from "@/components/dashboard/ColdMap.vue";
+import HotspotCard from "@/components/dashboard/HotspotCard.vue";
 import HiddenContent from "@/components/base/HiddenContent.vue";
-import ClusterMap from "@/components/dashboard/ClusterMap.vue";
-import GapByRace from "@/components/dashboard/GapByRace.vue";
 import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
-import RedDot from "@/components/dashboard/RedDot.vue";
 import DataNotes from "@/components/dashboard/DataNotes.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
