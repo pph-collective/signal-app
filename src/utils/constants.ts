@@ -12,7 +12,7 @@ export const COLORS = {
 // light to dark
 export const COLOR_SCALES = {
   cold: ["#FFFFFF", COLORS.primary],
-  hot: ["#FFFFFF", COLORS.green],
+  hot: [COLORS.pink, "#FFFFFF"],
 };
 
 export const NULL_CLUSTER = { name: "", cluster_id: -1 };

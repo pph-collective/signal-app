@@ -19,10 +19,9 @@ const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
-    description: "Bar chart showing the gap in vaccinations by race",
+    description: "Bar chart showing hospitalization rates by race",
     background: "transparent",
     padding: { left: 0, top: 0, right: 0, bottom: -1 },
-
     data: [
       {
         name: "yFields",
@@ -37,7 +36,7 @@ const spec = computed(() => {
     scales: [
       {
         name: "xscale",
-        domain: [0, 1],
+        domain: [0, 10000],
         range: "width",
       },
       {
@@ -53,7 +52,6 @@ const spec = computed(() => {
       {
         orient: "bottom",
         scale: "xscale",
-        format: ".0%",
         labelOverlap: "parity",
         labelSeparation: 4,
         domain: false,
@@ -94,7 +92,7 @@ const spec = computed(() => {
             tooltip: [
               {
                 signal:
-                  "{ title: datum.name, 'Hospitalizations per 10,000': round(datum.pct)}",
+                  "{ title: datum.name, 'Hospitalizations per 10,000': round(datum.rate)}",
                 test: "datum.population > 0",
               },
             ],
@@ -153,44 +151,14 @@ const spec = computed(() => {
         from: { data: "bars" },
         encode: {
           enter: {
-            x: { field: "x2", offset: 5 },
-            y: { field: "y", offset: { field: "height", mult: 0.5 } },
-            fill: { value: COLORS.dark },
-            align: { value: "left" },
-            baseline: { value: "middle" },
-            text: {
-              signal:
-                "datum.datum.gap > 0 ? datum.datum.gap + ' dose gap' : ''",
-            },
-          },
-        },
-      },
-      {
-        type: "text",
-        from: { data: "bars" },
-        encode: {
-          enter: {
             x: { field: "x2", offset: -5 },
             y: { field: "y", offset: { field: "height", mult: 0.5 } },
             fill: { value: "#FFFFFF" },
             align: { value: "right" },
             baseline: { value: "middle" },
             text: {
-              signal: "format(datum.datum.pct, '.0%') + ' vaccinated'",
+              signal: "round(datum.datum.rate) + ' per 10,000'",
             },
-          },
-        },
-      },
-      {
-        type: "rule",
-        encode: {
-          enter: {
-            x: { scale: "xscale", value: props.activeStats },
-            y: { value: 0 },
-            y2: { signal: "height" },
-            stroke: { value: COLORS.dark },
-            strokeDash: { value: [2, 2] },
-            strokeWidth: { value: 1 },
           },
         },
       },

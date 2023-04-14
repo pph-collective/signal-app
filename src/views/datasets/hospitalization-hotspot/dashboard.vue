@@ -62,22 +62,10 @@
           :filter-town="controls.town"
           :focus-stat="controls.focusStat"
           :initial-active-cluster="dashboardActiveCluster"
-          :map-type="'cold'"
+          :map-type="'hot'"
           class="is-absolute"
           @new-active-cluster-id="updateCluster"
         />
-        <ClusterMap
-          v-if="activeCluster && zoomed"
-          :cluster="activeCluster"
-          :geo="data.geo"
-          :locations="data.locations"
-          class="is-absolute"
-        />
-        <div v-if="activeCluster && zoomed" class="instructions">
-          <p>
-            A <RedDot class="red-dot" /> indicates a previous vaccination clinic
-          </p>
-        </div>
       </div>
       <!-- TODO change to make this keep the space like done with 'what is age-adjusted rate' in other PR -->
       <div :class="{ invisible: activeCluster.name === '' }">
@@ -106,6 +94,7 @@
             { field: 'total', name: 'All Residents' },
           ]"
           :focus-stat="controls.focusStat"
+          :date="currentDate"
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link
@@ -345,10 +334,6 @@ const updateCluster = (newClusterId) => {
   font-size: 0.875rem;
   animation: fade-in 500ms ease-in-out both;
   animation-delay: 250ms;
-}
-
-.red-dot {
-  margin-bottom: -5px;
 }
 
 .centered {

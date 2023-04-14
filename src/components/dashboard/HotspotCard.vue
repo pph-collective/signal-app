@@ -28,7 +28,7 @@
             >{{ round(maxHospRace?.rate) }} per 10,000
             {{ maxHospRace?.name }} residents</strong
           >
-          were hospitalized.
+          were hospitalized in {{ prettyDate(date) }}.
         </p>
       </div>
     </div>
@@ -87,7 +87,7 @@ import { computed } from "vue";
 
 import HotspotChart from "@/components/dashboard/HotspotChart.vue";
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
-import { sortByProperty } from "../../utils/utils";
+import { prettyDate, sortByProperty } from "../../utils/utils";
 import { round } from "lodash";
 
 const props = defineProps<{
@@ -95,6 +95,7 @@ const props = defineProps<{
   activeCluster: Cluster;
   fieldNames: Array<{ field: string; name: string }>;
   focusStat: FocusStat;
+  date: string;
 }>();
 
 const fieldData = computed(() => {
@@ -120,7 +121,7 @@ const activeStats = computed(() => {
             population > 0
               ? (row[f.observedField] / row[f.populationField]) * 10000
               : NaN,
-          gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
+          gap: Math.max(0, row[f.observedField] - row[f.expectedField]),
           population,
         };
       })
