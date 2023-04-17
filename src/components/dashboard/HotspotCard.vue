@@ -25,7 +25,7 @@
           among {{ maxHospRace?.name }} residents. As many as
           {{ activeFocusStats?.population }}
           <strong
-            >{{ round(maxHospRace?.rate) }} per 10,000
+            >{{ round(maxHospRace?.rate) }} per 100,000
             {{ maxHospRace?.name }} residents</strong
           >
           were hospitalized in {{ prettyDate(date) }}.
@@ -54,7 +54,7 @@
         <!-- In this community, there is a gap in this focus group -->
         <p v-if="activeFocusStats?.gap > 0">
           In {{ activeCluster.name }},
-          <strong>{{ round(activeFocusStats?.rate) }}</strong> per 10,000
+          <strong>{{ round(activeFocusStats?.rate) }}</strong> per 100,000
           {{ activeFocusStats?.name }} residents were hospitalized. This was
           higher than the average rate in Rhode Island.
         </p>
@@ -72,7 +72,7 @@
           <p>
             The highest rate of hospitalization is among
             <strong>{{ maxHospRace?.name }} residents</strong>.
-            <strong>{{ round(maxHospRace?.rate) }}</strong> per 10,000
+            <strong>{{ round(maxHospRace?.rate) }}</strong> per 100,000
             {{ maxHospRace?.name }}
             residents were hospitalized in [this period?]
           </p>
@@ -119,7 +119,7 @@ const activeStats = computed(() => {
           name: f.name,
           rate:
             population > 0
-              ? (row[f.observedField] / row[f.populationField]) * 10000
+              ? (row[f.observedField] / row[f.populationField]) * 100000
               : NaN,
           gap: Math.max(0, row[f.observedField] - row[f.expectedField]),
           population,

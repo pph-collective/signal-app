@@ -36,7 +36,7 @@ const spec = computed(() => {
     scales: [
       {
         name: "xscale",
-        domain: [0, 10000],
+        domain: [0, 100000],
         range: "width",
       },
       {
@@ -92,7 +92,7 @@ const spec = computed(() => {
             tooltip: [
               {
                 signal:
-                  "{ title: datum.name, 'Hospitalizations per 10,000': round(datum.rate)}",
+                  "{ title: datum.name, 'Hospitalizations per 100,000': round(datum.rate)}",
                 test: "datum.population > 0",
               },
             ],
@@ -122,7 +122,7 @@ const spec = computed(() => {
               {
                 signal: `{
                 title: datum.name,
-                'Hospitalizations per 10,000': round(datum.rate),
+                'Hospitalizations per 100,000': round(datum.rate),
                 }`,
                 test: "datum.population > 0",
               },
@@ -157,7 +157,7 @@ const spec = computed(() => {
             align: { value: "right" },
             baseline: { value: "middle" },
             text: {
-              signal: "round(datum.datum.rate) + ' per 10,000'",
+              signal: "round(datum.datum.rate) + ' per 100,000'",
             },
           },
         },
