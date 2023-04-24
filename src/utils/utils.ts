@@ -26,6 +26,11 @@ export const geoToTopo = (features, sphericalArea) => {
   return topo;
 };
 
+export const subtractDate = (date: string): string => {
+  const dateParts = date.split("-").map((p) => parseInt(p));
+  return new Date(dateParts[0], dateParts[1] - 2, dateParts[2]).toISOString();
+};
+
 // 2022-03-15 => March 15, 2022
 export const prettyDate = (date: string): string => {
   // Support for ISO 8601  differs in that date-only strings (e.g. "1970-01-01") are treated as UTC, not local.
