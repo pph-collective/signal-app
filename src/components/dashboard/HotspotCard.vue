@@ -22,13 +22,20 @@
       <div class="centered">
         <p class="has-text-centered">
           In {{ activeCluster.name }} the highest rate of hospitalization is
-          among {{ maxHospRace?.name }} residents. As many as
+          among {{ maxHospRace?.name }} residents. About
           {{ activeFocusStats?.population }}
           <strong
             >{{ round(maxHospRace?.rate) }} per 100,000
             {{ maxHospRace?.name }} residents</strong
           >
-          were hospitalized in {{ prettyDate(date) }}.
+          were hospitalized in
+          {{
+            parseISOlocal(date).getMonth() === 11
+              ? format(parseISOlocal(date), "MMMM yyyy")
+              : format(parseISOlocal(date), "MMMM")
+          }}
+          and
+          {{ format(add(parseISOlocal(date), { months: 1 }), "MMMM yyyy") }}.
         </p>
       </div>
     </div>
@@ -84,10 +91,11 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
+import { format, add } from "date-fns";
 
 import HotspotChart from "@/components/dashboard/HotspotChart.vue";
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
-import { prettyDate, sortByProperty } from "../../utils/utils";
+import { parseISOlocal, sortByProperty } from "../../utils/utils";
 import { round } from "lodash";
 
 const props = defineProps<{
