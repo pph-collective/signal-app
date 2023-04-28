@@ -38,7 +38,7 @@ const spec = computed(() => {
     scales: [
       {
         name: "xscale",
-        domain: [0, 1],
+        domain: [0, Math.min(props.expected * 1.25, 1)],
         range: "width",
       },
       {
@@ -52,6 +52,7 @@ const spec = computed(() => {
 
     axes: [
       {
+        title: "Percent Vaccinated",
         orient: "bottom",
         scale: "xscale",
         format: ".0%",
@@ -132,6 +133,13 @@ const spec = computed(() => {
                 test: "datum.population > 0",
               },
             ],
+            fill: { value: "transparent" },
+          },
+          hover: {
+            fill: { value: COLORS.info },
+          },
+          exit: {
+            fill: { value: "transparent" },
           },
         },
       },
@@ -156,7 +164,7 @@ const spec = computed(() => {
         from: { data: "bars" },
         encode: {
           enter: {
-            x: { field: "x2", offset: 5 },
+            x: { scale: "xscale", value: props.expected, offset: 5 },
             y: { field: "y", offset: { field: "height", mult: 0.5 } },
             fill: { value: COLORS.dark },
             align: { value: "left" },
@@ -179,7 +187,7 @@ const spec = computed(() => {
             align: { value: "right" },
             baseline: { value: "middle" },
             text: {
-              signal: "format(datum.datum.pct, '.0%') + ' vaccinated'",
+              signal: "format(datum.datum.pct, '.0%')",
             },
           },
         },
