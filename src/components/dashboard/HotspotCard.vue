@@ -17,7 +17,11 @@
       :class="focusStat.value === 'total' ? '' : 'is-invisible'"
     >
       <div>
-        <HotspotChart :active-stats="activeStats" :field-data="fieldData" />
+        <HotspotChart
+          :active-stats="activeStats"
+          :field-data="fieldData"
+          :domain-max="50000"
+        />
       </div>
       <div class="centered">
         <p class="has-text-centered">

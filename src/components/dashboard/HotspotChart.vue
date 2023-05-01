@@ -10,6 +10,7 @@ import { COLORS } from "../../utils/constants";
 interface Props {
   activeStats: Stat[];
   fieldData: Stat[];
+  domainMax: number;
 }
 
 const props = defineProps<Props>();
@@ -36,7 +37,7 @@ const spec = computed(() => {
     scales: [
       {
         name: "xscale",
-        domain: [0, 100000],
+        domain: [0, props.domainMax],
         range: "width",
       },
       {
@@ -151,13 +152,31 @@ const spec = computed(() => {
         from: { data: "bars" },
         encode: {
           enter: {
+            x: { field: "x2", offset: 5 },
+            y: { field: "y", offset: { field: "height", mult: 0.5 } },
+            fill: { value: COLORS.dark },
+            align: { value: "left" },
+            baseline: { value: "middle" },
+            text: {
+              signal:
+                "datum.datum.rate < datum.domainMax * 0.75 ? round(datum.datum.rate) + ' per 100,000' : ''",
+            },
+          },
+        },
+      },
+      {
+        type: "text",
+        from: { data: "bars" },
+        encode: {
+          enter: {
             x: { field: "x2", offset: -5 },
             y: { field: "y", offset: { field: "height", mult: 0.5 } },
             fill: { value: "#FFFFFF" },
             align: { value: "right" },
             baseline: { value: "middle" },
             text: {
-              signal: "round(datum.datum.rate) + ' per 100,000'",
+              signal:
+                "datum.datum.rate > datum.domainMax * 0.75 ? round(datum.datum.rate) + ' per 100,000' : ''",
             },
           },
         },
