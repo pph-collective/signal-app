@@ -100,7 +100,6 @@ const main = async () => {
   if (!dateRegex.test(date)) {
     warnAndExit(`ERROR! Incorrect date format. Use yyyy-mm-dd format: ${date}`);
   }
-  // start out with a const baseFiles
 
   const files = [
     {
@@ -140,10 +139,10 @@ const main = async () => {
           name: "cluster_id",
           type: "number",
         },
-        // {
-        //   name: "name",
-        //   type: "string",
-        // },
+        {
+          name: "name",
+          type: "string",
+        },
         {
           name: "observed_total",
           type: "number",
