@@ -1,7 +1,11 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where fewer people have received a booster dose
+      This tool shows us places where fewer people have received
+      <strong
+        >{{ currentDate >= "2023-03-15" ? "a new bivalent" : "any" }} booster
+        dose</strong
+      >
       compared to state levels. We call this difference in booster doses a
       <em>gap</em>. Vaccines can keep us from getting very sick with COVID-19,
       but protection decreases over time. A booster is another dose of the

@@ -21,6 +21,7 @@
     "firebase": "^9.6.5",
     "lodash": "^4.17.21",
     "pinia": "^2.0.9",
+    "sanitize-html": "^2.7.3",
     "topojson-client": "^3.1.0",
     "topojson-server": "^3.0.1",
     "topojson-simplify": "^3.0.3",
