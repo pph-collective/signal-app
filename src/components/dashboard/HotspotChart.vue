@@ -158,8 +158,7 @@ const spec = computed(() => {
             align: { value: "left" },
             baseline: { value: "middle" },
             text: {
-              signal:
-                "datum.datum.rate < datum.domainMax * 0.75 ? round(datum.datum.rate) + ' per 100,000' : ''",
+              signal: `datum.datum.rate <= ${props.domainMax} * 0.75 ? round(datum.datum.rate) + ' per 100,000' : ''`,
             },
           },
         },
@@ -175,8 +174,7 @@ const spec = computed(() => {
             align: { value: "right" },
             baseline: { value: "middle" },
             text: {
-              signal:
-                "datum.datum.rate > datum.domainMax * 0.75 ? round(datum.datum.rate) + ' per 100,000' : ''",
+              signal: `datum.datum.rate > ${props.domainMax} * 0.75 ? round(datum.datum.rate) + ' per 100,000' : ''`,
             },
           },
         },
