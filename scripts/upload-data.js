@@ -65,7 +65,7 @@ argparse.add_argument("-r", "--statebarriersfile", {
 });
 
 argparse.add_argument("-l", "--locationsfile", {
-  required: true,
+  required: false,
   help: "Path to locations json file",
 });
 
@@ -205,59 +205,12 @@ const main = async () => {
         },
       ],
     },
-    {
-      filePath: barriersfile,
-      extension: "json",
-      field: "barriers",
-      isArray: true,
-      schema: [
-        {
-          name: "cluster_id",
-          type: "number",
-        },
-        {
-          name: "pct_w_no_vehicle",
-          type: "number",
-        },
-        {
-          name: "pct_w_no_english",
-          type: "number",
-        },
-        {
-          name: "pct_w_no_insurance",
-          type: "number",
-        },
-        {
-          name: "pct_w_no_internet",
-          type: "number",
-        },
-      ],
-    },
-    {
-      filePath: statebarriersfile,
-      extension: "json",
-      field: "state_barriers",
-      isArray: false,
-      schema: [
-        {
-          name: "pct_w_no_vehicle",
-          type: "number",
-        },
-        {
-          name: "pct_w_no_english",
-          type: "number",
-        },
-        {
-          name: "pct_w_no_insurance",
-          type: "number",
-        },
-        {
-          name: "pct_w_no_internet",
-          type: "number",
-        },
-      ],
-    },
-    {
+    ,
+  ];
+
+  // vaccine and booster schemas
+  if (["vaccine_first_dose_coldspots", "booster_coldspots"].includes(id)) {
+    files.push({
       filePath: locationsfile,
       extension: "json",
       field: "locations",
@@ -296,8 +249,115 @@ const main = async () => {
           type: "boolean",
         },
       ],
-    },
-  ];
+    });
+
+    files.push({
+      filePath: barriersfile,
+      extension: "json",
+      field: "barriers",
+      isArray: true,
+      schema: [
+        {
+          name: "cluster_id",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_vehicle",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_english",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_insurance",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_internet",
+          type: "number",
+        },
+      ],
+    });
+
+    files.push({
+      filePath: statebarriersfile,
+      extension: "json",
+      field: "state_barriers",
+      isArray: false,
+      schema: [
+        {
+          name: "pct_w_no_vehicle",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_english",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_insurance",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_internet",
+          type: "number",
+        },
+      ],
+    });
+  }
+
+  // barriers schemas for hospitalization hotspots
+  if (id === "hospitalization_hotspots") {
+    files.push({
+      filePath: statebarriersfile,
+      extension: "json",
+      field: "state_barriers",
+      isArray: false,
+      schema: [
+        {
+          name: "pct_over_60",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_english",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_insurance",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_internet",
+          type: "number",
+        },
+      ],
+    });
+
+    files.push({
+      filePath: barriersfile,
+      extension: "json",
+      field: "barriers",
+      isArray: true,
+      schema: [
+        {
+          name: "pct_over_60",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_english",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_insurance",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_internet",
+          type: "number",
+        },
+      ],
+    });
+  }
 
   files.forEach(({ filePath, extension }) => {
     if (!fs.existsSync(filePath)) {
