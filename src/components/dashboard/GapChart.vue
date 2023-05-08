@@ -23,6 +23,11 @@ const spec = computed(() => {
     description: "Bar chart showing the gap in vaccinations by race",
     background: "transparent",
     padding: { left: 0, top: 0, right: 0, bottom: -1 },
+    autosize: {
+      type: "fit",
+      resize: true,
+      contains: "padding",
+    },
 
     data: [
       {
@@ -38,7 +43,7 @@ const spec = computed(() => {
     scales: [
       {
         name: "xscale",
-        domain: [0, Math.min(props.expected * 1.25, 1)],
+        domain: [0, Math.min(props.expected * 1.5, 1)],
         range: "width",
       },
       {
@@ -170,8 +175,7 @@ const spec = computed(() => {
             align: { value: "left" },
             baseline: { value: "middle" },
             text: {
-              signal:
-                "datum.datum.gap > 0 ? datum.datum.gap + ' dose gap' : ''",
+              signal: "datum.datum.gap > 0 ? datum.datum.gap + ' doses' : ''",
             },
           },
         },
