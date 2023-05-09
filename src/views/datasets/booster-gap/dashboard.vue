@@ -34,7 +34,7 @@
     <template #top-right>
       <button
         :disabled="!activeCluster.name"
-        class="zoom-button button is-link"
+        class="button is-link zoom-button"
         @click="zoomed = !zoomed"
       >
         <span class="icon">
@@ -321,8 +321,7 @@ const updateCluster = (newClusterId) => {
 }
 
 .zoom-button {
-  white-space: nowrap;
-  min-width: 12rem; /* 192 px */
+  min-width: min(100%, 12rem); /* 192 px */
 }
 
 .is-absolute {
