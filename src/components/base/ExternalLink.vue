@@ -15,3 +15,9 @@ withDefaults(
   }
 );
 </script>
+
+<style scoped>
+a {
+  overflow-wrap: break-word;
+}
+</style>
