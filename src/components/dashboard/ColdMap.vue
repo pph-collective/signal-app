@@ -52,8 +52,18 @@ const clusters = computed(() => {
         0,
         datum[`expected_${field}`] - datum[`observed_${field}`]
       );
+
       additionalFields[`gap_${field}_pct`] =
         additionalFields[`gap_${field}`] / datum[`population_${field}`];
+
+      additionalFields[`per100k_${field}`] =
+        (datum[`observed_${field}`] / datum[`population_${field}`]) * 100000;
+      additionalFields[`tooltip_${field}`] = additionalFields[
+        `per100k_${field}`
+      ].toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      });
     });
 
     if (datum) {
@@ -70,12 +80,21 @@ const clusters = computed(() => {
 });
 
 const focusFields = computed(() => {
-  return {
-    name: props.focusStat.name,
-    fill: `gap_${props.focusStat.value}_pct`,
-    tooltip: `gap_${props.focusStat.value}`,
-    population: `population_${props.focusStat.value}`,
-  };
+  if (props.mapType === "cold") {
+    return {
+      name: props.focusStat.name,
+      fill: `gap_${props.focusStat.value}_pct`,
+      tooltip: `gap_${props.focusStat.value}`,
+      population: `population_${props.focusStat.value}`,
+    };
+  } else {
+    return {
+      name: props.focusStat.name,
+      fill: `per100k_${props.focusStat.value}`,
+      tooltip: `tooltip_${props.focusStat.value}`,
+      population: `population_${props.focusStat.value}`,
+    };
+  }
 });
 
 const tooltipSignal = computed(() => {
@@ -94,7 +113,14 @@ const tooltipSignal = computed(() => {
     } : 'Not enough information'
     }`;
   } else {
-    return "'No tooltip here!'";
+    return `{
+      title: datum.properties.name
+      , 'Rate of hospitalization among ${focusFields.value.name.toLowerCase()}': datum.properties.${
+      focusFields.value.population
+    } > 0 ? datum.properties.${
+      focusFields.value.tooltip
+    } + ' per 100,000' : 'Not enough information'
+    }`;
   }
 });
 

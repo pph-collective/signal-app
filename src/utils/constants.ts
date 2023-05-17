@@ -20,7 +20,7 @@ export const BARCOLORS = [
 // light to dark
 export const COLOR_SCALES = {
   cold: ["#FFFFFF", COLORS.primary],
-  hot: [COLORS.pink, "#FFFFFF"],
+  hot: ["#FFFFFF", COLORS.pink],
 };
 
 export const NULL_CLUSTER = { name: "", cluster_id: -1 };

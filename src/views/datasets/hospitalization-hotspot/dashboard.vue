@@ -1,12 +1,11 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where fewer people have received a booster dose
-      compared to state levels. We call this difference in booster doses a
-      <em>gap</em>. Vaccines can keep us from getting very sick with COVID-19,
-      but protection decreases over time. A booster is another dose of the
-      vaccine that keeps your community protected. You can use this information
-      to find where the gaps are in our state and take steps to help close them.
+      This tool shows us places where people who have gone to the hospital with
+      COVID-19 live. This tool focuses on places where more people have gone to
+      the hospital compared to state levels. We call these places
+      <em>hotspots</em>. You can use this information to find where the hotspots
+      are in our state and take steps to help eliminate them.
     </template>
   </DashboardCard>
 
@@ -46,9 +45,9 @@
     </template>
 
     <template #subtitle>
-      This map shows where there are gaps in booster doses. Darker areas show
-      bigger gaps in booster doses among
-      <strong>{{ controls.focusStat.name }}</strong
+      This map shows hotspots where more people have gone to the hospital with
+      COVID-19 compared to state levels. Darker areas show higher rates of
+      hospital stays among <strong>{{ controls.focusStat.name }}</strong
       >. Areas with dashes mean there is not enough information. Select a
       community, click the <em>Zoom to Community</em> button, and scroll down to
       learn more.
@@ -78,9 +77,7 @@
     </template>
   </DashboardCard>
   <DashboardCard id="chart" width="full" :height="2">
-    <template #title
-      >How many booster doses do we need to close the gap?</template
-    >
+    <template #title>Who was hospitalized with COVID-19?</template>
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <HotspotCard
@@ -108,7 +105,10 @@
   </DashboardCard>
 
   <DashboardCard id="barriers" width="full" :height="2">
-    <template #title>How do we reach people who need boosters?</template>
+    <template #title
+      >How do we keep people from needing to go to the hospital with
+      COVID-19?</template
+    >
     <template #subtitle
       >People with fewer resources have a harder time getting
       vaccinated.</template
@@ -130,9 +130,56 @@
   </DashboardCard>
 
   <DashboardCard id="resources" width="full">
-    <template #title>What can I do to close the gap?</template>
+    <template #title
+      >What can I do to lower the chances of someone in my community
+      needingneeds to go to the hospital?</template
+    >
     <template #content>
-      <VaccineResources />
+      <div>
+        <div class="px-4 content">
+          <h5>Make sure people know where to go to get COVID-19 vaccines:</h5>
+          <ul>
+            <li>
+              Visit our pages about COVID-19
+              <router-link class="is-link" to="/dataset/vaccine-gap"
+                >Vaccines
+              </router-link>
+              and
+              <router-link class="is-link" to="/dataset/booster-gap"
+                >Boosters
+              </router-link>
+              to learn more about where there are gaps in our state.
+            </li>
+            <li>
+              You can also let people know
+              <ExternalLink href="https://covid.ri.gov/vaccination#athome">
+                how to get vaccinated at home </ExternalLink
+              >. This is a good option for people who may have a harder time
+              accessing a clinic.
+            </li>
+          </ul>
+          <h5>
+            Make sure people know where to go to get treatment for COVID-19:
+          </h5>
+          <ul>
+            <li>
+              Find out
+              <ExternalLink
+                href="https://covid-19-test-to-treat-locator-dhhs.hub.arcgis.com/"
+              >
+                where you can find treatment in your neighborhood </ExternalLink
+              >.
+            </li>
+          </ul>
+          <h5>
+            Make sure people know how to keep their health insurance coverage.
+          </h5>
+          <ul>
+            <li>???</li>
+          </ul>
+          <h5>mini grants? outreach tools? telemedicine options?</h5>
+        </div>
+      </div>
     </template>
   </DashboardCard>
 
@@ -173,8 +220,8 @@ import { useQueryParam } from "../../../composables/useQueryParam";
 
 import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
-import VaccineResources from "../../../components/dashboard/VaccineResources.vue";
 import ChooseDate from "../../../components/dashboard/ChooseDate.vue";
+import ExternalLink from "../../../components/base/ExternalLink.vue";
 
 const zoomed = ref(false);
 useQueryParam({

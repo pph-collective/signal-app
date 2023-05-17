@@ -37,7 +37,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "hospitalization-hotspot",
-        name: "Hospitalization hotspot?? TODO",
+        name: "Hotspots of COVID-19 Hospitalizations",
         component: () =>
           import("./views/datasets/hospitalization-hotspot/index.vue"),
       },

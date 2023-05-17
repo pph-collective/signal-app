@@ -20,14 +20,13 @@
         <HotspotChart
           :active-stats="activeStats"
           :field-data="fieldData"
-          :domain-max="50000"
+          :domain-max="maxHospRace?.rate * 1.35"
         />
       </div>
       <div class="centered">
         <p class="has-text-centered">
-          In {{ activeCluster.name }} the highest rate of hospitalization is
-          among {{ maxHospRace?.name }} residents. About
-          {{ activeFocusStats?.population }}
+          In {{ activeCluster.name }} the rate of people who went to the
+          hospital was highest among {{ maxHospRace?.name }} residents. About
           <strong
             >{{ round(maxHospRace?.rate) }} per 100,000
             {{ maxHospRace?.name }} residents</strong
@@ -55,23 +54,23 @@
         <KeyPerformanceIndicator
           :value="
             activeFocusStats?.population > 0
-              ? round(activeFocusStats?.rate)
+              ? round(activeFocusStats?.rate).toLocaleString()
               : '?'
           "
-          :title="`${activeFocusStats?.name} residents hospitalized in ${activeCluster.name}`"
+          :title="`per 100,000 ${activeFocusStats?.name} residents hospitalized in ${activeCluster.name}`"
         />
       </div>
       <div class="content centered has-text-centered">
         <!-- In this community, there is a gap in this focus group -->
-        <p v-if="activeFocusStats?.gap > 0">
+        <p v-if="activeFocusStats?.gap > 0 && activeFocusStats?.population > 0">
           In {{ activeCluster.name }},
-          <strong>{{ round(activeFocusStats?.rate) }}</strong> per 100,000
-          {{ activeFocusStats?.name }} residents were hospitalized. This was
-          higher than the average rate in Rhode Island.
+          <strong>{{ round(activeFocusStats?.rate).toLocaleString() }}</strong>
+          per 100,000 {{ activeFocusStats?.name }} residents were hospitalized.
+          This was higher than the average rate in Rhode Island.
         </p>
         <!-- There is no gap in this focus group, display the largest gap -->
         <span v-else>
-          <p v-if="activeFocusStats?.population > 0">Text if no "gap"</p>
+          <p v-if="activeFocusStats?.population > 0"></p>
           <!-- Not enough information -->
           <p v-else>
             In {{ activeCluster.name }}, there isn't enough hospitalization data
@@ -83,9 +82,17 @@
           <p>
             The highest rate of hospitalization is among
             <strong>{{ maxHospRace?.name }} residents</strong>.
-            <strong>{{ round(maxHospRace?.rate) }}</strong> per 100,000
+            <strong>{{ round(maxHospRace?.rate).toLocaleString() }}</strong> per
+            100,000
             {{ maxHospRace?.name }}
-            residents were hospitalized in [this period?]
+            residents were hospitalized in
+            {{
+              parseISOlocal(date).getMonth() === 11
+                ? format(parseISOlocal(date), "MMMM yyyy")
+                : format(parseISOlocal(date), "MMMM")
+            }}
+            and
+            {{ format(add(parseISOlocal(date), { months: 1 }), "MMMM yyyy") }}.
           </p>
         </span>
       </div>
@@ -138,7 +145,7 @@ const activeStats = computed(() => {
         };
       })
       .sort(sortByProperty("rate"))
-      .reverse(); // TODO should I reverse the array or update sortByProperty to allow reverse sorting?
+      .reverse();
   } else {
     return [];
   }
