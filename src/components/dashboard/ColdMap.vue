@@ -57,7 +57,10 @@ const clusters = computed(() => {
         additionalFields[`gap_${field}`] / datum[`population_${field}`];
 
       additionalFields[`per100k_${field}`] =
-        (datum[`observed_${field}`] / datum[`population_${field}`]) * 100000;
+        datum[`population_${field}`] > 0
+          ? (datum[`observed_${field}`] / datum[`population_${field}`]) * 100000
+          : 0;
+
       additionalFields[`tooltip_${field}`] = additionalFields[
         `per100k_${field}`
       ].toLocaleString("en-US", {
