@@ -65,6 +65,13 @@
           class="is-absolute"
           @new-active-cluster-id="updateCluster"
         />
+        <ClusterMap
+          v-if="activeCluster && zoomed"
+          :cluster="activeCluster"
+          :geo="data.geo"
+          :locations="[]"
+          class="is-absolute"
+        />
       </div>
       <div :class="{ invisible: activeCluster.name === '' }">
         <router-link
@@ -210,6 +217,7 @@ import HEZ_GEOJSON from "@/assets/geography/hez.json";
 import ControlPanel from "@/components/dashboard/ControlPanel.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import ColdMap from "@/components/dashboard/ColdMap.vue";
+import ClusterMap from "@/components/dashboard/ClusterMap.vue";
 import HotspotCard from "@/components/dashboard/HotspotCard.vue";
 import HiddenContent from "@/components/base/HiddenContent.vue";
 import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
