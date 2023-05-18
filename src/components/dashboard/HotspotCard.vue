@@ -28,7 +28,7 @@
           In {{ activeCluster.name }}, the rate of people who went to the
           hospital was highest among {{ maxHospRace?.name }} residents. About
           <strong
-            >{{ round(maxHospRace?.rate) }} per 100,000
+            >{{ round(maxHospRace?.rate).toLocaleString("en-US") }} per 100,000
             {{ maxHospRace?.name }} residents</strong
           >
           were hospitalized in

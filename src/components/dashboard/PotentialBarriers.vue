@@ -18,7 +18,6 @@
           </tr>
           <tr v-for="row in rows" :key="row.fieldName">
             <template v-if="barrier[row.property]">
-              <!-- TODO does this v-if make sense? And the change to env.d.ts:20 and this file:64? -->
               <td>{{ row.fieldName }}</td>
               <td>{{ formatPct(barrier[row.property]) }}</td>
               <td>{{ formatPct(stateBarriers[row.property]) }}</td>

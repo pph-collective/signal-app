@@ -93,7 +93,7 @@ const spec = computed(() => {
             tooltip: [
               {
                 signal:
-                  "{ title: datum.name, 'Hospitalizations per 100,000': round(datum.rate)}",
+                  "{ title: datum.name, 'Hospitalizations per 100,000': format(round(datum.rate), ',.0f')}",
                 test: "datum.population > 0",
               },
             ],
@@ -123,7 +123,7 @@ const spec = computed(() => {
               {
                 signal: `{
                 title: datum.name,
-                'Hospitalizations per 100,000': round(datum.rate),
+                'Hospitalizations per 100,000': format(round(datum.rate), ',.0f'),
                 }`,
                 test: "datum.population > 0",
               },
@@ -158,7 +158,7 @@ const spec = computed(() => {
             align: { value: "left" },
             baseline: { value: "middle" },
             text: {
-              signal: `datum.datum.rate <= ${props.domainMax} * 0.75 ? round(datum.datum.rate) + ' per 100,000' : ''`,
+              signal: `datum.datum.rate <= ${props.domainMax} * 0.75 ? format(round(datum.datum.rate), ',.0f') + ' per 100,000' : ''`,
             },
           },
         },
@@ -174,7 +174,7 @@ const spec = computed(() => {
             align: { value: "right" },
             baseline: { value: "middle" },
             text: {
-              signal: `datum.datum.rate > ${props.domainMax} * 0.75 ? round(datum.datum.rate) + ' per 100,000' : ''`,
+              signal: `datum.datum.rate > ${props.domainMax} * 0.75 ? format(round(datum.datum.rate), ',.0f') + ' per 100,000' : ''`,
             },
           },
         },

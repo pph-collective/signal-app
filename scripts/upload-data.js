@@ -360,10 +360,6 @@ const main = async () => {
   }
 
   files.forEach(({ filePath, extension }) => {
-    if (!filePath) {
-      return;
-    }
-
     if (!fs.existsSync(filePath)) {
       warnAndExit(`ERROR! File does not exist: ${filePath}`);
     }

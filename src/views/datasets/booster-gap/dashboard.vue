@@ -83,7 +83,6 @@
           </p>
         </div>
       </div>
-      <!-- TODO change to make this keep the space like done with 'what is age-adjusted rate' in other PR -->
       <div :class="{ invisible: activeCluster.name === '' }">
         <router-link
           :to="`/dataset/booster-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
