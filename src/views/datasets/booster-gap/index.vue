@@ -6,7 +6,7 @@
     </p>
     <p v-else class="update-date">
       Archived data from {{ prettyDate(currentDate) }} -
-      <router-link :to="path">View latest data</router-link>
+      <router-link :to="linkToCurrentData">View latest data</router-link>
     </p>
     <div class="vertical-spacing" />
     <Dashboard
@@ -44,6 +44,10 @@ useQueryParam({
 
 const route = useRoute();
 const { path } = route;
+const linkToCurrentData = {
+  path,
+  query: { date: currentDate.value },
+};
 
 const scrollRef = ref(null);
 const handleDateChange = (newDate) => {
