@@ -94,7 +94,7 @@
   <DashboardCard width="full">
     <template #content>
       <ControlPanel
-        :drop-downs="dropDowns"
+        :drop-downs="caseDropDown"
         :init-value="controls"
         @selected="updateControls"
       />
@@ -319,30 +319,10 @@ const updateCaseControls = (newControls) => {
   }
 };
 
-const dropDowns = {
-  age: {
-    icon: "fas fa-poll",
-    label: "What measure do you want to look at?",
-    values: [
-      { name: "Age Adjusted Rates", value: "adjusted" },
-      { name: "Rate by Age", value: "specific" },
-    ],
-  },
-};
-
 const hospFocus = { name: "Hospitalizations", value: "hospitalizations" };
 
 const controls = ref({
-  age: dropDowns.age.values[0],
-});
-
-useQueryParam({
-  param: "age",
-  ref: controls,
-  refField: "age",
-  valid: (p) => dropDowns.age.values.some((v) => p === v.value),
-  valToParam: (v) => v.value,
-  paramToVal: (p) => dropDowns.age.values.find((v) => p === v.value),
+  age: caseDropDown.age.values[0],
 });
 
 const updateControls = (newControls) => {
