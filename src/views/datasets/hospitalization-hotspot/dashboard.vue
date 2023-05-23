@@ -169,6 +169,22 @@
           </h5>
           <ul>
             <li>
+              Help people
+              <ExternalLink href="https://covid.ri.gov/detect/testing"
+                >get tested</ExternalLink
+              >
+              so they can start treatment as soon as possible.
+            </li>
+            <li>
+              Learn about
+              <ExternalLink
+                href="https://covid.ri.gov/treat/therapeutics?gclid=CjwKCAjwpayjBhAnEiwA-7ena53D2cKyXNp0MgIbBXPPz27355gBrR3UTplmWLarJHLRR3ZBFM_aJBoCMgwQAvD_BwE"
+              >
+                the treatments available
+              </ExternalLink>
+              for COVID-19.
+            </li>
+            <li>
               Find out
               <ExternalLink
                 href="https://covid-19-test-to-treat-locator-dhhs.hub.arcgis.com/"
@@ -181,9 +197,22 @@
             Make sure people know how to keep their health insurance coverage.
           </h5>
           <ul>
-            <li>???</li>
+            <li>
+              You can use this
+              <ExternalLink
+                href="https://staycovered.ri.gov/community-support/community-advocate-forum"
+                >community advocate toolkit</ExternalLink
+              >
+              to help people learn about what Medicaid renewals are.
+            </li>
+            <li>
+              You can help people understand their options for getting a new
+              health insurance plan through
+              <ExternalLink href="https://healthsourceri.com/transitions/"
+                >HealthSourceRI</ExternalLink
+              >
+            </li>
           </ul>
-          <h5>mini grants? outreach tools? telemedicine options?</h5>
         </div>
       </div>
     </template>
