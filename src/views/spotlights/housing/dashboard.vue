@@ -303,7 +303,7 @@ const caseControls = ref({
 });
 
 useQueryParam({
-  param: "cases",
+  param: "caseage",
   ref: caseControls,
   refField: "age",
   valid: (p) => caseDropDown.age.values.some((v) => p === v.value),
@@ -321,6 +321,15 @@ const hospFocus = { name: "Hospitalizations", value: "hospitalizations" };
 
 const controls = ref({
   age: caseDropDown.age.values[0],
+});
+
+useQueryParam({
+  param: "hospage",
+  ref: controls,
+  refField: "age",
+  valid: (p) => caseDropDown.age.values.some((v) => p === v.value),
+  valToParam: (v) => v.value,
+  paramToVal: (p) => caseDropDown.age.values.find((v) => p === v.value),
 });
 
 const updateControls = (newControls) => {
