@@ -66,16 +66,12 @@
         :init-value="caseControls"
         @selected="updateCaseControls"
       />
-      <div v-if="caseControls.age.value === 'adjusted'">
-        What is an age-adjusted rate? Age plays a big role in a person's risk
-        for COVID-19. Different groups of people have different age
-        distributions - meaning one group may have more old people, or one group
-        may have more young people. Age adjusting makes it so we can compare
-        between groups that have different age distributions.
-      </div>
-      <div v-else-if="caseControls.age.value === 'specific'">
-        Rates tell us how many people have tested positive for COVID-19 compared
-        to a larger group taking into account the population size of that group.
+      <div>
+        {{
+          controls.age.value === "adjusted"
+            ? text.age.adjusted
+            : text.age.specific
+        }}
       </div>
     </template>
   </DashboardCard>
@@ -98,16 +94,12 @@
         :init-value="controls"
         @selected="updateControls"
       />
-      <div v-if="controls.age.value === 'adjusted'">
-        What is an age-adjusted rate? Age plays a big role in a person's risk
-        for COVID-19. Different groups of people have different age
-        distributions - meaning one group may have more old people, or one group
-        may have more young people. Age adjusting makes it so we can compare
-        between groups that have different age distributions.
-      </div>
-      <div v-else-if="controls.age.value === 'specific'">
-        Rates tell us how many people have tested positive for COVID-19 compared
-        to a larger group taking into account the population size of that group.
+      <div>
+        {{
+          controls.age.value === "adjusted"
+            ? text.age.adjusted
+            : text.age.specific
+        }}
       </div>
     </template>
   </DashboardCard>
@@ -281,6 +273,12 @@ const text = {
       "<p>For cases, rates were <strong>similar across all housing types</strong> in Rhode Island. This means that people were getting sick with COVID-19 regardless of where they were living.",
     specific:
       "<p>COVID-19 case rates were <strong>higher in younger adults</strong>. Younger adults in <strong>non-congregate</strong> and <strong>public</strong> housing had higher rates of COVID-19 than those who lived in Section VIII housing.</p><br><p>COVID-19 case rates were <strong>lower in older adults</strong>. Older adults in <strong>Section VIII housing</strong> had higher rates of COVID-19 than those who lived in other types of housing.</p>",
+  },
+  age: {
+    adjusted:
+      "What is an age-adjusted rate? Age plays a big role in a person's risk for COVID-19. Different groups of people have different age distributions - meaning one group may have more old people, or one group may have more young people. Age adjusting makes it so we can compare between groups that have different age distributions.",
+    specific:
+      "Rates tell us how many people have tested positive for COVID-19 compared to a larger group taking into account the population size of that group.",
   },
 };
 
