@@ -98,6 +98,8 @@
           ]"
           :focus-stat="controls.focusStat"
           :date="currentDate"
+          :metric="'hospitalized'"
+          :rate-phrase="'per 100,000'"
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link
@@ -203,14 +205,14 @@
                 href="https://staycovered.ri.gov/community-support/community-advocate-forum"
                 >community advocate toolkit</ExternalLink
               >
-              to help people learn about what Medicaid renewals are.
+              to help people learn about Medicaid renewals.
             </li>
             <li>
               You can help people understand their options for getting a new
               health insurance plan through
               <ExternalLink href="https://healthsourceri.com/transitions/"
                 >HealthSourceRI</ExternalLink
-              >
+              >.
             </li>
           </ul>
         </div>
@@ -222,7 +224,45 @@
     <template #subtitle>Data Notes</template>
     <template #content>
       <div class="px-4 content">
-        <DataNotes />
+        <p>
+          This web tool includes information on COVID-19-associated
+          hospitalizations for Rhode Island residents who were admitted to an
+          acute care or psychiatric inpatient facility for at least one night
+          with COVID-19.
+        </p>
+        <p>
+          After January 1, 2023, persons are included once per COVID-19
+          infection if they had a laboratory-confirmed positive COVID-19 test
+          within 14 days prior to the hospital admission (if COVID-19 is not a
+          primary or contributing cause of hospitalization), within 30 days
+          prior to hospital admission (if COVID-19 is a primary or contributing
+          cause of hospitalization), or within 3 days after hospital admission
+          (regardless of the cause of hospitalization)
+        </p>
+        <p>
+          Prior to January 1, 2023, these data include persons admitted to an
+          inpatient facility for at least one night with a laboratory-confirmed
+          positive COVID-19 test, regardless of when the test was performed.
+          Hospitalizations prior to this date also counted an individual more
+          than once if they were readmitted during the course of a single
+          COVId-19 infection.
+        </p>
+        <p>
+          Estimates of population size are sourced from the United States Census
+          Bureau's
+          <ExternalLink href="https://www.census.gov/programs-surveys/acs"
+            >American Community Survey</ExternalLink
+          >
+          (2016-2020, 5-year estimates). There is statistical uncertainty
+          associated with these estimates, particularly for small populations in
+          small geographic areas, resulting in estimates of hospitalization
+          rates that are unreliable. Some estimates may be suppressed in line
+          with the Rhode Island Department of Health's
+          <ExternalLink
+            href="https://health.ri.gov/publications/policies/SmallNumbersReporting.pdf"
+            >Small Numbers Reporting Policy</ExternalLink
+          >.
+        </p>
       </div>
     </template>
   </DashboardCard>
@@ -250,7 +290,6 @@ import ClusterMap from "@/components/dashboard/ClusterMap.vue";
 import HotspotCard from "@/components/dashboard/HotspotCard.vue";
 import HiddenContent from "@/components/base/HiddenContent.vue";
 import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
-import DataNotes from "@/components/dashboard/DataNotes.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
 

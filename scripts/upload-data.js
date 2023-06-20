@@ -315,7 +315,7 @@ const main = async () => {
       isArray: false,
       schema: [
         {
-          name: "pct_over_60",
+          name: "pct_over_65",
           type: "number",
         },
         {
@@ -340,7 +340,7 @@ const main = async () => {
       isArray: true,
       schema: [
         {
-          name: "pct_over_60",
+          name: "pct_over_65",
           type: "number",
         },
         {

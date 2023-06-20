@@ -69,9 +69,9 @@ const rows = [
     text: "People who speak limited English might have trouble understanding materials in English.",
   },
   {
-    fieldName: "Over 60",
-    property: "pct_over_60",
-    text: "People over 60 years old are at higher risk of needing to go to the hospital with COVID-19.",
+    fieldName: "Over 65",
+    property: "pct_over_65",
+    text: "People over 65 years old are at higher risk of needing to go to the hospital with COVID-19.",
   },
 ];
 </script>

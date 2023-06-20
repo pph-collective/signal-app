@@ -20,25 +20,30 @@
         <HotspotChart
           :active-stats="activeStats"
           :field-data="fieldData"
-          :domain-max="maxHospRace?.rate * 1.35"
+          :domain-max="maxRace?.rate * 1.35"
         />
       </div>
       <div class="centered">
         <p class="has-text-centered">
-          In {{ activeCluster.name }}, the rate of people who went to the
-          hospital was highest among {{ maxHospRace?.name }} residents. About
+          In {{ activeCluster.name }}, the rate of people who were
+          {{ props.metric }} was highest among {{ maxRace?.name }} residents.
+          About
           <strong
-            >{{ round(maxHospRace?.rate).toLocaleString("en-US") }} per 100,000
-            {{ maxHospRace?.name }} residents</strong
+            >{{ round(maxRace?.rate).toLocaleString("en-US") }}
+            {{ props.ratePhrase }} {{ maxRace?.name }} residents</strong
           >
-          were hospitalized in
+          were {{ props.metric }} in
           {{
-            parseISOlocal(date).getMonth() === 11
+            parseISOlocal(date).getMonth() >= 10
               ? format(parseISOlocal(date), "MMMM yyyy")
               : format(parseISOlocal(date), "MMMM")
-          }}
-          and
-          {{ format(add(parseISOlocal(date), { months: 1 }), "MMMM yyyy") }}.
+          }},
+          {{
+            parseISOlocal(date).getMonth() >= 10
+              ? format(add(parseISOlocal(date), { months: 1 }), "MMMM yyyy")
+              : format(add(parseISOlocal(date), { months: 1 }), "MMMM")
+          }}, and
+          {{ format(add(parseISOlocal(date), { months: 2 }), "MMMM yyyy") }}.
         </p>
       </div>
     </div>
@@ -57,7 +62,7 @@
               ? round(activeFocusStats?.rate).toLocaleString()
               : '?'
           "
-          :title="`per 100,000 ${activeFocusStats?.name} residents hospitalized in ${activeCluster.name}`"
+          :title="`${props.ratePhrase} ${activeFocusStats?.name} residents ${props.metric} in ${activeCluster.name}`"
         />
       </div>
       <div class="content centered has-text-centered">
@@ -65,27 +70,37 @@
         <p v-if="activeFocusStats?.gap > 0 && activeFocusStats?.population > 0">
           In {{ activeCluster.name }}, about
           <strong>{{ round(activeFocusStats?.rate).toLocaleString() }}</strong>
-          per 100,000 {{ activeFocusStats?.name }} residents were hospitalized.
-          This was higher than the average rate in Rhode Island.
+          {{ props.ratePhrase }} {{ activeFocusStats?.name }} residents were
+          {{ props.metric }}. This was higher than the average rate in Rhode
+          Island.
         </p>
         <!-- There is no gap in this focus group, display the largest gap -->
         <span v-else>
-          <p v-if="activeFocusStats?.population > 0"></p>
+          <p v-if="activeFocusStats?.population > 0">
+            In {{ activeCluster.name }}, about
+            <strong>{{
+              round(activeFocusStats?.rate).toLocaleString()
+            }}</strong>
+            {{ props.ratePhrase }} {{ activeFocusStats?.name }} residents were
+            {{ props.metric }}. This was lower than the average rate in Rhode
+            Island.
+          </p>
           <!-- Not enough information -->
           <p v-else>
-            In {{ activeCluster.name }}, there isn't enough hospitalization data
-            on <strong>{{ activeFocusStats?.name }} residents</strong> to
-            determine their hospitalization rate.
+            In {{ activeCluster.name }}, there isn't enough
+            {{ props.metric }} data on
+            <strong>{{ activeFocusStats?.name }} residents</strong> to determine
+            their {{ props.metric }} rate.
           </p>
 
           <!-- Highest rate -->
           <p>
-            The highest rate of hospitalization was among
-            <strong>{{ maxHospRace?.name }} residents</strong>. About
-            <strong>{{ round(maxHospRace?.rate).toLocaleString() }}</strong> per
-            100,000
-            {{ maxHospRace?.name }}
-            residents were hospitalized in
+            The highest rate of {{ props.metric }} was among
+            <strong>{{ maxRace?.name }} residents</strong>. About
+            <strong>{{ round(maxRace?.rate).toLocaleString() }}</strong>
+            {{ props.ratePhrase }}
+            {{ maxRace?.name }}
+            residents were {{ props.metric }} in
             {{
               parseISOlocal(date).getMonth() === 11
                 ? format(parseISOlocal(date), "MMMM yyyy")
@@ -115,6 +130,8 @@ const props = defineProps<{
   fieldNames: Array<{ field: string; name: string }>;
   focusStat: FocusStat;
   date: string;
+  metric: string;
+  ratePhrase: string;
 }>();
 
 const fieldData = computed(() => {
@@ -152,9 +169,9 @@ const activeStats = computed(() => {
 });
 
 // activeStats is sorted by pct, minVaxRace is the first group whose percentage gap is not NaN
-const maxHospRace = computed(() => {
+const maxRace = computed(() => {
   for (const activeStat of activeStats.value) {
-    if (!isNaN(activeStat.rate)) {
+    if (!isNaN(activeStat.rate) && activeStat.name !== "All Residents") {
       return activeStat;
     }
   }
