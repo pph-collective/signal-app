@@ -100,6 +100,7 @@
           :date="currentDate"
           :metric="'hospitalized'"
           :rate-phrase="'per 100,000'"
+          :phrases="phrases"
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link
@@ -418,6 +419,10 @@ const updateControls = (newControls) => {
 const updateCluster = (newClusterId) => {
   activeCluster.value = clusterIdToCluster(newClusterId);
   dashboardActiveCluster.value = activeCluster.value;
+};
+
+const phrases = {
+  gap: "In {{ name }}, about <strong>{{ rate }}</strong> {{ props.ratePhrase }} {{ activeFocusStats?.name }} residents were hospitalized. This was higher than the average rate in Rhode Island.",
 };
 </script>
 

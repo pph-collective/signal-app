@@ -67,13 +67,19 @@
       </div>
       <div class="content centered has-text-centered">
         <!-- In this community, there is a gap in this focus group -->
-        <p v-if="activeFocusStats?.gap > 0 && activeFocusStats?.population > 0">
-          In {{ activeCluster.name }}, about
-          <strong>{{ round(activeFocusStats?.rate).toLocaleString() }}</strong>
-          {{ props.ratePhrase }} {{ activeFocusStats?.name }} residents were
-          {{ props.metric }}. This was higher than the average rate in Rhode
-          Island.
-        </p>
+        <!-- eslint-disable vue/no-v-html -->
+        <div
+          v-if="activeFocusStats?.gap > 0 && activeFocusStats?.population > 0"
+          v-html="
+            sanitizeHtml(
+              gapPhrase({
+                name: props.activeCluster.name,
+                rate: round(activeFocusStats?.rate).toLocaleString(),
+              })
+            )
+          "
+        />
+
         <!-- There is no gap in this focus group, display the largest gap -->
         <span v-else>
           <p v-if="activeFocusStats?.population > 0">
@@ -123,6 +129,8 @@ import HotspotChart from "@/components/dashboard/HotspotChart.vue";
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
 import { parseISOlocal, sortByProperty } from "../../utils/utils";
 import { round } from "lodash";
+import { compile } from "handlebars";
+import sanitizeHtml from "sanitize-html";
 
 const props = defineProps<{
   stats: Stat[];
@@ -132,6 +140,7 @@ const props = defineProps<{
   date: string;
   metric: string;
   ratePhrase: string;
+  phrases: Phrases;
 }>();
 
 const fieldData = computed(() => {
@@ -185,6 +194,8 @@ const activeFocusStats = computed(() => {
     (a) => a.name.toUpperCase() === props.focusStat.value.toUpperCase()
   );
 });
+
+const gapPhrase = compile(props.phrases.gap);
 </script>
 
 <style scoped lang="scss">
