@@ -102,12 +102,12 @@
             {{ maxRace?.name }}
             residents were {{ props.metric }} in
             {{
-              parseISOlocal(date).getMonth() === 11
+              parseISOlocal(date).getMonth() >= 10
                 ? format(parseISOlocal(date), "MMMM yyyy")
                 : format(parseISOlocal(date), "MMMM")
             }}
-            and
-            {{ format(add(parseISOlocal(date), { months: 1 }), "MMMM yyyy") }}.
+            through
+            {{ format(add(parseISOlocal(date), { months: 2 }), "MMMM yyyy") }}.
           </p>
         </span>
       </div>
