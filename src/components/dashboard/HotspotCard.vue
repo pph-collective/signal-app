@@ -32,19 +32,12 @@
                 allResidents({
                   name: props.activeCluster.name,
                   rate: round(maxRace?.rate).toLocaleString('en-US'),
-                  race: maxRace?.name,
-                  date1:
+                  maxRaceName: maxRace?.name,
+                  startDate:
                     parseISOlocal(date).getMonth() >= 10
                       ? format(parseISOlocal(date), 'MMMM yyyy')
                       : format(parseISOlocal(date), 'MMMM'),
-                  date2:
-                    parseISOlocal(date).getMonth() >= 10
-                      ? format(
-                          add(parseISOlocal(date), { months: 1 }),
-                          'MMMM yyyy'
-                        )
-                      : format(add(parseISOlocal(date), { months: 1 }), 'MMMM'),
-                  date3: format(
+                  endDate: format(
                     add(parseISOlocal(date), { months: 2 }),
                     'MMMM yyyy'
                   ),
@@ -130,11 +123,11 @@
                 highest({
                   race: maxRace?.name,
                   rate: round(maxRace?.rate).toLocaleString(),
-                  date1:
+                  startDate:
                     parseISOlocal(date).getMonth() >= 10
                       ? format(parseISOlocal(date), 'MMMM yyyy')
                       : format(parseISOlocal(date), 'MMMM'),
-                  date2: format(
+                  endDate: format(
                     add(parseISOlocal(date), { months: 2 }),
                     'MMMM yyyy'
                   ),

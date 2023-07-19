@@ -424,13 +424,13 @@ const updateCluster = (newClusterId) => {
 const phrases = {
   gap: "In {{ name }}, about <strong>{{ rate }}</strong> per 100,000 {{ race }} residents were hospitalized. This was higher than the average rate in Rhode Island.",
   allResidents:
-    "In {{ name }}, the rate of people who were hospitalized was highest among {{ race }} residents. About <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized in {{ date1 }}, {{ date2 }}, and {{ date3 }}.",
+    "In {{ name }}, the rate of people who were hospitalized was highest among {{ maxRaceName }} residents. About <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized in {{ startDate }} through {{ endDate }}.",
   noGap:
     "In {{ name }}, about <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized. This was lower than the average rate in Rhode Island.",
   noInfo:
     "In {{ name }}, there isn't enough hospitalization data on {{ race }} residents to determine their hospitalization rate.",
   highest:
-    "The highest rate of hospitalization was among <strong>{{ race }} residents </strong>. About <strong>{{ rate }} per 100,000</strong> {{ race }} residents were hospitalized in {{ date1 }} through {{ date2}}",
+    "The highest rate of hospitalization was among <strong>{{ race }} residents </strong>. About <strong>{{ rate }} per 100,000</strong> {{ race }} residents were hospitalized in {{ startDate }} through {{ endDate }}",
   kpiTitle: "per 100,000 {{ race }} residents hospitalized in {{ name }}",
 };
 </script>
