@@ -430,8 +430,8 @@ const phrases = {
   noInfo:
     "In {{ name }}, there isn't enough hospitalization data on {{ race }} residents to determine their hospitalization rate.",
   highest:
-    "The highest rate of hospitalization was among <strong>{{ race }} residents </strong>. About <strong>{{ rate }} per 100,000</strong> {{ race }} residents were hospitalized in {{ startDate }} through {{ endDate }}",
-  kpiTitle: "per 100,000 {{ race }} residents hospitalized in {{ name }}",
+    "The highest rate of hospitalization was among <strong>{{ race }} residents </strong>. About <strong>{{ rate }} per 100,000</strong> {{ race }} residents were hospitalized in {{ startDate }} through {{ endDate }}.",
+  kpiTitle: "per 100,000 {{ race }} residents hospitalized in {{ name }}.",
 };
 </script>
 
