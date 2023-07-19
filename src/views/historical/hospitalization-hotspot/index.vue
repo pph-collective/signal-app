@@ -22,7 +22,7 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 
-import Dashboard from "@/views/datasets/hospitalization-hotspot/dashboard.vue";
+import Dashboard from "@/views/historical/hospitalization-hotspot/dashboard.vue";
 import SuspenseComponent from "@/components/base/SuspenseComponent.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
