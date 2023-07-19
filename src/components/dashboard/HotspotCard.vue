@@ -20,31 +20,39 @@
         <HotspotChart
           :active-stats="activeStats"
           :field-data="fieldData"
-          :domain-max="maxRace?.rate * 1.35"
+          :domain-max="maxInclAll?.rate * 1.35"
         />
       </div>
       <div class="centered">
-        <p class="has-text-centered">
-          In {{ activeCluster.name }}, the rate of people who were
-          {{ props.metric }} was highest among {{ maxRace?.name }} residents.
-          About
-          <strong
-            >{{ round(maxRace?.rate).toLocaleString("en-US") }}
-            {{ props.ratePhrase }} {{ maxRace?.name }} residents</strong
-          >
-          were {{ props.metric }} in
-          {{
-            parseISOlocal(date).getMonth() >= 10
-              ? format(parseISOlocal(date), "MMMM yyyy")
-              : format(parseISOlocal(date), "MMMM")
-          }},
-          {{
-            parseISOlocal(date).getMonth() >= 10
-              ? format(add(parseISOlocal(date), { months: 1 }), "MMMM yyyy")
-              : format(add(parseISOlocal(date), { months: 1 }), "MMMM")
-          }}, and
-          {{ format(add(parseISOlocal(date), { months: 2 }), "MMMM yyyy") }}.
-        </p>
+        <div class="content centered has-text-centered">
+          <!-- eslint-disable vue/no-v-html -->
+          <div
+            v-html="
+              sanitizeHtml(
+                allResidents({
+                  name: props.activeCluster.name,
+                  rate: round(maxRace?.rate).toLocaleString('en-US'),
+                  race: maxRace?.name,
+                  date1:
+                    parseISOlocal(date).getMonth() >= 10
+                      ? format(parseISOlocal(date), 'MMMM yyyy')
+                      : format(parseISOlocal(date), 'MMMM'),
+                  date2:
+                    parseISOlocal(date).getMonth() >= 10
+                      ? format(
+                          add(parseISOlocal(date), { months: 1 }),
+                          'MMMM yyyy'
+                        )
+                      : format(add(parseISOlocal(date), { months: 1 }), 'MMMM'),
+                  date3: format(
+                    add(parseISOlocal(date), { months: 2 }),
+                    'MMMM yyyy'
+                  ),
+                })
+              )
+            "
+          />
+        </div>
       </div>
     </div>
 
@@ -62,7 +70,14 @@
               ? round(activeFocusStats?.rate).toLocaleString()
               : '?'
           "
-          :title="`${props.ratePhrase} ${activeFocusStats?.name} residents ${props.metric} in ${activeCluster.name}`"
+          :title="
+            sanitizeHtml(
+              kpiTitle({
+                race: activeFocusStats?.name,
+                name: props.activeCluster.name,
+              })
+            )
+          "
         />
       </div>
       <div class="content centered has-text-centered">
@@ -75,6 +90,7 @@
               gapPhrase({
                 name: props.activeCluster.name,
                 rate: round(activeFocusStats?.rate).toLocaleString(),
+                race: activeFocusStats?.name,
               })
             )
           "
@@ -82,39 +98,50 @@
 
         <!-- There is no gap in this focus group, display the largest gap -->
         <span v-else>
-          <p v-if="activeFocusStats?.population > 0">
-            In {{ activeCluster.name }}, about
-            <strong>{{
-              round(activeFocusStats?.rate).toLocaleString()
-            }}</strong>
-            {{ props.ratePhrase }} {{ activeFocusStats?.name }} residents were
-            {{ props.metric }}. This was lower than the average rate in Rhode
-            Island.
-          </p>
+          <p
+            v-if="activeFocusStats?.population > 0"
+            v-html="
+              sanitizeHtml(
+                noGap({
+                  name: props.activeCluster.name,
+                  rate: round(activeFocusStats?.rate).toLocaleString(),
+                  race: activeFocusStats?.name,
+                })
+              )
+            "
+          />
           <!-- Not enough information -->
-          <p v-else>
-            In {{ activeCluster.name }}, there isn't enough
-            {{ props.metric }} data on
-            <strong>{{ activeFocusStats?.name }} residents</strong> to determine
-            their {{ props.metric }} rate.
-          </p>
+          <p
+            v-else
+            v-html="
+              sanitizeHtml(
+                noInfo({
+                  name: props.activeCluster.name,
+                  race: activeFocusStats?.name,
+                })
+              )
+            "
+          ></p>
 
           <!-- Highest rate -->
-          <p>
-            The highest rate of {{ props.metric }} was among
-            <strong>{{ maxRace?.name }} residents</strong>. About
-            <strong>{{ round(maxRace?.rate).toLocaleString() }}</strong>
-            {{ props.ratePhrase }}
-            {{ maxRace?.name }}
-            residents were {{ props.metric }} in
-            {{
-              parseISOlocal(date).getMonth() >= 10
-                ? format(parseISOlocal(date), "MMMM yyyy")
-                : format(parseISOlocal(date), "MMMM")
-            }}
-            through
-            {{ format(add(parseISOlocal(date), { months: 2 }), "MMMM yyyy") }}.
-          </p>
+          <p
+            v-html="
+              sanitizeHtml(
+                highest({
+                  race: maxRace?.name,
+                  rate: round(maxRace?.rate).toLocaleString(),
+                  date1:
+                    parseISOlocal(date).getMonth() >= 10
+                      ? format(parseISOlocal(date), 'MMMM yyyy')
+                      : format(parseISOlocal(date), 'MMMM'),
+                  date2: format(
+                    add(parseISOlocal(date), { months: 2 }),
+                    'MMMM yyyy'
+                  ),
+                })
+              )
+            "
+          ></p>
         </span>
       </div>
     </div>
@@ -138,8 +165,6 @@ const props = defineProps<{
   fieldNames: Array<{ field: string; name: string }>;
   focusStat: FocusStat;
   date: string;
-  metric: string;
-  ratePhrase: string;
   phrases: Phrases;
 }>();
 
@@ -189,6 +214,15 @@ const maxRace = computed(() => {
   return activeStats.value[0];
 });
 
+const maxInclAll = computed(() => {
+  for (const activeStat of activeStats.value) {
+    if (!isNaN(activeStat.rate)) {
+      return activeStat;
+    }
+  }
+  return activeStats.value[0];
+});
+
 const activeFocusStats = computed(() => {
   return activeStats.value.find(
     (a) => a.name.toUpperCase() === props.focusStat.value.toUpperCase()
@@ -196,6 +230,11 @@ const activeFocusStats = computed(() => {
 });
 
 const gapPhrase = compile(props.phrases.gap);
+const allResidents = compile(props.phrases.allResidents);
+const noGap = compile(props.phrases.noGap);
+const noInfo = compile(props.phrases.noInfo);
+const highest = compile(props.phrases.highest);
+const kpiTitle = compile(props.phrases.kpiTitle);
 </script>
 
 <style scoped lang="scss">
