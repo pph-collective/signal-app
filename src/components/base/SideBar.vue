@@ -66,9 +66,9 @@
           >
         </li>
       </ul>
-      <p v-if="!collapsed" class="menu-label">Historical Datasets</p>
+      <p v-if="!collapsed" class="menu-label">Historical Data</p>
       <p v-else class="menu-label">
-        <abbr title="Historical Datasets">History</abbr>
+        <abbr title="Historical Data">History</abbr>
       </p>
       <ul class="menu-list">
         <li v-for="item in HISTORICAL" :key="item.route">

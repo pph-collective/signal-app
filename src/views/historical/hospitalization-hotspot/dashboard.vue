@@ -100,6 +100,7 @@
           :date="currentDate"
           :metric="'hospitalized'"
           :rate-phrase="'per 100,000'"
+          :phrases="phrases"
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link
@@ -223,7 +224,7 @@
   <DashboardCard width="full" :height="2">
     <template #subtitle>Data Notes</template>
     <template #content>
-      <div class="px-4 content">
+      <div class="is-size-7">
         <p>
           This web tool includes information on COVID-19-associated
           hospitalizations for Rhode Island residents who were admitted to an
@@ -418,6 +419,19 @@ const updateControls = (newControls) => {
 const updateCluster = (newClusterId) => {
   activeCluster.value = clusterIdToCluster(newClusterId);
   dashboardActiveCluster.value = activeCluster.value;
+};
+
+const phrases = {
+  gap: "In {{ name }}, about <strong>{{ rate }}</strong> per 100,000 {{ race }} residents were hospitalized. This was higher than the average rate in Rhode Island.",
+  allResidents:
+    "In {{ name }}, the rate of people who were hospitalized was highest among {{ maxRaceName }} residents. About <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized in {{ startDate }} through {{ endDate }}.",
+  noGap:
+    "In {{ name }}, about <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized. This was lower than the average rate in Rhode Island.",
+  noInfo:
+    "In {{ name }}, there isn't enough hospitalization data on {{ race }} residents to determine their hospitalization rate.",
+  highest:
+    "The highest rate of hospitalization was among <strong>{{ race }} residents </strong>. About <strong>{{ rate }} per 100,000</strong> {{ race }} residents were hospitalized in {{ startDate }} through {{ endDate }}.",
+  kpiTitle: "per 100,000 {{ race }} residents hospitalized in {{ name }}.",
 };
 </script>
 

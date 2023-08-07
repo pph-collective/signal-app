@@ -21,6 +21,15 @@ interface Barrier {
   pct_w_no_insurance: number;
 }
 
+interface Phrases {
+  gap: string;
+  allResidents: string;
+  noGap: string;
+  noInfo: string;
+  highest: string;
+  kpiTitle: string;
+}
+
 interface ClusterBarrier extends Barrier {
   cluster_id: number;
 }
