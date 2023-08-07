@@ -209,7 +209,7 @@ const main = async () => {
   ];
 
   // vaccine and booster schemas
-  if (["vaccine_first_dose_coldspots", "booster_coldspots"].includes(id)) {
+  if (["vax_first_dose_coldspots", "booster_coldspots"].includes(id)) {
     files.push({
       filePath: locationsfile,
       extension: "json",
