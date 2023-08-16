@@ -33,14 +33,6 @@
                   name: props.activeCluster.name,
                   rate: round(maxRace?.rate).toLocaleString('en-US'),
                   maxRaceName: maxRace?.name,
-                  startDate:
-                    parseISOlocal(date).getMonth() >= 10
-                      ? format(parseISOlocal(date), 'MMMM yyyy')
-                      : format(parseISOlocal(date), 'MMMM'),
-                  endDate: format(
-                    add(parseISOlocal(date), { months: 2 }),
-                    'MMMM yyyy'
-                  ),
                 })
               )
             "

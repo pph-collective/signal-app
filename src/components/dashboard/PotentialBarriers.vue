@@ -17,7 +17,7 @@
             <th>State</th>
           </tr>
           <tr v-for="row in rows" :key="row.fieldName">
-            <template v-if="barrier[row.property]">
+            <template v-if="typeof barrier[row.property] == 'number'">
               <td>{{ row.fieldName }}</td>
               <td>{{ formatPct(barrier[row.property]) }}</td>
               <td>{{ formatPct(stateBarriers[row.property]) }}</td>
@@ -56,7 +56,7 @@ const rows = [
   {
     fieldName: "No Health Insurance",
     property: "pct_w_no_insurance",
-    text: "Without health insurance, people might have trouble paying for health care.",
+    text: "Without health insurance, people might have trouble paying for healthcare.",
   },
   {
     fieldName: "No Home Internet",
@@ -69,9 +69,9 @@ const rows = [
     text: "People who speak limited English might have trouble understanding materials in English.",
   },
   {
-    fieldName: "Over 65",
-    property: "pct_over_65",
-    text: "People over 65 years old are at higher risk of needing to go to the hospital with COVID-19.",
+    fieldName: "Over 60",
+    property: "pct_over_60",
+    text: "People over 60 years old are at higher risk of needing to go to the hospital with COVID-19.",
   },
 ];
 </script>

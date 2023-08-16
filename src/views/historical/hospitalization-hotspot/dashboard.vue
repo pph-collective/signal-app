@@ -46,11 +46,11 @@
 
     <template #subtitle>
       This map shows hotspots where more people have gone to the hospital with
-      COVID-19 compared to state levels. Darker areas show higher rates of
-      hospital stays among <strong>{{ controls.focusStat.name }}</strong
-      >. Areas with dashes mean there is not enough information. Select a
-      community, click the <em>Zoom to Community</em> button, and scroll down to
-      learn more.
+      COVID-19 compared to state levels. Darker areas show hotspots. Areas with
+      dashes mean there is not enough information available to show a
+      hospitalization rate. Select a community, click the
+      <em>Zoom to Community</em>
+      button, and scroll down to learn more.
     </template>
 
     <template #content>
@@ -83,7 +83,10 @@
     </template>
   </DashboardCard>
   <DashboardCard id="chart" width="full" :height="2">
-    <template #title>Who was hospitalized with COVID-19?</template>
+    <template #title
+      >Who was hospitalized with COVID-19 between {{ startDate }} and
+      {{ endDate }}?</template
+    >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <HotspotCard
@@ -98,8 +101,6 @@
           ]"
           :focus-stat="controls.focusStat"
           :date="currentDate"
-          :metric="'hospitalized'"
-          :rate-phrase="'per 100,000'"
           :phrases="phrases"
         />
         <div :class="{ invisible: activeCluster.name === '' }">
@@ -119,8 +120,11 @@
       COVID-19?</template
     >
     <template #subtitle
-      >People with fewer resources have a harder time getting
-      vaccinated.</template
+      >When people have fewer resources, like money or vaccines or treatment, it
+      is harder to stay healthy. It is important that all people can access
+      things like vaccines and treatments when they need them. This is
+      especially important for older adults and others who are at risk for
+      getting very sick from COVID-19.</template
     >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
@@ -281,6 +285,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import { format, add } from "date-fns";
 
 import RI_GEOJSON from "@/assets/geography/ri.json";
 import HEZ_GEOJSON from "@/assets/geography/hez.json";
@@ -298,6 +303,7 @@ import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
 import ChooseDate from "../../../components/dashboard/ChooseDate.vue";
 import ExternalLink from "../../../components/base/ExternalLink.vue";
+import { parseISOlocal } from "../../../utils/utils";
 
 const zoomed = ref(false);
 useQueryParam({
@@ -422,17 +428,27 @@ const updateCluster = (newClusterId) => {
 };
 
 const phrases = {
-  gap: "In {{ name }}, about <strong>{{ rate }}</strong> per 100,000 {{ race }} residents were hospitalized. This was higher than the average rate in Rhode Island.",
+  gap: "In {{ name }}, about <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized. This was higher than the overall rate in Rhode Island.",
   allResidents:
-    "In {{ name }}, the rate of people who were hospitalized was highest among {{ maxRaceName }} residents. About <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized in {{ startDate }} through {{ endDate }}.",
+    "In {{ name }}, the rate of people who were hospitalized was highest among {{ maxRaceName }} residents. About <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized.",
   noGap:
-    "In {{ name }}, about <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized. This was lower than the average rate in Rhode Island.",
+    "In {{ name }}, about <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized. This was lower than the overall rate in Rhode Island.",
   noInfo:
     "In {{ name }}, there isn't enough hospitalization data on {{ race }} residents to determine their hospitalization rate.",
   highest:
-    "The highest rate of hospitalization was among <strong>{{ race }} residents </strong>. About <strong>{{ rate }} per 100,000</strong> {{ race }} residents were hospitalized in {{ startDate }} through {{ endDate }}.",
+    "The highest rate of hospitalization was among <strong>{{ race }} residents</strong>. About {{ rate }} per 100,000 {{ race }} residents were hospitalized.",
   kpiTitle: "per 100,000 {{ race }} residents hospitalized in {{ name }}.",
 };
+
+const startDate =
+  parseISOlocal(props.currentDate).getMonth() >= 10
+    ? format(parseISOlocal(props.currentDate), "MMMM yyyy")
+    : format(parseISOlocal(props.currentDate), "MMMM");
+
+const endDate = format(
+  add(parseISOlocal(props.currentDate), { months: 2 }),
+  "MMMM yyyy"
+);
 </script>
 
 <style scoped>
