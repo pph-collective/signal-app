@@ -2,7 +2,7 @@
   <div class="signal-grid-container px-4">
     <div class="content m-auto">
       <ul v-for="row in rows" :key="row.fieldName">
-        <li v-if="barrier[row.property]">
+        <li v-if="typeof barrier[row.property] === 'number'">
           {{ row.text }}
         </li>
       </ul>
@@ -17,7 +17,7 @@
             <th>State</th>
           </tr>
           <tr v-for="row in rows" :key="row.fieldName">
-            <template v-if="typeof barrier[row.property] == 'number'">
+            <template v-if="typeof barrier[row.property] === 'number'">
               <td>{{ row.fieldName }}</td>
               <td>{{ formatPct(barrier[row.property]) }}</td>
               <td>{{ formatPct(stateBarriers[row.property]) }}</td>
