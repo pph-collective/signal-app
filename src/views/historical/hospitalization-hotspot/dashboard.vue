@@ -75,7 +75,7 @@
       </div>
       <div :class="{ invisible: activeCluster.name === '' }">
         <router-link
-          :to="`/dataset/hospitalization-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
+          :to="`/historical/hospitalization-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
         >
           <i class="fa fa-arrow-circle-down fa-2x centered" />
         </router-link>
@@ -105,7 +105,7 @@
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link
-            :to="`/dataset/hospitalization-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
+            :to="`/historical/hospitalization-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
           >
             <i class="fa fa-arrow-circle-down fa-2x centered" />
           </router-link>
@@ -134,7 +134,7 @@
           :active-cluster="activeCluster"
         />
         <router-link
-          :to="`/dataset/hospitalization-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#resources`"
+          :to="`/historical/hospitalization-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#resources`"
         >
           <i class="fa fa-arrow-circle-down fa-2x centered" />
         </router-link>
