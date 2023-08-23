@@ -26,28 +26,17 @@ export const geoToTopo = (features, sphericalArea) => {
   return topo;
 };
 
-export const getMonth = (date: string): string => {
-  const dateParts = date.split("-").map((p) => parseInt(p));
-  return new Date(
-    dateParts[0],
-    dateParts[1] - 1, // months are 0-indexed in js
-    dateParts[2]
-  ).toLocaleDateString("en-US", {
-    month: "long",
-  });
-};
+export function getMonth(date: string): string {
+  return new Date(date).toLocaleDateString("en-US", { month: "long" });
+}
 
-export const monthYear = (date: string): string => {
-  const dateParts = date.split("-").map((p) => parseInt(p));
-  return new Date(
-    dateParts[0],
-    dateParts[1] - 1, // months are 0-indexed in js
-    dateParts[2]
-  ).toLocaleDateString("en-US", {
+// 2022-03-15 => March 2022
+export function monthYear(date: string): string {
+  return new Date(date).toLocaleDateString("en-US", {
     month: "long",
     year: "numeric",
   });
-};
+}
 
 export const parseISOlocal = (date: string): Date => {
   // Support for ISO 8601  differs in that date-only strings (e.g. "1970-01-01") are treated as UTC, not local.
