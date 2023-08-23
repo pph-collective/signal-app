@@ -196,7 +196,7 @@ const maxRace = computed(() => {
   }
 
   // shouldn't reach here, but if it does return the first one
-  return activeStats.value[0];
+  return activeStats.value.find(({ name }) => name === "All Residents");
 });
 
 const maxInclAll = computed(() => {
