@@ -24,6 +24,7 @@ interface Barrier {
 interface Phrases {
   gap: string;
   allResidents: string;
+  allHighest: string;
   noGap: string;
   noInfo: string;
   highest: string;

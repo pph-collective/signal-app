@@ -27,6 +27,18 @@
         <div class="content centered has-text-centered">
           <!-- eslint-disable vue/no-v-html -->
           <div
+            v-if="maxRace?.name === 'All Residents'"
+            v-html="
+              sanitizeHtml(
+                allHighest({
+                  name: props.activeCluster.name,
+                  rate: round(maxRace?.rate).toLocaleString('en-US'),
+                })
+              )
+            "
+          />
+          <div
+            v-else
             v-html="
               sanitizeHtml(
                 allResidents({
@@ -109,20 +121,24 @@
           ></p>
 
           <!-- Highest rate -->
+          <div
+            v-if="maxRace?.name === 'All Residents'"
+            v-html="
+              sanitizeHtml(
+                allHighest({
+                  name: props.activeCluster.name,
+                  rate: round(maxRace?.rate).toLocaleString('en-US'),
+                })
+              )
+            "
+          />
           <p
+            v-else
             v-html="
               sanitizeHtml(
                 highest({
                   race: maxRace?.name,
                   rate: round(maxRace?.rate).toLocaleString(),
-                  startDate:
-                    parseISOlocal(date).getMonth() >= 10
-                      ? format(parseISOlocal(date), 'MMMM yyyy')
-                      : format(parseISOlocal(date), 'MMMM'),
-                  endDate: format(
-                    add(parseISOlocal(date), { months: 2 }),
-                    'MMMM yyyy'
-                  ),
                 })
               )
             "
@@ -135,11 +151,10 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { format, add } from "date-fns";
 
 import HotspotChart from "@/components/dashboard/HotspotChart.vue";
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
-import { parseISOlocal, sortByProperty } from "../../utils/utils";
+import { sortByProperty } from "../../utils/utils";
 import { round } from "lodash";
 import { compile } from "handlebars";
 import sanitizeHtml from "sanitize-html";
@@ -195,7 +210,7 @@ const maxRace = computed(() => {
     }
   }
 
-  // shouldn't reach here, but if it does return the first one
+  // reaches here if all races are suppressed, so return all residents
   return activeStats.value.find(({ name }) => name === "All Residents");
 });
 
@@ -216,6 +231,7 @@ const activeFocusStats = computed(() => {
 
 const gapPhrase = compile(props.phrases.gap);
 const allResidents = compile(props.phrases.allResidents);
+const allHighest = compile(props.phrases.allHighest);
 const noGap = compile(props.phrases.noGap);
 const noInfo = compile(props.phrases.noInfo);
 const highest = compile(props.phrases.highest);

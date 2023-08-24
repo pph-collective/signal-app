@@ -431,6 +431,8 @@ const phrases = {
   gap: "In {{ name }}, about <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized. This was higher than the overall rate in Rhode Island.",
   allResidents:
     "In {{ name }}, the rate of people who were hospitalized was highest among {{ maxRaceName }} residents. About <strong>{{ rate }} per 100,000 {{ maxRaceName }} residents</strong> were hospitalized.",
+  allHighest:
+    "In {{ name }}, the rate of people who were hospitalized was highest among all residents. About <strong>{{ rate }} per 100,000 residents</strong> were hospitalized.",
   noGap:
     "In {{ name }}, about <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized. This was lower than the overall rate in Rhode Island.",
   noInfo:
