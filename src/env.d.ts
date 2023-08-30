@@ -17,6 +17,18 @@ interface Barrier {
   pct_w_no_insurance: number;
   pct_w_no_internet: number;
   pct_w_no_english: number;
+  pct_over_65: number;
+  pct_w_no_insurance: number;
+}
+
+interface Phrases {
+  gap: string;
+  allResidents: string;
+  allHighest: string;
+  noGap: string;
+  noInfo: string;
+  highest: string;
+  kpiTitle: string;
 }
 
 interface ClusterBarrier extends Barrier {

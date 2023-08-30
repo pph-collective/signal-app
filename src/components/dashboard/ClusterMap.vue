@@ -13,6 +13,7 @@ interface Props {
   cluster: Cluster;
   geo: Geo[];
   locations: Location[];
+  mapType: string;
 }
 
 const props = defineProps<Props>();

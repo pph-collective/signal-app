@@ -1,22 +1,9 @@
 <template>
   <div class="signal-grid-container px-4">
     <div class="content m-auto">
-      <ul>
-        <li>
-          Without cars, people might have trouble traveling to certain
-          vaccination sites.
-        </li>
-        <li>
-          Without health insurance, people might have trouble paying for health
-          care.
-        </li>
-        <li>
-          Without internet access, people might have trouble making appointments
-          online.
-        </li>
-        <li>
-          People who speak limited English might have trouble understanding
-          materials in English.
+      <ul v-for="row in rows" :key="row.fieldName">
+        <li v-if="typeof barrier[row.property] === 'number'">
+          {{ row.text }}
         </li>
       </ul>
     </div>
@@ -30,9 +17,11 @@
             <th>State</th>
           </tr>
           <tr v-for="row in rows" :key="row.fieldName">
-            <td>{{ row.fieldName }}</td>
-            <td>{{ formatPct(barrier[row.property]) }}</td>
-            <td>{{ formatPct(stateBarriers[row.property]) }}</td>
+            <template v-if="typeof barrier[row.property] === 'number'">
+              <td>{{ row.fieldName }}</td>
+              <td>{{ formatPct(barrier[row.property]) }}</td>
+              <td>{{ formatPct(stateBarriers[row.property]) }}</td>
+            </template>
           </tr>
         </tbody>
       </table>
@@ -62,18 +51,27 @@ const rows = [
   {
     fieldName: "No Vehicle Available",
     property: "pct_w_no_vehicle",
+    text: "Without cars, people might have trouble traveling to certain vaccination sites.",
   },
   {
     fieldName: "No Health Insurance",
     property: "pct_w_no_insurance",
+    text: "Without health insurance, people might have trouble paying for healthcare.",
   },
   {
     fieldName: "No Home Internet",
     property: "pct_w_no_internet",
+    text: "Without internet access, people might have trouble making appointments online.",
   },
   {
     fieldName: "Limited English",
     property: "pct_w_no_english",
+    text: "People who speak limited English might have trouble understanding materials in English.",
+  },
+  {
+    fieldName: "Over 60",
+    property: "pct_over_60",
+    text: "People over 60 years old are at higher risk of needing to go to the hospital with COVID-19.",
   },
 ];
 </script>

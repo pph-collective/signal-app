@@ -26,8 +26,19 @@ export const geoToTopo = (features, sphericalArea) => {
   return topo;
 };
 
-// 2022-03-15 => March 15, 2022
-export const prettyDate = (date: string): string => {
+export function getMonth(date: string): string {
+  return new Date(date).toLocaleDateString("en-US", { month: "long" });
+}
+
+// 2022-03-15 => March 2022
+export function monthYear(date: string): string {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
+}
+
+export const parseISOlocal = (date: string): Date => {
   // Support for ISO 8601  differs in that date-only strings (e.g. "1970-01-01") are treated as UTC, not local.
   // We split the date into its parts, so we can build a js Date with local time
   const dateParts = date.split("-").map((p) => parseInt(p));
@@ -35,7 +46,12 @@ export const prettyDate = (date: string): string => {
     dateParts[0],
     dateParts[1] - 1, // months are 0-indexed in js
     dateParts[2]
-  ).toLocaleDateString("en-US", {
+  );
+};
+
+// 2022-03-15 => March 15, 2022
+export const prettyDate = (date: string): string => {
+  return parseISOlocal(date).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",

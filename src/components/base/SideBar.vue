@@ -66,6 +66,46 @@
           >
         </li>
       </ul>
+      <p v-if="!collapsed" class="menu-label">Historical Data</p>
+      <p v-else class="menu-label">
+        <abbr title="Historical Data">History</abbr>
+      </p>
+      <ul class="menu-list">
+        <li v-for="item in HISTORICAL" :key="item.route">
+          <router-link
+            v-if="item.available"
+            :class="{ 'is-active': activeRoute === item.route }"
+            :aria-disabled="!item.available"
+            :to="'/historical/' + item.route"
+          >
+            <span v-if="!collapsed">{{ item.name }}</span>
+            <span v-else>
+              <abbr :title="item.name" class="collapsed-flex-item">
+                <i class="fas fa-poll mr-1" />
+                <span>{{ initials(item.name) }}</span>
+              </abbr></span
+            >
+          </router-link>
+          <a
+            v-else
+            disabled
+            :aria-disabled="!item.available"
+            class="not-allowed-cursor"
+          >
+            <span v-if="!collapsed">{{ item.name }}</span>
+            <span v-else
+              ><abbr :title="item.name" class="collapsed-flex-item">
+                <i class="fas fa-poll mr-1" />
+                <span>{{ initials(item.name) }}</span>
+              </abbr></span
+            >
+            <span v-if="!collapsed" class="tag is-light is-warning ml-2"
+              >coming soon</span
+            ></a
+          >
+        </li>
+      </ul>
+
       <p v-if="!collapsed" class="menu-label">Data Spotlights</p>
       <p v-else class="menu-label">
         <abbr title="COVID Cases">DATA</abbr>
@@ -154,6 +194,14 @@ const DATASETS = [
   {
     name: "Booster Gaps",
     route: "booster-gap",
+    available: true,
+  },
+];
+
+const HISTORICAL = [
+  {
+    name: "Hospitalization Hotspots",
+    route: "hospitalization-hotspot",
     available: true,
   },
 ];
