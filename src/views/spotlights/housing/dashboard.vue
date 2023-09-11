@@ -62,7 +62,7 @@
   <DashboardCard width="full">
     <template #content>
       <ControlPanel
-        :drop-downs="caseDropDown"
+        :drop-downs="dropDown"
         :init-value="caseControls"
         @selected="updateCaseControls"
       />
@@ -90,8 +90,8 @@
   <DashboardCard width="full">
     <template #content>
       <ControlPanel
-        :drop-downs="caseDropDown"
-        :init-value="caseControls"
+        :drop-downs="dropDown"
+        :init-value="hospControls"
         @selected="updateHospControls"
       />
       <div>
@@ -284,8 +284,7 @@ const text = {
 
 const data = await fetchSpotlightData(props.datasetName);
 
-// TODO save values in separate variable and include description
-const caseDropDown = {
+const dropDown = {
   age: {
     icon: "fas fa-poll",
     label: "What measure do you want to look at?",
@@ -297,33 +296,31 @@ const caseDropDown = {
 };
 
 const caseFocus = { name: "Cases", value: "cases" };
-
 const hospFocus = { name: "Hospitalizations", value: "hospitalizations" };
 
 const caseControls = ref({
-  age: caseDropDown.age.values[0],
+  age: dropDown.age.values[0],
 });
-
 const hospControls = ref({
-  age: caseDropDown.age.values[0],
+  age: dropDown.age.values[0],
 });
 
 useQueryParam({
   param: "caseage",
   ref: caseControls,
   refField: "age",
-  valid: (p) => caseDropDown.age.values.some((v) => p === v.value),
+  valid: (p) => dropDown.age.values.some((v) => p === v.value),
   valToParam: (v) => v.value,
-  paramToVal: (p) => caseDropDown.age.values.find((v) => p === v.value),
+  paramToVal: (p) => dropDown.age.values.find((v) => p === v.value),
 });
 
 useQueryParam({
   param: "hospage",
   ref: hospControls,
   refField: "age",
-  valid: (p) => caseDropDown.age.values.some((v) => p === v.value),
+  valid: (p) => dropDown.age.values.some((v) => p === v.value),
   valToParam: (v) => v.value,
-  paramToVal: (p) => caseDropDown.age.values.find((v) => p === v.value),
+  paramToVal: (p) => dropDown.age.values.find((v) => p === v.value),
 });
 
 const updateHospControls = (newControls) => {
