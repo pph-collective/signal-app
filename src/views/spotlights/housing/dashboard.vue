@@ -68,7 +68,7 @@
       />
       <div>
         {{
-          controls.age.value === "adjusted"
+          caseControls.age.value === "adjusted"
             ? text.age.adjusted
             : text.age.specific
         }}
@@ -91,12 +91,12 @@
     <template #content>
       <ControlPanel
         :drop-downs="caseDropDown"
-        :init-value="controls"
-        @selected="updateControls"
+        :init-value="caseControls"
+        @selected="updateHospControls"
       />
       <div>
         {{
-          controls.age.value === "adjusted"
+          caseControls.age.value === "adjusted"
             ? text.age.adjusted
             : text.age.specific
         }}
@@ -111,7 +111,7 @@
       <!-- add in outcomeData properly below -->
       <DataSpotlight
         :metric="hospFocus"
-        :age="controls.age"
+        :age="hospControls.age"
         :data="data"
         :text="text"
         :legend-title="'Housing Type'"
@@ -298,7 +298,13 @@ const caseDropDown = {
 
 const caseFocus = { name: "Cases", value: "cases" };
 
+const hospFocus = { name: "Hospitalizations", value: "hospitalizations" };
+
 const caseControls = ref({
+  age: caseDropDown.age.values[0],
+});
+
+const hospControls = ref({
   age: caseDropDown.age.values[0],
 });
 
@@ -311,30 +317,24 @@ useQueryParam({
   paramToVal: (p) => caseDropDown.age.values.find((v) => p === v.value),
 });
 
-const updateCaseControls = (newControls) => {
-  for (const [k, v] of Object.entries(newControls)) {
-    caseControls.value[k] = v;
-  }
-};
-
-const hospFocus = { name: "Hospitalizations", value: "hospitalizations" };
-
-const controls = ref({
-  age: caseDropDown.age.values[0],
-});
-
 useQueryParam({
   param: "hospage",
-  ref: controls,
+  ref: hospControls,
   refField: "age",
   valid: (p) => caseDropDown.age.values.some((v) => p === v.value),
   valToParam: (v) => v.value,
   paramToVal: (p) => caseDropDown.age.values.find((v) => p === v.value),
 });
 
-const updateControls = (newControls) => {
+const updateHospControls = (newControls) => {
   for (const [k, v] of Object.entries(newControls)) {
-    controls.value[k] = v;
+    hospControls.value[k] = v;
+  }
+};
+
+const updateCaseControls = (newControls) => {
+  for (const [k, v] of Object.entries(newControls)) {
+    caseControls.value[k] = v;
   }
 };
 </script>
