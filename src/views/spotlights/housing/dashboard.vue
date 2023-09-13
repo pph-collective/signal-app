@@ -96,7 +96,7 @@
       />
       <div>
         {{
-          caseControls.age.value === "adjusted"
+          hospControls.age.value === "adjusted"
             ? text.age.adjusted
             : text.age.specific
         }}
