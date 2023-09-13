@@ -43,8 +43,8 @@ const props = defineProps<{
 const barrier = computed(
   () =>
     props.barriers.find(
-      (b) => b.cluster_id === props.activeCluster.cluster_id
-    ) ?? {}
+      (b) => b.cluster_id === props.activeCluster.cluster_id,
+    ) ?? {},
 );
 
 const rows = [

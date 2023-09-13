@@ -29,7 +29,7 @@ const filteredTown = computed(() => {
     filtered = filtered.filter(
       (g) =>
         props.filterTown === g.properties.name ||
-        props.filterTown === g.properties.HEZ
+        props.filterTown === g.properties.HEZ,
     );
   }
 
@@ -42,7 +42,7 @@ const clusters = computed(() => {
 
   deepCopy.forEach((g: Geo) => {
     const datum = props.stats.find(
-      (d: { cluster_id: number }) => d.cluster_id === g.properties.cluster_id
+      (d: { cluster_id: number }) => d.cluster_id === g.properties.cluster_id,
     );
 
     const additionalFields = {};
@@ -50,7 +50,7 @@ const clusters = computed(() => {
       // Floored the gap such that it's always >= 0
       additionalFields[`gap_${field}`] = Math.max(
         0,
-        datum[`expected_${field}`] - datum[`observed_${field}`]
+        datum[`expected_${field}`] - datum[`observed_${field}`],
       );
 
       additionalFields[`gap_${field}_pct`] =
@@ -105,24 +105,24 @@ const tooltipSignal = computed(() => {
     return `{
       title: datum.properties.name
       , 'Percent gap among ${focusFields.value.name.toLowerCase()}': datum.properties.${
-      focusFields.value.population
-    } > 0 ? format(datum.properties.${
-      focusFields.value.fill
-    }, '.1%') : 'Not enough information'
+        focusFields.value.population
+      } > 0 ? format(datum.properties.${
+        focusFields.value.fill
+      }, '.1%') : 'Not enough information'
       , 'Dose gap among ${focusFields.value.name.toLowerCase()}': datum.properties.${
-      focusFields.value.population
-    } > 0 ? datum.properties.${
-      focusFields.value.tooltip
-    } : 'Not enough information'
+        focusFields.value.population
+      } > 0 ? datum.properties.${
+        focusFields.value.tooltip
+      } : 'Not enough information'
     }`;
   } else {
     return `{
       title: datum.properties.name
       , 'Rate of hospitalization among ${focusFields.value.name.toLowerCase()}': datum.properties.${
-      focusFields.value.population
-    } > 0 ? datum.properties.${
-      focusFields.value.tooltip
-    } + ' per 100,000' : 'Not enough information'
+        focusFields.value.population
+      } > 0 ? datum.properties.${
+        focusFields.value.tooltip
+      } + ' per 100,000' : 'Not enough information'
     }`;
   }
 });

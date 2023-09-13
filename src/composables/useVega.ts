@@ -43,8 +43,8 @@ export function useVega({
         maxWidth.value,
         Math.max(
           minWidth.value,
-          Math.min(el.value.parentElement.clientWidth, window.innerWidth)
-        ) - actionsWidth.value
+          Math.min(el.value.parentElement.clientWidth, window.innerWidth),
+        ) - actionsWidth.value,
       );
     }
     return minWidth.value;
@@ -56,8 +56,11 @@ export function useVega({
         maxHeight.value,
         Math.max(
           minHeight.value,
-          Math.min(el.value.parentElement.clientHeight - 10, window.innerHeight)
-        )
+          Math.min(
+            el.value.parentElement.clientHeight - 10,
+            window.innerHeight,
+          ),
+        ),
       );
     }
     return minHeight.value;
@@ -126,7 +129,7 @@ export function useVega({
   onMounted(updatePlot);
   onMounted(
     () =>
-      el.value?.parentElement && resizeObserver.observe(el.value.parentElement)
+      el.value?.parentElement && resizeObserver.observe(el.value.parentElement),
   );
   watch(spec, updatePlot);
   onUnmounted(finalize);

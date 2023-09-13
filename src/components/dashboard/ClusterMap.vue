@@ -21,7 +21,7 @@ const props = defineProps<Props>();
 // filter the geo to the cluster
 const filteredGeo = computed(() => {
   const features = props.geo.filter(
-    (g) => props.cluster.cluster_id === g.properties.cluster_id
+    (g) => props.cluster.cluster_id === g.properties.cluster_id,
   );
 
   return geoToTopo(features, 3e-10);

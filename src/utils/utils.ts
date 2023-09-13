@@ -19,8 +19,8 @@ export const geoToTopo = (features, sphericalArea) => {
     topojson.filterAttachedWeight(
       topo,
       sphericalArea,
-      topojson.sphericalRingArea
-    )
+      topojson.sphericalRingArea,
+    ),
   );
 
   return topo;
@@ -45,7 +45,7 @@ export const parseISOlocal = (date: string): Date => {
   return new Date(
     dateParts[0],
     dateParts[1] - 1, // months are 0-indexed in js
-    dateParts[2]
+    dateParts[2],
   );
 };
 

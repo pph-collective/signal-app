@@ -378,11 +378,11 @@ const main = async () => {
   if (!collections.includes(id)) {
     if (newId) {
       console.warn(
-        `WARNING! id does not exist in firestore. This script will create the following collection: ${id}`
+        `WARNING! id does not exist in firestore. This script will create the following collection: ${id}`,
       );
     } else {
       warnAndExit(`ERROR! id must match an existing collection id: ${collections.join(
-        ", "
+        ", ",
       )}.
       Use the --newId flag to create a new collection id for "${id}"`);
     }
@@ -398,11 +398,11 @@ const main = async () => {
     if (fs.existsSync(dir)) {
       if (overwrite) {
         console.warn(
-          `WARNING! Directory exists locally. Overwriting... ${dir}`
+          `WARNING! Directory exists locally. Overwriting... ${dir}`,
         );
       } else {
         warnAndExit(
-          `ERROR!: Directory exists locally. Use the overwrite flag if you wish to continue: ${dir}`
+          `ERROR!: Directory exists locally. Use the overwrite flag if you wish to continue: ${dir}`,
         );
       }
     }
@@ -412,11 +412,11 @@ const main = async () => {
     if (docSnapshot.exists) {
       if (overwrite) {
         console.warn(
-          `WARNING! Document exists in Firestore. Overwriting... ${docPath}`
+          `WARNING! Document exists in Firestore. Overwriting... ${docPath}`,
         );
       } else {
         warnAndExit(
-          `ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: ${docPath}`
+          `ERROR!: Document exists in Firestore. Use the overwrite flag if you wish to continue: ${docPath}`,
         );
       }
     }
@@ -440,7 +440,7 @@ const main = async () => {
           file.isArray ? "an array" : "an object"
         }, but is instead contained ${
           Array.isArray(file.data) ? "an array" : "a " + typeof file.data
-        }.`
+        }.`,
       );
     }
 
@@ -480,7 +480,7 @@ const main = async () => {
           [field]: stringify(data),
           ...previous,
         }),
-        {}
+        {},
       ),
       last_updated: Date.now(),
     });
@@ -495,15 +495,15 @@ const checkSchema = (schema, row, filePath) => {
     if (value === undefined) {
       warnAndExit(
         `ERROR!: object ${JSON.stringify(
-          row
-        )} in ${filePath} is missing field ${col.name}`
+          row,
+        )} in ${filePath} is missing field ${col.name}`,
       );
     }
     if (typeof value !== col.type) {
       warnAndExit(
         `ERROR!: field ${col.name} in object ${JSON.stringify(
-          row
-        )} in ${filePath} has type ${typeof value}, but expected ${col.type}`
+          row,
+        )} in ${filePath} has type ${typeof value}, but expected ${col.type}`,
       );
     }
 

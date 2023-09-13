@@ -45,7 +45,7 @@ const props = defineProps<{
 
 const activeStats = computed(() => {
   const row = props.data.age_adjusted.filter(
-    (stat) => stat.outcome_type === props.metric.value
+    (stat) => stat.outcome_type === props.metric.value,
   );
   return row;
 });

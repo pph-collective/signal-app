@@ -354,7 +354,7 @@ watch(
   (item) => {
     emit("newDate", item.value);
   },
-  { deep: true }
+  { deep: true },
 );
 
 const updateDate = (newDate) => {
@@ -449,7 +449,7 @@ const startDate =
 
 const endDate = format(
   add(parseISOlocal(props.currentDate), { months: 2 }),
-  "MMMM yyyy"
+  "MMMM yyyy",
 );
 </script>
 
