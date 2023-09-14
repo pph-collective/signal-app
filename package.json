@@ -26,7 +26,7 @@
     "topojson-simplify": "^3.0.3",
     "vega": "^5.21.0",
     "vega-embed": "^6.20.5",
-    "vega-lite": "^5.2.0",
+    "vega-lite": "^5.15.0",
     "vue": "^3.2.26",
     "vue-router": "^4.0.12",
     "zipson": "^0.2.12"
@@ -47,7 +47,7 @@
     "firebase-tools": "^12.5.4",
     "husky": "^8.0.1",
     "prettier": "^3.0.3",
-    "sass": "^1.46.0",
+    "sass": "^1.67.0",
     "typescript": "^5.2.2",
     "utility-types": "^3.10.0",
     "vite": "^4.4.9"
