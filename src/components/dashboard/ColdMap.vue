@@ -159,6 +159,10 @@ const spec = computed(() => {
             events: "@cluster_groups:mousedown",
             update: `activeGeography === datum.properties.cluster_id ? ${NULL_CLUSTER.cluster_id} : datum.properties.cluster_id`,
           },
+          {
+            events: "@cluster_groups:touchend",
+            update: `activeGeography === datum.properties.cluster_id ? ${NULL_CLUSTER.cluster_id} : datum.properties.cluster_id`,
+          },
         ],
       },
     ],
