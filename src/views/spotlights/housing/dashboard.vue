@@ -62,20 +62,16 @@
   <DashboardCard width="full">
     <template #content>
       <ControlPanel
-        :drop-downs="caseDropDown"
+        :drop-downs="dropDown"
         :init-value="caseControls"
         @selected="updateCaseControls"
       />
-      <div v-if="caseControls.age.value === 'adjusted'">
-        What is an age-adjusted rate? Age plays a big role in a person's risk
-        for COVID-19. Different groups of people have different age
-        distributions - meaning one group may have more old people, or one group
-        may have more young people. Age adjusting makes it so we can compare
-        between groups that have different age distributions.
-      </div>
-      <div v-else-if="caseControls.age.value === 'specific'">
-        Rates tell us how many people have tested positive for COVID-19 compared
-        to a larger group taking into account the population size of that group.
+      <div>
+        {{
+          caseControls.age.value === "adjusted"
+            ? text.age.adjusted
+            : text.age.specific
+        }}
       </div>
     </template>
   </DashboardCard>
@@ -94,20 +90,16 @@
   <DashboardCard width="full">
     <template #content>
       <ControlPanel
-        :drop-downs="dropDowns"
-        :init-value="controls"
-        @selected="updateControls"
+        :drop-downs="dropDown"
+        :init-value="hospControls"
+        @selected="updateHospControls"
       />
-      <div v-if="controls.age.value === 'adjusted'">
-        What is an age-adjusted rate? Age plays a big role in a person's risk
-        for COVID-19. Different groups of people have different age
-        distributions - meaning one group may have more old people, or one group
-        may have more young people. Age adjusting makes it so we can compare
-        between groups that have different age distributions.
-      </div>
-      <div v-else-if="controls.age.value === 'specific'">
-        Rates tell us how many people have tested positive for COVID-19 compared
-        to a larger group taking into account the population size of that group.
+      <div>
+        {{
+          hospControls.age.value === "adjusted"
+            ? text.age.adjusted
+            : text.age.specific
+        }}
       </div>
     </template>
   </DashboardCard>
@@ -119,7 +111,7 @@
       <!-- add in outcomeData properly below -->
       <DataSpotlight
         :metric="hospFocus"
-        :age="controls.age"
+        :age="hospControls.age"
         :data="data"
         :text="text"
         :legend-title="'Housing Type'"
@@ -282,12 +274,17 @@ const text = {
     specific:
       "<p>COVID-19 case rates were <strong>higher in younger adults</strong>. Younger adults in <strong>non-congregate</strong> and <strong>public</strong> housing had higher rates of COVID-19 than those who lived in Section VIII housing.</p><br><p>COVID-19 case rates were <strong>lower in older adults</strong>. Older adults in <strong>Section VIII housing</strong> had higher rates of COVID-19 than those who lived in other types of housing.</p>",
   },
+  age: {
+    adjusted:
+      "What is an age-adjusted rate? Age plays a big role in a person's risk for COVID-19. Different groups of people have different age distributions - meaning one group may have more old people, or one group may have more young people. Age adjusting makes it so we can compare between groups that have different age distributions.",
+    specific:
+      "Rates tell us how many people have tested positive for COVID-19 compared to a larger group taking into account the population size of that group.",
+  },
 };
 
 const data = await fetchSpotlightData(props.datasetName);
 
-// TODO save values in separate variable and include description
-const caseDropDown = {
+const dropDown = {
   age: {
     icon: "fas fa-poll",
     label: "What measure do you want to look at?",
@@ -299,55 +296,42 @@ const caseDropDown = {
 };
 
 const caseFocus = { name: "Cases", value: "cases" };
+const hospFocus = { name: "Hospitalizations", value: "hospitalizations" };
 
 const caseControls = ref({
-  age: caseDropDown.age.values[0],
+  age: dropDown.age.values[0],
+});
+const hospControls = ref({
+  age: dropDown.age.values[0],
 });
 
 useQueryParam({
-  param: "cases",
+  param: "caseage",
   ref: caseControls,
   refField: "age",
-  valid: (p) => caseDropDown.age.values.some((v) => p === v.value),
+  valid: (p) => dropDown.age.values.some((v) => p === v.value),
   valToParam: (v) => v.value,
-  paramToVal: (p) => caseDropDown.age.values.find((v) => p === v.value),
+  paramToVal: (p) => dropDown.age.values.find((v) => p === v.value),
 });
+
+useQueryParam({
+  param: "hospage",
+  ref: hospControls,
+  refField: "age",
+  valid: (p) => dropDown.age.values.some((v) => p === v.value),
+  valToParam: (v) => v.value,
+  paramToVal: (p) => dropDown.age.values.find((v) => p === v.value),
+});
+
+const updateHospControls = (newControls) => {
+  for (const [k, v] of Object.entries(newControls)) {
+    hospControls.value[k] = v;
+  }
+};
 
 const updateCaseControls = (newControls) => {
   for (const [k, v] of Object.entries(newControls)) {
     caseControls.value[k] = v;
-  }
-};
-
-const dropDowns = {
-  age: {
-    icon: "fas fa-poll",
-    label: "What measure do you want to look at?",
-    values: [
-      { name: "Age Adjusted Rates", value: "adjusted" },
-      { name: "Rate by Age", value: "specific" },
-    ],
-  },
-};
-
-const hospFocus = { name: "Hospitalizations", value: "hospitalizations" };
-
-const controls = ref({
-  age: dropDowns.age.values[0],
-});
-
-useQueryParam({
-  param: "age",
-  ref: controls,
-  refField: "age",
-  valid: (p) => dropDowns.age.values.some((v) => p === v.value),
-  valToParam: (v) => v.value,
-  paramToVal: (p) => dropDowns.age.values.find((v) => p === v.value),
-});
-
-const updateControls = (newControls) => {
-  for (const [k, v] of Object.entries(newControls)) {
-    controls.value[k] = v;
   }
 };
 </script>
