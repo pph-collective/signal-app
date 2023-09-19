@@ -9,7 +9,7 @@ For the map to work, you'll need a `.env` file in your project root directory wi
 VITE_MAPBOX_ACCESS_TOKEN=
 ```
 
-Node version: 16+
+Node version: 18+
 
 ```bash
 # install dependencies
@@ -18,14 +18,13 @@ $ npm install
 
 ### Compiles and hot-reloads for development
 ```bash
-# serve with hot reload at localhost:3000
+# serve with hot reload at localhost:5173
 $ npm run dev
 ```
 
 ### Linting
 ```bash
 $ npm run lint # report and fix linting errors
-$ npm run tscheck # check for type errors
 ```
 
 ### build for production and launch server
