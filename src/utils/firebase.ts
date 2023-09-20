@@ -61,7 +61,7 @@ export const fetchColdSpotData = async (datasetName: string, date: string) => {
   const result = await getDocWithDefaultPreferCache(
     defaults,
     datasetName,
-    date
+    date,
   );
 
   Object.entries(result).forEach(([field, value]) => {
@@ -84,7 +84,7 @@ export const fetchSpotlightData = async (datasetName: string) => {
   const result = await getDocWithDefaultPreferCache(
     defaults,
     "spotlights",
-    datasetName
+    datasetName,
   );
 
   return result;

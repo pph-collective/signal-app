@@ -12,6 +12,6 @@ withDefaults(
   }>(),
   {
     showIcon: true,
-  }
+  },
 );
 </script>

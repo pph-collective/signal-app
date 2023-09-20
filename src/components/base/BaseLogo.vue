@@ -17,7 +17,7 @@ const props = defineProps({
 const imgSrc = computed(() =>
   props.inverted
     ? "/images/signal-logo-inverted.png"
-    : "/images/signal-logo.png"
+    : "/images/signal-logo.png",
 );
 </script>
 

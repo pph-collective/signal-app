@@ -33,7 +33,7 @@
                 allHighest({
                   name: props.activeCluster.name,
                   rate: round(maxRace?.rate).toLocaleString('en-US'),
-                })
+                }),
               )
             "
           />
@@ -45,7 +45,7 @@
                   name: props.activeCluster.name,
                   rate: round(maxRace?.rate).toLocaleString('en-US'),
                   maxRaceName: maxRace?.name,
-                })
+                }),
               )
             "
           />
@@ -72,7 +72,7 @@
               kpiTitle({
                 race: activeFocusStats?.name,
                 name: props.activeCluster.name,
-              })
+              }),
             )
           "
         />
@@ -88,7 +88,7 @@
                 name: props.activeCluster.name,
                 rate: round(activeFocusStats?.rate).toLocaleString(),
                 race: activeFocusStats?.name,
-              })
+              }),
             )
           "
         />
@@ -103,7 +103,7 @@
                   name: props.activeCluster.name,
                   rate: round(activeFocusStats?.rate).toLocaleString(),
                   race: activeFocusStats?.name,
-                })
+                }),
               )
             "
           />
@@ -115,7 +115,7 @@
                 noInfo({
                   name: props.activeCluster.name,
                   race: activeFocusStats?.name,
-                })
+                }),
               )
             "
           ></p>
@@ -128,7 +128,7 @@
                 allHighest({
                   name: props.activeCluster.name,
                   rate: round(maxRace?.rate).toLocaleString('en-US'),
-                })
+                }),
               )
             "
           />
@@ -139,7 +139,7 @@
                 highest({
                   race: maxRace?.name,
                   rate: round(maxRace?.rate).toLocaleString(),
-                })
+                }),
               )
             "
           ></p>
@@ -179,7 +179,7 @@ const fieldData = computed(() => {
 
 const activeStats = computed(() => {
   const row = props.stats.find(
-    (stat) => stat.name === props.activeCluster.name
+    (stat) => stat.name === props.activeCluster.name,
   );
   if (row) {
     return fieldData.value
@@ -225,7 +225,7 @@ const maxInclAll = computed(() => {
 
 const activeFocusStats = computed(() => {
   return activeStats.value.find(
-    (a) => a.name.toUpperCase() === props.focusStat.value.toUpperCase()
+    (a) => a.name.toUpperCase() === props.focusStat.value.toUpperCase(),
   );
 });
 

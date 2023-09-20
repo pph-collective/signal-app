@@ -47,6 +47,6 @@ watch(
   (item) => {
     emit("newDate", item.value);
   },
-  { deep: true }
+  { deep: true },
 );
 </script>

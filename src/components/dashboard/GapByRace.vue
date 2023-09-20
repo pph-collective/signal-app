@@ -127,7 +127,7 @@ const props = defineProps<{
 }>();
 
 const expected = computed(
-  () => props.stats[0].expected_total / props.stats[0].population_total
+  () => props.stats[0].expected_total / props.stats[0].population_total,
 );
 
 const fieldData = computed(() => {
@@ -141,7 +141,7 @@ const fieldData = computed(() => {
 
 const activeStats = computed(() => {
   const row = props.stats.find(
-    (stat) => stat.name === props.activeCluster.name
+    (stat) => stat.name === props.activeCluster.name,
   );
   if (row) {
     // don't let a population be more than 99% vaccinated
@@ -178,7 +178,7 @@ const minVaxRace = computed(() => {
 
 const activeFocusStats = computed(() => {
   return activeStats.value.find(
-    (a) => a.name.toUpperCase() === props.focusStat.value.toUpperCase()
+    (a) => a.name.toUpperCase() === props.focusStat.value.toUpperCase(),
   );
 });
 </script>
