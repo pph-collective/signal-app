@@ -320,8 +320,9 @@ const phrases = {
     "In {{ name }}, there isn't enough vaccine data on <strong>{{ race }} residents</strong> to determine their vaccination status or the number of vaccine doses needed to close the gap.",
   highest:
     "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ rate }}</strong> of {{ minRaceName }} residents are vaccinated. Approximately <strong>{{ gap }}</strong> more {{ minRaceName }} residents need to be vaccinated to close this gap.",
-  kpiTitle: "{{ race }} residents vaccinated in {{ name }}.",
-  gapKpiTitle: "Approximate vaccine doses to",
+  kpiTitle: "{{ race }} residents vaccinated in {{ name }}",
+  gapKpiTitle:
+    "Approximate vaccine doses for {{ race }} residents needed to close the gap",
 };
 </script>
 

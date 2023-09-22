@@ -56,13 +56,27 @@
               ? formatPct(activeFocusStats?.pct)
               : '?'
           "
-          :title="`${activeFocusStats?.name} residents vaccinated in ${activeCluster.name}`"
+          :title="
+            sanitizeHtml(
+              kpiTitle({
+                race: activeFocusStats?.name,
+                name: props.activeCluster.name,
+              }),
+            )
+          "
         />
         <KeyPerformanceIndicator
           :value="
             activeFocusStats?.population > 0 ? activeFocusStats?.gap : '?'
           "
-          :title="`Approximate vaccine doses for ${activeFocusStats?.name} residents needed to close the gap`"
+          :title="
+            sanitizeHtml(
+              gapKpiTitle({
+                race: activeFocusStats?.name,
+                name: props.activeCluster.name,
+              }),
+            )
+          "
         />
       </div>
       <div class="content centered has-text-centered">
@@ -210,6 +224,8 @@ const allResidents = compile(props.phrases.allResidents);
 const noGap = compile(props.phrases.noGap);
 const noInfo = compile(props.phrases.noInfo);
 const highest = compile(props.phrases.highest);
+const kpiTitle = compile(props.phrases.kpiTitle);
+const gapKpiTitle = compile(props.phrases.gapKpiTitle);
 </script>
 
 <style scoped lang="scss">
