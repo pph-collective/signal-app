@@ -32,8 +32,8 @@
               allResidents({
                 name: activeCluster.name,
                 minRaceName: minVaxRace?.name,
-                rate: formatPct(minVaxRace?.pct),
-                expectedRate: formatPct(expected),
+                pct: formatPct(minVaxRace?.pct),
+                expectedPct: formatPct(expected),
                 gap: minVaxRace?.gap,
               }),
             )
@@ -88,9 +88,9 @@
             sanitizeHtml(
               gapPhrase({
                 name: props.activeCluster.name,
-                rate: formatPct(activeFocusStats?.pct),
+                pct: formatPct(activeFocusStats?.pct),
                 race: activeFocusStats?.name,
-                expectedRate: formatPct(expected),
+                expectedPct: formatPct(expected),
                 gap: activeFocusStats?.gap,
               }),
             )
@@ -105,9 +105,9 @@
               sanitizeHtml(
                 noGap({
                   name: props.activeCluster.name,
-                  rate: formatPct(activeFocusStats?.pct),
+                  pct: formatPct(activeFocusStats?.pct),
                   race: activeFocusStats?.name,
-                  expectedRate: formatPct(expected),
+                  expectedPct: formatPct(expected),
                 }),
               )
             "
@@ -134,7 +134,7 @@
               sanitizeHtml(
                 highest({
                   minRaceName: minVaxRace?.name,
-                  rate: formatPct(minVaxRace?.pct),
+                  pct: formatPct(minVaxRace?.pct),
                   gap: minVaxRace?.gap,
                 }),
               )

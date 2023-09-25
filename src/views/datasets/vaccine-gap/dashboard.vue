@@ -311,15 +311,15 @@ const updateCluster = (newClusterId) => {
 };
 
 const phrases = {
-  gap: "In {{ name }}, <strong>{{ rate }}</strong> of {{ race }} residents are vaccinated compared to our goal of {{ expectedRate }} total vaccinations statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be vaccinated to close this gap.",
+  gap: "In {{ name }}, <strong>{{ pct }}</strong> of {{ race }} residents are vaccinated compared to our goal of {{ expectedPct }} total vaccinations statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be vaccinated to close this gap.",
   allResidents:
-    "In {{ name }}, the largest gap was among {{ minRaceName }} residents. Only <strong>{{ rate }} of {{ name }} residents</strong> are vaccinated compared to {{ expectedRate }} statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to receive a dose to close this gap.",
+    "In {{ name }}, the largest gap was among {{ minRaceName }} residents. Only <strong>{{ pct }} of {{ name }} residents</strong> are vaccinated compared to {{ expectedPct }} statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to receive a dose to close this gap.",
   noGap:
-    "In {{ name }}, <strong>{{ rate }}</strong> of {{ race }} residents are vaccinated compared to our goal of {{ expectedRate }} total vaccinations statewide.",
+    "In {{ name }}, <strong>{{ pct }}</strong> of {{ race }} residents are vaccinated compared to our goal of {{ expectedPct }} total vaccinations statewide.",
   noInfo:
     "In {{ name }}, there isn't enough vaccine data on <strong>{{ race }} residents</strong> to determine their vaccination status or the number of vaccine doses needed to close the gap.",
   highest:
-    "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ rate }}</strong> of {{ minRaceName }} residents are vaccinated. Approximately <strong>{{ gap }}</strong> more {{ minRaceName }} residents need to be vaccinated to close this gap.",
+    "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ pct }}</strong> of {{ minRaceName }} residents are vaccinated. Approximately <strong>{{ gap }}</strong> more {{ minRaceName }} residents need to be vaccinated to close this gap.",
   kpiTitle: "{{ race }} residents vaccinated in {{ name }}",
   gapKpiTitle:
     "Approximate vaccine doses for {{ race }} residents needed to close the gap",
