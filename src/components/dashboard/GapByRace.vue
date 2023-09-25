@@ -24,20 +24,21 @@
         />
       </div>
       <div class="centered">
-        <p class="has-text-centered">
-          In {{ activeCluster.name }}, the largest gap is among
-          {{ minVaxRace?.name }} residents. Only
-          <strong
-            >{{ formatPct(minVaxRace?.pct) }} of
-            {{ minVaxRace?.name }} residents</strong
-          >
-          are vaccinated compared to {{ formatPct(expected) }} statewide.
-          Approximately
-          <strong
-            >{{ minVaxRace?.gap }} more {{ minVaxRace?.name }} residents</strong
-          >
-          need to receive a dose to close this gap.
-        </p>
+        <!-- eslint-disable vue/no-v-html -->
+        <p
+          class="has-text-centered"
+          v-html="
+            sanitizeHtml(
+              allResidents({
+                name: activeCluster.name,
+                minRaceName: minVaxRace?.name,
+                pct: formatPct(minVaxRace?.pct),
+                expectedPct: formatPct(expected),
+                gap: minVaxRace?.gap,
+              }),
+            )
+          "
+        />
       </div>
     </div>
 
@@ -55,57 +56,90 @@
               ? formatPct(activeFocusStats?.pct)
               : '?'
           "
-          :title="`${activeFocusStats?.name} residents vaccinated in ${activeCluster.name}`"
+          :title="
+            sanitizeHtml(
+              kpiTitle({
+                race: activeFocusStats?.name,
+                name: props.activeCluster.name,
+              }),
+            )
+          "
         />
         <KeyPerformanceIndicator
           :value="
             activeFocusStats?.population > 0 ? activeFocusStats?.gap : '?'
           "
-          :title="`Approximate vaccine doses for ${activeFocusStats?.name} residents needed to close the gap`"
+          :title="
+            sanitizeHtml(
+              gapKpiTitle({
+                race: activeFocusStats?.name,
+                name: props.activeCluster.name,
+              }),
+            )
+          "
         />
       </div>
       <div class="content centered has-text-centered">
         <!-- In this community, there is a gap in this focus group -->
-        <p v-if="activeFocusStats?.gap > 0">
-          In {{ activeCluster.name }},
-          <strong>{{ formatPct(activeFocusStats?.pct) }}</strong> of
-          {{ activeFocusStats?.name }} residents are vaccinated compared to our
-          goal of {{ formatPct(expected) }} total vaccinations statewide.
-          Approximately
-          <strong
-            >{{ activeFocusStats?.gap }} more
-            {{ activeFocusStats?.name }} residents</strong
-          >
-          need to be vaccinated to close this gap.
-        </p>
+        <!-- eslint-disable vue/no-v-html -->
+        <p
+          v-if="activeFocusStats?.gap > 0"
+          v-html="
+            sanitizeHtml(
+              gapPhrase({
+                name: props.activeCluster.name,
+                pct: formatPct(activeFocusStats?.pct),
+                race: activeFocusStats?.name,
+                expectedPct: formatPct(expected),
+                gap: activeFocusStats?.gap,
+              }),
+            )
+          "
+        />
         <!-- There is no gap in this focus group, display the largest gap -->
         <span v-else>
-          <!-- Fully Vaccinated -->
-          <p v-if="activeFocusStats?.population > 0">
-            In {{ activeCluster.name }},
-            <strong>{{ formatPct(activeFocusStats?.pct) }}</strong> of
-            {{ activeFocusStats?.name }} residents are vaccinated compared to
-            our goal of {{ formatPct(expected) }} total vaccinations statewide.
-          </p>
+          <!-- eslint-disable vue/no-v-html -->
+          <p
+            v-if="activeFocusStats?.population > 0"
+            v-html="
+              sanitizeHtml(
+                noGap({
+                  name: props.activeCluster.name,
+                  pct: formatPct(activeFocusStats?.pct),
+                  race: activeFocusStats?.name,
+                  expectedPct: formatPct(expected),
+                }),
+              )
+            "
+          />
 
           <!-- Not Enough Information-->
-          <p v-else>
-            In {{ activeCluster.name }}, there isn't enough vaccine data on
-            <strong>{{ activeFocusStats?.name }} residents</strong> to determine
-            their vaccination status or the number of vaccine doses needed to
-            close the gap.
-          </p>
+          <!-- eslint-disable vue/no-v-html -->
+          <p
+            v-else
+            v-html="
+              sanitizeHtml(
+                noInfo({
+                  name: props.activeCluster.name,
+                  race: activeFocusStats?.name,
+                }),
+              )
+            "
+          />
 
-          <!-- Largest Gap -->
-          <p>
-            The largest gap is among
-            <strong>{{ minVaxRace?.name }} residents</strong>. Only
-            <strong>{{ formatPct(minVaxRace?.pct) }}</strong> of
-            {{ minVaxRace?.name }} residents are vaccinated. Approximately
-            <strong>{{ minVaxRace?.gap }}</strong> more
-            {{ minVaxRace?.name }} residents need to be vaccinated to close this
-            gap.
-          </p>
+          <!-- Largest Gap, displayed when no gap or not enough info -->
+          <!-- eslint-disable vue/no-v-html -->
+          <p
+            v-html="
+              sanitizeHtml(
+                highest({
+                  minRaceName: minVaxRace?.name,
+                  pct: formatPct(minVaxRace?.pct),
+                  gap: minVaxRace?.gap,
+                }),
+              )
+            "
+          />
         </span>
       </div>
     </div>
@@ -118,12 +152,15 @@ import { computed } from "vue";
 import GapChart from "@/components/dashboard/GapChart.vue";
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
 import { formatPct, sortByProperty } from "../../utils/utils";
+import { compile } from "handlebars";
+import sanitizeHtml from "sanitize-html";
 
 const props = defineProps<{
   stats: Stat[];
   activeCluster: Cluster;
   fieldNames: Array<{ field: string; name: string }>;
   focusStat: FocusStat;
+  phrases: Phrases;
 }>();
 
 const expected = computed(
@@ -181,6 +218,14 @@ const activeFocusStats = computed(() => {
     (a) => a.name.toUpperCase() === props.focusStat.value.toUpperCase(),
   );
 });
+
+const gapPhrase = compile(props.phrases.gap);
+const allResidents = compile(props.phrases.allResidents);
+const noGap = compile(props.phrases.noGap);
+const noInfo = compile(props.phrases.noInfo);
+const highest = compile(props.phrases.highest);
+const kpiTitle = compile(props.phrases.kpiTitle);
+const gapKpiTitle = compile(props.phrases.gapKpiTitle);
 </script>
 
 <style scoped lang="scss">

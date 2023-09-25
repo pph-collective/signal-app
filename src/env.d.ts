@@ -29,6 +29,7 @@ interface Phrases {
   noInfo: string;
   highest: string;
   kpiTitle: string;
+  gapKpiTitle: string;
 }
 
 interface ClusterBarrier extends Barrier {
