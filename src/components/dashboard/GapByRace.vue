@@ -17,7 +17,12 @@
       :class="focusStat.value === 'total' ? '' : 'is-invisible'"
     >
       <div>
-        <GapChartPct
+        <GapChartRate v-if="displayAsRate"
+          :active-stats="activeStats"
+          :expected="expected"
+          :field-data="fieldData"
+        />
+        <GapChartPct v-else
           :active-stats="activeStats"
           :expected="expected"
           :field-data="fieldData"
@@ -146,9 +151,9 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { format } from "d3-format";
 
 import GapChartPct from "@/components/dashboard/GapChartPct.vue";
+import GapChartRate from "@/components/dashboard/GapChartRate.vue"
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
 import { formatPct, sortByProperty } from "../../utils/utils";
 import { compile } from "handlebars";

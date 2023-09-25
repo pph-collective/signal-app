@@ -204,6 +204,11 @@ const HISTORICAL = [
     route: "hospitalization-hotspot",
     available: true,
   },
+  {
+    name: "Testing Gaps",
+    route: "testing-gap",
+    available: true
+  }
 ];
 
 const SPOTLIGHTS = [

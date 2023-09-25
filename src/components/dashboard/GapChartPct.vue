@@ -20,7 +20,7 @@ const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
-    description: "Bar chart showing the gap in vaccinations by race",
+    description: "Bar chart showing the gap by race",
     background: "transparent",
     padding: { left: 0, top: 0, right: 0, bottom: -1 },
     autosize: {

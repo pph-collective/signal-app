@@ -359,6 +359,58 @@ const main = async () => {
     });
   }
 
+  if (id === "testing_coldspots") {
+    files.push({
+      filePath: statebarriersfile,
+      extension: "json",
+      field: "state_barriers",
+      isArray: false,
+      schema: [
+        {
+          name: "pct_w_no_vehicle",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_english",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_insurance",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_internet",
+          type: "number",
+        },
+      ],
+    });
+
+    files.push({
+      filePath: barriersfile,
+      extension: "json",
+      field: "barriers",
+      isArray: true,
+      schema: [
+        {
+          name: "pct_w_no_vehicle",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_english",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_insurance",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_internet",
+          type: "number",
+        },
+      ],
+    });
+  }
+
   files.forEach(({ filePath, extension }) => {
     if (!fs.existsSync(filePath)) {
       warnAndExit(`ERROR! File does not exist: ${filePath}`);

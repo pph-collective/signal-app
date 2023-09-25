@@ -106,6 +106,7 @@
           ]"
           :focus-stat="controls.focusStat"
           :phrases="phrases"
+          :displayAsRate="false"
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link
