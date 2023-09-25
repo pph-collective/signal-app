@@ -17,7 +17,7 @@
       :class="focusStat.value === 'total' ? '' : 'is-invisible'"
     >
       <div>
-        <GapChart
+        <GapChartPct
           :active-stats="activeStats"
           :expected="expected"
           :field-data="fieldData"
@@ -52,9 +52,7 @@
       >
         <KeyPerformanceIndicator
           :value="
-            activeFocusStats?.population > 0
-              ? formatPct(activeFocusStats?.pct)
-              : '?'
+            kpiValue
           "
           :title="
             sanitizeHtml(
@@ -148,8 +146,9 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
+import { format } from "d3-format";
 
-import GapChart from "@/components/dashboard/GapChart.vue";
+import GapChartPct from "@/components/dashboard/GapChartPct.vue";
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
 import { formatPct, sortByProperty } from "../../utils/utils";
 import { compile } from "handlebars";
@@ -161,6 +160,7 @@ const props = defineProps<{
   fieldNames: Array<{ field: string; name: string }>;
   focusStat: FocusStat;
   phrases: Phrases;
+  displayAsRate: Boolean;
 }>();
 
 const expected = computed(
@@ -191,6 +191,10 @@ const activeStats = computed(() => {
             population > 0
               ? Math.min(0.99, row[f.observedField] / row[f.populationField])
               : NaN,
+          rate:
+            population > 0
+              ? row[f.observedField] / row[f.populationField] * 100000
+              : NaN,
           gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
           population,
         };
@@ -217,6 +221,21 @@ const activeFocusStats = computed(() => {
   return activeStats.value.find(
     (a) => a.name.toUpperCase() === props.focusStat.value.toUpperCase(),
   );
+});
+
+const kpiValue = computed(() => {
+  if (activeFocusStats.value?.population > 0) {
+    if (props.displayAsRate) {
+      return activeFocusStats.value?.rate.toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      })
+    } else {
+      return formatPct(activeFocusStats.value?.pct)
+    }
+  } else {
+    return '?'
+  }
 });
 
 const gapPhrase = compile(props.phrases.gap);
