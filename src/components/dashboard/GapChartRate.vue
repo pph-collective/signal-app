@@ -169,7 +169,7 @@ const spec = computed(() => {
         from: { data: "bars" },
         encode: {
           enter: {
-            x: { scale: "xscale", value: props.expected * 100000, offset: 5 },
+            x: { scale: "xscale", value: props.expected, offset: 5 },
             y: { field: "y", offset: { field: "height", mult: 0.5 } },
             fill: { value: COLORS.dark },
             align: { value: "left" },
@@ -201,7 +201,7 @@ const spec = computed(() => {
         type: "rule",
         encode: {
           enter: {
-            x: { scale: "xscale", value: props.expected * 100000 },
+            x: { scale: "xscale", value: props.expected },
             y: { value: 0 },
             y2: { signal: "height" },
             stroke: { value: COLORS.dark },
