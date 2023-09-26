@@ -17,12 +17,14 @@
       :class="focusStat.value === 'total' ? '' : 'is-invisible'"
     >
       <div>
-        <GapChartRate v-if="displayAsRate"
+        <GapChartRate
+          v-if="displayAsRate"
           :active-stats="activeStats"
           :expected="expected"
           :field-data="fieldData"
         />
-        <GapChartPct v-else
+        <GapChartPct
+          v-else
           :active-stats="activeStats"
           :expected="expected"
           :field-data="fieldData"
@@ -56,9 +58,7 @@
         class="is-flex is-flex-direction-row is-justify-content-space-around"
       >
         <KeyPerformanceIndicator
-          :value="
-            kpiValue
-          "
+          :value="kpiValue"
           :title="
             sanitizeHtml(
               kpiTitle({
@@ -153,7 +153,7 @@
 import { computed } from "vue";
 
 import GapChartPct from "@/components/dashboard/GapChartPct.vue";
-import GapChartRate from "@/components/dashboard/GapChartRate.vue"
+import GapChartRate from "@/components/dashboard/GapChartRate.vue";
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
 import { formatPct, sortByProperty } from "../../utils/utils";
 import { compile } from "handlebars";
@@ -165,7 +165,7 @@ const props = defineProps<{
   fieldNames: Array<{ field: string; name: string }>;
   focusStat: FocusStat;
   phrases: Phrases;
-  displayAsRate: Boolean;
+  displayAsRate: boolean;
 }>();
 
 const expected = computed(
@@ -198,7 +198,7 @@ const activeStats = computed(() => {
               : NaN,
           rate:
             population > 0
-              ? row[f.observedField] / row[f.populationField] * 100000
+              ? (row[f.observedField] / row[f.populationField]) * 100000
               : NaN,
           gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
           population,
@@ -234,12 +234,12 @@ const kpiValue = computed(() => {
       return activeFocusStats.value?.rate.toLocaleString("en-US", {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0,
-      })
+      });
     } else {
-      return formatPct(activeFocusStats.value?.pct)
+      return formatPct(activeFocusStats.value?.pct);
     }
   } else {
-    return '?'
+    return "?";
   }
 });
 

@@ -63,6 +63,7 @@
           :initial-active-cluster="dashboardActiveCluster"
           :map-type="'cold'"
           class="is-absolute"
+          :display-as-rate="false"
           @new-active-cluster-id="updateCluster"
         />
         <ClusterMap
@@ -106,7 +107,7 @@
           ]"
           :focus-stat="controls.focusStat"
           :phrases="phrases"
-          :displayAsRate="false"
+          :display-as-rate="false"
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link

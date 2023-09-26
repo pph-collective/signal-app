@@ -63,6 +63,7 @@
           :initial-active-cluster="dashboardActiveCluster"
           :map-type="'hot'"
           class="is-absolute"
+          :display-as-rate="false"
           @new-active-cluster-id="updateCluster"
         />
         <ClusterMap

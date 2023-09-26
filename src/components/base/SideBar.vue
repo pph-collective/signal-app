@@ -207,8 +207,8 @@ const HISTORICAL = [
   {
     name: "Testing Gaps",
     route: "testing-gap",
-    available: true
-  }
+    available: true,
+  },
 ];
 
 const SPOTLIGHTS = [

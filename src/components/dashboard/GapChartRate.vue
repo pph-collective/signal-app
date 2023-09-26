@@ -43,7 +43,7 @@ const spec = computed(() => {
     scales: [
       {
         name: "xscale",
-        domain: {data: "stats", field: "rate"},
+        domain: { data: "stats", field: "rate" },
         range: "width",
       },
       {
@@ -101,7 +101,7 @@ const spec = computed(() => {
             tooltip: [
               {
                 signal:
-                  "{ title: datum.name, 'Rate per 100,000': format(datum.rate, '.0d'), 'To Close Gap': datum.gap}",
+                  "{ title: datum.name, 'Rate per 100,000': format(datum.rate, ',.0d'), 'To Close Gap': datum.gap}",
                 test: "datum.population > 0",
               },
             ],
@@ -132,7 +132,7 @@ const spec = computed(() => {
               {
                 signal: `{
                 title: datum.name,
-                'Rate per 100,000': format(datum.rate, '.0d'),
+                'Rate per 100,000': format(datum.rate, ',.0d'),
                 'To Close Gap': datum.gap
                 }`,
                 test: "datum.population > 0",
@@ -175,27 +175,28 @@ const spec = computed(() => {
             align: { value: "left" },
             baseline: { value: "middle" },
             text: {
-              signal: "datum.datum.gap > 0 ? datum.datum.gap + ' to close gap' : ''",
+              signal:
+                "datum.datum.gap > 0 ? datum.datum.gap + ' to close gap' : ''",
             },
           },
         },
       },
-      {
-        type: "text",
-        from: { data: "bars" },
-        encode: {
-          enter: {
-            x: { field: "x2", offset: -5 },
-            y: { field: "y", offset: { field: "height", mult: 0.5 } },
-            fill: { value: "#FFFFFF" },
-            align: { value: "right" },
-            baseline: { value: "middle" },
-            text: {
-              signal: "format(datum.datum.rate, '.0d')",
-            },
-          },
-        },
-      },
+      // {
+      //   type: "text",
+      //   from: { data: "bars" },
+      //   encode: {
+      //     enter: {
+      //       x: { field: "x2", offset: -5 },
+      //       y: { field: "y", offset: { field: "height", mult: 0.5 } },
+      //       fill: { value: "#FFFFFF" },
+      //       align: { value: "right" },
+      //       baseline: { value: "middle" },
+      //       // text: {
+      //       //   signal: "format(datum.datum.rate, '.0d')",
+      //       // },
+      //     },
+      //   },
+      // },
       {
         type: "rule",
         encode: {

@@ -21,6 +21,7 @@ const props = defineProps<{
   focusStat: FocusStat;
   initialActiveCluster: Cluster;
   mapType: string;
+  displayAsRate: boolean;
 }>();
 
 const filteredTown = computed(() => {
@@ -84,12 +85,21 @@ const clusters = computed(() => {
 
 const focusFields = computed(() => {
   if (props.mapType === "cold") {
-    return {
-      name: props.focusStat.name,
-      fill: `gap_${props.focusStat.value}_pct`,
-      tooltip: `gap_${props.focusStat.value}`,
-      population: `population_${props.focusStat.value}`,
-    };
+    if (props.displayAsRate) {
+      return {
+        name: props.focusStat.name,
+        fill: `per100k_${props.focusStat.value}`,
+        tooltip: `gap_${props.focusStat.value}`,
+        population: `population_${props.focusStat.value}`,
+      };
+    } else {
+      return {
+        name: props.focusStat.name,
+        fill: `gap_${props.focusStat.value}_pct`,
+        tooltip: `gap_${props.focusStat.value}`,
+        population: `population_${props.focusStat.value}`,
+      };
+    }
   } else {
     return {
       name: props.focusStat.name,
@@ -102,19 +112,35 @@ const focusFields = computed(() => {
 
 const tooltipSignal = computed(() => {
   if (props.mapType === "cold") {
-    return `{
-      title: datum.properties.name
-      , 'Percent gap among ${focusFields.value.name.toLowerCase()}': datum.properties.${
-        focusFields.value.population
-      } > 0 ? format(datum.properties.${
-        focusFields.value.fill
-      }, '.1%') : 'Not enough information'
-      , 'Dose gap among ${focusFields.value.name.toLowerCase()}': datum.properties.${
-        focusFields.value.population
-      } > 0 ? datum.properties.${
-        focusFields.value.tooltip
-      } : 'Not enough information'
-    }`;
+    if (props.displayAsRate) {
+      return `{
+        title: datum.properties.name
+        , 'Gap per 100,000 among ${focusFields.value.name.toLocaleLowerCase()}': datum.properties.${
+          focusFields.value.population
+        } > 0 ? format(datum.properties.${
+          focusFields.value.fill
+        }, ',.0d') : 'Not enough information'
+        , 'Absolute gap among ${focusFields.value.name.toLowerCase()}': datum.properties.${
+          focusFields.value.population
+        } > 0 ? datum.properties.${
+          focusFields.value.tooltip
+        } : 'Not enough information'
+      }`;
+    } else {
+      return `{
+        title: datum.properties.name
+        , 'Percent gap among ${focusFields.value.name.toLowerCase()}': datum.properties.${
+          focusFields.value.population
+        } > 0 ? format(datum.properties.${
+          focusFields.value.fill
+        }, '.1%') : 'Not enough information'
+        , 'Dose gap among ${focusFields.value.name.toLowerCase()}': datum.properties.${
+          focusFields.value.population
+        } > 0 ? datum.properties.${
+          focusFields.value.tooltip
+        } : 'Not enough information'
+      }`;
+    }
   } else {
     return `{
       title: datum.properties.name
