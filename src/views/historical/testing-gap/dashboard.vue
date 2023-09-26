@@ -64,21 +64,16 @@
           :initial-active-cluster="dashboardActiveCluster"
           :map-type="'cold'"
           class="is-absolute"
-          display-as-rate="true"
+          :display-as-rate="true"
           @new-active-cluster-id="updateCluster"
         />
         <ClusterMap
           v-if="activeCluster && zoomed"
           :cluster="activeCluster"
           :geo="data.geo"
-          :locations="data.locations"
+          :locations="[]"
           class="is-absolute"
         />
-        <div v-if="activeCluster && zoomed" class="instructions">
-          <p>
-            A <RedDot class="red-dot" /> indicates a previous vaccination clinic
-          </p>
-        </div>
       </div>
       <div :class="{ invisible: activeCluster.name === '' }">
         <router-link
@@ -141,17 +136,13 @@
 
   <DashboardCard id="resources" width="full">
     <template #title>What can I do to close the gap?</template>
-    <template #content>
-      <VaccineResources />
-    </template>
+    <template #content> Text here </template>
   </DashboardCard>
 
   <DashboardCard width="full" :height="2">
     <template #subtitle>Data Notes</template>
     <template #content>
-      <div class="px-4 content">
-        <DataNotes />
-      </div>
+      <div class="is-size-7">text here</div>
     </template>
   </DashboardCard>
 
@@ -178,14 +169,11 @@ import HiddenContent from "@/components/base/HiddenContent.vue";
 import ClusterMap from "@/components/dashboard/ClusterMap.vue";
 import GapByRace from "@/components/dashboard/GapByRace.vue";
 import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
-import RedDot from "@/components/dashboard/RedDot.vue";
-import DataNotes from "@/components/dashboard/DataNotes.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
 
 import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
-import VaccineResources from "../../../components/dashboard/VaccineResources.vue";
 import ChooseDate from "../../../components/dashboard/ChooseDate.vue";
 
 const zoomed = ref(false);
@@ -205,7 +193,6 @@ const props = defineProps<{
 
 // fetch the data
 const data = await fetchColdSpotData(props.datasetName, props.currentDate);
-console.log(data.barriers);
 
 const clusterIdToCluster = (id) => {
   if (id === NULL_CLUSTER.cluster_id) {
@@ -315,16 +302,16 @@ const updateCluster = (newClusterId) => {
 const phrases = {
   gap: "In {{ name }}, <strong>{{ rate }}</strong> per 100,000 {{ race }} residents got tested compared to our goal of {{ expectedRate }} total vaccinations statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be tested to close this gap.",
   allResidents:
-    "In {{ name }}, the largest gap was among {{ minRaceName }} residents. Only <strong>{{ pct }} of {{ name }} residents</strong> are vaccinated compared to {{ expectedPct }} statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to receive a dose to close this gap.",
+    "In {{ name }}, the largest gap was among {{ minRaceName }} residents. Only <strong>{{ rate }} per 100,000 {{ name }} residents</strong> were tested compared to {{ expectedRate }} statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be tested to close this gap.",
   noGap:
-    "In {{ name }}, <strong>{{ pct }}</strong> of {{ race }} residents are vaccinated compared to our goal of {{ expectedPct }} total vaccinations statewide.",
+    "In {{ name }}, <strong>{{ rate }}</strong> per 100,000 {{ race }} residents are vaccinated compared to our goal of {{ expectedRate }} tests per 100,000 statewide.",
   noInfo:
-    "In {{ name }}, there isn't enough vaccine data on <strong>{{ race }} residents</strong> to determine their vaccination status or the number of vaccine doses needed to close the gap.",
+    "In {{ name }}, there isn't enough vaccine data on <strong>{{ race }} residents</strong> to determine their vaccination status or the number of tests needed to close the gap.",
   highest:
-    "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ pct }}</strong> of {{ minRaceName }} residents are vaccinated. Approximately <strong>{{ gap }}</strong> more {{ minRaceName }} residents need to be vaccinated to close this gap.",
-  kpiTitle: "{{ race }} residents vaccinated in {{ name }}",
+    "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ rate }}</strong> per 100,000 {{ minRaceName }} residents were tested. Approximately <strong>{{ gap }}</strong> per 100,000 more {{ minRaceName }} residents need to be tested to close this gap.",
+  kpiTitle: "{{ race }} residents tested per 100,000 in {{ name }}",
   gapKpiTitle:
-    "Approximate vaccine doses for {{ race }} residents needed to close the gap",
+    "Approximate tests for {{ race }} residents needed to close the gap",
 };
 </script>
 
@@ -368,10 +355,6 @@ const phrases = {
   font-size: 0.875rem;
   animation: fade-in 500ms ease-in-out both;
   animation-delay: 250ms;
-}
-
-.red-dot {
-  margin-bottom: -5px;
 }
 
 .centered {
