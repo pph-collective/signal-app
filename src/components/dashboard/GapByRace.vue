@@ -42,6 +42,8 @@
                 pct: formatPct(minVaxRace?.pct),
                 expectedPct: formatPct(expectedPct),
                 gap: minVaxRace?.gap,
+                rate: formatUsString(minVaxRace?.rate),
+                expectedRate: formatUsString(expectedRate),
               }),
             )
           "
@@ -92,10 +94,10 @@
               gapPhrase({
                 name: props.activeCluster.name,
                 pct: formatPct(activeFocusStats?.pct),
-                rate: formatUsString.format(activeFocusStats?.rate),
+                rate: formatUsString(activeFocusStats?.rate),
                 race: activeFocusStats?.name,
                 expectedPct: formatPct(expectedPct),
-                expectedRate: formatUsString.format(expectedRate),
+                expectedRate: formatUsString(expectedRate),
                 gap: activeFocusStats?.gap,
               }),
             )
@@ -238,7 +240,7 @@ const activeFocusStats = computed(() => {
 const kpiValue = computed(() => {
   if (activeFocusStats.value?.population > 0) {
     if (props.displayAsRate) {
-      return formatUsString.format(activeFocusStats.value?.rate);
+      return formatUsString(activeFocusStats.value?.rate);
     } else {
       return formatPct(activeFocusStats.value?.pct);
     }

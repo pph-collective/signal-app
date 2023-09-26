@@ -1,7 +1,7 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      TThis tool shows us places where fewer people were tested for COVID-19
+      This tool shows us places where fewer people were tested for COVID-19
       compared to state levels. We call this difference in testing a
       <em>gap</em>. Testing is an important first step in stopping the spread of
       COVID-19 so that people can stay home when they get a positive result. You
@@ -302,7 +302,7 @@ const updateCluster = (newClusterId) => {
 const phrases = {
   gap: "In {{ name }}, <strong>{{ rate }}</strong> per 100,000 {{ race }} residents got tested compared to our goal of {{ expectedRate }} total vaccinations statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be tested to close this gap.",
   allResidents:
-    "In {{ name }}, the largest gap was among {{ minRaceName }} residents. Only <strong>{{ rate }} per 100,000 {{ name }} residents</strong> were tested compared to {{ expectedRate }} statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be tested to close this gap.",
+    "In {{ name }}, the largest gap was among {{ minRaceName }} residents. Only <strong>{{ rate }} per 100,000 {{ name }} residents</strong> were tested compared to {{ expectedRate }} per 100,000 statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be tested to close this gap.",
   noGap:
     "In {{ name }}, <strong>{{ rate }}</strong> per 100,000 {{ race }} residents are vaccinated compared to our goal of {{ expectedRate }} tests per 100,000 statewide.",
   noInfo:

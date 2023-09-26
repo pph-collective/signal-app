@@ -63,7 +63,7 @@ const clusters = computed(() => {
           ? (datum[`observed_${field}`] / datum[`population_${field}`]) * 100000
           : 0;
 
-      additionalFields[`tooltip_${field}`] = formatUsString.format(
+      additionalFields[`tooltip_${field}`] = formatUsString(
         additionalFields[`per100k_${field}`],
       );
     });

@@ -32,7 +32,7 @@
               sanitizeHtml(
                 allHighest({
                   name: props.activeCluster.name,
-                  rate: formatUsString.format(maxRace?.rate),
+                  rate: formatUsString(maxRace?.rate),
                 }),
               )
             "
@@ -43,7 +43,7 @@
               sanitizeHtml(
                 allResidents({
                   name: props.activeCluster.name,
-                  rate: formatUsString.format(maxRace?.rate),
+                  rate: formatUsString(maxRace?.rate),
                   maxRaceName: maxRace?.name,
                 }),
               )
@@ -64,7 +64,7 @@
         <KeyPerformanceIndicator
           :value="
             activeFocusStats?.population > 0
-              ? formatUsString.format(activeFocusStats?.rate)
+              ? formatUsString(activeFocusStats?.rate)
               : '?'
           "
           :title="
@@ -86,7 +86,7 @@
             sanitizeHtml(
               gapPhrase({
                 name: props.activeCluster.name,
-                rate: formatUsString.format(activeFocusStats?.rate),
+                rate: formatUsString(activeFocusStats?.rate),
                 race: activeFocusStats?.name,
               }),
             )
@@ -101,7 +101,7 @@
               sanitizeHtml(
                 noGap({
                   name: props.activeCluster.name,
-                  rate: formatUsString.format(activeFocusStats?.rate),
+                  rate: formatUsString(activeFocusStats?.rate),
                   race: activeFocusStats?.name,
                 }),
               )
@@ -127,7 +127,7 @@
               sanitizeHtml(
                 allHighest({
                   name: props.activeCluster.name,
-                  rate: formatUsString.format(maxRace?.rate),
+                  rate: formatUsString(maxRace?.rate),
                 }),
               )
             "
@@ -138,7 +138,7 @@
               sanitizeHtml(
                 highest({
                   race: maxRace?.name,
-                  rate: formatUsString.format(maxRace?.rate),
+                  rate: formatUsString(maxRace?.rate),
                 }),
               )
             "

@@ -181,22 +181,6 @@ const spec = computed(() => {
           },
         },
       },
-      // {
-      //   type: "text",
-      //   from: { data: "bars" },
-      //   encode: {
-      //     enter: {
-      //       x: { field: "x2", offset: -5 },
-      //       y: { field: "y", offset: { field: "height", mult: 0.5 } },
-      //       fill: { value: "#FFFFFF" },
-      //       align: { value: "right" },
-      //       baseline: { value: "middle" },
-      //       // text: {
-      //       //   signal: "format(datum.datum.rate, '.0d')",
-      //       // },
-      //     },
-      //   },
-      // },
       {
         type: "rule",
         encode: {
