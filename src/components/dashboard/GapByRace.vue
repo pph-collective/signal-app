@@ -88,7 +88,7 @@
         <!-- In this community, there is a gap in this focus group -->
         <!-- eslint-disable vue/no-v-html -->
         <p
-          v-if="activeFocusStats?.gap > 0"
+          v-if="activeFocusStats?.gap > 0 && activeFocusStats?.population > 0"
           v-html="
             sanitizeHtml(
               gapPhrase({
@@ -142,6 +142,7 @@
                 highest({
                   minRaceName: minVaxRace?.name,
                   pct: formatPct(minVaxRace?.pct),
+                  rate: formatUsString(minVaxRace?.rate),
                   gap: minVaxRace?.gap,
                 }),
               )

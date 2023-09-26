@@ -175,7 +175,8 @@ const spec = computed(() => {
             align: { value: "left" },
             baseline: { value: "middle" },
             text: {
-              signal: "datum.datum.gap > 0 ? datum.datum.gap + ' doses' : ''",
+              signal:
+                "datum.datum.gap > 0 && datum.datum.population > 0 ? datum.datum.gap + ' doses' : ''",
             },
           },
         },

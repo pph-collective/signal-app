@@ -176,7 +176,7 @@ const spec = computed(() => {
             baseline: { value: "middle" },
             text: {
               signal:
-                "datum.datum.gap > 0 ? datum.datum.gap + ' to close gap' : ''",
+                "datum.datum.gap > 0 && datum.datum.population > 0 ? datum.datum.gap + ' to close gap' : ''",
             },
           },
         },

@@ -77,7 +77,7 @@
       </div>
       <div :class="{ invisible: activeCluster.name === '' }">
         <router-link
-          :to="`/dataset/testing-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
+          :to="`/historical/testing-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
         >
           <i class="fa fa-arrow-circle-down fa-2x centered" />
         </router-link>
@@ -104,7 +104,7 @@
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link
-            :to="`/dataset/testing-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
+            :to="`/historical/testing-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
           >
             <i class="fa fa-arrow-circle-down fa-2x centered" />
           </router-link>
@@ -126,7 +126,7 @@
           :active-cluster="activeCluster"
         />
         <router-link
-          :to="`/dataset/testing-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#resources`"
+          :to="`/historical/testing-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#resources`"
         >
           <i class="fa fa-arrow-circle-down fa-2x centered" />
         </router-link>
@@ -308,7 +308,7 @@ const phrases = {
   noInfo:
     "In {{ name }}, there isn't enough vaccine data on <strong>{{ race }} residents</strong> to determine their vaccination status or the number of tests needed to close the gap.",
   highest:
-    "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ rate }}</strong> per 100,000 {{ minRaceName }} residents were tested. Approximately <strong>{{ gap }}</strong> per 100,000 more {{ minRaceName }} residents need to be tested to close this gap.",
+    "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ rate }}</strong> per 100,000 {{ minRaceName }} residents were tested. Approximately <strong>{{ gap }}</strong> more {{ minRaceName }} residents need to be tested to close this gap.",
   kpiTitle: "{{ race }} residents tested per 100,000 in {{ name }}",
   gapKpiTitle:
     "Approximate tests for {{ race }} residents needed to close the gap",
