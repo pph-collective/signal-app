@@ -32,7 +32,7 @@
               sanitizeHtml(
                 allHighest({
                   name: props.activeCluster.name,
-                  rate: round(maxRace?.rate).toLocaleString('en-US'),
+                  rate: formatUsString.format(maxRace?.rate),
                 }),
               )
             "
@@ -43,7 +43,7 @@
               sanitizeHtml(
                 allResidents({
                   name: props.activeCluster.name,
-                  rate: round(maxRace?.rate).toLocaleString('en-US'),
+                  rate: formatUsString.format(maxRace?.rate),
                   maxRaceName: maxRace?.name,
                 }),
               )
@@ -64,7 +64,7 @@
         <KeyPerformanceIndicator
           :value="
             activeFocusStats?.population > 0
-              ? round(activeFocusStats?.rate).toLocaleString()
+              ? formatUsString.format(activeFocusStats?.rate)
               : '?'
           "
           :title="
@@ -86,7 +86,7 @@
             sanitizeHtml(
               gapPhrase({
                 name: props.activeCluster.name,
-                rate: round(activeFocusStats?.rate).toLocaleString(),
+                rate: formatUsString.format(activeFocusStats?.rate),
                 race: activeFocusStats?.name,
               }),
             )
@@ -101,7 +101,7 @@
               sanitizeHtml(
                 noGap({
                   name: props.activeCluster.name,
-                  rate: round(activeFocusStats?.rate).toLocaleString(),
+                  rate: formatUsString.format(activeFocusStats?.rate),
                   race: activeFocusStats?.name,
                 }),
               )
@@ -127,7 +127,7 @@
               sanitizeHtml(
                 allHighest({
                   name: props.activeCluster.name,
-                  rate: round(maxRace?.rate).toLocaleString('en-US'),
+                  rate: formatUsString.format(maxRace?.rate),
                 }),
               )
             "
@@ -138,7 +138,7 @@
               sanitizeHtml(
                 highest({
                   race: maxRace?.name,
-                  rate: round(maxRace?.rate).toLocaleString(),
+                  rate: formatUsString.format(maxRace?.rate),
                 }),
               )
             "
@@ -154,8 +154,7 @@ import { computed } from "vue";
 
 import HotspotChart from "@/components/dashboard/HotspotChart.vue";
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
-import { sortByProperty } from "../../utils/utils";
-import { round } from "lodash";
+import { sortByProperty, formatUsString } from "../../utils/utils";
 import { compile } from "handlebars";
 import sanitizeHtml from "sanitize-html";
 

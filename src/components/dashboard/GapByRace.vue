@@ -20,13 +20,13 @@
         <GapChartRate
           v-if="displayAsRate"
           :active-stats="activeStats"
-          :expected="expected"
+          :expected="expectedRate"
           :field-data="fieldData"
         />
         <GapChartPct
           v-else
           :active-stats="activeStats"
-          :expected="expected"
+          :expected="expectedPct"
           :field-data="fieldData"
         />
       </div>
@@ -40,7 +40,7 @@
                 name: activeCluster.name,
                 minRaceName: minVaxRace?.name,
                 pct: formatPct(minVaxRace?.pct),
-                expectedPct: formatPct(expected),
+                expectedPct: formatPct(expectedPct),
                 gap: minVaxRace?.gap,
               }),
             )
@@ -92,8 +92,10 @@
               gapPhrase({
                 name: props.activeCluster.name,
                 pct: formatPct(activeFocusStats?.pct),
+                rate: formatUsString.format(activeFocusStats?.rate),
                 race: activeFocusStats?.name,
-                expectedPct: formatPct(expected),
+                expectedPct: formatPct(expectedPct),
+                expectedRate: formatUsString.format(expectedRate),
                 gap: activeFocusStats?.gap,
               }),
             )
@@ -110,7 +112,7 @@
                   name: props.activeCluster.name,
                   pct: formatPct(activeFocusStats?.pct),
                   race: activeFocusStats?.name,
-                  expectedPct: formatPct(expected),
+                  expectedPct: formatPct(expectedPct),
                 }),
               )
             "
@@ -155,7 +157,7 @@ import { computed } from "vue";
 import GapChartPct from "@/components/dashboard/GapChartPct.vue";
 import GapChartRate from "@/components/dashboard/GapChartRate.vue";
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
-import { formatPct, sortByProperty } from "../../utils/utils";
+import { formatPct, sortByProperty, formatUsString } from "../../utils/utils";
 import { compile } from "handlebars";
 import sanitizeHtml from "sanitize-html";
 
@@ -168,8 +170,13 @@ const props = defineProps<{
   displayAsRate: boolean;
 }>();
 
-const expected = computed(
+const expectedPct = computed(
   () => props.stats[0].expected_total / props.stats[0].population_total,
+);
+
+const expectedRate = computed(
+  () =>
+    (props.stats[0].expected_total / props.stats[0].population_total) * 100000,
 );
 
 const fieldData = computed(() => {
@@ -231,10 +238,7 @@ const activeFocusStats = computed(() => {
 const kpiValue = computed(() => {
   if (activeFocusStats.value?.population > 0) {
     if (props.displayAsRate) {
-      return activeFocusStats.value?.rate.toLocaleString("en-US", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      });
+      return formatUsString.format(activeFocusStats.value?.rate);
     } else {
       return formatPct(activeFocusStats.value?.pct);
     }

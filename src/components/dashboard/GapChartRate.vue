@@ -118,7 +118,7 @@ const spec = computed(() => {
         encode: {
           enter: {
             x: { scale: "xscale", field: "rate" },
-            x2: { scale: "xscale", value: props.expected * 100000 },
+            x2: { scale: "xscale", value: props.expected },
             yc: {
               signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
             },

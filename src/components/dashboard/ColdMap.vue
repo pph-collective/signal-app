@@ -9,6 +9,7 @@ import { useVega } from "../../composables/useVega";
 import RI_GEOJSON from "@/assets/geography/ri.json";
 import HEZ_GEOJSON from "@/assets/geography/hez.json";
 import { COLORS, COLOR_SCALES, NULL_CLUSTER } from "../../utils/constants";
+import { formatUsString } from "../../utils/utils";
 
 import { cloneDeep } from "lodash/lang";
 
@@ -62,12 +63,9 @@ const clusters = computed(() => {
           ? (datum[`observed_${field}`] / datum[`population_${field}`]) * 100000
           : 0;
 
-      additionalFields[`tooltip_${field}`] = additionalFields[
-        `per100k_${field}`
-      ].toLocaleString("en-US", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      });
+      additionalFields[`tooltip_${field}`] = formatUsString.format(
+        additionalFields[`per100k_${field}`],
+      );
     });
 
     if (datum) {

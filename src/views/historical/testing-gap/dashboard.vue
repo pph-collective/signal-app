@@ -1,16 +1,12 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where fewer people have received
-      <strong
-        >{{ currentDate >= "2023-03-15" ? "a new bivalent" : "any" }} booster
-        dose</strong
-      >
-      compared to state levels. We call this difference in booster doses a
-      <em>gap</em>. Vaccines can keep us from getting very sick with COVID-19,
-      but protection decreases over time. A booster is another dose of the
-      vaccine that keeps your community protected. You can use this information
-      to find where the gaps are in our state and take steps to help close them.
+      TThis tool shows us places where fewer people were tested for COVID-19
+      compared to state levels. We call this difference in testing a
+      <em>gap</em>. Testing is an important first step in stopping the spread of
+      COVID-19 so that people can stay home when they get a positive result. You
+      can use this information to find where the gaps are in our state and take
+      steps to help close them.
     </template>
   </DashboardCard>
 
@@ -50,8 +46,8 @@
     </template>
 
     <template #subtitle>
-      This map shows where there are gaps in booster doses. Darker areas show
-      bigger gaps in booster doses among
+      This map shows where there are gaps in COVID-19 testing. Darker areas show
+      bigger gaps in testing among
       <strong>{{ controls.focusStat.name }}</strong
       >. Areas with dashes mean there is not enough information. Select a
       community, click the <em>Zoom to Community</em> button, and scroll down to
@@ -86,7 +82,7 @@
       </div>
       <div :class="{ invisible: activeCluster.name === '' }">
         <router-link
-          :to="`/dataset/booster-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
+          :to="`/dataset/testing-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
         >
           <i class="fa fa-arrow-circle-down fa-2x centered" />
         </router-link>
@@ -94,9 +90,7 @@
     </template>
   </DashboardCard>
   <DashboardCard id="chart" width="full" :height="2">
-    <template #title
-      >How many booster doses do we need to close the gap?</template
-    >
+    <template #title>How many tests do we need to close the gap?</template>
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <GapByRace
@@ -115,7 +109,7 @@
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link
-            :to="`/dataset/booster-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
+            :to="`/dataset/testing-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
           >
             <i class="fa fa-arrow-circle-down fa-2x centered" />
           </router-link>
@@ -125,10 +119,9 @@
   </DashboardCard>
 
   <DashboardCard id="barriers" width="full" :height="2">
-    <template #title>How do we reach people who need boosters?</template>
+    <template #title>How do we reach people who need tests?</template>
     <template #subtitle
-      >People with fewer resources have a harder time getting
-      vaccinated.</template
+      >People with fewer resources have a harder time getting tested.</template
     >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
@@ -138,7 +131,7 @@
           :active-cluster="activeCluster"
         />
         <router-link
-          :to="`/dataset/booster-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#resources`"
+          :to="`/dataset/testing-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#resources`"
         >
           <i class="fa fa-arrow-circle-down fa-2x centered" />
         </router-link>
@@ -320,7 +313,7 @@ const updateCluster = (newClusterId) => {
 
 // setup phrases for card text
 const phrases = {
-  gap: "In {{ name }}, <strong>{{ pct }}</strong> of {{ race }} residents are vaccinated compared to our goal of {{ expectedPct }} total vaccinations statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be vaccinated to close this gap.",
+  gap: "In {{ name }}, <strong>{{ rate }}</strong> per 100,000 {{ race }} residents got tested compared to our goal of {{ expectedRate }} total vaccinations statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be tested to close this gap.",
   allResidents:
     "In {{ name }}, the largest gap was among {{ minRaceName }} residents. Only <strong>{{ pct }} of {{ name }} residents</strong> are vaccinated compared to {{ expectedPct }} statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to receive a dose to close this gap.",
   noGap:

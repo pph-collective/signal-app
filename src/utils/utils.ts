@@ -60,6 +60,11 @@ export const prettyDate = (date: string): string => {
 
 export const formatPct = format(".0%");
 
+export const formatUsString = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+});
+
 export const sortByProperty = (property) => (a, b) => {
   let valA = a[property];
   let valB = b[property];
