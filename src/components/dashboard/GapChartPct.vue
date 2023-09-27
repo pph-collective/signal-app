@@ -82,36 +82,6 @@ const spec = computed(() => {
 
     marks: [
       {
-        name: "bars",
-        type: "rect",
-        from: { data: "stats" },
-        encode: {
-          enter: {
-            x: { scale: "xscale", field: "pct" },
-            x2: { scale: "xscale", value: 0 },
-            yc: {
-              signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
-            },
-            height: { scale: "yscale", band: 1 },
-            fill: { value: COLORS.dark },
-            stroke: [{ value: COLORS.dark, test: `datum.population > 0` }],
-          },
-          update: {
-            opacity: { value: 0.9 },
-            tooltip: [
-              {
-                signal:
-                  "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
-                test: "datum.population > 0",
-              },
-            ],
-          },
-          hover: {
-            opacity: { value: 1.0 },
-          },
-        },
-      },
-      {
         name: "gaps",
         type: "rect",
         from: { data: "stats" },
@@ -145,6 +115,36 @@ const spec = computed(() => {
           },
           exit: {
             fill: { value: "transparent" },
+          },
+        },
+      },
+      {
+        name: "bars",
+        type: "rect",
+        from: { data: "stats" },
+        encode: {
+          enter: {
+            x: { scale: "xscale", field: "pct" },
+            x2: { scale: "xscale", value: 0 },
+            yc: {
+              signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
+            },
+            height: { scale: "yscale", band: 1 },
+            fill: { value: COLORS.dark },
+            stroke: [{ value: COLORS.dark, test: `datum.population > 0` }],
+          },
+          update: {
+            opacity: { value: 0.9 },
+            tooltip: [
+              {
+                signal:
+                  "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
+                test: "datum.population > 0",
+              },
+            ],
+          },
+          hover: {
+            opacity: { value: 1.0 },
           },
         },
       },
