@@ -136,13 +136,81 @@
 
   <DashboardCard id="resources" width="full">
     <template #title>What can I do to close the gap?</template>
-    <template #content> Text here </template>
+    <template #content>
+      <div>
+        <div class="px-4 content">
+          <h5>Make sure people know where to get tested for COVID-29</h5>
+          <ul>
+            <li>link 1</li>
+          </ul>
+          <h5>
+            Make sure people know where to go to get treatment for COVID-19
+          </h5>
+          <ul>
+            <li>
+              Learn more about
+              <ExternalLink
+                href="https://covid.ri.gov/treat/therapeutics?gclid=CjwKCAjwpayjBhAnEiwA-7ena53D2cKyXNp0MgIbBXPPz27355gBrR3UTplmWLarJHLRR3ZBFM_aJBoCMgwQAvD_BwE"
+                >what treatments</ExternalLink
+              >
+              are available for COVID-19
+            </li>
+            <li>
+              Find out where you can
+              <ExternalLink href=""
+                >find treatment in your neighborhood NEEDS LINK</ExternalLink
+              >
+            </li>
+          </ul>
+          <h5>Make sure people know where to go to get COVID-19 vaccines:</h5>
+          <ul>
+            <li>
+              Visit our pages about COVID-19
+              <router-link class="is-link" to="/dataset/vaccine-gap"
+                >Vaccines
+              </router-link>
+              and
+              <router-link class="is-link" to="/dataset/booster-gap"
+                >Boosters
+              </router-link>
+              to learn more about where there are gaps in our state.
+            </li>
+            <li>
+              You can also let people know
+              <ExternalLink href="https://covid.ri.gov/vaccination#athome">
+                how to get vaccinated at home </ExternalLink
+              >. This is a good option for people who may have a harder time
+              accessing a clinic.
+            </li>
+          </ul>
+          <h5>
+            Make sure people know how to keep their health insurance coverage
+          </h5>
+          <ul>
+            <li>
+              You can use help people learn about
+              <ExternalLink href="">Medicaid renewals NEEDS LINK</ExternalLink>
+            </li>
+            <li>
+              You can help people understand their options for health insurance
+              through <ExternalLink href="">HealthSourceRI</ExternalLink>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </template>
   </DashboardCard>
 
   <DashboardCard width="full" :height="2">
     <template #subtitle>Data Notes</template>
     <template #content>
-      <div class="is-size-7">text here</div>
+      <div class="is-size-7">
+        This web tool includes information on tests administered to Rhode Island
+        residents that were processed by the state laboratory at the Rhode
+        Island Department of Health. Rhode Island residents with invalid or
+        incomplete residential address information excluded. Data for Rhode
+        Island residents who tested via at-home rapid tests.
+      </div>
     </template>
   </DashboardCard>
 
@@ -169,6 +237,7 @@ import HiddenContent from "@/components/base/HiddenContent.vue";
 import ClusterMap from "@/components/dashboard/ClusterMap.vue";
 import GapByRace from "@/components/dashboard/GapByRace.vue";
 import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
+import ExternalLink from "@/components/base/ExternalLink.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
 
