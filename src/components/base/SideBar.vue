@@ -209,6 +209,11 @@ const HISTORICAL = [
     route: "testing-gap",
     available: true,
   },
+  {
+    name: "Case Hotspots",
+    route: "case-hotspot",
+    available: true,
+  },
 ];
 
 const SPOTLIGHTS = [
