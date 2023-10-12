@@ -139,9 +139,14 @@
     <template #content>
       <div>
         <div class="px-4 content">
-          <h5>Make sure people know where to get tested for COVID-29</h5>
+          <h5>Make sure people know where to get tested for COVID-19</h5>
           <ul>
-            <li>link 1</li>
+            <li>
+              Find places to
+              <ExternalLink href="https://testinglocator.cdc.gov/"
+                >get free COVID-19 testing near you</ExternalLink
+              >
+            </li>
           </ul>
           <h5>
             Make sure people know where to go to get treatment for COVID-19
@@ -157,7 +162,8 @@
             </li>
             <li>
               Find out where you can
-              <ExternalLink href=""
+              <ExternalLink
+                href="https://covid-19-test-to-treat-locator-dhhs.hub.arcgis.com/"
                 >find treatment in your neighborhood NEEDS LINK</ExternalLink
               >
             </li>
@@ -176,6 +182,12 @@
               to learn more about where there are gaps in our state.
             </li>
             <li>
+              Find COVID vaccines near you by using the search bar at
+              <ExternalLink href="https://www.vaccines.gov/"
+                >vaccines.gov</ExternalLink
+              >. You can search by zip code or vaccine type
+            </li>
+            <li>
               You can also let people know
               <ExternalLink href="https://covid.ri.gov/vaccination#athome">
                 how to get vaccinated at home </ExternalLink
@@ -188,12 +200,19 @@
           </h5>
           <ul>
             <li>
-              You can use help people learn about
-              <ExternalLink href="">Medicaid renewals NEEDS LINK</ExternalLink>
+              You can use this
+              <ExternalLink
+                href="https://staycovered.ri.gov/community-support/community-advocate-forum"
+                >community advocate toolkit</ExternalLink
+              >
+              to help people learn about Medicaid renewals
             </li>
             <li>
               You can help people understand their options for health insurance
-              through <ExternalLink href="">HealthSourceRI</ExternalLink>
+              through
+              <ExternalLink href="https://healthsourceri.com/transitions/"
+                >HealthSourceRI</ExternalLink
+              >
             </li>
           </ul>
         </div>
@@ -209,7 +228,22 @@
         residents that were processed by the state laboratory at the Rhode
         Island Department of Health. Rhode Island residents with invalid or
         incomplete residential address information excluded. Data for Rhode
-        Island residents who tested via at-home rapid tests.
+        Island residents who tested via at-home rapid tests are not included
+        unless they submitted their results to the Rhode Island Department of
+        Health. Estimates of population size are sourced from the United States
+        Census Bureau's
+        <ExternalLink href="https://www.census.gov/programs-surveys/acs"
+          >American Community Survey</ExternalLink
+        >
+        (2016-2020, 5-year estimates). There is statistical uncertainty
+        associated with these estimates, particularly for small populations in
+        small geographic areas, resulting in estimates of testing rates that are
+        unreliable. Some estimates may be suppressed in line with the Rhode
+        Island Department of Health's
+        <ExternalLink
+          href="https://health.ri.gov/publications/policies/SmallNumbersReporting.pdf"
+          >Small Numbers Reporting Policy</ExternalLink
+        >.
       </div>
     </template>
   </DashboardCard>
@@ -369,13 +403,13 @@ const updateCluster = (newClusterId) => {
 
 // setup phrases for card text
 const phrases = {
-  gap: "In {{ name }}, <strong>{{ rate }}</strong> per 100,000 {{ race }} residents got tested compared to our goal of {{ expectedRate }} total vaccinations statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be tested to close this gap.",
+  gap: "In {{ name }}, <strong>{{ rate }}</strong> per 100,000 {{ race }} residents got tested compared to our goal of {{ expectedRate }} total tests statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be tested to close this gap.",
   allResidents:
     "In {{ name }}, the largest gap was among {{ minRaceName }} residents. Only <strong>{{ rate }} per 100,000 {{ name }} residents</strong> were tested compared to {{ expectedRate }} per 100,000 statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be tested to close this gap.",
   noGap:
-    "In {{ name }}, <strong>{{ rate }}</strong> per 100,000 {{ race }} residents are vaccinated compared to our goal of {{ expectedRate }} tests per 100,000 statewide.",
+    "In {{ name }}, <strong>{{ rate }}</strong> per 100,000 {{ race }} residents got tested compared to our goal of {{ expectedRate }} tests per 100,000 statewide.",
   noInfo:
-    "In {{ name }}, there isn't enough vaccine data on <strong>{{ race }} residents</strong> to determine their vaccination status or the number of tests needed to close the gap.",
+    "In {{ name }}, there isn't enough testing data on <strong>{{ race }} residents</strong> to determine the number of tests needed to close the gap.",
   highest:
     "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ rate }}</strong> per 100,000 {{ minRaceName }} residents were tested. Approximately <strong>{{ gap }}</strong> more {{ minRaceName }} residents need to be tested to close this gap.",
   kpiTitle: "{{ race }} residents tested per 100,000 in {{ name }}",
