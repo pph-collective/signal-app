@@ -119,9 +119,9 @@
     <template #title>How do we keep people from getting COVID-19?</template>
     <template #subtitle
       >When people have fewer resources it is harder for them to stay healthy.
-      It is important that all people can access things like vaccines or can
-      stay home from work or school when they need to. This can stop people from
-      getting sick with COVID-19.</template
+      It is important that all people can stay home from work or school when
+      they need to. This can stop people from getting sick with
+      COVID-19.</template
     >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
@@ -149,7 +149,20 @@
         <div class="px-4 content">
           <h5>Help people find out where to get tested</h5>
           <ul>
-            <li>Text here</li>
+            <li>
+              Find places to get free COVID-19 testing
+              <ExternalLink href="https://testinglocator.cdc.gov/"
+                >near you</ExternalLink
+              >
+            </li>
+            <li>
+              Use
+              <ExternalLink
+                href="https://www.cdc.gov/coronavirus/2019-ncov/testing/self-testing.html"
+                >a rapid COVID-19 test</ExternalLink
+              >
+              to test yourself at hom
+            </li>
           </ul>
           <h5>
             Make sure people know where to go to get treatment for COVID-19:
@@ -207,10 +220,10 @@
           </h5>
           <ul>
             <li>
-              You can use this
+              You can use
               <ExternalLink
                 href="https://staycovered.ri.gov/community-support/community-advocate-forum"
-                >community advocate toolkit</ExternalLink
+                >this community advocate toolkit</ExternalLink
               >
               to help people learn about Medicaid renewals.
             </li>
@@ -232,39 +245,19 @@
     <template #content>
       <div class="is-size-7">
         <p>
-          This web tool includes information on COVID-19-associated
-          hospitalizations for Rhode Island residents who were admitted to an
-          acute care or psychiatric inpatient facility for at least one night
-          with COVID-19.
-        </p>
-        <p>
-          After January 1, 2023, persons are included once per COVID-19
-          infection if they had a laboratory-confirmed positive COVID-19 test
-          within 14 days prior to the hospital admission (if COVID-19 is not a
-          primary or contributing cause of hospitalization), within 30 days
-          prior to hospital admission (if COVID-19 is a primary or contributing
-          cause of hospitalization), or within 3 days after hospital admission
-          (regardless of the cause of hospitalization)
-        </p>
-        <p>
-          Prior to January 1, 2023, these data include persons admitted to an
-          inpatient facility for at least one night with a laboratory-confirmed
-          positive COVID-19 test, regardless of when the test was performed.
-          Hospitalizations prior to this date also counted an individual more
-          than once if they were readmitted during the course of a single
-          COVId-19 infection.
-        </p>
-        <p>
-          Estimates of population size are sourced from the United States Census
-          Bureau's
+          This web tool includes information on COVID-19 cases among Rhode
+          Island residents that were reported to the Rhode Island Department of
+          Health. Rhode Island residents with invalid or incomplete residential
+          address information excluded. Estimates of population size are sourced
+          from the United States Census Bureau's
           <ExternalLink href="https://www.census.gov/programs-surveys/acs"
             >American Community Survey</ExternalLink
           >
           (2016-2020, 5-year estimates). There is statistical uncertainty
           associated with these estimates, particularly for small populations in
-          small geographic areas, resulting in estimates of hospitalization
-          rates that are unreliable. Some estimates may be suppressed in line
-          with the Rhode Island Department of Health's
+          small geographic areas, resulting in estimates of diagnosis rates that
+          are unreliable. Some estimates may be suppressed in line with the
+          Rhode Island Department of Health's
           <ExternalLink
             href="https://health.ri.gov/publications/policies/SmallNumbersReporting.pdf"
             >Small Numbers Reporting Policy</ExternalLink
@@ -441,7 +434,7 @@ const phrases = {
     "In {{ name }}, there isn't enough data on {{ race }} residents to determine their positive test rate.",
   highest:
     "The highest rate of testing positive was among <strong>{{ race }} residents</strong>. About {{ rate }} per 100,000 {{ race }} residents tested positive.",
-  kpiTitle: "per 100,000 {{ race }} residents hospitalized in {{ name }}.",
+  kpiTitle: "per 100,000 {{ race }} residents tested positive in {{ name }}.",
 };
 
 const startDate =
