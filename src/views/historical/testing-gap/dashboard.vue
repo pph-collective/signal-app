@@ -156,9 +156,9 @@
               Learn more about
               <ExternalLink
                 href="https://covid.ri.gov/treat/therapeutics?gclid=CjwKCAjwpayjBhAnEiwA-7ena53D2cKyXNp0MgIbBXPPz27355gBrR3UTplmWLarJHLRR3ZBFM_aJBoCMgwQAvD_BwE"
-                >what treatments</ExternalLink
+                >treatments</ExternalLink
               >
-              are available for COVID-19
+              available for COVID-19
             </li>
             <li>
               Find out where you can
@@ -208,7 +208,7 @@
               to help people learn about Medicaid renewals
             </li>
             <li>
-              You can help people understand their options for health insurance
+              You can help people find health insurance
               through
               <ExternalLink href="https://healthsourceri.com/transitions/"
                 >HealthSourceRI</ExternalLink
