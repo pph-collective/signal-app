@@ -20,7 +20,8 @@ visualization grammar, to visualize data on our dashboard maps.
 
 ## Getting Started with SIGNAL
 
-:exclamation: For in depth details on project set up, navigate to the `README.md` in the `scripts` folder.
+:exclamation: For in depth details on project set up, navigate to the `README.md` in the `scripts` folder. Located
+[here](https://github.com/pph-collective/signal-app/tree/main/scripts).
 
 ### Requirements
 
@@ -60,4 +61,4 @@ $ npm run serve
 ### Admin Setup
 
 In order to upload data, see the `README.md` file in the `scripts` folder for more detailed instructions on setup and 
-required scripts.
+required scripts. Located [here](https://github.com/pph-collective/signal-app/tree/main/scripts).
