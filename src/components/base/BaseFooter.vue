@@ -12,11 +12,22 @@
       <i class="far fa-copyright" />
       <span class="copyright-span">{{ year }}{{ " " }}</span>
       <span class="copyright-span">People, Place and Health Collective</span>
+      <ExternalLink
+          class="pl-4"
+          href="https://github.com/pph-collective/signal-app"
+          :show-icon="false"
+      >
+        <i class="fab fa-github has-text-white"></i>
+        <VisuallyHidden>GitHub</VisuallyHidden>
+      </ExternalLink>
     </section>
   </footer>
 </template>
 
 <script setup lang="ts">
+import ExternalLink from "@/components/base/ExternalLink.vue";
+import VisuallyHidden from "@/components/base/VisuallyHidden.vue";
+
 const year = new Date().getFullYear();
 </script>
 
