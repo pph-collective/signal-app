@@ -17,7 +17,7 @@ interface Barrier {
   pct_w_no_insurance: number;
   pct_w_no_internet: number;
   pct_w_no_english: number;
-  pct_over_65: number;
+  pct_over_60: number;
   pct_w_no_insurance: number;
 }
 

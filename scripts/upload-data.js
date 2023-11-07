@@ -307,7 +307,7 @@ const main = async () => {
   }
 
   // barriers schemas for hospitalization hotspots
-  if (id === "hospitalization_hotspots") {
+  if (["hospitalization_hotspots", "case_hotspots"].includes(id)) {
     files.push({
       filePath: statebarriersfile,
       extension: "json",
@@ -315,7 +315,7 @@ const main = async () => {
       isArray: false,
       schema: [
         {
-          name: "pct_over_65",
+          name: "pct_over_60",
           type: "number",
         },
         {
@@ -340,7 +340,7 @@ const main = async () => {
       isArray: true,
       schema: [
         {
-          name: "pct_over_65",
+          name: "pct_over_60",
           type: "number",
         },
         {
