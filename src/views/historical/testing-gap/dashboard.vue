@@ -1,11 +1,11 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where fewer people have received their first
-      COVID-19 vaccine dose compared to state levels. We call this difference in
-      vaccinations a <em>gap</em>. Vaccines can keep us from getting very sick
-      with COVID-19. You can use this information to find where the gaps are in
-      our state and take steps to help close them.
+      This tool, which is no longer being updated, shows us places where fewer tests were taken for COVID-19
+      compared to state levels. We call this difference in in the number of tests a
+      <em>gap</em>. Testing is an important first step in stopping the spread of
+      COVID-19 so that people can stay home when they get a positive result. You
+      can use this information to find where the gaps were in our state.
     </template>
   </DashboardCard>
 
@@ -45,8 +45,8 @@
     </template>
 
     <template #subtitle>
-      This map shows where there are gaps in first vaccine doses. Darker areas
-      show bigger gaps in vaccination among
+      This map shows where there were gaps in COVID-19 testing. Darker areas show
+      bigger gaps in testing among
       <strong>{{ controls.focusStat.name }}</strong
       >. Areas with dashes mean there is not enough information. Select a
       community, click the <em>Zoom to Community</em> button, and scroll down to
@@ -63,36 +63,28 @@
           :initial-active-cluster="dashboardActiveCluster"
           :map-type="'cold'"
           class="is-absolute"
-          :display-as-rate="false"
+          :display-as-rate="true"
           @new-active-cluster-id="updateCluster"
         />
         <ClusterMap
           v-if="activeCluster && zoomed"
           :cluster="activeCluster"
           :geo="data.geo"
-          :locations="data.locations"
+          :locations="[]"
           class="is-absolute"
         />
-        <div v-if="activeCluster && zoomed" class="instructions">
-          <p>
-            A <RedDot class="red-dot" /> indicates a previous vaccination clinic
-          </p>
-        </div>
       </div>
       <div :class="{ invisible: activeCluster.name === '' }">
         <router-link
-          :to="`/dataset/vaccine-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
+          :to="`/historical/testing-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
         >
           <i class="fa fa-arrow-circle-down fa-2x centered" />
         </router-link>
       </div>
     </template>
   </DashboardCard>
-
   <DashboardCard id="chart" width="full" :height="2">
-    <template #title
-      >How many first vaccine doses do we need to close the gap?</template
-    >
+    <template #title>How many tests could have closed the gap?</template>
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <GapByRace
@@ -107,11 +99,11 @@
           ]"
           :focus-stat="controls.focusStat"
           :phrases="phrases"
-          :display-as-rate="false"
+          :display-as-rate="true"
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link
-            :to="`/dataset/vaccine-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
+            :to="`/historical/testing-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
           >
             <i class="fa fa-arrow-circle-down fa-2x centered" />
           </router-link>
@@ -121,10 +113,9 @@
   </DashboardCard>
 
   <DashboardCard id="barriers" width="full" :height="2">
-    <template #title>How do we reach people who need vaccines?</template>
+    <template #title>How do we reach people who need tests?</template>
     <template #subtitle
-      >People with fewer resources have a harder time getting
-      vaccinated.</template
+      >People with fewer resources have a harder time getting tested.</template
     >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
@@ -134,7 +125,7 @@
           :active-cluster="activeCluster"
         />
         <router-link
-          :to="`/dataset/vaccine-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#resources`"
+          :to="`/historical/testing-gap?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#resources`"
         >
           <i class="fa fa-arrow-circle-down fa-2x centered" />
         </router-link>
@@ -143,17 +134,119 @@
   </DashboardCard>
 
   <DashboardCard id="resources" width="full">
-    <template #title>What can I do to close the gap?</template>
+    <template #title>What can I do to close testing gaps?</template>
     <template #content>
-      <VaccineResources />
+      <div>
+        <div class="px-4 content">
+          <h5>Make sure people know where to get tested for COVID-19</h5>
+          <ul>
+            <li>
+              Find places to 
+              <ExternalLink href="https://testinglocator.cdc.gov/"
+                >get free COVID-19 testing near you.</ExternalLink>
+            </li>
+            <li>
+              Use a  
+              <ExternalLink href="https://www.cdc.gov/coronavirus/2019-ncov/testing/self-testing.html"
+                >rapid COVID-19 test to test at home.</ExternalLink>
+            </li>
+          </ul>
+          <h5>
+            Make sure people know where to go to get treatment for COVID-19
+          </h5>
+          <ul>
+            <li>
+              Learn about 
+              <ExternalLink
+                href="https://covid.ri.gov/treat/therapeutics?gclid=CjwKCAjwpayjBhAnEiwA-7ena53D2cKyXNp0MgIbBXPPz27355gBrR3UTplmWLarJHLRR3ZBFM_aJBoCMgwQAvD_BwE"
+                >treatments available for COVID-19</ExternalLink
+              >
+              available for COVID-19
+            </li>
+            <li>
+              Find out where you can
+              <ExternalLink
+                href="https://covid-19-test-to-treat-locator-dhhs.hub.arcgis.com/"
+                >find treatment in your neighborhood NEEDS LINK</ExternalLink
+              >
+            </li>
+          </ul>
+          <h5>Make sure people know where to go to get COVID-19 vaccines:</h5>
+          <ul>
+            <li>
+              Visit our pages about COVID-19
+              <router-link class="is-link" to="/dataset/vaccine-gap"
+                >Vaccines
+              </router-link>
+              and
+              <router-link class="is-link" to="/dataset/booster-gap"
+                >Boosters
+              </router-link>
+              to learn more about where there are gaps in our state.
+            </li>
+            <li>
+              Find COVID vaccines near you by using the search bar at
+              <ExternalLink href="https://www.vaccines.gov/"
+                >vaccines.gov</ExternalLink
+              >. You can search by zip code or vaccine type
+            </li>
+            <li>
+              You can also let people know
+              <ExternalLink href="https://covid.ri.gov/vaccination#athome">
+                how to get vaccinated at home </ExternalLink
+              >. This is a good option for people who may have a harder time
+              accessing a clinic.
+            </li>
+          </ul>
+          <h5>
+            Make sure people know how to keep their health insurance coverage
+          </h5>
+          <ul>
+            <li>
+              You can use this
+              <ExternalLink
+                href="https://staycovered.ri.gov/community-support/community-advocate-forum"
+                >community advocate toolkit</ExternalLink
+              >
+              to help people learn about Medicaid renewals
+            </li>
+            <li>
+              You can help people find health insurance
+              through
+              <ExternalLink href="https://healthsourceri.com/transitions/"
+                >HealthSourceRI</ExternalLink
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
     </template>
   </DashboardCard>
 
   <DashboardCard width="full" :height="2">
     <template #subtitle>Data Notes</template>
     <template #content>
-      <div class="px-4 content">
-        <DataNotes />
+      <div class="is-size-7">
+        This web tool includes information on tests administered to Rhode Island
+        residents that were processed by the state laboratory at the Rhode
+        Island Department of Health. Rhode Island residents with invalid or
+        incomplete residential address information excluded. Data for Rhode
+        Island residents who tested via at-home rapid tests are not included
+        unless they submitted their results to the Rhode Island Department of
+        Health. Estimates of population size are sourced from the United States
+        Census Bureau's
+        <ExternalLink href="https://www.census.gov/programs-surveys/acs"
+          >American Community Survey</ExternalLink
+        >
+        (2016-2020, 5-year estimates). There is statistical uncertainty
+        associated with these estimates, particularly for small populations in
+        small geographic areas, resulting in estimates of testing rates that are
+        unreliable. Some estimates may be suppressed in line with the Rhode
+        Island Department of Health's
+        <ExternalLink
+          href="https://health.ri.gov/publications/policies/SmallNumbersReporting.pdf"
+          >Small Numbers Reporting Policy</ExternalLink
+        >.
       </div>
     </template>
   </DashboardCard>
@@ -181,14 +274,12 @@ import HiddenContent from "@/components/base/HiddenContent.vue";
 import ClusterMap from "@/components/dashboard/ClusterMap.vue";
 import GapByRace from "@/components/dashboard/GapByRace.vue";
 import PotentialBarriers from "@/components/dashboard/PotentialBarriers.vue";
-import RedDot from "@/components/dashboard/RedDot.vue";
-import DataNotes from "@/components/dashboard/DataNotes.vue";
+import ExternalLink from "@/components/base/ExternalLink.vue";
 
 import { useQueryParam } from "../../../composables/useQueryParam";
 
 import { fetchColdSpotData } from "../../../utils/firebase";
 import { NULL_CLUSTER } from "../../../utils/constants";
-import VaccineResources from "../../../components/dashboard/VaccineResources.vue";
 import ChooseDate from "../../../components/dashboard/ChooseDate.vue";
 
 const zoomed = ref(false);
@@ -250,6 +341,7 @@ const updateDate = (newDate) => {
 const townDefault = "All of Rhode Island";
 const towns = RI_GEOJSON.map((geo) => geo.properties.name).sort();
 const hez = HEZ_GEOJSON.map((geo) => geo.properties.HEZ).sort();
+
 const dropDowns = {
   town: {
     icon: "fas fa-globe",
@@ -312,19 +404,20 @@ const updateCluster = (newClusterId) => {
   dashboardActiveCluster.value = activeCluster.value;
 };
 
+// setup phrases for card text
 const phrases = {
-  gap: "In {{ name }}, <strong>{{ pct }}</strong> of {{ race }} residents are vaccinated compared to our goal of {{ expectedPct }} total vaccinations statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be vaccinated to close this gap.",
+  gap: "In {{ name }}, <strong>{{ rate }}</strong> per 100,000 {{ race }} residents got tested compared to our goal of {{ expectedRate }} total tests statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be tested to close this gap.",
   allResidents:
-    "In {{ name }}, the largest gap was among {{ minRaceName }} residents. Only <strong>{{ pct }} of {{ name }} residents</strong> are vaccinated compared to {{ expectedPct }} statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to receive a dose to close this gap.",
+    "In {{ name }}, the largest gap was among {{ minRaceName }} residents. Only <strong>{{ rate }} per 100,000 {{ name }} residents</strong> were tested compared to {{ expectedRate }} per 100,000 statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be tested to close this gap.",
   noGap:
-    "In {{ name }}, <strong>{{ pct }}</strong> of {{ race }} residents are vaccinated compared to our goal of {{ expectedPct }} total vaccinations statewide.",
+    "In {{ name }}, <strong>{{ rate }}</strong> per 100,000 {{ race }} residents got tested compared to our goal of {{ expectedRate }} tests per 100,000 statewide.",
   noInfo:
-    "In {{ name }}, there isn't enough vaccine data on <strong>{{ race }} residents</strong> to determine their vaccination status or the number of vaccine doses needed to close the gap.",
+    "In {{ name }}, there isn't enough testing data on <strong>{{ race }} residents</strong> to determine the number of tests needed to close the gap.",
   highest:
-    "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ pct }}</strong> of {{ minRaceName }} residents are vaccinated. Approximately <strong>{{ gap }}</strong> more {{ minRaceName }} residents need to be vaccinated to close this gap.",
-  kpiTitle: "{{ race }} residents vaccinated in {{ name }}",
+    "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ rate }}</strong> per 100,000 {{ minRaceName }} residents were tested. Approximately <strong>{{ gap }}</strong> more {{ minRaceName }} residents need to be tested to close this gap.",
+  kpiTitle: "{{ race }} residents tested per 100,000 in {{ name }}",
   gapKpiTitle:
-    "Approximate vaccine doses for {{ race }} residents needed to close the gap",
+    "Approximate tests for {{ race }} residents needed to close the gap",
 };
 </script>
 
@@ -368,10 +461,6 @@ const phrases = {
   font-size: 0.875rem;
   animation: fade-in 500ms ease-in-out both;
   animation-delay: 250ms;
-}
-
-.red-dot {
-  margin-bottom: -5px;
 }
 
 .centered {

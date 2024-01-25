@@ -20,7 +20,7 @@ const remSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
-    description: "Bar chart showing the gap in vaccinations by race",
+    description: "Bar chart showing the gap by race",
     background: "transparent",
     padding: { left: 0, top: 0, right: 0, bottom: -1 },
     autosize: {
@@ -82,36 +82,6 @@ const spec = computed(() => {
 
     marks: [
       {
-        name: "bars",
-        type: "rect",
-        from: { data: "stats" },
-        encode: {
-          enter: {
-            x: { scale: "xscale", field: "pct" },
-            x2: { scale: "xscale", value: 0 },
-            yc: {
-              signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
-            },
-            height: { scale: "yscale", band: 1 },
-            fill: { value: COLORS.dark },
-            stroke: [{ value: COLORS.dark, test: `datum.population > 0` }],
-          },
-          update: {
-            opacity: { value: 0.9 },
-            tooltip: [
-              {
-                signal:
-                  "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
-                test: "datum.population > 0",
-              },
-            ],
-          },
-          hover: {
-            opacity: { value: 1.0 },
-          },
-        },
-      },
-      {
         name: "gaps",
         type: "rect",
         from: { data: "stats" },
@@ -149,6 +119,36 @@ const spec = computed(() => {
         },
       },
       {
+        name: "bars",
+        type: "rect",
+        from: { data: "stats" },
+        encode: {
+          enter: {
+            x: { scale: "xscale", field: "pct" },
+            x2: { scale: "xscale", value: 0 },
+            yc: {
+              signal: "scale('yscale', datum.name) + bandwidth('yscale') / 2",
+            },
+            height: { scale: "yscale", band: 1 },
+            fill: { value: COLORS.dark },
+            stroke: [{ value: COLORS.dark, test: `datum.population > 0` }],
+          },
+          update: {
+            opacity: { value: 0.9 },
+            tooltip: [
+              {
+                signal:
+                  "{ title: datum.name, 'Percent Vaccinated': format(datum.pct, '.0%'), 'Doses to Close Gap': datum.gap}",
+                test: "datum.population > 0",
+              },
+            ],
+          },
+          hover: {
+            opacity: { value: 1.0 },
+          },
+        },
+      },
+      {
         type: "text",
         interactive: false,
         from: { data: "gaps" },
@@ -175,7 +175,8 @@ const spec = computed(() => {
             align: { value: "left" },
             baseline: { value: "middle" },
             text: {
-              signal: "datum.datum.gap > 0 ? datum.datum.gap + ' doses' : ''",
+              signal:
+                "datum.datum.gap > 0 && datum.datum.population > 0 ? datum.datum.gap + ' doses' : ''",
             },
           },
         },
