@@ -141,10 +141,14 @@
           <h5>Make sure people know where to get tested for COVID-19</h5>
           <ul>
             <li>
-              Find places to
+              Find places to 
               <ExternalLink href="https://testinglocator.cdc.gov/"
-                >get free COVID-19 testing near you</ExternalLink
-              >
+                >get free COVID-19 testing near you.</ExternalLink>
+            </li>
+            <li>
+              Use a  
+              <ExternalLink href="https://www.cdc.gov/coronavirus/2019-ncov/testing/self-testing.html"
+                >rapid COVID-19 test to test at home.</ExternalLink>
             </li>
           </ul>
           <h5>
@@ -152,10 +156,10 @@
           </h5>
           <ul>
             <li>
-              Learn more about
+              Learn about 
               <ExternalLink
                 href="https://covid.ri.gov/treat/therapeutics?gclid=CjwKCAjwpayjBhAnEiwA-7ena53D2cKyXNp0MgIbBXPPz27355gBrR3UTplmWLarJHLRR3ZBFM_aJBoCMgwQAvD_BwE"
-                >treatments</ExternalLink
+                >treatments available for COVID-19</ExternalLink
               >
               available for COVID-19
             </li>
