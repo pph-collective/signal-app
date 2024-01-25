@@ -1,12 +1,11 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where fewer people were tested for COVID-19
-      compared to state levels. We call this difference in testing a
+      This tool, which is no longer being updated, shows us places where fewer tests were taken for COVID-19
+      compared to state levels. We call this difference in in the number of tests a
       <em>gap</em>. Testing is an important first step in stopping the spread of
       COVID-19 so that people can stay home when they get a positive result. You
-      can use this information to find where the gaps are in our state and take
-      steps to help close them.
+      can use this information to find where the gaps were in our state.
     </template>
   </DashboardCard>
 
@@ -46,7 +45,7 @@
     </template>
 
     <template #subtitle>
-      This map shows where there are gaps in COVID-19 testing. Darker areas show
+      This map shows where there were gaps in COVID-19 testing. Darker areas show
       bigger gaps in testing among
       <strong>{{ controls.focusStat.name }}</strong
       >. Areas with dashes mean there is not enough information. Select a
@@ -85,7 +84,7 @@
     </template>
   </DashboardCard>
   <DashboardCard id="chart" width="full" :height="2">
-    <template #title>How many tests do we need to close the gap?</template>
+    <template #title>How many tests could have closed the gap?</template>
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <GapByRace
@@ -135,7 +134,7 @@
   </DashboardCard>
 
   <DashboardCard id="resources" width="full">
-    <template #title>What can I do to close the gap?</template>
+    <template #title>What can I do to close testing gaps?</template>
     <template #content>
       <div>
         <div class="px-4 content">
