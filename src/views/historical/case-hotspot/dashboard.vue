@@ -1,7 +1,7 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where people who have tested positive for
+      This tool, which is no longer being updated, shows us places where people who have tested positive for
       COVID-19 live. This tool focuses on places where more people have tested
       positive compared to state levels. We call these places
       <em>hotspots</em>. You can use this information to find where the hotspots
