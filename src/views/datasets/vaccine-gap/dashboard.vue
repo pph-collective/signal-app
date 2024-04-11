@@ -1,11 +1,11 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where fewer people have received their first
+      This tool, which is no longer being updated, shows us places where fewer people received a
       COVID-19 vaccine dose compared to state levels. We call this difference in
-      vaccinations a <em>gap</em>. Vaccines can keep us from getting very sick
-      with COVID-19. You can use this information to find where the gaps are in
-      our state and take steps to help close them.
+      vaccinations a <em>gap</em>. Annual COVID-19 vaccines can keep us from getting very sick
+      with COVID-19. You can use this information to find where the gaps were in
+      our state and take steps to minimize gaps with the annual COVID-19 vaccines.
     </template>
   </DashboardCard>
 
@@ -45,7 +45,7 @@
     </template>
 
     <template #subtitle>
-      This map shows where there are gaps in first vaccine doses. Darker areas
+      This map shows where there were gaps in COVID-19 vaccines. Darker areas
       show bigger gaps in vaccination among
       <strong>{{ controls.focusStat.name }}</strong
       >. Areas with dashes mean there is not enough information. Select a
@@ -90,7 +90,7 @@
 
   <DashboardCard id="chart" width="full" :height="2">
     <template #title
-      >How many first vaccine doses do we need to close the gap?</template
+      >What communities had the largest vaccine gaps?</template
     >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
@@ -119,7 +119,7 @@
   </DashboardCard>
 
   <DashboardCard id="barriers" width="full" :height="2">
-    <template #title>How do we reach people who need vaccines?</template>
+    <template #title>How do we reach people who need the annual vaccine?</template>
     <template #subtitle
       >People with fewer resources have a harder time getting
       vaccinated.</template
@@ -141,7 +141,7 @@
   </DashboardCard>
 
   <DashboardCard id="resources" width="full">
-    <template #title>What can I do to close the gap?</template>
+    <template #title>What can I do to minimize the gap in the future?</template>
     <template #content>
       <VaccineResources />
     </template>
@@ -311,15 +311,15 @@ const updateCluster = (newClusterId) => {
 };
 
 const phrases = {
-  gap: "In {{ name }}, <strong>{{ pct }}</strong> of {{ race }} residents are vaccinated compared to our goal of {{ expectedPct }} total vaccinations statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to be vaccinated to close this gap.",
+  gap: "In {{ name }}, <strong>{{ pct }}</strong> of {{ race }} residents were vaccinated compared to our goal of {{ expectedPct }} total vaccinations statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> needed to be vaccinated to close this gap.",
   allResidents:
-    "In {{ name }}, the largest gap was among {{ minRaceName }} residents. Only <strong>{{ pct }} of {{ name }} residents</strong> are vaccinated compared to {{ expectedPct }} statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> need to receive a dose to close this gap.",
+    "In {{ name }}, the largest gap was among {{ minRaceName }} residents. Only <strong>{{ pct }} of {{ name }} residents</strong> were vaccinated compared to {{ expectedPct }} statewide. Approximately <strong>{{ gap }} more {{ minRaceName }} residents</strong> needed to receive a dose to close this gap.",
   noGap:
-    "In {{ name }}, <strong>{{ pct }}</strong> of {{ race }} residents are vaccinated compared to our goal of {{ expectedPct }} total vaccinations statewide.",
+    "In {{ name }}, <strong>{{ pct }}</strong> of {{ race }} residents were vaccinated compared to our goal of {{ expectedPct }} total vaccinations statewide.",
   noInfo:
-    "In {{ name }}, there isn't enough vaccine data on <strong>{{ race }} residents</strong> to determine their vaccination status or the number of vaccine doses needed to close the gap.",
+    "In {{ name }}, there wasn't enough vaccine data on <strong>{{ race }} residents</strong> to determine their vaccination status or the number of vaccine doses that were needed to close the gap.",
   highest:
-    "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ pct }}</strong> of {{ minRaceName }} residents are vaccinated. Approximately <strong>{{ gap }}</strong> more {{ minRaceName }} residents need to be vaccinated to close this gap.",
+    "The largest gap was among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ pct }}</strong> of {{ minRaceName }} residents were vaccinated. Approximately <strong>{{ gap }}</strong> more {{ minRaceName }} residents needed to be vaccinated to close this gap.",
   kpiTitle: "{{ race }} residents vaccinated in {{ name }}",
   gapKpiTitle:
     "Approximate vaccine doses for {{ race }} residents needed to close the gap",
