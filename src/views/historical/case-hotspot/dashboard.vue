@@ -1,7 +1,7 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where people who have tested positive for
+      This tool, which is no longer being updated, shows us places where people who have tested positive for
       COVID-19 live. This tool focuses on places where more people have tested
       positive compared to state levels. We call these places
       <em>hotspots</em>. You can use this information to find where the hotspots
@@ -147,6 +147,28 @@
     <template #content>
       <div>
         <div class="px-4 content">
+          <h5>Make sure people know where to go to get COVID-19 vaccines:</h5>
+          <ul>
+            <li>
+              Visit our pages about COVID-19
+              <router-link class="is-link" to="/dataset/vaccine-gap"
+                >Vaccines
+              </router-link>
+              and
+              <router-link class="is-link" to="/dataset/booster-gap"
+                >Boosters
+              </router-link>
+              to learn more about where there are gaps in our state.
+            </li>
+            <li>
+              You can also let people know
+              <ExternalLink href="https://covid.ri.gov/vaccination#athome">
+                how to get vaccinated at home </ExternalLink
+              >. This is a good option for people who may have a harder time
+              accessing a clinic.
+            </li>
+          </ul>
+          
           <h5>Help people find out where to get tested</h5>
           <ul>
             <li>
@@ -187,31 +209,10 @@
             <li>
               Find out
               <ExternalLink
-                href="https://covid-19-test-to-treat-locator-dhhs.hub.arcgis.com/"
+                href="https://treatments.hhs.gov/"
               >
                 where you can find treatment in your neighborhood </ExternalLink
               >.
-            </li>
-          </ul>
-          <h5>Make sure people know where to go to get COVID-19 vaccines:</h5>
-          <ul>
-            <li>
-              Visit our pages about COVID-19
-              <router-link class="is-link" to="/dataset/vaccine-gap"
-                >Vaccines
-              </router-link>
-              and
-              <router-link class="is-link" to="/dataset/booster-gap"
-                >Boosters
-              </router-link>
-              to learn more about where there are gaps in our state.
-            </li>
-            <li>
-              You can also let people know
-              <ExternalLink href="https://covid.ri.gov/vaccination#athome">
-                how to get vaccinated at home </ExternalLink
-              >. This is a good option for people who may have a harder time
-              accessing a clinic.
             </li>
           </ul>
 

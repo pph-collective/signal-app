@@ -1,7 +1,7 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where fewer people were tested for COVID-19
+      This tool, which is no longer being updated, shows us places where fewer people were tested for COVID-19
       compared to state levels. We call this difference in testing a
       <em>gap</em>. Testing is an important first step in stopping the spread of
       COVID-19 so that people can stay home when they get a positive result. You
@@ -49,7 +49,7 @@
       This map shows where there are gaps in COVID-19 testing. Darker areas show
       bigger gaps in testing among
       <strong>{{ controls.focusStat.name }}</strong
-      >. Areas with dashes mean there is not enough information. Select a
+      >. Areas with dashes mean there is not enough information to report. Select a
       community, click the <em>Zoom to Community</em> button, and scroll down to
       learn more.
     </template>
@@ -85,7 +85,7 @@
     </template>
   </DashboardCard>
   <DashboardCard id="chart" width="full" :height="2">
-    <template #title>How many tests do we need to close the gap?</template>
+    <template #title>How many tests did we need to close the gap?</template>
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
         <GapByRace
@@ -306,9 +306,9 @@ const phrases = {
   noGap:
     "In {{ name }}, <strong>{{ rate }}</strong> per 100,000 {{ race }} residents are vaccinated compared to our goal of {{ expectedRate }} tests per 100,000 statewide.",
   noInfo:
-    "In {{ name }}, there isn't enough vaccine data on <strong>{{ race }} residents</strong> to determine their vaccination status or the number of tests needed to close the gap.",
+    "In {{ name }}, there isn't enough vaccine data on <strong>{{ race }} residents</strong> to show how many people tested positive for COVID-19.",
   highest:
-    "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ rate }}</strong> per 100,000 {{ minRaceName }} residents were tested. Approximately <strong>{{ gap }}</strong> more {{ minRaceName }} residents need to be tested to close this gap.",
+    "The highest rate of testing poisitve for COVID-19 was among <strong>{{ minRaceName }} residents</strong>. About <strong>{{ rate }}</strong> per 100,000 {{ minRaceName }} residents tested positive.",
   kpiTitle: "{{ race }} residents tested per 100,000 in {{ name }}",
   gapKpiTitle:
     "Approximate tests for {{ race }} residents needed to close the gap",
