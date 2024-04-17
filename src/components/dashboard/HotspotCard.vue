@@ -215,7 +215,6 @@ const maxRace = computed(() => {
 
 const maxRate = computed(() => {
   const rates = activeStats.value.map((stat) => isNaN(stat.rate) ? 0 : stat.rate)
-  console.log(Math.max(...rates))
   return Math.max(...rates)
 });
 
