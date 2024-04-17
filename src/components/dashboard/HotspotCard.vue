@@ -20,7 +20,7 @@
         <HotspotChart
           :active-stats="activeStats"
           :field-data="fieldData"
-          :domain-max="maxInclAll?.rate * 1.35"
+          :domain-max="maxRate * 1.35"
         />
       </div>
       <div class="centered">
@@ -213,13 +213,10 @@ const maxRace = computed(() => {
   return activeStats.value.find(({ name }) => name === "All Residents");
 });
 
-const maxInclAll = computed(() => {
-  for (const activeStat of activeStats.value) {
-    if (!isNaN(activeStat.rate)) {
-      return activeStat;
-    }
-  }
-  return activeStats.value[0];
+const maxRate = computed(() => {
+  const rates = activeStats.value.map((stat) => isNaN(stat.rate) ? 0 : stat.rate)
+  console.log(Math.max(...rates))
+  return Math.max(...rates)
 });
 
 const activeFocusStats = computed(() => {
