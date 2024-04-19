@@ -54,11 +54,6 @@ const routes: RouteRecordRaw[] = [
           import("./views/historical/hospitalization-hotspot/index.vue"),
       },
       {
-        path: "testing-gap",
-        name: "Closing the gap in COVID-19 testing",
-        component: () => import("./views/historical/testing-gap/index.vue"),
-      },
-      {
         path: "case-hotspot",
         name: "Hotspots of COVID-19 Cases",
         component: () => import("./views/historical/case-hotspot/index.vue"),

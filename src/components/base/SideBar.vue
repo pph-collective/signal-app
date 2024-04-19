@@ -205,11 +205,6 @@ const HISTORICAL = [
     available: true,
   },
   {
-    name: "Testing Gaps",
-    route: "testing-gap",
-    available: true,
-  },
-  {
     name: "Case Hotspots",
     route: "case-hotspot",
     available: true,
