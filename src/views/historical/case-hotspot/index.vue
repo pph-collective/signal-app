@@ -30,7 +30,6 @@ import { useQueryParam } from "../../../composables/useQueryParam";
 import { fetchKeys } from "../../../utils/firebase";
 import { prettyDate } from "../../../utils/utils";
 
-// const datasetName = "case_hotspots";
 const datasetName = "case_hotspots";
 
 const dates = await fetchKeys(datasetName);
