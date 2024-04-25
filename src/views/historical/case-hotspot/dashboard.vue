@@ -1,9 +1,9 @@
 <template>
   <DashboardCard width="full">
     <template #subtitle>
-      This tool shows us places where people who have gone to the hospital with
-      COVID-19 live. This tool focuses on places where more people have gone to
-      the hospital compared to state levels. We call these places
+      This tool, which is no longer being updated, shows us places where people who have tested positive for
+      COVID-19 live. This tool focuses on places where more people have tested
+      positive compared to state levels. We call these places
       <em>hotspots</em>. You can use this information to find where the hotspots
       are in our state and take steps to help eliminate them.
     </template>
@@ -45,10 +45,10 @@
     </template>
 
     <template #subtitle>
-      This map shows hotspots where more people have gone to the hospital with
+      This map shows hotspots where more people have tested positive for
       COVID-19 compared to state levels. Darker areas show hotspots. Areas with
-      dashes mean there is not enough information available to show a
-      hospitalization rate. Select a community, click the
+      dashes mean there is not enough information available to show a how many
+      people have tested positive. Select a community, click the
       <em>Zoom to Community</em>
       button, and scroll down to learn more.
     </template>
@@ -76,7 +76,7 @@
       </div>
       <div :class="{ invisible: activeCluster.name === '' }">
         <router-link
-          :to="`/historical/hospitalization-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
+          :to="`/historical/case-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#chart`"
         >
           <i class="fa fa-arrow-circle-down fa-2x centered" />
         </router-link>
@@ -85,7 +85,7 @@
   </DashboardCard>
   <DashboardCard id="chart" width="full" :height="2">
     <template #title
-      >Who was hospitalized with COVID-19 between {{ startDate }} and
+      >Who tested positive for COVID-19 between {{ startDate }} and
       {{ endDate }}?</template
     >
     <template #content>
@@ -106,7 +106,7 @@
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link
-            :to="`/historical/hospitalization-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
+            :to="`/historical/case-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#barriers`"
           >
             <i class="fa fa-arrow-circle-down fa-2x centered" />
           </router-link>
@@ -116,16 +116,12 @@
   </DashboardCard>
 
   <DashboardCard id="barriers" width="full" :height="2">
-    <template #title
-      >How do we keep people from needing to go to the hospital with
-      COVID-19?</template
-    >
+    <template #title>How do we keep people from getting COVID-19?</template>
     <template #subtitle
-      >When people have fewer resources, like money or vaccines or treatment, it
-      is harder to stay healthy. It is important that all people can access
-      things like vaccines and treatments when they need them. This is
-      especially important for older adults and others who are at risk for
-      getting very sick from COVID-19.</template
+      >When people have fewer resources it is harder for them to stay healthy.
+      It is important that all people can stay home from work or school when
+      they need to. This can stop people from getting sick with
+      COVID-19.</template
     >
     <template #content>
       <HiddenContent :show="activeCluster.name !== ''">
@@ -135,7 +131,7 @@
           :active-cluster="activeCluster"
         />
         <router-link
-          :to="`/historical/hospitalization-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#resources`"
+          :to="`/historical/case-hotspot?town=${controls.town}&stat=${controls.focusStat.value}&cluster=${activeCluster.cluster_id}&zoom=${zoomed}&date=${currentDate}#resources`"
         >
           <i class="fa fa-arrow-circle-down fa-2x centered" />
         </router-link>
@@ -145,8 +141,8 @@
 
   <DashboardCard id="resources" width="full">
     <template #title
-      >What can I do to lower the chances that someone in my community needs to
-      go to the hospital?</template
+      >What can I do to lower the chances that someone in my community gets
+      COVID-19</template
     >
     <template #content>
       <div>
@@ -172,6 +168,24 @@
               accessing a clinic.
             </li>
           </ul>
+          
+          <h5>Help people find out where to get tested</h5>
+          <ul>
+            <li>
+              Find places to get free COVID-19 testing
+              <ExternalLink href="https://testinglocator.cdc.gov/"
+                >near you</ExternalLink
+              >
+            </li>
+            <li>
+              Use
+              <ExternalLink
+                href="https://www.cdc.gov/coronavirus/2019-ncov/testing/self-testing.html"
+                >a rapid COVID-19 test</ExternalLink
+              >
+              to test yourself at hom
+            </li>
+          </ul>
           <h5>
             Make sure people know where to go to get treatment for COVID-19:
           </h5>
@@ -195,21 +209,22 @@
             <li>
               Find out
               <ExternalLink
-                href="https://covid-19-test-to-treat-locator-dhhs.hub.arcgis.com/"
+                href="https://treatments.hhs.gov/"
               >
                 where you can find treatment in your neighborhood </ExternalLink
               >.
             </li>
           </ul>
+
           <h5>
             Make sure people know how to keep their health insurance coverage.
           </h5>
           <ul>
             <li>
-              You can use this
+              You can use
               <ExternalLink
                 href="https://staycovered.ri.gov/community-support/community-advocate-forum"
-                >community advocate toolkit</ExternalLink
+                >this community advocate toolkit</ExternalLink
               >
               to help people learn about Medicaid renewals.
             </li>
@@ -231,39 +246,19 @@
     <template #content>
       <div class="is-size-7">
         <p>
-          This web tool includes information on COVID-19-associated
-          hospitalizations for Rhode Island residents who were admitted to an
-          acute care or psychiatric inpatient facility for at least one night
-          with COVID-19.
-        </p>
-        <p>
-          After January 1, 2023, persons are included once per COVID-19
-          infection if they had a laboratory-confirmed positive COVID-19 test
-          within 14 days prior to the hospital admission (if COVID-19 is not a
-          primary or contributing cause of hospitalization), within 30 days
-          prior to hospital admission (if COVID-19 is a primary or contributing
-          cause of hospitalization), or within 3 days after hospital admission
-          (regardless of the cause of hospitalization)
-        </p>
-        <p>
-          Prior to January 1, 2023, these data include persons admitted to an
-          inpatient facility for at least one night with a laboratory-confirmed
-          positive COVID-19 test, regardless of when the test was performed.
-          Hospitalizations prior to this date also counted an individual more
-          than once if they were readmitted during the course of a single
-          COVId-19 infection.
-        </p>
-        <p>
-          Estimates of population size are sourced from the United States Census
-          Bureau's
+          This web tool includes information on COVID-19 cases among Rhode
+          Island residents that were reported to the Rhode Island Department of
+          Health. Rhode Island residents with invalid or incomplete residential
+          address information excluded. Estimates of population size are sourced
+          from the United States Census Bureau's
           <ExternalLink href="https://www.census.gov/programs-surveys/acs"
             >American Community Survey</ExternalLink
           >
           (2016-2020, 5-year estimates). There is statistical uncertainty
           associated with these estimates, particularly for small populations in
-          small geographic areas, resulting in estimates of hospitalization
-          rates that are unreliable. Some estimates may be suppressed in line
-          with the Rhode Island Department of Health's
+          small geographic areas, resulting in estimates of diagnosis rates that
+          are unreliable. Some estimates may be suppressed in line with the
+          Rhode Island Department of Health's
           <ExternalLink
             href="https://health.ri.gov/publications/policies/SmallNumbersReporting.pdf"
             >Small Numbers Reporting Policy</ExternalLink
@@ -429,18 +424,18 @@ const updateCluster = (newClusterId) => {
 };
 
 const phrases = {
-  gap: "In {{ name }}, about <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized. This was higher than the overall rate in Rhode Island.",
+  gap: "In {{ name }}, about <strong>{{ rate }} per 100,000 {{ race }} residents</strong> tested positive. This was higher than the overall rate in Rhode Island.",
   allResidents:
-    "In {{ name }}, the rate of people who were hospitalized was highest among {{ maxRaceName }} residents. About <strong>{{ rate }} per 100,000 {{ maxRaceName }} residents</strong> were hospitalized.",
+    "In {{ name }}, the rate of people who tested positive was highest among {{ maxRaceName }} residents. About <strong>{{ rate }} per 100,000 {{ maxRaceName }} residents</strong> tested positive.",
   allHighest:
-    "In {{ name }}, the rate of people who were hospitalized was highest among all residents. About <strong>{{ rate }} per 100,000 residents</strong> were hospitalized.",
+    "In {{ name }}, the rate of people who tested positive was highest among all residents. About <strong>{{ rate }} per 100,000 residents</strong> tested positive.",
   noGap:
-    "In {{ name }}, about <strong>{{ rate }} per 100,000 {{ race }} residents</strong> were hospitalized. This was lower than the overall rate in Rhode Island.",
+    "In {{ name }}, about <strong>{{ rate }} per 100,000 {{ race }} residents</strong> tested positive. This was lower than the overall rate in Rhode Island.",
   noInfo:
-    "In {{ name }}, there isn't enough hospitalization data on {{ race }} residents to determine their hospitalization rate.",
+    "In {{ name }}, there isn't enough data on {{ race }} residents to determine their positive test rate.",
   highest:
-    "The highest rate of hospitalization was among <strong>{{ race }} residents</strong>. About {{ rate }} per 100,000 {{ race }} residents were hospitalized.",
-  kpiTitle: "per 100,000 {{ race }} residents hospitalized in {{ name }}.",
+    "The highest rate of testing positive was among <strong>{{ race }} residents</strong>. About {{ rate }} per 100,000 {{ race }} residents tested positive.",
+  kpiTitle: "per 100,000 {{ race }} residents tested positive in {{ name }}.",
 };
 
 const startDate =

@@ -17,9 +17,16 @@
       :class="focusStat.value === 'total' ? '' : 'is-invisible'"
     >
       <div>
-        <GapChart
+        <GapChartRate
+          v-if="displayAsRate"
           :active-stats="activeStats"
-          :expected="expected"
+          :expected="expectedRate"
+          :field-data="fieldData"
+        />
+        <GapChartPct
+          v-else
+          :active-stats="activeStats"
+          :expected="expectedPct"
           :field-data="fieldData"
         />
       </div>
@@ -33,8 +40,10 @@
                 name: activeCluster.name,
                 minRaceName: minVaxRace?.name,
                 pct: formatPct(minVaxRace?.pct),
-                expectedPct: formatPct(expected),
+                expectedPct: formatPct(expectedPct),
                 gap: minVaxRace?.gap,
+                rate: formatUsString(minVaxRace?.rate),
+                expectedRate: formatUsString(expectedRate),
               }),
             )
           "
@@ -51,11 +60,7 @@
         class="is-flex is-flex-direction-row is-justify-content-space-around"
       >
         <KeyPerformanceIndicator
-          :value="
-            activeFocusStats?.population > 0
-              ? formatPct(activeFocusStats?.pct)
-              : '?'
-          "
+          :value="kpiValue"
           :title="
             sanitizeHtml(
               kpiTitle({
@@ -83,14 +88,16 @@
         <!-- In this community, there is a gap in this focus group -->
         <!-- eslint-disable vue/no-v-html -->
         <p
-          v-if="activeFocusStats?.gap > 0"
+          v-if="activeFocusStats?.gap > 0 && activeFocusStats?.population > 0"
           v-html="
             sanitizeHtml(
               gapPhrase({
                 name: props.activeCluster.name,
                 pct: formatPct(activeFocusStats?.pct),
+                rate: formatUsString(activeFocusStats?.rate),
                 race: activeFocusStats?.name,
-                expectedPct: formatPct(expected),
+                expectedPct: formatPct(expectedPct),
+                expectedRate: formatUsString(expectedRate),
                 gap: activeFocusStats?.gap,
               }),
             )
@@ -107,7 +114,7 @@
                   name: props.activeCluster.name,
                   pct: formatPct(activeFocusStats?.pct),
                   race: activeFocusStats?.name,
-                  expectedPct: formatPct(expected),
+                  expectedPct: formatPct(expectedPct),
                 }),
               )
             "
@@ -135,6 +142,7 @@
                 highest({
                   minRaceName: minVaxRace?.name,
                   pct: formatPct(minVaxRace?.pct),
+                  rate: formatUsString(minVaxRace?.rate),
                   gap: minVaxRace?.gap,
                 }),
               )
@@ -149,9 +157,10 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 
-import GapChart from "@/components/dashboard/GapChart.vue";
+import GapChartPct from "@/components/dashboard/GapChartPct.vue";
+import GapChartRate from "@/components/dashboard/GapChartRate.vue";
 import KeyPerformanceIndicator from "@/components/dashboard/KeyPerformanceIndicator.vue";
-import { formatPct, sortByProperty } from "../../utils/utils";
+import { formatPct, sortByProperty, formatUsString } from "../../utils/utils";
 import { compile } from "handlebars";
 import sanitizeHtml from "sanitize-html";
 
@@ -161,10 +170,16 @@ const props = defineProps<{
   fieldNames: Array<{ field: string; name: string }>;
   focusStat: FocusStat;
   phrases: Phrases;
+  displayAsRate: boolean;
 }>();
 
-const expected = computed(
+const expectedPct = computed(
   () => props.stats[0].expected_total / props.stats[0].population_total,
+);
+
+const expectedRate = computed(
+  () =>
+    (props.stats[0].expected_total / props.stats[0].population_total) * 100000,
 );
 
 const fieldData = computed(() => {
@@ -190,6 +205,10 @@ const activeStats = computed(() => {
           pct:
             population > 0
               ? Math.min(0.99, row[f.observedField] / row[f.populationField])
+              : NaN,
+          rate:
+            population > 0
+              ? (row[f.observedField] / row[f.populationField]) * 100000
               : NaN,
           gap: Math.max(0, row[f.expectedField] - row[f.observedField]),
           population,
@@ -217,6 +236,18 @@ const activeFocusStats = computed(() => {
   return activeStats.value.find(
     (a) => a.name.toUpperCase() === props.focusStat.value.toUpperCase(),
   );
+});
+
+const kpiValue = computed(() => {
+  if (activeFocusStats.value?.population > 0) {
+    if (props.displayAsRate) {
+      return formatUsString(activeFocusStats.value?.rate);
+    } else {
+      return formatPct(activeFocusStats.value?.pct);
+    }
+  } else {
+    return "?";
+  }
 });
 
 const gapPhrase = compile(props.phrases.gap);

@@ -68,6 +68,7 @@
           :initial-active-cluster="dashboardActiveCluster"
           :map-type="'cold'"
           class="is-absolute"
+          :display-as-rate="false"
           @new-active-cluster-id="updateCluster"
         />
         <ClusterMap
@@ -110,6 +111,7 @@
           ]"
           :focus-stat="controls.focusStat"
           :phrases="phrases"
+          :display-as-rate="false"
         />
         <div :class="{ invisible: activeCluster.name === '' }">
           <router-link
@@ -327,7 +329,8 @@ const phrases = {
   highest:
     "The largest gap is among <strong>{{ minRaceName }} residents</strong>. Only <strong>{{ pct }}</strong> of {{ minRaceName }} residents are vaccinated. Approximately <strong>{{ gap }}</strong> more {{ minRaceName }} residents need to be vaccinated to close this gap.",
   kpiTitle: "{{ race }} residents vaccinated in {{ name }}",
-  gapKpiTitle: "Approximate vaccine doses for {{ race }} residents needed to close the gap",
+  gapKpiTitle:
+    "Approximate vaccine doses for {{ race }} residents needed to close the gap",
 };
 </script>
 

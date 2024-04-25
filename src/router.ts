@@ -53,6 +53,11 @@ const routes: RouteRecordRaw[] = [
         component: () =>
           import("./views/historical/hospitalization-hotspot/index.vue"),
       },
+      {
+        path: "case-hotspot",
+        name: "Hotspots of COVID-19 Cases",
+        component: () => import("./views/historical/case-hotspot/index.vue"),
+      },
     ],
   },
   {

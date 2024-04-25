@@ -307,7 +307,7 @@ const main = async () => {
   }
 
   // barriers schemas for hospitalization hotspots
-  if (id === "hospitalization_hotspots") {
+  if (["hospitalization_hotspots", "case_hotspots"].includes(id)) {
     files.push({
       filePath: statebarriersfile,
       extension: "json",
@@ -315,7 +315,7 @@ const main = async () => {
       isArray: false,
       schema: [
         {
-          name: "pct_over_65",
+          name: "pct_over_60",
           type: "number",
         },
         {
@@ -340,7 +340,59 @@ const main = async () => {
       isArray: true,
       schema: [
         {
-          name: "pct_over_65",
+          name: "pct_over_60",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_english",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_insurance",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_internet",
+          type: "number",
+        },
+      ],
+    });
+  }
+
+  if (id === "testing_coldspots") {
+    files.push({
+      filePath: statebarriersfile,
+      extension: "json",
+      field: "state_barriers",
+      isArray: false,
+      schema: [
+        {
+          name: "pct_w_no_vehicle",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_english",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_insurance",
+          type: "number",
+        },
+        {
+          name: "pct_w_no_internet",
+          type: "number",
+        },
+      ],
+    });
+
+    files.push({
+      filePath: barriersfile,
+      extension: "json",
+      field: "barriers",
+      isArray: true,
+      schema: [
+        {
+          name: "pct_w_no_vehicle",
           type: "number",
         },
         {

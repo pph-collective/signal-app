@@ -204,6 +204,11 @@ const HISTORICAL = [
     route: "hospitalization-hotspot",
     available: true,
   },
+  {
+    name: "Case Hotspots",
+    route: "case-hotspot",
+    available: true,
+  },
 ];
 
 const SPOTLIGHTS = [

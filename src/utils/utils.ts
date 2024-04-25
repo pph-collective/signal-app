@@ -60,10 +60,26 @@ export const prettyDate = (date: string): string => {
 
 export const formatPct = format(".0%");
 
+export const USStringFormat = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+});
+
+export function formatUsString(usString: number) {
+  return USStringFormat.format(usString);
+}
+
 export const sortByProperty = (property) => (a, b) => {
   let valA = a[property];
   let valB = b[property];
 
+  // if NaN, make MIN_VALUE
+  if (isNaN(valA)) {
+    valA = Number.MIN_VALUE;
+  }
+  if (isNaN(valB)) {
+    valB = Number.MIN_VALUE;
+  }
   // if strings, ignore upper and lowercase
   if (typeof valA === "string" && typeof valB === "string") {
     valA = valA.toUpperCase();
