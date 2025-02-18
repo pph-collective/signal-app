@@ -216,17 +216,7 @@ const SPOTLIGHTS = [
     name: "Outcomes by Housing Type",
     route: "housing",
     available: true,
-  },
-  {
-    name: "Outcomes by School",
-    route: "school",
-    available: false,
-  },
-  {
-    name: "Outcomes by Workplace Type",
-    route: "workplace",
-    available: false,
-  },
+  }
 ];
 
 const RESOURCES = [
