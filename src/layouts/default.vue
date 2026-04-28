@@ -1,5 +1,6 @@
 <template>
   <div class="is-isolated">
+    <ArchiveBanner />
     <a class="logo-container" href="/">
       <span class="brand-title is-family-secondary">Project SIGNAL</span>
       <BaseLogo />
@@ -17,6 +18,7 @@ import { ref, onErrorCaptured } from "vue";
 import BaseLogo from "@/components/base/BaseLogo.vue";
 import BaseFooter from "@/components/base/BaseFooter.vue";
 import ErrorPage from "@/components/base/ErrorPage.vue";
+import ArchiveBanner from "../components/base/ArchiveBanner.vue";
 
 // ERROR HANDLING
 const errored = ref(false);
