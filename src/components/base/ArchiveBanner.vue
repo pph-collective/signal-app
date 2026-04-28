@@ -11,7 +11,7 @@
     color: white;
     text-align: center;
     vertical-align: middle;
-    padding-block: 0.5rem;
+    padding-block: 10px;
     font-size: 1.2rem;
 }
 </style>
