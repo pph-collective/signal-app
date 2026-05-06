@@ -30,7 +30,6 @@
 .banner a:hover,
 .banner a:focus {
   color: #ffffff;
-  /* background-color: #b22222; */
   outline: 2px solid #ffffff;
   border-radius: 2px;
 }
