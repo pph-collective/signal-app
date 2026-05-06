@@ -1,6 +1,6 @@
 <template>
   <div class="banner has-text-centered">
-    This documentation contains archived materials maintained for reference or
+    This site contains archived materials maintained for reference or
     record-keeping purposes. Some materials may not meet current accessibility
     standards. To learn more or to request an accessible version of archived
     content, please visit:
